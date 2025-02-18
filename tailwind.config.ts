@@ -12,6 +12,12 @@ export default {
         background: "var(--background)",
         foreground: "var(--foreground)",
       },
+      fontFamily: {
+        aristoBold: ["aristo-demi-bold", "sans-serif"],
+        aristoNormal: ["aristo-normal", "sans-serif"],
+        poppinsRegular: ["poppins-regular", "sans-serif"],
+        poppinsSemiBold: ["Poppins-SemiBold", "sans-serif"],
+      },
     },
   },
   plugins: [],
