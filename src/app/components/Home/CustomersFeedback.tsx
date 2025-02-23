@@ -8,6 +8,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Button from "../common/Buttons";
 import { GoArrowRight } from "react-icons/go";
+import SlideInSection from "../common/slideInSection";
 
 const CustomersFeedbacks = () => {
   const settings = {
@@ -45,40 +46,43 @@ const CustomersFeedbacks = () => {
     ],
   };
   return (
-    <section className="bg-[#FCFCFC]">
-      <Container>
-        <HeadingTextWithSubHead
-          className="text-center mb-10"
-          width={782}
-          height={50}
-          iconImage="/assets/LandingPage/icons/vector2.svg"
-          heading={"What our customers are saying"}
-          subhead={
-            "Explore testimonials showcasing clients’ success stories with FarmFundr, highlighting the transformative agricultural investment journeys they’ve experienced."
-          }
-        />
+    <SlideInSection>
+      <section className="bg-[#FCFCFC]">
+        <Container>
+          <HeadingTextWithSubHead
+            className="text-center mb-10"
+            alignment="center"
+            width={782}
+            height={50}
+            iconImage="/assets/LandingPage/icons/vector2.svg"
+            heading={"What our customers are saying"}
+            subhead={
+              "Explore testimonials showcasing clients’ success stories with FarmFundr, highlighting the transformative agricultural investment journeys they’ve experienced."
+            }
+          />
 
-        <Slider {...settings} className="mt-16">
-          <ReviewCard />
-          <ReviewCard />
-          <ReviewCard />
-          <ReviewCard />
-          <ReviewCard />
-          <ReviewCard />
-          <ReviewCard />
-        </Slider>
+          <Slider {...settings} className="mt-16">
+            <ReviewCard />
+            <ReviewCard />
+            <ReviewCard />
+            <ReviewCard />
+            <ReviewCard />
+            <ReviewCard />
+            <ReviewCard />
+          </Slider>
 
-        <Button
-          size="medium"
-          className="flex items-center gap-x-4 justify-center mt-20 text-center w-[535px] mx-auto"
-        >
-          <span>Explore More and Invest Now</span>
-          <span>
-            <GoArrowRight size={24} className="text-white" />
-          </span>
-        </Button>
-      </Container>
-    </section>
+          <Button
+            size="medium"
+            className="flex items-center gap-x-4 justify-center mt-20 text-center w-[535px] mx-auto"
+          >
+            <span>Explore More and Invest Now</span>
+            <span>
+              <GoArrowRight size={24} className="text-white" />
+            </span>
+          </Button>
+        </Container>
+      </section>
+    </SlideInSection>
   );
 };
 

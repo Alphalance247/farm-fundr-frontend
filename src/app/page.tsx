@@ -1,3 +1,4 @@
+import Footer from "./components/common/footer";
 import Header from "./components/common/header";
 import About from "./components/Home/about";
 import Benefits from "./components/Home/Benefits";
@@ -20,6 +21,7 @@ export default function Home() {
       <MeetTeam />
       <CustomersFeedbacks />
       <Faqs />
+      <Footer />
       {/* <Button variant="secondary">Login</Button>
       <Button>Get Started</Button>
 

@@ -31,7 +31,7 @@ const FaqContainer: React.FC<clickProp> = ({
         <Image
           src={`${
             isOpen === i
-              ? "/assets/LandingPage/icons/investment.svg"
+              ? "/assets/LandingPage/icons/times.svg"
               : "/assets/LandingPage/icons/plus.svg"
           }`}
           width={40}

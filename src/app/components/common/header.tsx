@@ -19,7 +19,7 @@ const Header = () => {
   ];
 
   return (
-    <header className="bg-[#EEFEF6]">
+    <header className="bg-[#EEFEF6] sticky z-[1000] top-0 h-[86px]">
       <div className="transition-all duration-500 max-w-[1300px] mx-auto px-8 flex justify-between items-center py-3">
         <Link href="/">
           <Image
@@ -40,9 +40,9 @@ const Header = () => {
                 <li
                   className={`${
                     activeMenu === items?.name
-                      ? "text-[#2D865B] border-b-[2px] border-[#2D865B] pb-2"
+                      ? "text-[#51F4A6] border-b-[2px] border-[#51F4A6] pb-2"
                       : "text-[#282A03]"
-                  }  cursor-pointer px-4 text-base font-poppinsRegular max-xl:text-xs max-xl:px-2`}
+                  }  cursor-pointer  hover:text-[#51F4A6] px-4 text-base font-poppinsRegular max-xl:text-xs max-xl:px-2`}
                   onClick={() => setActiveMenu(items?.name)}
                 >
                   <Link href={items?.link}>{items?.name}</Link>
@@ -53,7 +53,7 @@ const Header = () => {
         </nav>
 
         <div className="flex items-center gap-x-3 max-lg:hidden">
-          <Button variant="secondary" size="small" className="w-fit">
+          <Button variant="secondary" size="small" className="w-[180px]">
             Login
           </Button>
           <Button className="w-fit" size="small">

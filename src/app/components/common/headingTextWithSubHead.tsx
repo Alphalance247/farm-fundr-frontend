@@ -5,6 +5,7 @@ interface propsMarging {
   heading?: ReactNode;
   subhead?: ReactNode;
   className?: string;
+  alignment?: string;
   withSubHead?: boolean;
   withImage?: boolean;
   iconImage: string;
@@ -21,6 +22,7 @@ const HeadingTextWithSubHead: React.FC<propsMarging> = ({
   iconImage,
   width,
   height,
+  alignment,
 }) => {
   return (
     <>
@@ -42,7 +44,9 @@ const HeadingTextWithSubHead: React.FC<propsMarging> = ({
       </div>
 
       {withSubHead && (
-        <p className="text-lg text-[#7C7C7C] font-poppinsRegular text-center">
+        <p
+          className={`text-lg text-[#7C7C7C] font-poppinsRegular ${alignment}`}
+        >
           {subhead}
         </p>
       )}

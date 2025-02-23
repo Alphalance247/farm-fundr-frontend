@@ -3,6 +3,7 @@ import { useState } from "react";
 import Image from "next/image";
 import Container from "../common/container";
 import FaqContainer from "../common/faqContainer";
+import SlideInSection from "../common/slideInSection";
 
 const Faqs = () => {
   const [isOpen, setIsOpen] = useState<number>(0);
@@ -49,17 +50,18 @@ const Faqs = () => {
   ];
 
   return (
-    <section className="relative bg-[#fcfcfc]">
-      <div className="absolute bottom-0">
-        <Image
-          src="/assets/LandingPage/icons/position2.svg"
-          width={200}
-          height={400}
-          alt="positionlogo"
-        />
-      </div>
-      <Container>
-        {/* <div className="flex flex-col gap-y-3">
+    <SlideInSection>
+      <section className="relative bg-[#fcfcfc]">
+        <div className="absolute bottom-0">
+          <Image
+            src="/assets/LandingPage/icons/position2.svg"
+            width={200}
+            height={400}
+            alt="positionlogo"
+          />
+        </div>
+        <Container>
+          {/* <div className="flex flex-col gap-y-3">
         {Offerings.map((item, i) => {
           return (
             <div
@@ -105,34 +107,35 @@ const Faqs = () => {
 
         <FaqContainer />
       </div> */}
-        <div className="grid grid-cols-[40%auto]">
-          <div className="">
-            <h3 className="text-5xl font-aristoBold font-bold text-[#5F5F5F] mb-10">
-              Frequently Asked questions
-            </h3>
-            <Image
-              src={"/assets/LandingPage/images/faq.png"}
-              width={317}
-              height={317}
-              alt="faqs"
-            />
-          </div>
-
-          <div className="flex flex-col gap-y-4">
-            {faqs.map((item, i) => (
-              <FaqContainer
-                key={i}
-                i={i}
-                answer={item?.answer}
-                question={item?.question}
-                isOpen={isOpen}
-                onClick={() => handleToggle(i)}
+          <div className="grid grid-cols-[40%auto]">
+            <div className="">
+              <h3 className="text-5xl font-aristoBold font-bold text-[#5F5F5F] mb-10">
+                Frequently Asked questions
+              </h3>
+              <Image
+                src={"/assets/LandingPage/images/faq.png"}
+                width={317}
+                height={317}
+                alt="faqs"
               />
-            ))}
+            </div>
+
+            <div className="flex flex-col gap-y-4">
+              {faqs.map((item, i) => (
+                <FaqContainer
+                  key={i}
+                  i={i}
+                  answer={item?.answer}
+                  question={item?.question}
+                  isOpen={isOpen}
+                  onClick={() => handleToggle(i)}
+                />
+              ))}
+            </div>
           </div>
-        </div>
-      </Container>
-    </section>
+        </Container>
+      </section>
+    </SlideInSection>
   );
 };
 
