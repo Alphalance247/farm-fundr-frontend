@@ -55,8 +55,8 @@ const Footer = () => {
           alt="footer logo"
           className="mx-auto"
         />
-        <div className="py-10 px-5 border-[#51F4A6]  border flex justify-between gap-20 rounded-[20px] mt-16">
-          <div className="w-[45%]">
+        <div className="py-10 px-5 border-[#51F4A6]  border flex justify-between gap-20 rounded-[20px] mt-16 lg:gap-10 md:flex-col">
+          <div className="w-[45%] lg:w-[60%] md:w-full">
             <p className="text-[white] text-4xl font-aristoBold mb-6">
               Subscribe to our newsletter
             </p>
@@ -66,8 +66,8 @@ const Footer = () => {
             </p>
           </div>
 
-          <div className="w-[37%]">
-            <div className="flex gap-x-2 mb-6">
+          <div className="w-[37%] lg:w-[60%] md:w-full">
+            <div className="flex gap-x-2 mb-6 md:flex-col md:gap-y-6">
               <input
                 type="text"
                 placeholder="Enter your email address"
@@ -88,7 +88,7 @@ const Footer = () => {
             </p>
           </div>
         </div>
-        <div className="grid grid-cols-[25%auto] gap-x-20 mt-24">
+        <div className="grid grid-cols-[25%auto] gap-x-20 mt-24 lg:grid-cols-[30%auto] lg:gap-x-10 md:grid-cols-1 md:gap-y-8">
           <div>
             <Image
               src="/assets/LandingPage/icons/fundrlogo.svg"
@@ -120,13 +120,13 @@ const Footer = () => {
             {navs.map((items) => {
               return (
                 <div key={items?.id}>
-                  <ul className="grid grid-cols-3 justify-between gap-x-28">
+                  <ul className="grid grid-cols-3 justify-between gap-x-28 lg:gap-x-10 md:grid-cols-1 md:mb-6">
                     <li
                       className={`${
                         activeMenu === items?.name1
-                          ? " border-b-[3px] text-[white] border-[#51F4A6] pb-2"
+                          ? " border-b-[3px] text-[white] border-[#51F4A6] pb-2 md:pb-0"
                           : "text-[white]"
-                      }  cursor-pointer mb-3 w-fit text-base font-poppinsRegular max-xl:text-xs`}
+                      }  cursor-pointer mb-3 w-fit text-base font-poppinsRegular max-xl:text-xs md:mb-2`}
                       onClick={() => setActiveMenu(items?.name1)}
                     >
                       <Link href={items?.link1}>{items?.name1}</Link>
@@ -135,19 +135,20 @@ const Footer = () => {
                     <li
                       className={`${
                         activeMenu === items?.name2
-                          ? " border-b-[3px] text-[white] border-[#51F4A6] pb-2"
+                          ? " border-b-[3px] text-[white] border-[#51F4A6] pb-2 md:pb-0"
                           : "text-[white]"
-                      }  cursor-pointer mb-3 w-fit text-base font-poppinsRegular max-xl:text-xs`}
+                      }  cursor-pointer mb-3 w-fit text-base font-poppinsRegular max-xl:text-xs md:mb-2`}
                       onClick={() => setActiveMenu(items?.name2)}
                     >
                       <Link href={items?.link2}>{items?.name2}</Link>
                     </li>
+
                     <li
                       className={`${
                         activeMenu === items?.name3
-                          ? " border-b-[3px] text-[white] border-[#51F4A6] pb-2"
+                          ? " border-b-[3px] text-[white] border-[#51F4A6] pb-2 md:pb-0"
                           : "text-[white]"
-                      }  cursor-pointer mb-3 w-fit text-base font-poppinsRegular max-xl:text-xs`}
+                      }  cursor-pointer mb-3 w-fit text-base font-poppinsRegular max-xl:text-xs md:mb-2`}
                       onClick={() => setActiveMenu(items?.name3)}
                     >
                       <Link href={items?.link3}>{items?.name3}</Link>

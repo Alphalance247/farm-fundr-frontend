@@ -71,7 +71,7 @@ const Benefits = () => {
         </div>
         <Container>
           <HeadingTextWithSubHead
-            className="text-center mb-10"
+            className="text-center mb-10 lg:mb-6"
             alignment="text-center"
             width={778}
             height={50}
@@ -90,21 +90,21 @@ const Benefits = () => {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: 20 }}
               transition={{ duration: 0.5 }}
-              className="grid grid-cols-2 gap-x-20 mb-20"
+              className="grid grid-cols-2 gap-x-20 mb-20 lg:gap-x-10 md:grid-cols-1 md:gap-y-12"
             >
               <div className="flex flex-col gap-y-6">
                 {tab.map((item, i) => {
                   return (
                     <div
-                      className={`shadow-md border-l-[15px] py-5 px-8 flex gap-x-2 rounded-[20px]`}
+                      className={`shadow-md border-l-[15px] py-5 px-8 flex gap-x-2 rounded-[20px] lg:px-4 lg:py-3`}
                       key={i}
                       style={{ borderColor: item?.border }}
                     >
                       <div>
-                        <p className="text-2xl font-aristoBold font-semibold text-[#5F5F5F] mb-2">
+                        <p className="text-2xl font-aristoBold font-semibold text-[#5F5F5F] mb-2 lg:text-lg">
                           {item?.heading}
                         </p>
-                        <p className="text-[#7C7C7C] text-lg font-poppinsRegular w-[90%]">
+                        <p className="text-[#7C7C7C] text-lg font-poppinsRegular w-[90%] lg:text-sm">
                           {item?.paragraph}
                         </p>
                       </div>

@@ -20,18 +20,18 @@ const Button: React.FC<buttonProps> = ({
 }) => {
   const buttonColor = {
     primary:
-      "bg-[#282a03] text-white hover:opacity-[0.8] hover:transition-all hover:duration-500",
+      "bg-[#282a03] text-white hover:opacity-[0.8] hover:transition-all hover:duration-500 md:w-full",
     secondary:
-      "border border-[#2D865B] text-base text-[#2D865B] bg-[#EEFEF6] hover:bg-[#C9FCE3] hover:transition-all hover:duration-500",
+      "border border-[#2D865B] text-base text-[#2D865B] bg-[#EEFEF6] hover:bg-[#C9FCE3] hover:transition-all hover:duration-500 md:w-full",
     tertiary:
-      "bg-[linear-gradient(1.54deg,#4379FF_-179.29%,#51F4A6_88.65%)] text-[#282a03] w-fit hover:opacity-[0.8] hover:transition-all hover:duration-500",
+      "bg-[linear-gradient(1.54deg,#4379FF_-179.29%,#51F4A6_88.65%)] text-[#282a03] w-fit hover:opacity-[0.8] hover:transition-all hover:duration-500 md:w-full",
     switch: "text-base text-[#2D865B] bg-transparent",
     //   bg-[linear-gradient(180deg,rgba(28,62,49,0.04)_28.06%,#1C3E31_40.79%)]
   };
 
   const buttonSize = {
-    small: "text-base py-3 px-8",
-    medium: "px-8 py-4",
+    small: "text-base py-3 px-8 md:px-4",
+    medium: "px-8 py-4 md:px-4",
     large: "bg-[#282a03] text-white",
     switch: "",
   };
@@ -39,7 +39,7 @@ const Button: React.FC<buttonProps> = ({
   return (
     <button
       onClick={onClick}
-      className={` font-semibold rounded-[2.5rem] font-poppinsSemiBold ${buttonColor[variant]} ${buttonSize[size]} ${className}`}
+      className={` font-semibold rounded-[2.5rem] font-poppinsSemiBold md:text-xs ${buttonColor[variant]} ${buttonSize[size]} ${className}`}
     >
       {children}
     </button>

@@ -10,7 +10,7 @@ const MeetTeam = () => {
       <section className="bg-[#FCFCFC]">
         <Container>
           <div className="bg-[#2D865B] w-full relative rounded-[20px]">
-            <div className="absolute bottom-0 left-0">
+            <div className="absolute bottom-0 left-0 md:hidden">
               <Image
                 width={290}
                 height={390}
@@ -18,7 +18,7 @@ const MeetTeam = () => {
                 alt="positon1"
               />
             </div>
-            <div className="absolute top-[1rem] left-[10rem]">
+            <div className="absolute top-[1rem] z-[1] left-[10rem]">
               <Image
                 width={120}
                 height={140}
@@ -26,7 +26,7 @@ const MeetTeam = () => {
                 alt="positionlogo"
               />
             </div>
-            <div className="absolute bottom-0 right-0">
+            <div className="absolute bottom-0 right-0 z-[1]">
               <Image
                 src="/assets/LandingPage/icons/position3.svg"
                 width={150}
@@ -35,7 +35,7 @@ const MeetTeam = () => {
               />
             </div>
 
-            <div className="py-28 w-[45%] mx-auto">
+            <div className="relative z-10 py-28 w-[45%] mx-auto lg:w-[60%] lg:mr-[1rem] md:w-[95%] md:mr-0 md:px-1">
               <h3 className="text-6xl font-aristoBold font-bold text-[#51F4A6] mb-6">
                 {" "}
                 Farmfundr Team

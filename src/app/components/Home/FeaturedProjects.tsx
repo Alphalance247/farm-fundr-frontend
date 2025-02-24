@@ -25,10 +25,10 @@ const FeaturedProject = () => {
             height={40}
             heading={"Top Featured Farm Projects"}
             withSubHead={false}
-            className="text-center mb-16"
+            className="text-center mb-16 lg:mb-12"
           />
 
-          <div className="grid grid-cols-3 gap-x-6">
+          <div className="grid grid-cols-3 gap-x-6 lg:gap-x-4 lg:grid-cols-2 md:grid-cols-1 md:gap-y-8">
             <Card />
             <Card />
             <Card />
@@ -36,7 +36,7 @@ const FeaturedProject = () => {
 
           <Button
             size="medium"
-            className="flex items-center gap-x-4 justify-center mt-20 text-center w-[535px] mx-auto"
+            className="flex items-center gap-x-4 justify-center mt-20 text-center w-[535px] mx-auto "
           >
             <span>Explore More and Invest Now</span>
             <span>

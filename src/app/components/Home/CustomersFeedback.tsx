@@ -18,6 +18,8 @@ const CustomersFeedbacks = () => {
     slidesToShow: 3,
     slidesToScroll: 1,
     initialSlide: 0,
+    arrows: false,
+
     responsive: [
       {
         breakpoint: 1024,
@@ -51,17 +53,17 @@ const CustomersFeedbacks = () => {
         <Container>
           <HeadingTextWithSubHead
             className="text-center mb-10"
-            alignment="center"
             width={782}
             height={50}
             iconImage="/assets/LandingPage/icons/vector2.svg"
             heading={"What our customers are saying"}
+            alignment="text-center"
             subhead={
               "Explore testimonials showcasing clients’ success stories with FarmFundr, highlighting the transformative agricultural investment journeys they’ve experienced."
             }
           />
 
-          <Slider {...settings} className="mt-16">
+          <Slider {...settings} className="mt-16 lg:mt-12">
             <ReviewCard />
             <ReviewCard />
             <ReviewCard />

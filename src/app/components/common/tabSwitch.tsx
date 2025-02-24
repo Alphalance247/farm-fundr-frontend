@@ -9,7 +9,7 @@ const TabSwitch = ({
   setActiveTab: React.Dispatch<React.SetStateAction<string>>;
 }) => {
   return (
-    <div className="flex bg-[#C9FCE3] rounded-[50px] justify-center gap-x-2 items-center w-fit mx-auto p-2 mt-10 mb-16">
+    <div className="flex bg-[#C9FCE3] rounded-[50px] justify-center gap-x-2 items-center w-fit mx-auto p-2 mt-10 mb-16 md:px-2 md:py-1">
       <Button
         size="medium"
         variant={activeTab === "investors" ? "primary" : "switch"}

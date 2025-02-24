@@ -5,6 +5,7 @@ import { FiMenu } from "react-icons/fi";
 import { IoClose } from "react-icons/io5";
 import Link from "next/link";
 import Button from "./Buttons";
+import { motion } from "framer-motion";
 
 const Header = () => {
   const [activeMenu, setActiveMenu] = useState("Home");
@@ -20,7 +21,7 @@ const Header = () => {
 
   return (
     <header className="bg-[#EEFEF6] sticky z-[1000] top-0 h-[86px]">
-      <div className="transition-all duration-500 max-w-[1300px] mx-auto px-8 flex justify-between items-center py-3">
+      <div className="transition-all duration-500 max-w-[1300px] mx-auto px-8 flex justify-between items-center py-3 md:px-4">
         <Link href="/">
           <Image
             src="/assets/LandingPage/icons/fundrlogo.svg"
@@ -30,19 +31,19 @@ const Header = () => {
           />
         </Link>
 
-        <nav className="transition-all duration-500 max-lg:hidden">
+        <nav className="transition-all duration-500 xl:hidden">
           {navs.map((items) => {
             return (
               <ul
                 key={items?.id}
-                className="inline-flex items-end cursor-pointer max-lg:flex max-lg:flex-col max-lg:pt-12 max-lg:items-center max-sm:pt-4"
+                className="inline-flex items-end cursor-pointer lg:flex lg:flex-col lg:pt-12 lg:items-center sm:pt-4"
               >
                 <li
                   className={`${
                     activeMenu === items?.name
                       ? "text-[#51F4A6] border-b-[2px] border-[#51F4A6] pb-2"
                       : "text-[#282A03]"
-                  }  cursor-pointer  hover:text-[#51F4A6] px-4 text-base font-poppinsRegular max-xl:text-xs max-xl:px-2`}
+                  }  cursor-pointer  hover:text-[#51F4A6] px-4 text-base font-poppinsRegular xl:text-xs xl:px-2`}
                   onClick={() => setActiveMenu(items?.name)}
                 >
                   <Link href={items?.link}>{items?.name}</Link>
@@ -52,7 +53,7 @@ const Header = () => {
           })}
         </nav>
 
-        <div className="flex items-center gap-x-3 max-lg:hidden">
+        <div className="flex items-center gap-x-3 xl:hidden">
           <Button variant="secondary" size="small" className="w-[180px]">
             Login
           </Button>
@@ -61,7 +62,7 @@ const Header = () => {
           </Button>
         </div>
 
-        <div className="lg:hidden transition-all duration-500 grow flex justify-end items-center h-10 gap-8">
+        <div className="hidden lg:transition-all lg:duration-500 lg:grow xl:flex xl:justify-end xl:items-center xl:h-10 xl:gap-8 ">
           <button
             className="transition-all duration-500 text-black p-1 text-4xl hover:p-2"
             onClick={() => setShowMobileMenu((prev) => !prev)}
@@ -71,12 +72,15 @@ const Header = () => {
         </div>
       </div>
 
-      <div
-        className={`lg:hidden transition-all duration-500 overflow-hidden bg-white ${
-          showMobileMenu ? "h-auto" : "h-0"
+      <motion.div
+        className={`xl:transition-all xl:duration-500 xl:overflow-hidden xl:bg-[#EEFEF6]  ${
+          showMobileMenu ? "xl:h-auto" : "xl:h-0"
         }`}
+        initial={{ x: "100%" }}
+        animate={{ x: showMobileMenu ? "0%" : "100%" }}
+        transition={{ duration: 0.1 }}
       >
-        <nav className="justify-start items-center gap-4 flex flex-col py-8 px-3">
+        <nav className="hidden xl:justify-start xl:items-left gap-4 xl:flex xl:flex-col xl:py-8 xl:px-3">
           {navs.map((items) => {
             return (
               <ul key={items?.id} className="">
@@ -87,11 +91,16 @@ const Header = () => {
             );
           })}
 
-          <div>
-            {/* <Button onClick={() => handleNavClick(null, "get-in-touch")} /> */}
+          <div className="flex flex-col gap-y-6 items-center">
+            <Button variant="secondary" size="small" className="w-[180px]">
+              Login
+            </Button>
+            <Button className="w-fit" size="small">
+              Get Started
+            </Button>
           </div>
         </nav>
-      </div>
+      </motion.div>
     </header>
   );
 };
