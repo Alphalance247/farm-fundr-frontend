@@ -42,7 +42,9 @@ const FaqContainer: React.FC<clickProp> = ({
 
       {isOpen === i && (
         <div className="bg-[#EEFEF6] px-6 pb-4 pt-3 rounded-br-[10px] rounded-bl-[10px]">
-          <p className="text-lg font-poppinsRegular">{answer}</p>
+          <p className="text-lg font-poppinsRegular text-[#282A03] md:text-sm">
+            {answer}
+          </p>
         </div>
       )}
     </div>

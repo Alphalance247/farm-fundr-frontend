@@ -31,7 +31,7 @@ const HowItWorks = () => {
   ];
   return (
     <SlideInSection>
-      <section className="relative bg-[#fcfcfc]">
+      <section className="relative bg-[#fcfcfc] z-[1]">
         <div className="absolute bottom-0">
           <Image
             src="/assets/LandingPage/icons/position1.svg"
@@ -90,7 +90,7 @@ const HowItWorks = () => {
           </div>
           <Button
             size="medium"
-            className="flex items-center gap-x-4 justify-center mt-10 text-center w-[535px] mx-auto"
+            className="flex items-center gap-x-4 justify-center mt-10 text-center w-[535px] mx-auto relative z-[10]"
           >
             <span>Get Started</span>
             <span>

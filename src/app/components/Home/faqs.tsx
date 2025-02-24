@@ -107,7 +107,7 @@ const Faqs = () => {
 
         <FaqContainer />
       </div> */}
-          <div className="grid grid-cols-[40%auto] md:grid-cols-1 gap-y-6">
+          <div className="grid grid-cols-[40%auto] lg:gap-x-6 md:grid-cols-1 md:gap-y-6">
             <div className="">
               <h3 className="text-5xl font-aristoBold font-bold text-[#5F5F5F] mb-10">
                 Frequently Asked questions

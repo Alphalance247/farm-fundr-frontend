@@ -8,7 +8,7 @@ const ReviewCard = () => {
     "/assets/LandingPage/card/star.svg",
   ];
   return (
-    <div className="bg-[#C9FCE3] border-[#51F4A6] border-l-[15px] rounded-[20px] px-5 py-10 mr-4 lg:px-3 lg:py-3 md:mr-[4px]">
+    <div className="bg-[#C9FCE3] border-[#51F4A6] border-l-[15px] rounded-[20px] mb-10 px-5 py-10 mr-4 lg:px-3 lg:py-3 md:mr-[4px]">
       <p className="text-lg font-poppinsRegular text-[#7C7C7C] mb-10 lg:mb-6 lg:text-base">
         Farmfundr is a very good platform that connect you with the farmers with
         ease by investing with a good return.

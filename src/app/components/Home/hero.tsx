@@ -12,7 +12,7 @@ const Hero = () => {
 
         <div className="bg-[linear-gradient(270deg,rgba(132,132,132,0)_0%,#0D281B_100%)] absolute top-0 left-0 h-full w-full z-10"></div>
         <div className="max-w-[1300px] mx-auto px-8 pt-[12rem] pb-[15rem] relative top-0 left-0 z-50 xl:pb-[12rem] xl:pt-[9rem] md:px-4 md:py-16">
-          <div className="w-[55%] xl:w-[60%] lg:w-[90%] md:w-full">
+          <div className="w-[55%] xl:w-[60%] lg:w-[83%] md:w-full">
             <p className="font-poppinsRegular font-medium text-base text-white mb-8">
               Welcome to Farmfundr
             </p>
