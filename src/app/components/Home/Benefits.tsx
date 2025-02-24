@@ -61,7 +61,7 @@ const Benefits = () => {
   return (
     <SlideInSection>
       <section className="bg-[#fcfcfc] relative">
-        <div className="absolute bottom-0">
+        <div className="absolute bottom-0 z-[1]">
           <Image
             src="/assets/LandingPage/icons/position1.svg"
             width={200}
@@ -134,7 +134,7 @@ const Benefits = () => {
 
           <Button
             size="medium"
-            className="flex items-center gap-x-4 justify-center mt-10 text-center w-[535px] mx-auto"
+            className="flex items-center gap-x-4 justify-center mt-10 text-center w-[535px] mx-auto relative z-10"
           >
             <span>Get Started</span>
             <span>

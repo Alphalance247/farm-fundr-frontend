@@ -9,6 +9,8 @@ import "slick-carousel/slick/slick-theme.css";
 import Button from "../common/Buttons";
 import { GoArrowRight } from "react-icons/go";
 import SlideInSection from "../common/slideInSection";
+import PrevArrow from "../common/prevButton";
+import NextArrow from "../common/NextArrow";
 
 const CustomersFeedbacks = () => {
   const settings = {
@@ -18,7 +20,8 @@ const CustomersFeedbacks = () => {
     slidesToShow: 3,
     slidesToScroll: 1,
     initialSlide: 0,
-    arrows: false,
+    prevArrow: <PrevArrow />,
+    nextArrow: <NextArrow />,
 
     responsive: [
       {
