@@ -6,14 +6,32 @@ import { IoClose } from "react-icons/io5";
 import Link from "next/link";
 import Button from "./Buttons";
 import { motion } from "framer-motion";
+import { FaCaretDown } from "react-icons/fa";
 
 const Header = () => {
   const [activeMenu, setActiveMenu] = useState("Home");
   const [showMobileMenu, setShowMobileMenu] = useState(false);
+  const [showDropDown, setShowDropDown] = useState<number | null>(null);
 
   const navs = [
     { id: 1, name: "Home", scrollSection: "about", link: "/" },
-    { id: 3, name: "About Us", scrollSection: "solution", link: "/" },
+    {
+      id: 3,
+      name: "About Us",
+      scrollSection: "solution",
+      link: "/",
+      subMenu: [
+        {
+          name: "Me",
+          link: "/",
+        },
+        {
+          name: "You",
+          link: "/",
+        },
+      ],
+      icon: <FaCaretDown size={16} />,
+    },
     { id: 4, name: "How It Works", scrollSection: "serve", link: "/" },
     { id: 5, name: "MarketPlace", scrollSection: "technology", link: "/" },
     { id: 6, name: "Contact Us", scrollSection: "technology", link: "/" },
@@ -32,11 +50,11 @@ const Header = () => {
         </Link>
 
         <nav className="transition-all duration-500 xl:hidden">
-          {navs.map((items) => {
+          {navs.map((items, i) => {
             return (
               <ul
                 key={items?.id}
-                className="inline-flex items-end cursor-pointer lg:flex lg:flex-col lg:pt-12 lg:items-center sm:pt-4"
+                className="inline-flex relative items-end cursor-pointer lg:flex lg:flex-col lg:pt-12 lg:items-center sm:pt-4"
               >
                 <li
                   className={`${
@@ -45,8 +63,36 @@ const Header = () => {
                       : "text-[#282A03]"
                   }  cursor-pointer  hover:text-[#51F4A6] px-4 text-base font-poppinsRegular xl:text-xs xl:px-2`}
                   onClick={() => setActiveMenu(items?.name)}
+                  onMouseLeave={() => setShowDropDown(null)}
                 >
-                  <Link href={items?.link}>{items?.name}</Link>
+                  {items?.subMenu ? (
+                    <button
+                      className={`flex gap-x-2 items-center transition-colors duration-300 cursor-pointer`}
+                      onClick={() => {
+                        if (showDropDown === i) {
+                          setShowDropDown(null);
+                        } else {
+                          setShowDropDown(i);
+                        }
+                      }}
+                    >
+                      {items?.name} <span>{items?.icon}</span>
+                    </button>
+                  ) : (
+                    <Link href={items?.link}>{items?.name}</Link>
+                  )}
+
+                  {items?.subMenu && showDropDown === i && (
+                    <div className="absolute left-0 top-6 mt-2 w-48 bg-white shadow-lg rounded-md">
+                      {items?.subMenu.map((subLink, subIndex) => (
+                        <Link key={subIndex} href={subLink?.link}>
+                          <span className="block px-4 py-2 text-gray-700 hover:bg-gray-200 cursor-pointer">
+                            {subLink?.name}
+                          </span>
+                        </Link>
+                      ))}
+                    </div>
+                  )}
                 </li>
               </ul>
             );

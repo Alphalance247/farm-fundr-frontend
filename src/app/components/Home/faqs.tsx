@@ -109,7 +109,7 @@ const Faqs = () => {
       </div> */}
           <div className="grid grid-cols-[40%auto] lg:gap-x-6 md:grid-cols-1 md:gap-y-6">
             <div className="">
-              <h3 className="text-5xl font-aristoBold font-bold text-[#5F5F5F] mb-10">
+              <h3 className="text-5xl font-aristoBold font-bold text-[#5F5F5F] mb-10 md:text-[1.6rem] md:capitalize md:text-center">
                 Frequently Asked questions
               </h3>
               <Image

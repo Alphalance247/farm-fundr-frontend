@@ -55,7 +55,7 @@ const About = () => {
             <Image
               width={577}
               height={573}
-              src="/images/frame1.png"
+              src="/assets/LandingPage/images/5.png"
               alt="frame1"
             />
           </div>
