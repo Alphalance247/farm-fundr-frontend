@@ -43,11 +43,11 @@ const WhatWeOffer = () => {
             {data.map((el, i) => (
               <div
                 key={i}
-                className={`flex justify-between gap-x-20 items-center ${
+                className={`flex justify-between gap-x-20 items-center   ${
                   i % 2 === 0 ? "flex-row" : "flex-row-reverse"
-                }`}
+                } lg:gap-x-10 md:flex-col md:gap-y-8`}
               >
-                <div className="w-[40%]">
+                <div className="w-[40%] lg:w-[55%] md:w-full">
                   <p className="text-2xl font-aristoBold text-[#2D865B] mb-2">
                     {el?.title}
                   </p>
@@ -57,8 +57,10 @@ const WhatWeOffer = () => {
                 </div>
 
                 <div
-                  className={`border-[#51F4A6] pr-11 rounded-[20px] ${
-                    i % 2 === 0 ? "border-r-4 pr-11" : "border-l-4 pl-11"
+                  className={`border-[#51F4A6] rounded-[20px] ${
+                    i % 2 === 0
+                      ? "border-r-4 pr-11 lg:pr-5"
+                      : "border-l-4 pl-11 lg:pl-5"
                   }`}
                 >
                   <Image

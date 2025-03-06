@@ -30,11 +30,11 @@ const MissionVision = () => {
           />
         </div>
         <Container>
-          <div className="grid grid-cols-2 gap-x-16 relative z-10">
+          <div className="grid grid-cols-2 gap-x-16 relative z-10 lg:gap-x-10 md:grid-cols-1 md:gap-y-8">
             {mission.map((items, i) => (
               <div
                 key={i}
-                className="bg-[linear-gradient(90deg,#2D865B_0%,#12482F_100%)] px-4 py-8 flex items-start gap-x-5 rounded-[20px] border-l-[10px] border-b-[10px] border-[#51F4A6]"
+                className="bg-[linear-gradient(90deg,#2D865B_0%,#12482F_100%)] px-4 py-8 flex items-start gap-x-5 rounded-[20px] border-l-[10px] border-b-[10px] border-[#51F4A6] lg:flex-col lg:gap-y-8"
               >
                 <Image width={60} height={60} src={items?.icons} alt="" />
                 <div>

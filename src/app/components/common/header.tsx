@@ -22,11 +22,11 @@ const Header = () => {
       link: "/",
       subMenu: [
         {
-          name: "Me",
-          link: "/",
+          name: "About Us",
+          link: "/about-us",
         },
         {
-          name: "You",
+          name: "Meet our team",
           link: "/",
         },
       ],
