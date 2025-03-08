@@ -5,12 +5,13 @@ import SlideInSection from "./slideInSection";
 
 interface HeroCommonProps {
   text?: string;
+  img?: string;
 }
 
-const HeroCommon: React.FC<HeroCommonProps> = ({ text }) => {
+const HeroCommon: React.FC<HeroCommonProps> = ({ text, img }) => {
   return (
     <SlideInSection>
-      <section className="relative bg-center bg-cover bg-[url('/assets/about/hero.png')]">
+      <section className={`relative bg-center  ${img}`}>
         <div className="bg-[linear-gradient(270deg,rgba(132,132,132,0)_0%,#0D281B_100%)] absolute top-0 left-0 h-full w-full z-10"></div>
         <div className="max-w-[1300px] mx-auto px-8 pt-8 relative z-20">
           <Link href={"/"}>
@@ -27,7 +28,7 @@ const HeroCommon: React.FC<HeroCommonProps> = ({ text }) => {
             </button>
           </Link>
           <div className="py-28 text-center">
-            <h1 className="text-6xl text-white font-aristoBold">
+            <h1 className="text-6xl text-white font-aristoBold md:text-4xl">
               {text || "About Us"}
             </h1>
           </div>

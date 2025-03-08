@@ -28,7 +28,7 @@ const Hero = () => {
             <Button
               size="medium"
               variant="tertiary"
-              className="flex items-center gap-x-4 justify-center"
+              className="flex items-center gap-x-4 justify-center w-fit"
             >
               <span>Get started for free</span>
               <span>

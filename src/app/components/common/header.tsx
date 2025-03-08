@@ -32,8 +32,18 @@ const Header = () => {
       ],
       icon: <FaCaretDown size={16} />,
     },
-    { id: 4, name: "How It Works", scrollSection: "serve", link: "/" },
-    { id: 5, name: "MarketPlace", scrollSection: "technology", link: "/" },
+    {
+      id: 4,
+      name: "How It Works",
+      scrollSection: "serve",
+      link: "/how-it-works",
+    },
+    {
+      id: 5,
+      name: "MarketPlace",
+      scrollSection: "technology",
+      link: "/farm-marketplace",
+    },
     { id: 6, name: "Contact Us", scrollSection: "technology", link: "/" },
   ];
 

@@ -11,6 +11,9 @@ interface aboutUsProp {
   subhead?: string;
   paragraphHeading?: boolean;
   btnAvailable?: boolean;
+  btnText?: string;
+  imgUrl?: string;
+  alignment?: string;
 }
 
 const AboutUsCommon: React.FC<aboutUsProp> = ({
@@ -19,6 +22,9 @@ const AboutUsCommon: React.FC<aboutUsProp> = ({
   subhead,
   paragraphHeading,
   btnAvailable,
+  btnText,
+  imgUrl,
+  alignment,
 }) => {
   return (
     <SlideInSection>
@@ -45,9 +51,7 @@ const AboutUsCommon: React.FC<aboutUsProp> = ({
           )}
 
           <div
-            className={`grid grid-cols-2 gap-x-12 md:grid-cols-1 gap-y-10 ${
-              paragraphHeading && "items-center"
-            } `}
+            className={`grid grid-cols-2 gap-x-12 md:grid-cols-1 gap-y-10 ${alignment} `}
           >
             <div>
               {paragraphHeading && (
@@ -73,7 +77,7 @@ const AboutUsCommon: React.FC<aboutUsProp> = ({
                   size="medium"
                   className="flex items-center gap-x-4 justify-center mt-10 lg:mt-4 md:mt-8"
                 >
-                  <span>Learn More</span>
+                  <span>{btnText || "Learn More"}</span>
                   <span>
                     <GoArrowRight size={24} className="text-white" />
                   </span>
@@ -84,7 +88,7 @@ const AboutUsCommon: React.FC<aboutUsProp> = ({
             <Image
               width={577}
               height={573}
-              src="/assets/LandingPage/images/5.png"
+              src={imgUrl || "/assets/LandingPage/images/5.png"}
               alt="frame1"
             />
           </div>

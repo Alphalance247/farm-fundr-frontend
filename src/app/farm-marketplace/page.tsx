@@ -1,0 +1,16 @@
+import HeroCommon from "../components/common/heroCommon";
+import SearchFarm from "../components/marketplace/searchFarm";
+
+const FarmMarketPlace = () => {
+  return (
+    <>
+      <HeroCommon
+        text="Farm MarketPlace"
+        img="bg-cover bg-[url('/assets/marketplace/marketplace.png')]"
+      />
+      <SearchFarm />
+    </>
+  );
+};
+
+export default FarmMarketPlace;

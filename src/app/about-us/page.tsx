@@ -6,8 +6,12 @@ import HeroCommon from "../components/common/heroCommon";
 const AboutUs = () => {
   return (
     <>
-      <HeroCommon />
-      <AboutUsCommon paragraphHeading={true} btnAvailable={false} />
+      <HeroCommon img="bg-cover bg-[url('/assets/about/hero.png')]" />
+      <AboutUsCommon
+        alignment="items-center"
+        paragraphHeading={true}
+        btnAvailable={false}
+      />
       <MissionVision />
       <WhatWeOffer />
     </>
