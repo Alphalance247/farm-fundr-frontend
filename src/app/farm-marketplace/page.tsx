@@ -1,4 +1,5 @@
 import HeroCommon from "../components/common/heroCommon";
+import ProjectListing from "../components/marketplace/ProjectListing";
 import SearchFarm from "../components/marketplace/searchFarm";
 
 const FarmMarketPlace = () => {
@@ -9,6 +10,7 @@ const FarmMarketPlace = () => {
         img="bg-cover bg-[url('/assets/marketplace/marketplace.png')]"
       />
       <SearchFarm />
+      <ProjectListing />
     </>
   );
 };
