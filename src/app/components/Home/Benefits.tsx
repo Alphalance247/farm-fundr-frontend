@@ -57,7 +57,9 @@ const Benefits = () => {
       icon: "/assets/LandingPage/icons/light.svg",
     },
   ];
+
   const tab = activeTab === "investors" ? data : data2;
+
   return (
     <SlideInSection>
       <section className="bg-[#fcfcfc] relative">

@@ -1,5 +1,3 @@
-import Footer from "./components/common/footer";
-import Header from "./components/common/header";
 import About from "./components/Home/about";
 import Benefits from "./components/Home/Benefits";
 import CustomersFeedbacks from "./components/Home/CustomersFeedback";
@@ -12,7 +10,7 @@ import MeetTeam from "./components/Home/MeetTeam";
 export default function Home() {
   return (
     <section>
-      <Header />
+      {/* <Header /> */}
       <Hero />
       <About />
       <Benefits />
@@ -21,7 +19,7 @@ export default function Home() {
       <MeetTeam />
       <CustomersFeedbacks />
       <Faqs />
-      <Footer />
+      {/* <Footer /> */}
       {/* <Button variant="secondary">Login</Button>
       <Button>Get Started</Button>
 

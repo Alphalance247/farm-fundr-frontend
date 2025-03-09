@@ -22,18 +22,28 @@ const Header = () => {
       link: "/",
       subMenu: [
         {
-          name: "Me",
-          link: "/",
+          name: "About Us",
+          link: "/about-us",
         },
         {
-          name: "You",
+          name: "Meet our team",
           link: "/",
         },
       ],
       icon: <FaCaretDown size={16} />,
     },
-    { id: 4, name: "How It Works", scrollSection: "serve", link: "/" },
-    { id: 5, name: "MarketPlace", scrollSection: "technology", link: "/" },
+    {
+      id: 4,
+      name: "How It Works",
+      scrollSection: "serve",
+      link: "/how-it-works",
+    },
+    {
+      id: 5,
+      name: "MarketPlace",
+      scrollSection: "technology",
+      link: "/farm-marketplace",
+    },
     { id: 6, name: "Contact Us", scrollSection: "technology", link: "/" },
   ];
 
@@ -83,10 +93,10 @@ const Header = () => {
                   )}
 
                   {items?.subMenu && showDropDown === i && (
-                    <div className="absolute left-0 top-6 mt-2 w-48 bg-white shadow-lg rounded-md">
+                    <div className="absolute left-0 top-6 mt-2 w-48 bg-[#2D865B] shadow-lg p-4 rounded-xl">
                       {items?.subMenu.map((subLink, subIndex) => (
                         <Link key={subIndex} href={subLink?.link}>
-                          <span className="block px-4 py-2 text-gray-700 hover:bg-gray-200 cursor-pointer">
+                          <span className="block px-4 border-[#E2E2E2] border-[0.3px] text-[#FCFCFC] rounded-xl cursor-pointer py-[15px] mb-3">
                             {subLink?.name}
                           </span>
                         </Link>
