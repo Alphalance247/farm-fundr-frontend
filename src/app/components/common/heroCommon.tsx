@@ -17,13 +17,6 @@ const HeroCommon: React.FC<HeroCommonProps> = ({ text, img }) => {
           <Link href={"/"}>
             <button className="text-white flex items-center gap-x-3 text-lg font-poppinsRegular hover:text-[#51F4A6]">
               <span className="bg-[white] rounded-full p-4 hover:bg-[#51F4A6]">
-                {/* <Image
-                  src="/assets/about/back.svg"
-                  width={32}
-                  height={32}
-                  alt="Go back"
-                  className=" hover:bg-[#51F4A6]"
-                />{" "} */}
                 <IoIosArrowBack size={24} color="#226646" />
               </span>{" "}
               Go back

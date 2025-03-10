@@ -140,9 +140,11 @@ const Header = () => {
           {navs.map((items) => {
             return (
               <ul key={items?.id} className="">
-                <li className="text-[#4f4f4f] cursor-pointer px-4 text-sm font-semibold font-geist block">
-                  {items?.name}
-                </li>
+                <Link href={items?.link}>
+                  <li className="text-[#4f4f4f] cursor-pointer px-4 text-sm font-semibold font-geist block">
+                    {items?.name}
+                  </li>
+                </Link>
               </ul>
             );
           })}
