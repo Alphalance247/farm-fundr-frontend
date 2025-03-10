@@ -44,7 +44,12 @@ const Header = () => {
       scrollSection: "technology",
       link: "/farm-marketplace",
     },
-    { id: 6, name: "Contact Us", scrollSection: "technology", link: "/" },
+    {
+      id: 6,
+      name: "Contact Us",
+      scrollSection: "technology",
+      link: "/contact-us",
+    },
   ];
 
   return (
