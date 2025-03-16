@@ -16,7 +16,7 @@ const GetInTouch = () => {
           className="text-center mb-16 lg:mb-8"
         />
 
-        <section className="bg-[#2D865B] py-16 px-20 relative rounded-tl-[2.5rem] rounded-br-[2.5rem] grid grid-cols-2 items-end">
+        <section className="bg-[#2D865B] py-16 px-20 relative rounded-tl-[2.5rem] rounded-br-[2.5rem] grid grid-cols-2 lg:grid-cols-1 items-end md:px-4">
           <div className="absolute bottom-0 right-0 z-[1]">
             <Image
               src="/assets/LandingPage/icons/position3.svg"
@@ -72,6 +72,45 @@ const GetInTouch = () => {
             </div>
           </div>
         </section>
+        <div>
+          <p className="text-2xl font-aristoBold text-[#5F5F5F] text-center my-16">
+            Follow Us on our socials for more tips and updates
+          </p>
+
+          <div className="flex justify-center gap-x-20 md:grid md:grid-cols-2 md:gap-y-6 justify-items-center">
+            <div className="flex items-center gap-x-[10px]">
+              <Image
+                src="/assets/ContactUs/instgram.svg"
+                width={40}
+                height={40}
+                alt=""
+              />
+              <p className="text-lg text-[#7C7C7C] font-poppinsRegular">
+                Instagram
+              </p>
+            </div>
+            <div className="flex items-center gap-x-[10px]">
+              <Image
+                src="/assets/ContactUs/linkdIn.svg"
+                width={40}
+                height={40}
+                alt="linkedIn"
+              />
+              <p className="text-lg text-[#7C7C7C] font-poppinsRegular">
+                Linkedin
+              </p>
+            </div>
+            <div className="flex items-center gap-x-[10px] md:col-span-2">
+              <Image
+                src="/assets/ContactUs/x.svg"
+                width={40}
+                height={40}
+                alt="X"
+              />
+              <p className="text-lg text-[#7C7C7C] font-poppinsRegular">X</p>
+            </div>
+          </div>
+        </div>
       </Container>
     </section>
   );

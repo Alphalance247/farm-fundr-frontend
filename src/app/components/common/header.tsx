@@ -27,7 +27,7 @@ const Header = () => {
         },
         {
           name: "Meet our team",
-          link: "/",
+          link: "/meet-team",
         },
       ],
       icon: <FaCaretDown size={16} />,
@@ -146,7 +146,10 @@ const Header = () => {
             return (
               <ul key={items?.id} className="">
                 <Link href={items?.link}>
-                  <li className="text-[#4f4f4f] cursor-pointer px-4 text-sm font-semibold font-geist block">
+                  <li
+                    className="text-[#a19494] cursor-pointer px-4 text-sm font-semibold font-geist block"
+                    onClick={() => setShowMobileMenu(false)}
+                  >
                     {items?.name}
                   </li>
                 </Link>
