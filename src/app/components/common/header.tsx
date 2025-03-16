@@ -27,7 +27,7 @@ const Header = () => {
         },
         {
           name: "Meet our team",
-          link: "/",
+          link: "/meet-team",
         },
       ],
       icon: <FaCaretDown size={16} />,
@@ -44,7 +44,12 @@ const Header = () => {
       scrollSection: "technology",
       link: "/farm-marketplace",
     },
-    { id: 6, name: "Contact Us", scrollSection: "technology", link: "/" },
+    {
+      id: 6,
+      name: "Contact Us",
+      scrollSection: "technology",
+      link: "/contact-us",
+    },
   ];
 
   return (
@@ -140,9 +145,14 @@ const Header = () => {
           {navs.map((items) => {
             return (
               <ul key={items?.id} className="">
-                <li className="text-[#4f4f4f] cursor-pointer px-4 text-sm font-semibold font-geist block">
-                  {items?.name}
-                </li>
+                <Link href={items?.link}>
+                  <li
+                    className="text-[#a19494] cursor-pointer px-4 text-sm font-semibold font-geist block"
+                    onClick={() => setShowMobileMenu(false)}
+                  >
+                    {items?.name}
+                  </li>
+                </Link>
               </ul>
             );
           })}

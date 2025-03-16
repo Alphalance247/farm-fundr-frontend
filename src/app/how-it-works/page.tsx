@@ -11,7 +11,13 @@ const HowItWorks = () => {
         img="bg-cover bg-[url('/assets/HowItWorks/howitworks.jpeg')]"
       />
       <Process />
-      <Contact />
+      <Contact
+        bg="bg-[#EEFEF6]"
+        text="Got any questions?"
+        btnText="Meet team"
+        url="/meet-team"
+        textColor="text-[#5F5F5F]"
+      />
       <AboutUsCommon
         btnAvailable={true}
         alignment="items-center"
