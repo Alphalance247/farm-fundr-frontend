@@ -21,7 +21,7 @@ const SignUp = () => {
           layout="responsive"
         />
       </div>
-      <div className="absolute top-0 right-0 z-[1]">
+      <div className="absolute top-0 right-0 z-[1] md:hidden">
         <Image
           src="/assets/UserOnboarding/rect.png"
           width={150}

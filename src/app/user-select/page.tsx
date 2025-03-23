@@ -36,7 +36,7 @@ const UserSelectPage: React.FC = () => {
       <OnBoardNav />
 
       <section className="relative">
-        <div className="absolute bottom-0 ">
+        <div className="absolute bottom-0 md:hidden">
           <Image
             src="/assets/LandingPage/icons/position1.svg"
             width={200}
@@ -45,7 +45,7 @@ const UserSelectPage: React.FC = () => {
             layout="responsive"
           />
         </div>
-        <div className="absolute top-0 right-0 z-[1]">
+        <div className="absolute top-0 right-0 z-[1] md:hidden">
           <Image
             src="/assets/UserOnboarding/rect.png"
             width={150}
