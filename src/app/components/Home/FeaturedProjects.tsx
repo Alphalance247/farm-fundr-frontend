@@ -5,6 +5,7 @@ import Card from "../common/card";
 import Button from "../common/Buttons";
 import { GoArrowRight } from "react-icons/go";
 import SlideInSection from "../common/slideInSection";
+import Link from "next/link";
 
 const FeaturedProject = () => {
   return (
@@ -33,16 +34,17 @@ const FeaturedProject = () => {
             <Card />
             <Card />
           </div>
-
-          <Button
-            size="medium"
-            className="flex items-center gap-x-4 justify-center mt-20 text-center w-[535px] mx-auto relative z-10"
-          >
-            <span>Explore More and Invest Now</span>
-            <span>
-              <GoArrowRight size={24} className="text-white" />
-            </span>
-          </Button>
+          <Link href={"/farm-marketplace"}>
+            <Button
+              size="medium"
+              className="flex items-center gap-x-4 justify-center mt-20 text-center w-[535px] mx-auto relative z-10"
+            >
+              <span>Explore More and Invest Now</span>
+              <span>
+                <GoArrowRight size={24} className="text-white" />
+              </span>
+            </Button>
+          </Link>
         </Container>
       </section>
     </SlideInSection>
