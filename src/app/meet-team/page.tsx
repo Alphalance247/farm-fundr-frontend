@@ -1,10 +1,11 @@
 import HeroCommon from "../components/common/heroCommon";
+import LayOuts from "../components/common/Layouts";
 import Contact from "../components/How It Works/contact";
 import TeamGallery from "../components/meetTeam/teamGallery";
 
 const MeetOurTeam = () => {
   return (
-    <>
+    <LayOuts>
       <HeroCommon
         text="Meet Our Team"
         img="bg-cover bg-[url('/assets/MeetTeam/TeamHero.png')]"
@@ -23,7 +24,7 @@ const MeetOurTeam = () => {
         url="/meet-team"
         textColor="text-[#5F5F5F]"
       />
-    </>
+    </LayOuts>
   );
 };
 

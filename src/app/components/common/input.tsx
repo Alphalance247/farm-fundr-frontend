@@ -7,6 +7,7 @@ interface InputProps {
   placeholder?: string;
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   className?: string;
+  variant?: string;
 }
 
 const Input: React.FC<InputProps> = ({
@@ -16,6 +17,7 @@ const Input: React.FC<InputProps> = ({
   placeholder,
   onChange,
   className,
+  variant,
 }) => {
   return (
     <input
@@ -24,7 +26,11 @@ const Input: React.FC<InputProps> = ({
       value={value}
       placeholder={placeholder}
       onChange={onChange}
-      className={`text-lg font-poppinsRegular w-full text-[#7C7C7C] p-4 bg-[#EEFEF6] rounded-2xl ${className}`}
+      className={` font-poppinsRegular w-full outline-[#51F4A6] ${
+        variant === "primary"
+          ? "border-[#CECECE] border bg-[#F6F6F6] p-4 text-sm text-[#858585] rounded-xl"
+          : "bg-[#EEFEF6]  p-4 text-lg text-[#7C7C7C] rounded-2xl"
+      }     ${className}`}
     />
   );
 };

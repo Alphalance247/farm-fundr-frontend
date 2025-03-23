@@ -1,6 +1,12 @@
 import { ReactNode } from "react";
 
-type buttonVariant = "primary" | "secondary" | "tertiary" | "switch" | "search";
+type buttonVariant =
+  | "primary"
+  | "secondary"
+  | "tertiary"
+  | "switch"
+  | "search"
+  | "googleBtn";
 type buttonSize = "small" | "medium" | "large" | "switch";
 
 interface buttonProps {
@@ -9,6 +15,7 @@ interface buttonProps {
   variant?: buttonVariant;
   size?: buttonSize;
   className?: string;
+  disabled?: boolean;
 }
 
 const Button: React.FC<buttonProps> = ({
@@ -17,6 +24,7 @@ const Button: React.FC<buttonProps> = ({
   variant = "primary",
   size = "small",
   className,
+  disabled,
 }) => {
   const buttonColor = {
     primary:
@@ -28,6 +36,9 @@ const Button: React.FC<buttonProps> = ({
     switch: "text-base text-[#2D865B] bg-transparent",
     search:
       "bg-[#CECECE] text-[#7C7C7C] hover:opacity-[0.8] hover:transition-all hover:duration-500 md:w-full",
+
+    googleBtn:
+      "bg-[#F6F6F6] text-[#7C7C7C] hover:opacity-[0.8] hover:transition-all hover:duration-500 md:w-full",
 
     //   bg-[linear-gradient(180deg,rgba(28,62,49,0.04)_28.06%,#1C3E31_40.79%)]
   };
@@ -43,6 +54,7 @@ const Button: React.FC<buttonProps> = ({
     <button
       onClick={onClick}
       className={` font-semibold rounded-[2.5rem] font-poppinsSemiBold md:text-xs ${buttonColor[variant]} ${buttonSize[size]} ${className}`}
+      disabled={disabled}
     >
       {children}
     </button>

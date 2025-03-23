@@ -7,12 +7,13 @@ import { MdOutlineCalendarViewMonth } from "react-icons/md";
 import { useState } from "react";
 import React from "react";
 import ReachOut from "@/app/components/common/reachout";
+import LayOuts from "@/app/components/common/Layouts";
 
 const ProjectListingPage: React.FC = () => {
   const tabs = ["Overview", "Analytics"];
   const [activeTab, setActiveTab] = useState<string>(tabs[0]);
   return (
-    <>
+    <LayOuts>
       <section className="bg-[#FCFCFC]">
         <Container>
           <div className="border border-[#E2E2E2] shadow-sm bg-white py-8 px-8 rounded-[20px] grid grid-cols-2 gap-x-16 lg:grid-cols-1 lg:gap-y-8 md:px-4 md:py-6">
@@ -331,7 +332,7 @@ const ProjectListingPage: React.FC = () => {
           )}
         </Container>
       </section>
-    </>
+    </LayOuts>
   );
 };
 

@@ -52,6 +52,35 @@ const Header = () => {
     },
   ];
 
+  const navsMobile = [
+    { id: 1, name: "Home", link: "/" },
+    {
+      id: 2,
+      name: "About Us",
+      link: "/about-us",
+    },
+    {
+      id: 3,
+      name: "Meet our team",
+      link: "/meet-team",
+    },
+    {
+      id: 4,
+      name: "How It Works",
+      link: "/how-it-works",
+    },
+    {
+      id: 5,
+      name: "MarketPlace",
+      link: "/farm-marketplace",
+    },
+    {
+      id: 6,
+      name: "Contact Us",
+      link: "/contact-us",
+    },
+  ];
+
   return (
     <header className="bg-[#EEFEF6] sticky z-[1000] top-0 h-[86px]">
       <div className="transition-all duration-500 max-w-[1300px] mx-auto px-8 flex justify-between items-center py-3 md:px-4">
@@ -115,12 +144,16 @@ const Header = () => {
         </nav>
 
         <div className="flex items-center gap-x-3 xl:hidden">
-          <Button variant="secondary" size="small" className="w-[180px]">
-            Login
-          </Button>
-          <Button className="w-fit" size="small">
-            Get Started
-          </Button>
+          <Link href={"/login"}>
+            <Button variant="secondary" size="small" className="w-[180px]">
+              Login
+            </Button>
+          </Link>
+          <Link href={"/user-select"}>
+            <Button className="w-fit" size="small">
+              Get Started
+            </Button>
+          </Link>
         </div>
 
         <div className="hidden lg:transition-all lg:duration-500 lg:grow xl:flex xl:justify-end xl:items-center xl:h-10 xl:gap-8 ">
@@ -142,7 +175,7 @@ const Header = () => {
         transition={{ duration: 0.1 }}
       >
         <nav className="hidden xl:justify-start xl:items-left gap-4 xl:flex xl:flex-col xl:py-8 xl:px-3">
-          {navs.map((items) => {
+          {navsMobile.map((items) => {
             return (
               <ul key={items?.id} className="">
                 <Link href={items?.link}>
@@ -157,13 +190,21 @@ const Header = () => {
             );
           })}
 
-          <div className="flex flex-col gap-y-6 items-center">
-            <Button variant="secondary" size="small" className="w-[180px]">
-              Login
-            </Button>
-            <Button className="w-fit" size="small">
-              Get Started
-            </Button>
+          <div className="flex flex-col gap-y-6 md:block items-center">
+            <Link href={"/login"}>
+              <Button
+                variant="secondary"
+                size="small"
+                className="w-[180px] md:mb-4"
+              >
+                Login
+              </Button>
+            </Link>
+            <Link href={"/user-select"}>
+              <Button className="w-fit" size="small">
+                Get Started
+              </Button>
+            </Link>
           </div>
         </nav>
       </motion.div>

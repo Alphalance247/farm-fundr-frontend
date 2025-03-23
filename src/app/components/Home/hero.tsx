@@ -2,6 +2,7 @@ import Button from "../common/Buttons";
 import { GoArrowRight } from "react-icons/go";
 import SlideInSection from "../common/slideInSection";
 import AnimateBackground from "../common/animateBackground";
+import Link from "next/link";
 
 const Hero = () => {
   return (
@@ -25,16 +26,18 @@ const Hero = () => {
               Flourish with FarmFundr.
             </p>
 
-            <Button
-              size="medium"
-              variant="tertiary"
-              className="flex items-center gap-x-4 justify-center w-fit"
-            >
-              <span>Get started for free</span>
-              <span>
-                <GoArrowRight size={24} className="text-black" />
-              </span>
-            </Button>
+            <Link href={"/user-select"}>
+              <Button
+                size="medium"
+                variant="tertiary"
+                className="flex items-center gap-x-4 justify-center w-fit"
+              >
+                <span>Get started for free</span>
+                <span>
+                  <GoArrowRight size={24} className="text-black" />
+                </span>
+              </Button>
+            </Link>
           </div>
         </div>
       </section>
