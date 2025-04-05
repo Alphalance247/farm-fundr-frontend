@@ -10,20 +10,15 @@ import { IoEye } from "react-icons/io5";
 import { FaRegEyeSlash } from "react-icons/fa";
 
 interface formState {
-  fullname: "";
-  email: "";
-  password: "";
-  confirm__password: "";
+  email: string;
+  password: string;
 }
 
-const SignUp = () => {
+const Login = () => {
   const [form, setForm] = useState<formState>({
-    fullname: "",
     email: "",
     password: "",
-    confirm__password: "",
   });
-
   const [showPassword, setShowPassword] = useState<{ [key: string]: boolean }>({
     password: false,
     confirm__password: false,
@@ -40,7 +35,7 @@ const SignUp = () => {
 
   return (
     <section className="relative">
-      <div className="absolute bottom-0 z-[1] lg:hidden">
+      <div className="absolute bottom-0  z-[1] lg:hidden">
         <Image
           src="/assets/LandingPage/icons/position1.svg"
           width={200}
@@ -49,7 +44,6 @@ const SignUp = () => {
           layout="responsive"
         />
       </div>
-
       <div className="absolute top-0 right-0 z-[1] md:hidden">
         <Image
           src="/assets/UserOnboarding/rect.png"
@@ -61,21 +55,21 @@ const SignUp = () => {
 
       <Container>
         <div className="grid grid-cols-2 gap-8 lg:grid-cols-1 relative z-10">
-          <div className="h-full w-full relative lg:hidden">
+          <div className="relative lg:hidden">
             <Image
-              src="/assets/UserOnboarding/signupimg.png"
+              src="/assets/UserOnboarding/login.png"
               width={580}
-              height={775}
+              height={637}
               alt="signImage"
             />
           </div>
 
           <div className="bg-[#FCFCFC] px-10 py-5 rounded-[2.5rem] border border-[#CECECE] md:px-4">
             <h1 className="text-[#5F5F5F] font-aristoBold text-4xl text-center md:text-2xl">
-              Let’s get started
+              Welcome Back!
             </h1>
             <p className="text-lg font-poppinsRegular text-[#7C7C7C] mt-2 text-center mb-8 md:text-base md:mb-4">
-              Create your account on Farmfundr
+              We miss you!
             </p>
 
             <Button
@@ -104,34 +98,18 @@ const SignUp = () => {
             </div>
 
             <form action="">
-              <div className="grid grid-cols-2 gap-4 mb-4 md:grid-cols-1">
-                <div>
-                  <label className="text-sm text-[#5F5F5F] mb-2 font-poppinsSemiBold">
-                    Full Name
-                  </label>
-                  <Input
-                    type="text"
-                    name="fullname"
-                    value={form?.fullname || ""}
-                    onChange={handleChange}
-                    placeholder="Enter full name"
-                    variant="primary"
-                  />
-                </div>
-
-                <div>
-                  <label className="text-sm text-[#5F5F5F] mb-2 font-poppinsSemiBold">
-                    Email
-                  </label>
-                  <Input
-                    type="email"
-                    name="email"
-                    value={form?.email || ""}
-                    onChange={handleChange}
-                    placeholder="Enter email address"
-                    variant="primary"
-                  />
-                </div>
+              <div className="mb-4">
+                <label className="text-sm text-[#5F5F5F] mb-2 font-poppinsSemiBold">
+                  Email
+                </label>
+                <Input
+                  type="email"
+                  name="email"
+                  value={form?.email || ""}
+                  onChange={handleChange}
+                  placeholder="Enter email address"
+                  variant="primary"
+                />
               </div>
 
               <div className="mb-4 relative">
@@ -160,35 +138,9 @@ const SignUp = () => {
                 </div>
               </div>
 
-              <div className="mb-6 relative">
-                <div>
-                  <label className="text-sm text-[#5F5F5F] mb-2 font-poppinsSemiBold">
-                    Confirm Password
-                  </label>
-                  <Input
-                    type={showPassword?.confirm__password ? "text" : "password"}
-                    name="confirm__password"
-                    value={form?.confirm__password || ""}
-                    onChange={handleChange}
-                    placeholder="Confirm Password"
-                    variant="primary"
-                  />
-                </div>
-
-                <div className="absolute top-10 right-4">
-                  <div
-                    onClick={() =>
-                      togglePasswordVisibility("confirm__password")
-                    }
-                  >
-                    {showPassword.confirm__password ? (
-                      <FaRegEyeSlash size={24} className="text-[#7C7C7C]" />
-                    ) : (
-                      <IoEye size={24} className="text-[#7C7C7C]" />
-                    )}
-                  </div>
-                </div>
-              </div>
+              <p className="text-[#2D865B] font-poppinsSemiBold mt-4 text-lg mb-10 underline underline-offset-2 flex flex-col items-end">
+                <Link href="/user-select"> forgot password?</Link>
+              </p>
 
               <Link href={"/verify-email"}>
                 <Button
@@ -196,7 +148,7 @@ const SignUp = () => {
                   variant={"search"}
                   size="small"
                 >
-                  <span>{"Continue "}</span>
+                  <span>{"Login "}</span>
                   <span>
                     {" "}
                     <GoArrowRight size={24} className="text-[#7C7C7C]" />
@@ -206,17 +158,9 @@ const SignUp = () => {
 
               <div>
                 <p className="text-lg font-poppinsRegular text-[#7C7C7C] mt-4 mb-10 text-center md:text-base">
-                  Already have an account?
+                  Don’t have an account?
                   <span className="text-[#2D865B] font-poppinsSemiBold">
-                    <Link href="/login"> Log in</Link>
-                  </span>
-                </p>
-
-                <p className="p-4 bg-[#F6F6F6] text-[#7C7C7C] rounded-xl text-lg md:text-base">
-                  By creating an account, you confirm that you have read and
-                  agreed to our
-                  <span className="text-[#2D865B] underline underline-offset-2">
-                    <Link href={"/"}> Terms and Conditions</Link>
+                    <Link href="/user-select"> Get Started</Link>
                   </span>
                 </p>
               </div>
@@ -228,4 +172,4 @@ const SignUp = () => {
   );
 };
 
-export default SignUp;
+export default Login;
