@@ -1,5 +1,4 @@
-import Footer from "./components/common/footer";
-import Header from "./components/common/header";
+import LayOuts from "./components/common/Layouts";
 import About from "./components/Home/about";
 import Benefits from "./components/Home/Benefits";
 import CustomersFeedbacks from "./components/Home/CustomersFeedback";
@@ -11,8 +10,7 @@ import MeetTeam from "./components/Home/MeetTeam";
 
 export default function Home() {
   return (
-    <section>
-      <Header />
+    <LayOuts>
       <Hero />
       <About />
       <Benefits />
@@ -21,7 +19,7 @@ export default function Home() {
       <MeetTeam />
       <CustomersFeedbacks />
       <Faqs />
-      <Footer />
+      {/* <Footer /> */}
       {/* <Button variant="secondary">Login</Button>
       <Button>Get Started</Button>
 
@@ -51,6 +49,6 @@ export default function Home() {
           "FarmFundr is a platform designed to connect farmers and investors, fostering  collaboration and innovation in the agricultural sector. The platform aims to drive  agricultural growth and sustainability while providing mutual benefits to farmers  and investors"
         }
       /> */}
-    </section>
+    </LayOuts>
   );
 }

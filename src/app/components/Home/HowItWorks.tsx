@@ -4,6 +4,7 @@ import Image from "next/image";
 import Button from "../common/Buttons";
 import { GoArrowRight } from "react-icons/go";
 import SlideInSection from "../common/slideInSection";
+import Link from "next/link";
 
 const HowItWorks = () => {
   const data = [
@@ -31,7 +32,7 @@ const HowItWorks = () => {
   ];
   return (
     <SlideInSection>
-      <section className="relative bg-[#fcfcfc]">
+      <section className="relative bg-[#fcfcfc] z-[1]">
         <div className="absolute bottom-0">
           <Image
             src="/assets/LandingPage/icons/position1.svg"
@@ -88,15 +89,17 @@ const HowItWorks = () => {
               })}
             </div>
           </div>
-          <Button
-            size="medium"
-            className="flex items-center gap-x-4 justify-center mt-10 text-center w-[535px] mx-auto"
-          >
-            <span>Get Started</span>
-            <span>
-              <GoArrowRight size={24} className="text-white" />
-            </span>
-          </Button>
+          <Link href={"/user-select"}>
+            <Button
+              size="medium"
+              className="flex items-center gap-x-4 justify-center mt-10 text-center w-[535px] mx-auto relative z-[10]"
+            >
+              <span>Get Started</span>
+              <span>
+                <GoArrowRight size={24} className="text-white" />
+              </span>
+            </Button>
+          </Link>
         </Container>
       </section>
     </SlideInSection>

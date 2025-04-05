@@ -6,17 +6,79 @@ import { IoClose } from "react-icons/io5";
 import Link from "next/link";
 import Button from "./Buttons";
 import { motion } from "framer-motion";
+import { FaCaretDown } from "react-icons/fa";
 
 const Header = () => {
   const [activeMenu, setActiveMenu] = useState("Home");
   const [showMobileMenu, setShowMobileMenu] = useState(false);
+  const [showDropDown, setShowDropDown] = useState<number | null>(null);
 
   const navs = [
     { id: 1, name: "Home", scrollSection: "about", link: "/" },
-    { id: 3, name: "About Us", scrollSection: "solution", link: "/" },
-    { id: 4, name: "How It Works", scrollSection: "serve", link: "/" },
-    { id: 5, name: "MarketPlace", scrollSection: "technology", link: "/" },
-    { id: 6, name: "Contact Us", scrollSection: "technology", link: "/" },
+    {
+      id: 3,
+      name: "About Us",
+      scrollSection: "solution",
+      link: "/",
+      subMenu: [
+        {
+          name: "About Us",
+          link: "/about-us",
+        },
+        {
+          name: "Meet our team",
+          link: "/meet-team",
+        },
+      ],
+      icon: <FaCaretDown size={16} />,
+    },
+    {
+      id: 4,
+      name: "How It Works",
+      scrollSection: "serve",
+      link: "/how-it-works",
+    },
+    {
+      id: 5,
+      name: "MarketPlace",
+      scrollSection: "technology",
+      link: "/farm-marketplace",
+    },
+    {
+      id: 6,
+      name: "Contact Us",
+      scrollSection: "technology",
+      link: "/contact-us",
+    },
+  ];
+
+  const navsMobile = [
+    { id: 1, name: "Home", link: "/" },
+    {
+      id: 2,
+      name: "About Us",
+      link: "/about-us",
+    },
+    {
+      id: 3,
+      name: "Meet our team",
+      link: "/meet-team",
+    },
+    {
+      id: 4,
+      name: "How It Works",
+      link: "/how-it-works",
+    },
+    {
+      id: 5,
+      name: "MarketPlace",
+      link: "/farm-marketplace",
+    },
+    {
+      id: 6,
+      name: "Contact Us",
+      link: "/contact-us",
+    },
   ];
 
   return (
@@ -32,11 +94,11 @@ const Header = () => {
         </Link>
 
         <nav className="transition-all duration-500 xl:hidden">
-          {navs.map((items) => {
+          {navs.map((items, i) => {
             return (
               <ul
                 key={items?.id}
-                className="inline-flex items-end cursor-pointer lg:flex lg:flex-col lg:pt-12 lg:items-center sm:pt-4"
+                className="inline-flex relative items-end cursor-pointer lg:flex lg:flex-col lg:pt-12 lg:items-center sm:pt-4"
               >
                 <li
                   className={`${
@@ -45,8 +107,36 @@ const Header = () => {
                       : "text-[#282A03]"
                   }  cursor-pointer  hover:text-[#51F4A6] px-4 text-base font-poppinsRegular xl:text-xs xl:px-2`}
                   onClick={() => setActiveMenu(items?.name)}
+                  onMouseLeave={() => setShowDropDown(null)}
                 >
-                  <Link href={items?.link}>{items?.name}</Link>
+                  {items?.subMenu ? (
+                    <button
+                      className={`flex gap-x-2 items-center transition-colors duration-300 cursor-pointer`}
+                      onClick={() => {
+                        if (showDropDown === i) {
+                          setShowDropDown(null);
+                        } else {
+                          setShowDropDown(i);
+                        }
+                      }}
+                    >
+                      {items?.name} <span>{items?.icon}</span>
+                    </button>
+                  ) : (
+                    <Link href={items?.link}>{items?.name}</Link>
+                  )}
+
+                  {items?.subMenu && showDropDown === i && (
+                    <div className="absolute left-0 top-6 mt-2 w-48 bg-[#2D865B] shadow-lg p-4 rounded-xl">
+                      {items?.subMenu.map((subLink, subIndex) => (
+                        <Link key={subIndex} href={subLink?.link}>
+                          <span className="block px-4 border-[#E2E2E2] border-[0.3px] text-[#FCFCFC] rounded-xl cursor-pointer py-[15px] mb-3">
+                            {subLink?.name}
+                          </span>
+                        </Link>
+                      ))}
+                    </div>
+                  )}
                 </li>
               </ul>
             );
@@ -54,12 +144,16 @@ const Header = () => {
         </nav>
 
         <div className="flex items-center gap-x-3 xl:hidden">
-          <Button variant="secondary" size="small" className="w-[180px]">
-            Login
-          </Button>
-          <Button className="w-fit" size="small">
-            Get Started
-          </Button>
+          <Link href={"/login"}>
+            <Button variant="secondary" size="small" className="w-[180px]">
+              Login
+            </Button>
+          </Link>
+          <Link href={"/user-select"}>
+            <Button className="w-fit" size="small">
+              Get Started
+            </Button>
+          </Link>
         </div>
 
         <div className="hidden lg:transition-all lg:duration-500 lg:grow xl:flex xl:justify-end xl:items-center xl:h-10 xl:gap-8 ">
@@ -81,23 +175,36 @@ const Header = () => {
         transition={{ duration: 0.1 }}
       >
         <nav className="hidden xl:justify-start xl:items-left gap-4 xl:flex xl:flex-col xl:py-8 xl:px-3">
-          {navs.map((items) => {
+          {navsMobile.map((items) => {
             return (
               <ul key={items?.id} className="">
-                <li className="text-[#4f4f4f] cursor-pointer px-4 text-sm font-semibold font-geist block">
-                  {items?.name}
-                </li>
+                <Link href={items?.link}>
+                  <li
+                    className="text-[#a19494] cursor-pointer px-4 text-sm font-semibold font-geist block"
+                    onClick={() => setShowMobileMenu(false)}
+                  >
+                    {items?.name}
+                  </li>
+                </Link>
               </ul>
             );
           })}
 
-          <div className="flex flex-col gap-y-6 items-center">
-            <Button variant="secondary" size="small" className="w-[180px]">
-              Login
-            </Button>
-            <Button className="w-fit" size="small">
-              Get Started
-            </Button>
+          <div className="flex flex-col gap-y-6 md:block items-center">
+            <Link href={"/login"}>
+              <Button
+                variant="secondary"
+                size="small"
+                className="w-[180px] md:mb-4"
+              >
+                Login
+              </Button>
+            </Link>
+            <Link href={"/user-select"}>
+              <Button className="w-fit" size="small">
+                Get Started
+              </Button>
+            </Link>
           </div>
         </nav>
       </motion.div>

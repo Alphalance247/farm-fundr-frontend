@@ -10,6 +10,7 @@ const Card = () => {
           width={336}
           height={185}
           alt="land"
+          layout="responsive"
         />
         <p className="border-[#B0EECA] border px-4 py-1 absolute bottom-[-1rem] right-[1rem] flex items-center bg-white text-[#00C853] rounded-lg">
           <span className="mr-1">
