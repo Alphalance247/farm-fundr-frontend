@@ -115,7 +115,9 @@ const VerifyEmail = () => {
                       maxLength={1}
                       value={digit}
                       placeholder="-"
-                      ref={(el) => (inputRefs.current[index] = el)}
+                      ref={(el) => {
+                        inputRefs.current[index] = el;
+                      }}
                       onChange={(e) => handleChange(index, e.target.value)}
                       onKeyDown={(e) => handleKeyDown(index, e)}
                       className="w-full h-12 text-center border rounded-lg text-xl font-bold outline-none focus:ring-2 focus:ring-blue-500"
