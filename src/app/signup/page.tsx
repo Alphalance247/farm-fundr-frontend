@@ -9,8 +9,21 @@ import { useState } from "react";
 import { IoEye } from "react-icons/io5";
 import { FaRegEyeSlash } from "react-icons/fa";
 
+interface formState {
+  fullname: "";
+  email: "";
+  password: "";
+  confirm__password: "";
+}
+
 const SignUp = () => {
-  const [form, setForm] = useState<{ [key: string]: any }>({});
+  const [form, setForm] = useState<formState>({
+    fullname: "",
+    email: "",
+    password: "",
+    confirm__password: "",
+  });
+
   const [showPassword, setShowPassword] = useState<{ [key: string]: boolean }>({
     password: false,
     confirm__password: false,
