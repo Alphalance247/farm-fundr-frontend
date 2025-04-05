@@ -104,7 +104,9 @@ const UserSelectPage: React.FC = () => {
           <div className="text-center relative md:z-20">
             <Link href={select === "Investor" ? "/signup" : "/"}>
               <Button
-                className="w-[400px] flex items-center gap-x-4 justify-center text-center mx-auto"
+                className={`w-[400px] flex items-center gap-x-4 justify-center text-center mx-auto ${
+                  select === "" ? "cursor-not-allowed" : ""
+                }`}
                 variant={select === "" ? "search" : "primary"}
                 size="small"
                 disabled={select === "" ? true : false}
