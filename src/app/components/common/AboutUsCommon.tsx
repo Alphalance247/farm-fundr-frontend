@@ -68,7 +68,7 @@ const AboutUsCommon: React.FC<aboutUsProp> = ({
                 className="mb-8 text-left lg:mb-3"
                 subhead={
                   subhead ||
-                  "FarmFundr is a platform designed to connect farmers and investors, fostering  collaboration and innovation in the agricultural sector. The platform aims to drive  agricultural growth and sustainability while providing mutual benefits to farmers  and investors"
+                  "FarmPady is a platform designed to connect farmers and investors, fostering  collaboration and innovation in the agricultural sector. The platform aims to drive  agricultural growth and sustainability while providing mutual benefits to farmers  and investors"
                 }
                 withImage={false}
               />

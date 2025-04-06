@@ -139,7 +139,7 @@ const Login = () => {
               </div>
 
               <p className="text-[#2D865B] font-poppinsSemiBold mt-4 text-lg mb-10 underline underline-offset-2 flex flex-col items-end">
-                <Link href="/user-select"> forgot password?</Link>
+                <Link href="/forgot-password"> forgot password?</Link>
               </p>
 
               <Link href={"/verify-email"}>
