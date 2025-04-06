@@ -39,7 +39,7 @@ const MeetTeam = () => {
             <div className="relative z-10 py-28 w-[45%] mx-auto lg:w-[60%] lg:mr-[1rem] md:w-[95%] md:mr-0 md:px-1">
               <h3 className="text-6xl font-aristoBold font-bold text-[#51F4A6] mb-6">
                 {" "}
-                Farmfundr Team
+                FarmPady Team
               </h3>
               <p className=" font-poppinsSemiBold text-2xl text-[#FFFFFF] mb-16">
                 Get to meet our professional team on this platform

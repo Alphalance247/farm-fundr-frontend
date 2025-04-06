@@ -18,32 +18,32 @@ const Faqs = () => {
 
   const faqs = [
     {
-      question: " What is farmfundr?",
-      answer: `FarmFundr is a platform where investors and farmers connect to
+      question: " What is FarmPady?",
+      answer: `FarmPady is a platform where investors and farmers connect to
           collaborate on Agricultural products, fostering partnerships that
           drive agricultural innovation and mutual growth`,
     },
     {
-      question: " What is farmfundr?",
-      answer: `FarmFundr is a platform where investors and farmers connect to
+      question: " What is FarmPady?",
+      answer: `FarmPady is a platform where investors and farmers connect to
           collaborate on Agricultural products, fostering partnerships that
           drive agricultural innovation and mutual growth`,
     },
     {
-      question: " What is farmfundr?",
-      answer: `FarmFundr is a platform where investors and farmers connect to
+      question: " What is FarmPady?",
+      answer: `FarmPady is a platform where investors and farmers connect to
           collaborate on Agricultural products, fostering partnerships that
           drive agricultural innovation and mutual growth`,
     },
     {
-      question: " What is farmfundr?",
-      answer: `FarmFundr is a platform where investors and farmers connect to
+      question: " What is FarmPady?",
+      answer: `FarmPady is a platform where investors and farmers connect to
           collaborate on Agricultural products, fostering partnerships that
           drive agricultural innovation and mutual growth`,
     },
     {
-      question: " What is farmfundr?",
-      answer: `FarmFundr is a platform where investors and farmers connect to
+      question: " What is FarmPady?",
+      answer: `FarmPady is a platform where investors and farmers connect to
           collaborate on Agricultural products, fostering partnerships that
           drive agricultural innovation and mutual growth`,
     },

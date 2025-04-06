@@ -6,6 +6,7 @@ const AnimateBackground = () => {
   const images = [
     "/assets/LandingPage/images/hero.png",
     "/assets/LandingPage/images/hero1.png",
+    "/assets/LandingPage/images/hero3.png",
   ];
   const [currentImage, setCurrentImage] = useState(0);
 
