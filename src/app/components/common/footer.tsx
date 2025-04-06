@@ -51,7 +51,7 @@ const Footer = () => {
         <Image
           width={565}
           height={141}
-          src="/assets/LandingPage/icons/logofooter.svg"
+          src="/assets/LandingPage/icons/fundrlogo1.svg"
           alt="footer logo"
           className="mx-auto"
         />
