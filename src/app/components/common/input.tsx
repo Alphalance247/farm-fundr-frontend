@@ -30,7 +30,7 @@ const Input: React.FC<InputProps> = ({
         variant === "primary"
           ? "border-[#CECECE] border bg-[#F6F6F6] p-4 text-sm text-[#858585] rounded-xl"
           : "bg-[#EEFEF6]  p-4 text-lg text-[#7C7C7C] rounded-2xl"
-      }     ${className}`}
+      } ${className}`}
     />
   );
 };
