@@ -87,7 +87,7 @@ const FarmerDashboard = () => {
                       className={`flex flex-col justify-center items-center gap-x-3 cursor-pointer ${item?.bgColor} rounded-md py-4 `}
                     >
                       <Image
-                        src={item?.img}
+                        src={item?.img || ""}
                         width={22}
                         height={25}
                         alt="asset icons"

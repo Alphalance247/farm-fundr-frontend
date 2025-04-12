@@ -73,7 +73,7 @@ const WeatherReport: React.FC = ({}) => {
                 <Image
                   width={32}
                   height={32}
-                  src={item.weatherIcon}
+                  src={item.weatherIcon || ""}
                   alt="weather icons"
                 />
                 <p className="text-xs font-poppinsRegular text-[#5F5F5F]">
