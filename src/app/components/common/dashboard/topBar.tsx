@@ -8,7 +8,7 @@ import Image from "next/image";
 import { FaChevronDown } from "react-icons/fa";
 
 export function Topbar() {
-  const [search, setSearch] = useState<string>("");
+  // const [search, setSearch] = useState<string>("");
   const [date, setDate] = useState<string>("");
   const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setDate(e.target.value);
