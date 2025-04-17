@@ -4,6 +4,8 @@ import Button from "../components/common/Buttons";
 import Image from "next/image";
 import Link from "next/link";
 import WeatherReport from "../components/dashboard/overview/weatherReports";
+import InvestmentOverview from "../components/dashboard/overview/investmentOverview";
+import EarningOverview from "../components/dashboard/overview/earningOverview";
 
 interface data {
   text?: string;
@@ -105,6 +107,15 @@ const FarmerDashboard = () => {
         </div>
 
         <WeatherReport />
+
+        <div className="grid grid-cols-2 gap-x-6 mt-6">
+          <div>
+            <InvestmentOverview />
+            <EarningOverview />
+          </div>
+
+          <div></div>
+        </div>
       </main>
     </DashboardLayout>
   );

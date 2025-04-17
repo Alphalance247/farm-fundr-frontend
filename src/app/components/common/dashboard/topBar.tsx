@@ -41,6 +41,7 @@ export function Topbar() {
           value=""
           className="pl-8 w-[329px]"
           variant="primary"
+          withWidth={false}
         />
       </div>
 
@@ -60,6 +61,7 @@ export function Topbar() {
           value={date}
           className="w-[246px]"
           variant="primary"
+          withWidth={false}
         />
       </div>
 
