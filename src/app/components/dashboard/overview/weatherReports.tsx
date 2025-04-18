@@ -34,7 +34,7 @@ const WeatherReport: React.FC = ({}) => {
     },
   ];
   return (
-    <section className="mt-6 px-[22px] py-8 border border-[#E4E7EC] bg-[white] rounded-xl ">
+    <section className="mt-6 px-[22px] py-8 border border-[#E4E7EC] bg-[white] rounded-xl">
       <div className="flex justify-between  items-center mb-5">
         <SubHead text="Weather Report" />
         <div className="relative flex items-center gap-x-4">

@@ -4,6 +4,12 @@ import Button from "../components/common/Buttons";
 import Image from "next/image";
 import Link from "next/link";
 import WeatherReport from "../components/dashboard/overview/weatherReports";
+import InvestmentOverview from "../components/dashboard/overview/investmentOverview";
+import EarningOverview from "../components/dashboard/overview/earningOverview";
+import PendingPayment from "../components/dashboard/overview/pendingPayment";
+import FarmingSummary from "../components/dashboard/overview/farmingSummary";
+import RecentActivity from "../components/dashboard/overview/recentActivity";
+import BidSummary from "../components/dashboard/overview/bidSummary";
 
 interface data {
   text?: string;
@@ -105,6 +111,20 @@ const FarmerDashboard = () => {
         </div>
 
         <WeatherReport />
+
+        <div className="grid grid-cols-2 gap-x-6 mt-6">
+          <div>
+            <InvestmentOverview />
+            <EarningOverview />
+            <PendingPayment />
+          </div>
+
+          <div>
+            <FarmingSummary />
+            <RecentActivity />
+            <BidSummary />
+          </div>
+        </div>
       </main>
     </DashboardLayout>
   );
