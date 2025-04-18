@@ -35,7 +35,6 @@ const AboutUsCommon: React.FC<aboutUsProp> = ({
             width={200}
             height={400}
             alt="positionlogo"
-            layout="responsive"
           />
         </div>
         <Container>

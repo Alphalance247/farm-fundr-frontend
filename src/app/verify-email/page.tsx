@@ -104,7 +104,7 @@ const VerifyEmail = () => {
               <div>
                 <UserVerification
                   heading="OTP Verification"
-                  subhead="Enter the 4 digit code sent to your email."
+                  subhead="Enter the 6 digit code sent to your email."
                 />
 
                 <div className="flex gap-2 mb-6 mt-4">
@@ -157,7 +157,7 @@ const VerifyEmail = () => {
                     onClick={handleSendEmailOtp}
                     disabled={otp.some((digit) => digit === "")}
                   >
-                    Send Code
+                    Verify Account
                     <span>
                       {" "}
                       <GoArrowRight size={24} className="text-[#7C7C7C]" />
@@ -218,7 +218,7 @@ const VerifyEmail = () => {
                   size="small"
                   onClick={handleEmailOtp}
                 >
-                  Send Code
+                  Verify Account
                   <span>
                     {" "}
                     <GoArrowRight size={24} className="text-white" />
