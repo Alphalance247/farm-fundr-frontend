@@ -29,26 +29,26 @@ const FarmerDashboard = () => {
     },
     {
       text: "Manage farms",
-      link: "/farmer-dashboard/iiiio",
+      link: "/farmer-dashboard",
       img: "/assets/DashBoard/overview/copy.svg",
       bgColor: "bg-[#EEFEF6]",
     },
     {
       text: "Withdraw Funds",
-      link: "/farmer-dashboard/hhhjs",
+      link: "/farmer-dashboard",
       img: "/assets/DashBoard/overview/bank.svg",
       bgColor: "bg-[#FFE6E6]",
     },
     {
       text: "Update Bank Details",
-      link: "/farmer-dashboard/hhhjs",
+      link: "/farmer-dashboard",
       img: "/assets/DashBoard/overview/withdraw.svg",
       bgColor: "bg-[#FFFAE6]",
     },
   ];
   return (
     <DashboardLayout>
-      <Topbar />
+      <Topbar overview="overview" />
 
       <main className="px-10 py-8 bg-gray-50 overflow-auto">
         <div className="grid grid-cols-[60%auto] gap-6">
