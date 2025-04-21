@@ -6,20 +6,41 @@ import { useState } from "react";
 import Input from "../input";
 import Image from "next/image";
 import { FaChevronDown } from "react-icons/fa";
+import { useEffect } from "react";
 
-export function Topbar() {
+export function Topbar({ overview }: { overview: string }) {
   // const [search, setSearch] = useState<string>("");
-  const [date, setDate] = useState<string>("");
-  const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setDate(e.target.value);
-  };
+  const [dateTime, setDateTime] = useState<string>("21-02-2025. 12:02:00 PM");
+
+  useEffect(() => {
+    const updateDateTime = () => {
+      const now = new Date();
+      const formattedDate = now.toLocaleDateString("en-GB", {
+        day: "2-digit",
+        month: "2-digit",
+        year: "numeric",
+      });
+      const formattedTime = now.toLocaleTimeString("en-GB", {
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+        hour12: true,
+      });
+      setDateTime(`${formattedDate} ${formattedTime}`);
+    };
+
+    updateDateTime(); // Set initial date and time
+    const interval = setInterval(updateDateTime, 1000); // Update every second
+
+    return () => clearInterval(interval); // Cleanup on component unmount
+  }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     console.log(e.target.value);
   };
   return (
     <header className="flex items-center justify-between gap-x-6 h-[93px] px-10 py-5 bg-white shadow-sm sticky top-0 z-10">
-      <h1 className="text-2xl font-aristoBold text-[#5F5F5F]">Overview</h1>
+      <h1 className="text-2xl font-aristoBold text-[#5F5F5F]">{overview}</h1>
 
       <div className="relative">
         <BiSearch
@@ -45,27 +66,18 @@ export function Topbar() {
         />
       </div>
 
-      <div className="rounded-full bg-[#F6F6F6] w-16 h-16 flex items-center justify-center relative cursor-pointer ">
+      <div className="rounded-full bg-[#F6F6F6] w-16 h-16 flex items-center justify-center relative cursor-pointer hover:bg-[#cac6c6]">
         <IoNotificationsOutline size={38} color="#4E4E4E" />
         <p className="w-4 h-4 text-[10px] flex flex-col items-center justify-center rounded-full absolute bg-[#EA5455] text-white top-3 right-4">
           4
         </p>
       </div>
 
-      <div>
-        <Input
-          type="date"
-          name="search"
-          placeholder="Search"
-          onChange={handleDateChange}
-          value={date}
-          className="w-[246px]"
-          variant="primary"
-          withWidth={false}
-        />
+      <div className="px-6 py-4 rounded-xl bg-[#F6F6F6] w-[full]">
+        <p className="text-sm font-poppinsRegular text-[#5F5F5F]">{dateTime}</p>
       </div>
 
-      <div className="flex justify-between gap-x-4 items-center py-[5px] px-6 bg-[#F6F6F6] rounded-2xl cursor-pointer">
+      <div className="flex justify-between gap-x-4 items-center py-[5px] px-6 bg-[#F6F6F6] rounded-2xl cursor-pointer hover:bg-[#cac6c6]">
         <div className="flex items-center gap-x-3">
           <Image
             src="/assets/DashBoard/overview/avatar.svg"
