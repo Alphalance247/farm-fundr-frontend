@@ -5,6 +5,7 @@ import Input from "../../common/input";
 import Button from "../../common/Buttons";
 import React, { useState, useEffect } from "react";
 import { MdOutlineRadioButtonChecked } from "react-icons/md";
+import { FaRegCircleCheck } from "react-icons/fa6";
 
 interface subscriptionTier {
   planType: string;
@@ -17,6 +18,8 @@ interface billingCadenceProps {
   subhead: string;
   subscriptionTier: subscriptionTier[];
   planName: string;
+  onClick?: React.MouseEventHandler<HTMLButtonElement>;
+  onClickTranfer?: React.MouseEventHandler<HTMLButtonElement>;
 }
 
 const BillingFrequency: React.FC<billingCadenceProps> = ({
@@ -24,6 +27,8 @@ const BillingFrequency: React.FC<billingCadenceProps> = ({
   heading,
   subhead,
   planName,
+  onClick,
+  onClickTranfer,
 }) => {
   const [subType, setSubType] = useState<string>("Pay monthly");
   const [paymentMethod, setPaymentMethod] = useState<string>("paystack");
@@ -81,7 +86,11 @@ const BillingFrequency: React.FC<billingCadenceProps> = ({
                 </p>
 
                 {item?.offer && (
-                  <p className="text-[#226646] font-poppinsSemiBold textt-[10px] border py-0 px-2 border-[#C9FCE3] bg-[white] rounded-sm">
+                  <p
+                    className={`text-[#226646] font-poppinsSemiBold text-[13px] border py-0 px-2 border-[#C9FCE3]  rounded-sm ${
+                      subType === item?.planType ? "bg-[white]" : "bg-[#EEFEF6]"
+                    }`}
+                  >
                     {item?.offer}
                   </p>
                 )}
@@ -142,13 +151,13 @@ const BillingFrequency: React.FC<billingCadenceProps> = ({
 
         <div className="mt-8">
           <p className=" font-poppinsSemiBold text-lg text-[#5F5F5F] mb-4">
-            Payment Method
+            Payment summary
           </p>
 
           <div className="">
             <form
               action=""
-              className="bg-white rounded-md p-4 w-[50%] flex flex-col gap-y-4"
+              className="bg-white rounded-[8px] p-4 w-[50%] flex flex-col gap-y-4"
             >
               <div>
                 <label
@@ -185,13 +194,15 @@ const BillingFrequency: React.FC<billingCadenceProps> = ({
                   variant="primary"
                 />
 
-                <p className="flex items-center mt-2 gap-x-2 font-poppinsRegular text-sm text-[#5F5F5F]">
-                  {" "}
-                  <span>
-                    <FiCircle size={16} color="#5F5F5F" />
-                  </span>{" "}
-                  One-Time subscription
-                </p>
+                {paymentMethod === "paystack" && (
+                  <p className="flex items-center mt-2 gap-x-2 font-poppinsRegular text-sm text-[#5F5F5F]">
+                    {" "}
+                    <span>
+                      <FaRegCircleCheck size={16} color="#5F5F5F" />
+                    </span>{" "}
+                    One-Time subscription
+                  </p>
+                )}
               </div>
 
               <div className="grid grid-cols-2 gap-x-4">
@@ -232,18 +243,35 @@ const BillingFrequency: React.FC<billingCadenceProps> = ({
               </div>
 
               <div className="mt-4">
-                <Button
-                  size="medium"
-                  className="w-full flex items-center justify-center"
-                >
-                  <Image
-                    width={37}
-                    height={37}
-                    src="/assets/DashBoard/subscription/paystack.svg"
-                    alt="paystack"
-                  />
-                  Pay with paystack
-                </Button>
+                {paymentMethod === "paystack" ? (
+                  <Button
+                    size="medium"
+                    className="w-full flex items-center justify-center"
+                    onClick={onClick}
+                  >
+                    <Image
+                      width={37}
+                      height={37}
+                      src="/assets/DashBoard/subscription/paystack.svg"
+                      alt="paystack"
+                    />
+                    Pay with paystack
+                  </Button>
+                ) : (
+                  <Button
+                    size="medium"
+                    className="w-full flex items-center justify-center"
+                    onClick={onClickTranfer}
+                  >
+                    <Image
+                      width={37}
+                      height={37}
+                      src="/assets/DashBoard/subscription/paystack.svg"
+                      alt="paystack"
+                    />
+                    Make Transfer
+                  </Button>
+                )}
               </div>
             </form>
           </div>
