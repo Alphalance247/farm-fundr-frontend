@@ -3,7 +3,7 @@ import { FiCircle } from "react-icons/fi";
 import Image from "next/image";
 import Input from "../../common/input";
 import Button from "../../common/Buttons";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { MdOutlineRadioButtonChecked } from "react-icons/md";
 
 interface subscriptionTier {
@@ -16,20 +16,28 @@ interface billingCadenceProps {
   heading: string;
   subhead: string;
   subscriptionTier: subscriptionTier[];
+  planName: string;
 }
 
 const BillingFrequency: React.FC<billingCadenceProps> = ({
   subscriptionTier,
   heading,
   subhead,
+  planName,
 }) => {
   const [subType, setSubType] = useState<string>("Pay monthly");
   const [paymentMethod, setPaymentMethod] = useState<string>("paystack");
+  const [selectedPrice, setSelectedPrice] = useState<string>("");
 
-  const subPrices: { [key: string]: string } = {
-    monthly: "1000",
-    quarterly: "2000",
-  };
+  useEffect(() => {
+    // Find the default subscription tier based on the initial subType
+    const defaultTier = subscriptionTier.find(
+      (item) => item.planType === subType
+    );
+    if (defaultTier) {
+      setSelectedPrice(defaultTier.prices); // Set the default price
+    }
+  }, [subType, subscriptionTier]);
 
   return (
     <main className="px-10 py-8 bg-gray-50 overflow-auto">
@@ -48,7 +56,10 @@ const BillingFrequency: React.FC<billingCadenceProps> = ({
               className={`rounded-xl border border-[#E2E2E2] p-2 w-[200px] cursor-pointer  ${
                 subType === item?.planType ? "bg-[#EEFEF6]" : "bg-transparent"
               }`}
-              onClick={() => setSubType(item?.planType)}
+              onClick={() => {
+                setSubType(item?.planType);
+                setSelectedPrice(item?.prices);
+              }}
               key={i}
             >
               <div className="flex justify-between mb-2">
@@ -149,7 +160,7 @@ const BillingFrequency: React.FC<billingCadenceProps> = ({
                 <Input
                   name="planname"
                   type="text"
-                  value="Basic Plan"
+                  value={planName}
                   placeholder=""
                   className=""
                   readonly={true}
@@ -167,7 +178,7 @@ const BillingFrequency: React.FC<billingCadenceProps> = ({
                 <Input
                   name="subscription"
                   type="text"
-                  value={subPrices[subType]}
+                  value={selectedPrice}
                   placeholder=""
                   className=""
                   readonly={true}

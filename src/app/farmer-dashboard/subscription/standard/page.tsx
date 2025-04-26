@@ -49,6 +49,7 @@ const StandardPlan = () => {
       {data.map((item, i) => (
         <BillingFrequency
           heading="Billings"
+          planName="Standard Plan"
           subhead="Standard Plan"
           subscriptionTier={item?.subTier}
           key={i}
