@@ -4,6 +4,8 @@ import { Topbar } from "@/app/components/common/dashboard/topBar";
 import BillingFrequency from "@/app/components/dashboard/subscription/billingFrequency";
 import { useState } from "react";
 import TransferPopUP from "@/app/components/dashboard/subscription/transferPopUp";
+import SuccessfulSubscription from "@/app/components/dashboard/subscription/succesfulSubscription";
+
 interface SubTier {
   planType: string;
   prices: string;
@@ -18,6 +20,7 @@ interface data {
 
 const StandardPlan = () => {
   const [showModal, setShowModal] = useState<boolean>(false);
+  const [successfulTransfer, setSuccessfulTranfer] = useState<boolean>(false);
   const data: data[] = [
     {
       heading: "",
@@ -58,6 +61,12 @@ const StandardPlan = () => {
     setShowModal(true);
   };
 
+  const handlePaidTransfer = (e: React.FormEvent) => {
+    e.preventDefault();
+    console.log("transfer successful");
+    setSuccessfulTranfer(true);
+  };
+
   const handleRemoveModal = () => {
     setShowModal(false);
   };
@@ -82,11 +91,14 @@ const StandardPlan = () => {
 
         {showModal && (
           <>
-            <div
-              className="absolute inset-0 bg-black opacity-50 z-20"
-              onClick={handleRemoveModal} // Close modal when clicking on the overlay
-            ></div>
-            <TransferPopUP onClick={handleRemoveModal} />
+            {successfulTransfer ? (
+              <SuccessfulSubscription onClick={handleRemoveModal} />
+            ) : (
+              <TransferPopUP
+                onClick={handleRemoveModal}
+                handlePaidTansfer={handlePaidTransfer}
+              />
+            )}
           </>
         )}
       </DashboardLayout>

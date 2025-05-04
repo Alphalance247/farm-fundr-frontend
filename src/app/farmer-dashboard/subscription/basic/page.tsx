@@ -4,6 +4,7 @@ import { Topbar } from "@/app/components/common/dashboard/topBar";
 import BillingFrequency from "@/app/components/dashboard/subscription/billingFrequency";
 import { useState } from "react";
 import TransferPopUP from "@/app/components/dashboard/subscription/transferPopUp";
+import SuccessfulSubscription from "@/app/components/dashboard/subscription/succesfulSubscription";
 interface SubTier {
   planType: string;
   prices: string;
@@ -18,6 +19,8 @@ interface data {
 
 const BasicPlan = () => {
   const [showModal, setShowModal] = useState<boolean>(false);
+  const [successfulTransfer, setSuccessfulTranfer] = useState<boolean>(false);
+
   const data: data[] = [
     {
       heading: "Billing frequency",
@@ -58,39 +61,49 @@ const BasicPlan = () => {
     setShowModal(true);
   };
 
+  const handlePaidTransfer = (e: React.FormEvent) => {
+    e.preventDefault();
+    console.log("transfer successful");
+    setSuccessfulTranfer(true);
+  };
+
   const handleRemoveModal = () => {
     setShowModal(false);
+    setSuccessfulTranfer(false);
   };
 
   return (
-    <div className="relative">
-      <DashboardLayout>
-        <Topbar overview="Wallet" />
+    // <div className="relative">
+    <DashboardLayout>
+      <Topbar overview="Wallet" />
 
-        {data.map((item, i) => (
-          <BillingFrequency
-            heading="Billing frequency"
-            planName="Basic Plan"
-            subhead="Basic Plan"
-            subscriptionTier={item?.subTier}
-            key={i}
-            onClick={handlePaystackPayment}
-            onClickTranfer={handleTransferPayment}
-          />
-        ))}
-        {/* Overlay */}
+      {data.map((item, i) => (
+        <BillingFrequency
+          heading="Billing frequency"
+          planName="Basic Plan"
+          subhead="Basic Plan"
+          subscriptionTier={item?.subTier}
+          key={i}
+          onClick={handlePaystackPayment}
+          onClickTranfer={handleTransferPayment}
+        />
+      ))}
+      {/* Overlay */}
 
-        {showModal && (
-          <>
-            <div
-              className="absolute inset-0 bg-black opacity-50 z-20"
-              onClick={handleRemoveModal} // Close modal when clicking on the overlay
-            ></div>
-            <TransferPopUP onClick={handleRemoveModal} />
-          </>
-        )}
-      </DashboardLayout>
-    </div>
+      {showModal && (
+        <>
+          {successfulTransfer ? (
+            <SuccessfulSubscription onClick={handleRemoveModal} />
+          ) : (
+            <TransferPopUP
+              onClick={handleRemoveModal}
+              handlePaidTansfer={handlePaidTransfer}
+            />
+          )}
+        </>
+      )}
+    </DashboardLayout>
+    // </div>
   );
 };
 
