@@ -7,8 +7,13 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 
-const RequestPayout = () => {
+const RequestPayoutUser = ({
+  handleRequestPayoutModal,
+}: {
+  handleRequestPayoutModal: () => void;
+}) => {
   const [successPayout, setPayOutSuccess] = useState("initial");
+
   const handleCloseModal = () => {
     // setPayOutSuccess("success");
   };
@@ -67,35 +72,8 @@ const RequestPayout = () => {
               notified shortly for your withdrawal on your wallet. Thank you!"
           link="/farmer-dashboard/wallet"
           img="/assets/DashBoard/wallet/success-request.svg"
+          handleClose={handleRequestPayoutModal}
         />
-        // <div className=" bg-[white] w-full max-w-[529px] mx-auto rounded-[10px] p-6 shadow-lg z-50">
-        //   <Image
-        //     width={481}
-        //     height={187}
-        //     src={`/assets/DashBoard/wallet/success-request.svg`}
-        //     alt="deactivate"
-        //   />
-
-        //   <h4 className="text-3xl font-aristoBold text-[#252B42] mt-6 text-center">
-        //     Payout request sent!
-        //   </h4>
-
-        //   <div className="mt-3 bg-[#EEFEF6] p-3 border border-[#51F4A6] rounded-lg">
-        //     <p className="text-sm font-poppinsSemiBold text-[#5F5F5F]">
-        //       What Next?
-        //     </p>
-        //     <p className="text-[#7C7C7C] text-sm font-poppinsRegular">
-        //       Your payout request has been sent to farmpady team and you will be
-        //       notified shortly for your withdrawal on your wallet. Thank you!
-        //     </p>
-        //   </div>
-
-        //   <Link href="/farmer-dashboard/wallet">
-        //     <div className="mt-8">
-        //       <Button className="w-full">Okay, Thank you</Button>
-        //     </div>
-        //   </Link>
-        // </div>
       )}
       {successPayout === "fail" && (
         <RequestPayoutModal
@@ -103,10 +81,11 @@ const RequestPayout = () => {
           description="You don’t have enough balance on your wallet to request for payout at the moment. Make sure you have enough balance on your wallet before you request for payout."
           link="/farmer-dashboard/wallet"
           img="/assets/DashBoard/wallet/failed-request.svg"
+          handleClose={handleRequestPayoutModal}
         />
       )}
     </ModalOverlay>
   );
 };
 
-export default RequestPayout;
+export default RequestPayoutUser;

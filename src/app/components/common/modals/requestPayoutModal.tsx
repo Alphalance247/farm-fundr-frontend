@@ -5,13 +5,14 @@ import Button from "../Buttons";
 const RequestPayoutModal = ({
   title,
   description,
-  link,
   img,
+  handleClose,
 }: {
   title: string;
   description: string;
   link: string;
   img: string;
+  handleClose: () => void;
 }) => {
   return (
     <div className=" bg-[white] w-full max-w-[529px] mx-auto rounded-[10px] p-6 shadow-lg z-50">
@@ -36,11 +37,11 @@ const RequestPayoutModal = ({
         </p>
       </div>
 
-      <Link href={link || ""}>
-        <div className="mt-8">
-          <Button className="w-full">Okay, Thank you</Button>
-        </div>
-      </Link>
+      <div className="mt-8">
+        <Button className="w-full" onClick={handleClose}>
+          Okay, Thank you
+        </Button>
+      </div>
     </div>
   );
 };

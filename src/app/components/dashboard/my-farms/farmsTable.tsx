@@ -1,14 +1,11 @@
 "use client";
 import { useState, useMemo } from "react";
-import EmployeeSearch, {
+import TransactionSearch, {
   type SortOption,
   type FilterOption,
 } from "../../dashboard/wallet/transactionSearch";
-import TransactionSearch from "./transactionSearch";
 import { PiDotsThreeVertical } from "react-icons/pi";
-import { IoMdTime } from "react-icons/io";
-import { IoArrowDown } from "react-icons/io5";
-import { IoArrowUp } from "react-icons/io5";
+import Image from "next/image";
 
 interface Employee {
   id: number;
@@ -25,71 +22,52 @@ interface Employee {
   descriptionIconColor: string;
   amountColor: string;
   statusColor: string;
-  typeIcons: React.ReactNode;
+  typeIcons: string;
 }
 
-const TEAM_COLORS: Record<
-  string,
-  { backgroundColor: string; textColor: string }
-> = {
-  "Design & Development": { backgroundColor: "#E7E9EA", textColor: "#0C1720" },
-  Advocate: { backgroundColor: "#DFF4F2", textColor: "#0C1720" },
-  Cloud: { backgroundColor: "#F6D5B6", textColor: "#5F3309" },
-  Legal: { backgroundColor: "#E9FAFF", textColor: "#0ECDFF" },
-  Domestic: { backgroundColor: "#E7E9EA", textColor: "#0C1720" },
-  ITSM: { backgroundColor: "#E7E9EA", textColor: "#0C1720" },
-  "Product Office": { backgroundColor: "#E7E9EA", textColor: "#0C1720" },
-  "Artificial Intelligence": {
-    backgroundColor: "#E7E9EA",
-    textColor: "#0C1720",
-  },
-  "Quality Assurance": { backgroundColor: "#E7E9EA", textColor: "#0C1720" },
-  DEVOPS: { backgroundColor: "#E7E9EA", textColor: "#0C1720" },
-};
-
-const DUMMY_EMPLOYEES: Employee[] = Array.from({ length: 5 }).map((_, idx) => ({
+const DUMMY_EMPLOYEES: Employee[] = Array.from({ length: 6 }).map((_, idx) => ({
   id: idx + 1,
   transactionId: [
-    "TRD-20240226",
-    "TRD-20240226",
-    "TRD-20240226",
-    "TRD-20240226",
-    "TRD-20240226",
+    "Green Valley Farm",
+    "Apple Green House",
+    "Green Valley Farm",
+    "Apple Green House",
+    "Green Valley Farm",
+    "Apple Green House",
   ][idx],
   name: [
-    "Payout Request",
-    "Project Funded",
-    "Payout Processed",
-    "Project Funded",
-    "Payout Processed",
+    "Ibadan, Nigeria",
+    "Lagos, Nigeria",
+    "Abuja, Nigeria",
+    "Kano, Nigeria",
+    "Abuja, Nigeria",
+    "Kano, Nigeria",
   ][idx],
   description: [
-    "Request submitted for Milestone 2 payment",
-    "Milestone 2 funding received from Investor",
-    "Payment sent to your bank account",
-    "Milestone 2 funding received from Investor",
-    "Payment sent to your bank account",
+    "CAC-12345",
+    "CAC-12345",
+    "CAC-12345",
+    "CAC-12345",
+    "CAC-12345",
+    "CAC-12345",
   ][idx],
-  amount: [
-    "+ N120,000",
-    "+ N120,000",
-    "+ N120,000",
-    "+ N120,000",
-    "+ N120,000",
-  ][idx],
+  amount: ["34", "10", "6", "2", "8", "18"][idx],
   date: "Jan 21, 2025",
 
-  status: ["Pending", "Pending", "Pending", "Pending", "Pending"][idx],
+  status: ["Active", "Pending", "Active", "Pending", "Inactive", "Pending"][
+    idx
+  ],
   action: ["View", "View", "View", "View", "View"][idx],
   // Add the missing properties required by the Employee interface
   deductions: 0,
   miscAmount: 0,
   typeIcons: [
-    <IoMdTime size={20} color="#DEA304" key={idx} />,
-    <IoArrowUp size={20} color="#00C853" key={idx} />,
-    <IoArrowDown size={20} color="#4379FF" key={idx} />,
-    <IoArrowUp size={20} color="#00C853" key={idx} />,
-    <IoArrowDown size={20} color="#DEA304" key={idx} />,
+    "/assets/my-farms/farmpic.svg",
+    "/assets/my-farms/farmpic.svg",
+    "/assets/my-farms/farmpic.svg",
+    "/assets/my-farms/farmpic.svg",
+    "/assets/my-farms/farmpic.svg",
+    "/assets/my-farms/farmpic.svg",
   ][idx],
   bg: [
     "bg-[#EEFEF6]",
@@ -110,7 +88,8 @@ const DUMMY_EMPLOYEES: Employee[] = Array.from({ length: 5 }).map((_, idx) => ({
     "bg-[#00C853]",
     "bg-[#4379FF]",
     "bg-[#00C853]",
-    "bg-[#4379FF]",
+    "bg-[#FE0503]",
+    "bg-[#00C853]",
   ][idx],
 
   descriptionIconColor: [
@@ -129,10 +108,7 @@ const DUMMY_EMPLOYEES: Employee[] = Array.from({ length: 5 }).map((_, idx) => ({
   ][idx],
 }));
 
-export default function TransactionSearchTable() {
-  const [perPage, setPerPage] = useState(10);
-  const [page, setPage] = useState(1);
-
+export default function FarmListTable() {
   // Search and filter state
   const [searchQuery, setSearchQuery] = useState("");
   const [sortBy, setSortBy] = useState<SortOption>("firstName");
@@ -168,15 +144,15 @@ export default function TransactionSearchTable() {
   }, [DUMMY_EMPLOYEES, searchQuery, sortBy, filterBy]);
 
   return (
-    <section className="bg-white rounded-lg border border-[#E3E3E5]">
+    <section className="">
       <TransactionSearch
-        withHeading={true}
         searchQuery={searchQuery}
         sortBy={sortBy}
         filterBy={filterBy}
         onSearchChange={setSearchQuery}
         onSortChange={setSortBy}
         onFilterChange={setFilterBy}
+        withHeading={true}
       />
 
       <div className="overflow-x-auto">
@@ -186,20 +162,17 @@ export default function TransactionSearchTable() {
               <th className="py-3 px-4 w-[10px] text-left">
                 <input type="checkbox" className="rounded border-gray-300" />
               </th>
-              <th className="py-3 px-4 text-sm text-[#0B222A] font-poppinsSemiBold w-[150px] text-left">
-                Transaction Id
+              <th className="py-3 px-4 text-sm text-[#0B222A] font-poppinsSemiBold w-[200px] text-left">
+                Farm Name
               </th>
               <th className="py-3 px-4 text-sm  text-[#0B222A] font-poppinsSemiBold text-left w-[150px]">
-                Type
+                Location
               </th>
-              <th className="py-3 px-4 text-sm  text-[#0B222A] font-poppinsSemiBold text-left w-[200px]">
-                Description
-              </th>
-              <th className="py-3 px-4 text-sm  text-[#0B222A] font-poppinsSemiBold text-left w-[100px]">
-                Amount
+              <th className="py-3 px-4 text-sm  text-[#0B222A] font-poppinsSemiBold text-left w-[150px]">
+                CAC Reg No
               </th>
               <th className="py-3 px-4 text-sm  text-[#0B222A] font-poppinsSemiBold text-left w-[100px]">
-                Date
+                Branches
               </th>
               <th className="py-3 px-4 text-sm  text-[#0B222A] font-poppinsSemiBold text-left w-[50px]">
                 Status
@@ -216,17 +189,20 @@ export default function TransactionSearchTable() {
                   <input type="checkbox" className="rounded" />
                 </td>
                 <td className="py-3 px-4">
-                  <span className="text-[#1B2229] text-sm font-poppinsRegular">
+                  <span className="text-[#1B2229] text-sm font-poppinsRegular flex items-center gap-2">
+                    <Image
+                      src={emp.typeIcons || "/assets/my-farms/farmpic.svg"}
+                      alt={emp.name}
+                      width={40}
+                      height={40}
+                    />
                     {emp.transactionId}
                   </span>
                 </td>
                 <td
                   className={`py-3 px-4 text-sm font-poppinsRegular ${emp?.nameColor}`}
                 >
-                  <span className="flex items-center gap-2">
-                    {emp?.name}
-                    {emp?.typeIcons}
-                  </span>
+                  <span className="flex items-center gap-2">{emp?.name}</span>
                 </td>
                 <td
                   className={`py-3 px-4 text-sm font-poppinsRegular ${emp?.nameColor}`}
@@ -238,9 +214,7 @@ export default function TransactionSearchTable() {
                 >
                   {emp.amount}
                 </td>
-                <td className="py-3 px-4 text-[#34474E] text-sm font-poppinsRegular">
-                  {emp?.date}
-                </td>
+
                 <td className="py-3 px-4 text-sm text-[#2F2F33]">
                   <span
                     className={`py-2 px-5 ${emp?.statusColor} text-white rounded-xl font-poppinsRegular tracking-[-2%]`}
@@ -248,6 +222,7 @@ export default function TransactionSearchTable() {
                     {emp?.status}
                   </span>
                 </td>
+
                 <td className="py-3 px-4">
                   <div className="w-8 h-8 bg-white p-2 rounded-lg border-[#E4E7EC] border cursor-pointer">
                     <PiDotsThreeVertical color="#001F3F" size={16} />
@@ -258,40 +233,6 @@ export default function TransactionSearchTable() {
           </tbody>
         </table>
       </div>
-
-      {/* <div className="flex items-center justify-between px-6 py-4">
-        <div className="flex items-center gap-2 text-sm text-[#2F2F33]">
-          <span>Show</span>
-          <select
-            value={perPage}
-            onChange={(e) => setPerPage(Number(e.target.value))}
-            className="border border-[#E3E3E5] rounded px-2 py-1"
-          >
-            <option value={10}>10</option>
-            <option value={20}>20</option>
-            <option value={50}>50</option>
-          </select>
-          <span>per page</span>
-        </div>
-
-        <div className="flex items-center gap-4 text-sm">
-          <button
-            onClick={() => setPage((p) => Math.max(1, p - 1))}
-            className="text-[#2F2F33]"
-            disabled={page === 1}
-          >
-            Previous
-          </button>
-          <span className="text-[#2F2F33]">Page {page} of 2</span>
-          <button
-            onClick={() => setPage((p) => p + 1)}
-            className="text-[#2F2F33]"
-            disabled={page === 2}
-          >
-            Next
-          </button>
-        </div>
-      </div> */}
     </section>
   );
 }

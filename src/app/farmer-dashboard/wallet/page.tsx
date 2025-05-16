@@ -1,3 +1,4 @@
+"use client";
 import DashboardLayout from "../../components/common/dashboardLayout";
 import { Topbar } from "../../components/common/dashboard/topBar";
 import { MdOutlineFileCopy } from "react-icons/md";
@@ -8,13 +9,28 @@ import { FaArrowDown } from "react-icons/fa6";
 import PendingPayment from "@/app/components/dashboard/overview/pendingPayment";
 import TransactionSearchTable from "@/app/components/dashboard/wallet/allTransaction";
 import Link from "next/link";
+import { useState } from "react";
+import RequestPayoutUser from "@/app/components/dashboard/wallet/requestPayoutUser";
 
 const Wallet = () => {
+  const [showRequestPayoutModal, setShowRequestPayoutModal] = useState(false);
+  const handleRequestPayoutModal = () => {
+    setShowRequestPayoutModal(true);
+  };
+
+  const handleCloseRequestPayoutModal = () => {
+    setShowRequestPayoutModal(false);
+  };
+
+  const handleCopy = (text: string) => {
+    navigator.clipboard.writeText(text);
+  };
+
   return (
     <DashboardLayout>
       <Topbar overview="Wallet" />
 
-      <main className="px-10 py-10  overflow-auto">
+      <main className="px-10 py-10 overflow-auto bg-gray-50">
         <div className=" mb-8">
           <h2 className="text-xl font-poppinsSemiBold text-[#5F5F5F]">
             Wallet
@@ -52,7 +68,7 @@ const Wallet = () => {
 
                 <div
                   className="bg-[#E9EAE6] cursor-pointer rounded-[8px] px-2 py-1 flex items-center gap-x-2"
-                  // onClick={() => handleCopy("1234567890")}
+                  onClick={() => handleCopy("1234567890")}
                 >
                   <p className="text-[#282A03] font-poppinsRegular text-sm">
                     copy
@@ -66,22 +82,27 @@ const Wallet = () => {
             </div>
 
             <div className="flex items-center gap-x-4">
-              <Link href="/farmer-dashboard/wallet/request-payout">
-                <Button className="flex items-center justify-center gap-x-2 w-full">
+              <div>
+                <Button
+                  className="flex items-center justify-center gap-x-2 w-full"
+                  onClick={handleRequestPayoutModal}
+                >
                   <MdAddAlarm />
                   Request payout
                 </Button>
-              </Link>
+              </div>
 
-              <Link href="/farmer-dashboard/wallet/withdrawfund">
-                <Button
-                  variant="subprimary"
-                  className="flex items-center justify-center gap-x-2 w-full"
-                >
-                  <FaArrowDown size={18} color="#2D865B" />
-                  Withdraw funds
-                </Button>
-              </Link>
+              <div>
+                <Link href="/farmer-dashboard/wallet/withdrawfund">
+                  <Button
+                    variant="subprimary"
+                    className="flex items-center justify-center gap-x-2 w-full"
+                  >
+                    <FaArrowDown size={18} color="#2D865B" />
+                    Withdraw funds
+                  </Button>
+                </Link>
+              </div>
             </div>
           </div>
 
@@ -90,6 +111,11 @@ const Wallet = () => {
 
         <TransactionSearchTable />
       </main>
+      {showRequestPayoutModal && (
+        <RequestPayoutUser
+          handleRequestPayoutModal={handleCloseRequestPayoutModal}
+        />
+      )}
     </DashboardLayout>
   );
 };

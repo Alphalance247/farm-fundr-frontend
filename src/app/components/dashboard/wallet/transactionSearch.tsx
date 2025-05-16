@@ -11,6 +11,7 @@ interface TransactionSearchProps {
   onSearchChange: (value: string) => void;
   onSortChange: (value: SortOption) => void;
   onFilterChange: (value: FilterOption) => void;
+  withHeading: boolean;
 }
 
 export default function TransactionSearch({
@@ -20,13 +21,16 @@ export default function TransactionSearch({
   onSearchChange,
   onSortChange,
   onFilterChange,
+  withHeading,
 }: TransactionSearchProps) {
   return (
-    <div className="py-6 px-4">
+    <div className="mb-6 px-4 py-6">
       <div className="flex items-center justify-between">
-        <h4 className="text-sm font-poppinsSemiBold text-[#5F5F5F]">
-          All Transactions
-        </h4>
+        {withHeading && (
+          <h4 className="text-sm font-poppinsSemiBold text-[#5F5F5F]">
+            All Transactions
+          </h4>
+        )}
 
         <div className="flex items-center gap-4">
           <div className="flex items-center gap-2">
@@ -36,7 +40,7 @@ export default function TransactionSearch({
             <div className="relative w-[280px] flex items-center gap-2">
               <input
                 type="text"
-                placeholder="Search"
+                placeholder="Search by farm name"
                 value={searchQuery}
                 onChange={(e) => onSearchChange(e.target.value)}
                 className="w-full pl-10 pr-4 py-2 border border-[#E3E3E5] rounded-lg text-sm focus:outline-none focus:ring-1 focus:ring-[#E37915] focus:border-[#E37915]"
@@ -61,7 +65,7 @@ export default function TransactionSearch({
           </div>
 
           <div className="flex items-center gap-2">
-            <span className="text-sm font-medium text-[#71717A]">Sort By</span>
+            <span className="text-sm font-medium text-[#71717A]">Modified</span>
             <select
               value={sortBy}
               onChange={(e) => onSortChange(e.target.value as SortOption)}
