@@ -1,5 +1,5 @@
 "use client";
-import { useState, useMemo } from "react";
+import { useState } from "react";
 import TransactionSearch, {
   type SortOption,
   type FilterOption,
@@ -113,35 +113,6 @@ export default function FarmListTable() {
   const [searchQuery, setSearchQuery] = useState("");
   const [sortBy, setSortBy] = useState<SortOption>("firstName");
   const [filterBy, setFilterBy] = useState<FilterOption>("all");
-
-  // Filtered and sorted employees
-  const filteredEmployees = useMemo(() => {
-    return DUMMY_EMPLOYEES.filter((emp) => {
-      const searchLower = searchQuery.toLowerCase();
-      //   const matchesSearch =
-      // emp.name.toLowerCase().includes(searchLower) ||
-      // emp.transactionId.toLowerCase().includes(searchLower);
-
-      //   if (filterBy === "all") return matchesSearch;
-      // Add more filter conditions as needed
-
-      return searchLower;
-    }).sort((a, b) => {
-      switch (sortBy) {
-        case "firstName":
-          return a.name.split(" ")[0].localeCompare(b.name.split(" ")[0]);
-        case "lastName":
-          return a.name
-            .split(" ")
-            .slice(-1)[0]
-            .localeCompare(b.name.split(" ").slice(-1)[0]);
-        case "team":
-          return a.transactionId.localeCompare(b.transactionId);
-        default:
-          return 0;
-      }
-    });
-  }, [DUMMY_EMPLOYEES, searchQuery, sortBy, filterBy]);
 
   return (
     <section className="">

@@ -1,6 +1,6 @@
 "use client";
-import { useState, useMemo } from "react";
-import EmployeeSearch, {
+import { useState } from "react";
+import {
   type SortOption,
   type FilterOption,
 } from "../../dashboard/wallet/transactionSearch";
@@ -27,25 +27,6 @@ interface Employee {
   statusColor: string;
   typeIcons: React.ReactNode;
 }
-
-const TEAM_COLORS: Record<
-  string,
-  { backgroundColor: string; textColor: string }
-> = {
-  "Design & Development": { backgroundColor: "#E7E9EA", textColor: "#0C1720" },
-  Advocate: { backgroundColor: "#DFF4F2", textColor: "#0C1720" },
-  Cloud: { backgroundColor: "#F6D5B6", textColor: "#5F3309" },
-  Legal: { backgroundColor: "#E9FAFF", textColor: "#0ECDFF" },
-  Domestic: { backgroundColor: "#E7E9EA", textColor: "#0C1720" },
-  ITSM: { backgroundColor: "#E7E9EA", textColor: "#0C1720" },
-  "Product Office": { backgroundColor: "#E7E9EA", textColor: "#0C1720" },
-  "Artificial Intelligence": {
-    backgroundColor: "#E7E9EA",
-    textColor: "#0C1720",
-  },
-  "Quality Assurance": { backgroundColor: "#E7E9EA", textColor: "#0C1720" },
-  DEVOPS: { backgroundColor: "#E7E9EA", textColor: "#0C1720" },
-};
 
 const DUMMY_EMPLOYEES: Employee[] = Array.from({ length: 5 }).map((_, idx) => ({
   id: idx + 1,
@@ -130,42 +111,10 @@ const DUMMY_EMPLOYEES: Employee[] = Array.from({ length: 5 }).map((_, idx) => ({
 }));
 
 export default function TransactionSearchTable() {
-  const [perPage, setPerPage] = useState(10);
-  const [page, setPage] = useState(1);
-
   // Search and filter state
   const [searchQuery, setSearchQuery] = useState("");
   const [sortBy, setSortBy] = useState<SortOption>("firstName");
   const [filterBy, setFilterBy] = useState<FilterOption>("all");
-
-  // Filtered and sorted employees
-  const filteredEmployees = useMemo(() => {
-    return DUMMY_EMPLOYEES.filter((emp) => {
-      const searchLower = searchQuery.toLowerCase();
-      //   const matchesSearch =
-      // emp.name.toLowerCase().includes(searchLower) ||
-      // emp.transactionId.toLowerCase().includes(searchLower);
-
-      //   if (filterBy === "all") return matchesSearch;
-      // Add more filter conditions as needed
-
-      return searchLower;
-    }).sort((a, b) => {
-      switch (sortBy) {
-        case "firstName":
-          return a.name.split(" ")[0].localeCompare(b.name.split(" ")[0]);
-        case "lastName":
-          return a.name
-            .split(" ")
-            .slice(-1)[0]
-            .localeCompare(b.name.split(" ").slice(-1)[0]);
-        case "team":
-          return a.transactionId.localeCompare(b.transactionId);
-        default:
-          return 0;
-      }
-    });
-  }, [DUMMY_EMPLOYEES, searchQuery, sortBy, filterBy]);
 
   return (
     <section className="bg-white rounded-lg border border-[#E3E3E5]">
