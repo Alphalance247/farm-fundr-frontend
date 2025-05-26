@@ -1,11 +1,9 @@
 "use client";
 import React, { useState } from "react";
 import Image from "next/image";
-import { LiaTimesSolid } from "react-icons/lia";
 import Button from "@/app/components/common/Buttons";
 import { FaArrowRightLong } from "react-icons/fa6";
 import { IoPencilSharp } from "react-icons/io5";
-import Link from "next/link";
 import BidConfirmModal from "@/app/components/common/modals/bidConfirmModal";
 import BackIcon from "@/app/components/common/backIcon";
 import { Topbar } from "@/app/components/common/dashboard/topBar";
