@@ -60,7 +60,7 @@ export function Topbar({ overview }: { overview: string }) {
           placeholder="Search"
           onChange={handleChange}
           value=""
-          className="pl-8 w-[329px]"
+          className="pl-8 w-[329px] bg-[#F6F6F6]"
           variant="primary"
           withWidth={false}
         />

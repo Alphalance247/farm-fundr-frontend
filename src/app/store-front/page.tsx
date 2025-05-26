@@ -1,0 +1,139 @@
+"use client";
+import { SearchIcon } from "lucide-react";
+import StoreFrontHeading from "../components/dashboard/common/storeFrontHeading";
+import { color } from "../components/data";
+import { TabProvider, useTab } from "@/context/TabContext";
+import { useState } from "react";
+import Input from "../components/common/input";
+import Button from "../components/common/Buttons";
+import StoreFontCard from "../components/store-font/storeFontCard";
+import { FaSortDown } from "react-icons/fa";
+import StoreFontFooter from "../components/store-font/storeFontFooter";
+
+const StoreFront = () => {
+  const { activeTab } = useTab();
+  const [activeButton, setActiveButton] = useState<string>("All");
+  const buttons: { id: number; name: string }[] = [
+    { id: 1, name: "All" },
+    { id: 2, name: "Open" },
+    { id: 3, name: "Closed" },
+  ];
+  return (
+    <TabProvider>
+      <StoreFrontHeading
+        color={color[activeTab].color}
+        textColor={color[activeTab].textColor}
+        badgeColor={color[activeTab].badgeColor}
+        iconColor={color[activeTab].iconColor}
+        withBorderRadius={false}
+      />
+
+      <section className="max-w-[1300px] mx-auto px-4 py-10 md:px-4 md:py-12">
+        <div className="flex gap-3 justify-between mb-16">
+          <div className="">
+            {buttons.map((button) => (
+              <div key={button.id} className="inline-flex gap-x-2">
+                <button
+                  key={button.id}
+                  className={` rounded-xl p-2 ${
+                    button.id === 1 ? "" : "ml-3"
+                  } block text-sm font-poppinsRegular w-full text-[#7C7C7C] ${
+                    activeButton === button.name
+                      ? "bg-[#51F4A6] border border-[#2D865B] text-[#282A03]"
+                      : " border border-[#E2E2E2] bg-white"
+                  }`}
+                  onClick={() => setActiveButton(button.name)}
+                >
+                  {button.name}
+                </button>
+              </div>
+            ))}
+          </div>
+
+          <div className="inline-flex gap-3">
+            <button className="flex items-center gap-2 text-sm font-poppinsRegular text-[#7C7C7C] bg-[#F6F6F6] p-[10px] rounded-lg">
+              All Project
+              <span className="text-sm font-poppinsRegular text-[#7C7C7C]">
+                <FaSortDown color="#6E7055" />
+              </span>
+            </button>
+            <button className="flex items-center gap-2 w-fit text-sm font-poppinsRegular text-[#7C7C7C] bg-[#F6F6F6] p-[10px] rounded-lg">
+              Filter by
+              <span className="text-sm font-poppinsRegular text-[#7C7C7C]">
+                <FaSortDown color="#6E7055" />
+              </span>
+            </button>
+
+            <Input
+              placeholder="Search"
+              type="text"
+              name="search"
+              value=""
+              className="w-[418px]"
+              variant="primary"
+            />
+
+            <Button className="flex items-center gap-2">
+              Search
+              <SearchIcon />
+            </Button>
+          </div>
+        </div>
+        <div className="grid grid-cols-3 gap-10">
+          <StoreFontCard
+            imageUrl="/assets/my-farms/f1.png"
+            status="Active"
+            onViewProjects={() => {
+              /* handle click */
+            }}
+            href="/farmer-dashboard/my-farms/projects/Ibadan Branch"
+          />
+          <StoreFontCard
+            imageUrl="/assets/my-farms/2.png"
+            status="Active"
+            onViewProjects={() => {
+              /* handle click */
+            }}
+            href="/farmer-dashboard/my-farms/projects/Ibadan Branch"
+          />
+          <StoreFontCard
+            imageUrl="/assets/my-farms/f2.png"
+            status="Active"
+            onViewProjects={() => {
+              /* handle click */
+            }}
+            href="/farmer-dashboard/my-farms/projects/Ibadan Branch"
+          />
+          <StoreFontCard
+            imageUrl="/assets/my-farms/f3.png"
+            status="Active"
+            onViewProjects={() => {
+              /* handle click */
+            }}
+            href="/farmer-dashboard/my-farms/projects/Ibadan Branch"
+          />
+          <StoreFontCard
+            imageUrl="/assets/my-farms/f4.png"
+            status="Active"
+            onViewProjects={() => {
+              /* handle click */
+            }}
+            href="/farmer-dashboard/my-farms/projects/Ibadan Branch"
+          />
+          <StoreFontCard
+            imageUrl="/assets/my-farms/f5.png"
+            status="Active"
+            onViewProjects={() => {
+              /* handle click */
+            }}
+            href="/farmer-dashboard/my-farms/projects/Ibadan Branch"
+          />
+        </div>
+      </section>
+
+      <StoreFontFooter />
+    </TabProvider>
+  );
+};
+
+export default StoreFront;

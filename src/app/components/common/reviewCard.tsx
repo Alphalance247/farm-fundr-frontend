@@ -1,12 +1,6 @@
 import Image from "next/image";
+import { images } from "../data";
 const ReviewCard = () => {
-  const images = [
-    "/assets/LandingPage/card/star.svg",
-    "/assets/LandingPage/card/star.svg",
-    "/assets/LandingPage/card/star.svg",
-    "/assets/LandingPage/card/star.svg",
-    "/assets/LandingPage/card/star.svg",
-  ];
   return (
     <div className="bg-[#C9FCE3] border-[#51F4A6] border-l-[15px] rounded-[20px] mb-10 px-5 py-10 mr-4 lg:px-3 lg:py-3 md:mr-[4px]">
       <p className="text-lg font-poppinsRegular text-[#7C7C7C] mb-10 lg:mb-6 lg:text-base">
