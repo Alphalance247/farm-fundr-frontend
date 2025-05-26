@@ -2,6 +2,7 @@ import React from "react";
 import Image from "next/image";
 import { MdCardTravel } from "react-icons/md";
 import Button from "../common/Buttons";
+import Link from "next/link";
 
 interface StoreFontCardProps {
   status: "Active" | "Inactive";
@@ -116,22 +117,28 @@ const StoreFontCard: React.FC<StoreFontCardProps> = ({
         </div>
 
         <div className="flex items-center gap-x-3">
-          <Button
-            variant="primary"
-            size="small"
-            className="w-full flex items-center justify-center gap-x-2"
-          >
-            <MdCardTravel color="white" size={24} />
-            Bid Now
-          </Button>
-          <Button
-            className="w-full"
-            variant="secondary"
-            size="small"
-            onClick={onViewProjects}
-          >
-            View Details
-          </Button>
+          <div>
+            <Button
+              variant="primary"
+              size="small"
+              className="w-full flex items-center justify-center gap-x-2"
+            >
+              <MdCardTravel color="white" size={24} />
+              Bid Now
+            </Button>
+          </div>
+          <div>
+            <Link href={"/store-front/1"}>
+              <Button
+                className="w-full"
+                variant="secondary"
+                size="small"
+                onClick={onViewProjects}
+              >
+                View Details
+              </Button>
+            </Link>
+          </div>
         </div>
       </div>
     </div>
