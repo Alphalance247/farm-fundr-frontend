@@ -67,6 +67,7 @@ const RequestPayout = () => {
               notified shortly for your withdrawal on your wallet. Thank you!"
           link="/farmer-dashboard/wallet"
           img="/assets/DashBoard/wallet/success-request.svg"
+          handleClose={handleCloseModal}
         />
         // <div className=" bg-[white] w-full max-w-[529px] mx-auto rounded-[10px] p-6 shadow-lg z-50">
         //   <Image
@@ -103,6 +104,7 @@ const RequestPayout = () => {
           description="You don’t have enough balance on your wallet to request for payout at the moment. Make sure you have enough balance on your wallet before you request for payout."
           link="/farmer-dashboard/wallet"
           img="/assets/DashBoard/wallet/failed-request.svg"
+          handleClose={handleCloseModal}
         />
       )}
     </ModalOverlay>
