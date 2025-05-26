@@ -8,7 +8,8 @@ type buttonVariant =
   | "search"
   | "googleBtn"
   | "subprimary"
-  | "subsecondary";
+  | "subsecondary"
+  | "subtertiary";
 
 type buttonSize = "small" | "medium" | "large" | "switch";
 
@@ -46,6 +47,9 @@ const Button: React.FC<buttonProps> = ({
       "bg-[#EEFEF6] border-[0.75px] text-[#2D865B] rounded-[2.5rem] border-[#2D865B] hover:opacity-[0.8] hover:transition-all hover:duration-500",
     subsecondary:
       "bg-[#FCFCFC] border-[1px] text-[#2D865B] border-[#E8E8E8] rounded-[0.5rem] hover:opacity-[0.8] hover:transition-all hover:duration-500",
+
+    subtertiary:
+      "bg-[transparent] border border-[#2D865B] text-white hover:opacity-[0.8] rounded-[2.5rem] hover:transition-all hover:duration-500 md:w-full",
   };
 
   const buttonSize = {

@@ -23,6 +23,7 @@ const Card = () => {
           Open
         </p>
       </div>
+
       <div className="flex items-start gap-x-5 mb-2">
         <Image
           src="/assets/LandingPage/card/logo.svg"

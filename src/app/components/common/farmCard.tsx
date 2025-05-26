@@ -1,7 +1,7 @@
 import React from "react";
 import Image from "next/image";
-import Button from "../../common/Buttons";
 import Link from "next/link";
+import Button from "./Buttons";
 
 interface BranchFarmCardProps {
   branchName: string;
@@ -11,16 +11,13 @@ interface BranchFarmCardProps {
   openingHours: string;
   status: "Active" | "Inactive";
   imageUrl: string;
-  onViewProjects?: () => void;
   href: string;
 }
 
-const BranchFarmCard: React.FC<BranchFarmCardProps> = ({
+const FarmCard: React.FC<BranchFarmCardProps> = ({
   branchName,
-  farmName,
   address,
   projectsCount,
-  openingHours,
   status,
   imageUrl,
   href,
@@ -46,17 +43,8 @@ const BranchFarmCard: React.FC<BranchFarmCardProps> = ({
           />
           <span>{status || "Active"}</span>
         </div>
-        <button className="absolute top-3 right-3 bg-[#F6F6F6] rounded-xl w-11 h-9 p-1 shadow">
-          <span className="text-xl text-[#7C7C7C]">⋯</span>
-        </button>
       </div>
       <div className=" px-3 py-4 border border-[#F6F6F6]">
-        <h3 className="text-xl font-aristoBold text-[#5F5F5F] mb-2">
-          {branchName}
-        </h3>
-        <p className="text-sm text-[#7C7C7C] font-poppinsRegular">
-          Farm name: <span className=" font-poppinsSemiBold">{farmName}</span>
-        </p>
         <div className="flex items-center text-sm text-[#7C7C7C] mt-3 font-poppinsRegular mb-3">
           <span className="mr-1">
             <Image
@@ -80,23 +68,13 @@ const BranchFarmCard: React.FC<BranchFarmCardProps> = ({
           </span>
           {projectsCount}
         </div>
-        <div className="flex items-center text-sm font-poppinsRegular text-[#7C7C7C] mt-3">
-          <span className="mr-1">
-            <Image
-              src="/assets/my-farms/6.svg"
-              alt="time"
-              width={24}
-              height={24}
-            />
-          </span>
-          {openingHours}
-        </div>
+
         <Link href={`${href}`}>
-          <Button className="mt-6 w-full"> View All Projects</Button>
+          <Button className="mt-6 w-full"> Go to Branches</Button>
         </Link>
       </div>
     </div>
   );
 };
 
-export default BranchFarmCard;
+export default FarmCard;
