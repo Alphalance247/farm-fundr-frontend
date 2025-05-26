@@ -32,11 +32,11 @@ const Sidebar: React.FC = () => {
     {
       text: "Dashboard",
       link: "/farmer-dashboard",
-      icons: <HiOutlineHome size={20} fill="white" />,
+      icons: <HiOutlineHome size={20} />,
     },
     {
       text: "My Farms",
-      link: "/farmer-dashboard/iiiio",
+      link: "/farmer-dashboard/my-farms",
       icons: <TbReportAnalytics size={20} />,
       notification: "10",
       bgColor: "bg-[#F2F2F2]",
@@ -44,7 +44,7 @@ const Sidebar: React.FC = () => {
     },
     {
       text: "Message",
-      link: "/farmer-dashboard/hhhjs",
+      link: "/farmer-dashboard/message",
       icons: <MdOutlineMessage size={20} />,
       notification: "10",
       bgColor: "bg-[#2D865B]",
@@ -52,33 +52,33 @@ const Sidebar: React.FC = () => {
     },
     {
       text: "Analytics",
-      link: "/compliance",
+      link: "/farmer-dashboard/analytics",
       icons: <MdOutlineAnalytics size={20} />,
     },
     {
       text: "Wallet",
-      link: "/compliance",
+      link: "/farmer-dashboard/wallet",
       icons: <MdOutlineAccountBalanceWallet size={20} />,
     },
     {
       text: "Subscription",
-      link: "/compliance",
+      link: "/farmer-dashboard/subscription",
       icons: <MdOutlinePayment size={20} />,
     },
     {
       text: "Settings",
-      link: "/compliance",
+      link: "/farmer-dashboard/settings",
       icons: <CiSettings size={20} />,
     },
     {
       text: "Help Center",
-      link: "/compliance",
+      link: "/farmer-dashboard/help-center",
       icons: <PiHeadsetLight size={20} />,
     },
   ];
 
   return (
-    <aside className="w-80 bg-white overflow-y-scroll h-screen ">
+    <aside className="w-80 bg-white overflow-y-scroll h-screen">
       {/* Logo / Brand Name */}
       <div className="flex flex-col justify-between ">
         <div className="font-bold">
@@ -117,14 +117,20 @@ const Sidebar: React.FC = () => {
                             item.text === "Subscription"
                               ? "border-b border-[#F0F2F5] pb-6"
                               : ""
-                          }  hover:bg-[#F0F2F5] hover:rounded-lg ${
+                          }  hover:bg-[#F0F2F5] hover:animate-out hover:rounded-lg ${
                             pathname === item?.link
                               ? "bg-[linear-gradient(90deg,#2D865B_0%,#12482F_100%)] text-[white] rounded-lg text-sm font-poppinsSemiBold"
                               : "bg-transparent text-[#7C7C7C] text-sm font-poppinsRegular"
                           }`}
                         >
                           <div className="flex gap-x-3 items-center">
-                            <span className=" fill-white text-[#7C7C7C]">
+                            <span
+                              className={` ${
+                                pathname === item?.link
+                                  ? "fill-white"
+                                  : "fill-[#7C7C7C]"
+                              }`}
+                            >
                               {item?.icons}
                             </span>
                             <li className="text-sm  font-medium font-Graphik">

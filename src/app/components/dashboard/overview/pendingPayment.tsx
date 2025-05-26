@@ -4,9 +4,17 @@ import { FaCaretDown } from "react-icons/fa";
 import Image from "next/image";
 import Button from "../../common/Buttons";
 
-const PendingPayment = () => {
+const PendingPayment = ({
+  isTotalAvailable = true,
+}: {
+  isTotalAvailable?: boolean;
+}) => {
   return (
-    <div className="mt-6 px-[22px] py-8 border border-[#E4E7EC] bg-[white] rounded-xl">
+    <div
+      className={`px-[22px] py-8 border border-[#E4E7EC] bg-[white] rounded-xl ${
+        isTotalAvailable && "mt-6"
+      }`}
+    >
       <div className="flex justify-between  items-center mb-4">
         <SubHead text="Pending Payment" />
         <div className="relative flex items-center gap-x-4">
@@ -34,12 +42,16 @@ const PendingPayment = () => {
         </div>
       </div>
 
-      <div className="border-b border-b-[#E2E2E2] mb-4">
-        <p className="mb-1 text-sm font-poppinsRegular text-[#5F5F5F]">Total</p>
-        <h4 className=" font-poppinsSemiBold text-[#5F5F5F]">N500,000.00</h4>
-      </div>
+      {isTotalAvailable && (
+        <div className="mb-2">
+          <p className="mb-1 text-sm font-poppinsRegular text-[#5F5F5F]">
+            Total
+          </p>
+          <h4 className=" font-poppinsSemiBold text-[#5F5F5F]">N500,000.00</h4>
+        </div>
+      )}
 
-      <div className="flex flex-col gap-y-4">
+      <div className="flex flex-col gap-y-4 border-t border-t-[#E2E2E2] pt-2">
         <div className="bg-[#FCFCFC] p-4 rounded-xl flex justify-between ">
           <div className="flex items-center gap-x-2">
             <Image
@@ -86,13 +98,15 @@ const PendingPayment = () => {
           </p>
         </div>
 
-        <Button
-          variant="secondary"
-          size="small"
-          className="w-[180px] mt-6 mx-auto"
-        >
-          View All
-        </Button>
+        {isTotalAvailable && (
+          <Button
+            variant="secondary"
+            size="small"
+            className="w-[180px] mt-6 mx-auto"
+          >
+            View All
+          </Button>
+        )}
       </div>
     </div>
   );
