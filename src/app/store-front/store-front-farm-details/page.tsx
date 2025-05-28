@@ -6,6 +6,7 @@ import { useTab } from "@/context/TabContext";
 import GoBackBtn from "@/app/components/common/goBack";
 import { useState } from "react";
 import Overview from "@/app/components/store-font/store-front-farm-details/overview";
+import FarmersProfile from "@/app/components/store-font/store-front-farm-details/farmersProfile";
 
 const StoreFrontFarmDetails = () => {
   const { activeTab } = useTab();
@@ -44,12 +45,7 @@ const StoreFrontFarmDetails = () => {
 
         <div className="mt-8">
           {activeBtn === "Overview" && <Overview />}
-          {activeBtn === "Farmer’s Profile" && (
-            <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam,
-              quos.
-            </p>
-          )}
+          {activeBtn === "Farmer’s Profile" && <FarmersProfile />}
         </div>
       </section>
 
