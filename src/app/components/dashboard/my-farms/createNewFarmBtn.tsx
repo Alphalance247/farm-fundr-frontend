@@ -11,7 +11,7 @@ const CreateNewFarmBtn = () => {
           alt="plus"
         />
       </span>
-      Create Farm
+      Create New
       <span>
         <FaAngleDown size={24} color="white" />
       </span>

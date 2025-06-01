@@ -44,47 +44,57 @@ const StoreFrontHeading = ({
             height={168}
           />
           <div>
-            <h3
-              className={`text-[22px] ${textColor} leading-7 font-aristoBold mb-1`}
-            >
-              FarmPady
-            </h3>
+            <div className="flex gap-x-3 items-center mb-1">
+              <h3
+                className={`text-[22px] ${textColor} leading-7 font-aristoBold `}
+              >
+                FarmPady
+              </h3>
+              {withBorderRadius || (
+                <p
+                  className={`text-sm font-poppinsRegular w-fit text-[#226646] px-3 py-[6px] rounded-[79px] flex items-center justify-center gap-2 bg-[#FFFFFF]`}
+                >
+                  <MdVerifiedUser fill="#00C853" size={16} />
+                  Verified
+                </p>
+              )}
+            </div>
             <p className={`${textColor} mb-1`}>
-              <span className="text-[10px] font-poppinsRegular"> Address:</span>{" "}
-              <span className="font-poppinsSemiBold text-[10px]">
+              <span className="text-xs font-poppinsRegular"> Address:</span>{" "}
+              <span className="font-poppinsSemiBold text-xs">
                 Lagos Nigeria{" "}
               </span>
             </p>
+            {withBorderRadius && (
+              <p className={`${textColor} mb-1`}>
+                <span className="text-xs font-poppinsRegular">
+                  Farmer Name::
+                </span>{" "}
+                <span className="font-poppinsSemiBold text-xs">
+                  Aderibigbe Adigun
+                </span>
+              </p>
+            )}
             <p className={`${textColor} mb-1`}>
-              <span className="text-[10px] font-poppinsRegular">
-                Farmer Name::
-              </span>{" "}
-              <span className="font-poppinsSemiBold text-[10px]">
-                Aderibigbe Adigun
-              </span>
-            </p>
-            <p className={`${textColor} mb-1`}>
-              <span className="text-[10px] font-poppinsRegular">
-                CAC Reg No:
-              </span>{" "}
-              <span className="font-poppinsSemiBold text-[10px]">
-                CAC-12345
-              </span>
+              <span className="text-xs font-poppinsRegular">CAC Reg No:</span>{" "}
+              <span className="font-poppinsSemiBold text-xs">CAC-12345</span>
             </p>
 
-            <p
-              className={`text-sm font-poppinsRegular mt-2 w-fit ${textColor} px-3 py-[6px] rounded-[79px] flex items-center justify-center gap-2 bg-[#FFFFFF33]`}
-            >
-              <MdVerifiedUser className={`${badgeColor}`} size={16} />
-              Verified
-            </p>
+            {withBorderRadius && (
+              <p
+                className={`text-sm font-poppinsRegular mt-2 w-fit ${textColor} px-3 py-[6px] rounded-[79px] flex items-center justify-center gap-2 bg-[#FFFFFF33]`}
+              >
+                <MdVerifiedUser className={`${badgeColor}`} size={16} />
+                Verified
+              </p>
+            )}
 
             <div className="flex gap-x-3 mt-4">
               <Button
                 className={`w-fit flex items-center justify-center gap-2 ${textColor}`}
                 variant="subtertiary"
               >
-                <FaRegEnvelope size={16} className={`${iconColor}`} />
+                <FaRegEnvelope size={16} />
                 Send a message
               </Button>
 
@@ -93,7 +103,7 @@ const StoreFrontHeading = ({
                   className="w-fit flex items-center justify-center gap-2"
                   variant="secondary"
                 >
-                  <BsEyeFill size={16} color={textColor} fill={textColor} />
+                  <BsEyeFill size={16} />
                   View Farm
                 </Button>
               </Link>

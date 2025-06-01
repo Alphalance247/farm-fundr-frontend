@@ -9,15 +9,26 @@ import Button from "../components/common/Buttons";
 import StoreFontCard from "../components/store-font/storeFontCard";
 import { FaSortDown } from "react-icons/fa";
 import StoreFontFooter from "../components/store-font/storeFontFooter";
+import PlaceBid from "../components/store-font/placeBid";
 
 const StoreFront = () => {
   const { activeTab } = useTab();
   const [activeButton, setActiveButton] = useState<string>("All");
+  const [showBidModal, setShowBidModal] = useState<boolean>(false);
   const buttons: { id: number; name: string }[] = [
     { id: 1, name: "All" },
     { id: 2, name: "Open" },
     { id: 3, name: "Closed" },
   ];
+
+  const handleBid = () => {
+    setShowBidModal((prev) => !prev);
+  };
+
+  const handleCloseBidModal = () => {
+    setShowBidModal((prev) => !prev);
+  };
+
   return (
     <TabProvider>
       <StoreFrontHeading
@@ -71,6 +82,7 @@ const StoreFront = () => {
               value=""
               className="w-[418px]"
               variant="primary"
+              onChange={() => {}}
             />
 
             <Button className="flex items-center gap-2">
@@ -87,6 +99,7 @@ const StoreFront = () => {
               /* handle click */
             }}
             href="/farmer-dashboard/my-farms/projects/Ibadan Branch"
+            onViewBid={handleBid}
           />
           <StoreFontCard
             imageUrl="/assets/my-farms/2.png"
@@ -132,6 +145,13 @@ const StoreFront = () => {
       </section>
 
       <StoreFontFooter />
+
+      {showBidModal && (
+        <PlaceBid
+          handleRequestPayoutModal={handleCloseBidModal}
+          onCloseBid={handleCloseBidModal}
+        />
+      )}
     </TabProvider>
   );
 };
