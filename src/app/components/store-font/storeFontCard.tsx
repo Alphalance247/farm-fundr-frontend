@@ -9,12 +9,14 @@ interface StoreFontCardProps {
   imageUrl: string;
   onViewProjects?: () => void;
   href: string;
+  onViewBid?: () => void;
 }
 
 const StoreFontCard: React.FC<StoreFontCardProps> = ({
   status,
   imageUrl,
   onViewProjects,
+  onViewBid,
 }) => {
   return (
     <div className="bg-white rounded-xl w-full shadow-lg">
@@ -122,6 +124,7 @@ const StoreFontCard: React.FC<StoreFontCardProps> = ({
               variant="primary"
               size="small"
               className="w-full flex items-center justify-center gap-x-2"
+              onClick={onViewBid}
             >
               <MdCardTravel color="white" size={24} />
               Bid Now
