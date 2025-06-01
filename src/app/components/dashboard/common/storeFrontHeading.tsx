@@ -9,7 +9,6 @@ const StoreFrontHeading = ({
   color,
   textColor,
   badgeColor,
-  iconColor,
   withBorderRadius = true,
 }: {
   color: string;
