@@ -24,6 +24,7 @@ const FarmDetails = ({
 }) => {
   const [countries, setCountries] = useState<ICountry[]>([]);
   const [states, setStates] = useState<IState[]>([]);
+
   // Load countries on component mount
   useEffect(() => {
     const loadCountries = () => {

@@ -16,3 +16,33 @@ export interface FarmFormData {
   //     [key: string]: { file: File | null; preview: string | null };
   //   };
 }
+
+export interface branchFormData {
+  selectFarm: string;
+  branchName: string;
+  branchAddress: string;
+  description: string;
+  branchSize: string;
+  fieldType: string;
+  workHours: string;
+  time: string;
+}
+
+export interface projectFormData {
+  selectFarm: string;
+  selectBranch: string;
+  projectName: string;
+  projectType: string;
+  branchAddress: string;
+  fundingDetails: string;
+  description: string;
+  investmentStart: string;
+  investmentEnd: string;
+  paymentType: string;
+  howItWorks: string;
+  progressOvertime: string;
+  branchSize: string;
+  fieldType: string;
+  workHours: string;
+  time: string;
+}
