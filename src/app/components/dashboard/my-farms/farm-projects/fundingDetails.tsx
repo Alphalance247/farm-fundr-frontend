@@ -2,16 +2,20 @@ import Label from "@/app/components/common/label";
 import Input from "@/app/components/common/input";
 import { projectFormData } from "@/utils/form";
 import Button from "@/app/components/common/Buttons";
-import { FaArrowRightLong } from "react-icons/fa6";
+import { FaArrowLeftLong, FaArrowRightLong } from "react-icons/fa6";
 
 const FundingDetails = ({
   form,
   setForm,
   setFormStep,
+  formStep,
+  setCompletedSteps,
 }: {
   form: projectFormData;
   setForm: (form: projectFormData) => void;
   setFormStep: (formStep: number) => void;
+  setCompletedSteps: (steps: number[] | ((prev: number[]) => number[])) => void;
+  formStep: number;
 }) => {
   return (
     <div>
@@ -29,6 +33,36 @@ const FundingDetails = ({
               setForm({ ...form, fundingDetails: e.target.value })
             }
           />
+        </div>
+
+        <div>
+          <div>
+            <Label className="">Expected Return (ROI)</Label>
+            <input
+              name="expectedReturn"
+              className="w-full bg-[#EEFEF6]"
+              min="1"
+              max="100"
+              type="range"
+              value={form?.expectedReturn}
+              placeholder="Enter farm size"
+              onChange={(e) =>
+                setForm({ ...form, expectedReturn: e.target.value })
+              }
+            />
+          </div>
+
+          <div className="flex items-center justify-between mt-3">
+            <p className="bg-[#8B8B8B] h-[3px] w-2 rounded-[1px]"></p>
+            <div className="flex items-center gap-x-2">
+              <p className=" font-poppinsSemiBold text-sm text-[#7C7C7C]">
+                ROI%:
+              </p>
+              <p className="px-3 py-[10px] border border-[#E2E2E2] bg-[#FCFCFC] text-[#5F5F5F] font-poppinsSemiBold text-sm rounded-[20px]">
+                {form?.expectedReturn} %
+              </p>
+            </div>
+          </div>
         </div>
 
         <div className="grid grid-cols-2 gap-x-6">
@@ -82,12 +116,29 @@ const FundingDetails = ({
         </div>
       </div>
 
-      <div className="mt-8">
+      <div className="mt-8 flex items-center justify-between">
         <Button
-          className="w-full flex items-center justify-center gap-x-4"
+          className="w-fit flex items-center justify-center gap-x-4"
+          onClick={(e) => {
+            e.preventDefault();
+            setCompletedSteps((prev) =>
+              prev.filter((step) => step !== formStep)
+            );
+            setFormStep(formStep - 1);
+          }}
+          variant="secondary"
+        >
+          <span>
+            <FaArrowLeftLong />
+          </span>{" "}
+          Previous
+        </Button>
+        <Button
+          className="w-fit flex items-center justify-center gap-x-4"
           onClick={(e) => {
             e.preventDefault();
             setFormStep(3);
+            setCompletedSteps((prev) => [...prev, formStep]);
           }}
         >
           Proceed{" "}

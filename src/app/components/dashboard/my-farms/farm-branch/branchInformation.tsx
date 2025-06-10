@@ -8,10 +8,14 @@ const BranchInformation = ({
   form,
   setForm,
   setFormStep,
+  setCompletedSteps,
+  formStep,
 }: {
   form: branchFormData;
   setForm: (form: branchFormData) => void;
   setFormStep: (formStep: number) => void;
+  setCompletedSteps: (steps: number[] | ((prev: number[]) => number[])) => void;
+  formStep: number;
 }) => {
   return (
     <div>
@@ -84,6 +88,7 @@ const BranchInformation = ({
           onClick={(e) => {
             e.preventDefault();
             setFormStep(2);
+            setCompletedSteps((prev) => [...prev, formStep]);
           }}
         >
           Proceed{" "}

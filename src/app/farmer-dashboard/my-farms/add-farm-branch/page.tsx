@@ -9,6 +9,7 @@ import BranchSizeDetails from "@/app/components/dashboard/my-farms/farm-branch/b
 const AddFarmBranch = () => {
   const [formStep, setFormStep] = useState(1);
   const [file, setFile] = useState<File | null>(null);
+  const [completedSteps, setCompletedSteps] = useState<number[]>([]);
   const [form, setForm] = useState({
     selectFarm: "",
     branchName: "",
@@ -20,12 +21,14 @@ const AddFarmBranch = () => {
     time: "",
   });
 
+  console.log(file);
+
   return (
     <DashboardLayout>
       <main className="px-10 py-10 bg-gray-50 overflow-auto">
         <div className="flex gap-x-6">
           <div className="w-[30%]">
-            <GoBackBtn href="/my-farms" />
+            <GoBackBtn href="/farmer-dashboard/my-farms" />
 
             <div className="border border-[#FEF0B0] bg-[#FFFAE6] rounded-lg p-3 flex gap-x-5 items-start mt-6 ">
               <Image
@@ -70,28 +73,16 @@ const AddFarmBranch = () => {
             Step {formStep}/2
           </div>
           <div className="flex gap-x-2 justify-center mt-4 mb-6">
-            <div
-              className={`w-[114px] h-[3px]  rounded-xl ${
-                formStep === 1 ? "bg-[#51F4A6]" : "bg-[#E2E2E2]"
-              }
-              `}
-            ></div>
-            <div
-              className={`w-[114px] h-[3px]  rounded-xl ${
-                formStep === 2 ? "bg-[#51F4A6]" : "bg-[#E2E2E2]"
-              }
-              `}
-            ></div>
-
-            {/* {[1, 2].map((el, i) => (
+            {[1, 2].map((el, i) => (
               <div
                 className={`w-[114px] h-[3px]  rounded-xl ${
-                  formStep === 2 ? "bg-[#51F4A6]" : "bg-[#E2E2E2]"
-                }
-                `}
+                  completedSteps.includes(i + 1) || formStep === i + 1
+                    ? "bg-[#51F4A6]"
+                    : "bg-[#E2E2E2]"
+                }`}
                 key={i}
               ></div>
-            ))} */}
+            ))}
           </div>
 
           <form action="" className="w-[70%] mx-auto">
@@ -100,6 +91,8 @@ const AddFarmBranch = () => {
                 form={form}
                 setForm={setForm}
                 setFormStep={setFormStep}
+                formStep={formStep}
+                setCompletedSteps={setCompletedSteps}
               />
             )}
             {formStep === 2 && (
@@ -108,6 +101,8 @@ const AddFarmBranch = () => {
                 setForm={setForm}
                 setFile={setFile}
                 setFormStep={setFormStep}
+                formStep={formStep}
+                setCompletedSteps={setCompletedSteps}
               />
             )}
           </form>

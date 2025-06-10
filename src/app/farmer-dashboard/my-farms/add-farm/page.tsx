@@ -7,7 +7,7 @@ import GoBackBtn from "@/app/components/common/goBack";
 import Label from "@/app/components/common/label";
 import Input from "@/app/components/common/input";
 import Button from "@/app/components/common/Buttons";
-import { FaArrowRightLong } from "react-icons/fa6";
+import { FaArrowRightLong, FaArrowLeftLong } from "react-icons/fa6";
 import { FiDownload } from "react-icons/fi";
 import FarmDetails from "@/app/components/dashboard/my-farms/form-steps/farmDetails";
 import FarmHeading from "@/app/components/dashboard/my-farms/common/farmHeading";
@@ -110,10 +110,12 @@ const AddFarm = () => {
       <Topbar overview="My farm" />
 
       <main className="px-10 py-10 bg-gray-50 overflow-auto">
-        <div className="flex gap-x-6">
+        <div
+          className={`flex gap-x-6  ${formStep !== 5 ? "" : "justify-center"}`}
+        >
           {formStep !== 5 && (
             <div className="w-[30%]">
-              <GoBackBtn href="/my-farms" />
+              <GoBackBtn href="/farmer-dashboard/my-farms" />
 
               <div className="border border-[#FEF0B0] bg-[#FFFAE6] rounded-lg p-3 flex gap-x-5 items-start mt-6 ">
                 <Image
@@ -155,6 +157,8 @@ const AddFarm = () => {
                 ? "Set Up Your Farm Ownership"
                 : formStep === 4
                 ? "Farm Images"
+                : formStep === 5
+                ? "Project Summary"
                 : ""}
             </h3>
           </div>
@@ -248,16 +252,33 @@ const AddFarm = () => {
                   </div>
                 </div>
 
-                <div className="mt-8">
+                <div className="mt-8 flex items-center justify-between">
                   <Button
-                    className="w-full flex items-center justify-center gap-x-4"
+                    className="w-fit flex items-center justify-center gap-x-4"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setCompletedSteps((prev) =>
+                        prev.filter((step) => step !== formStep)
+                      );
+                      setFormStep(formStep - 1);
+                    }}
+                    variant="secondary"
+                  >
+                    <span>
+                      <FaArrowLeftLong />
+                    </span>{" "}
+                    Previous
+                  </Button>
+
+                  <Button
+                    className="w-fit flex items-center justify-center gap-x-4"
                     onClick={(e) => {
                       e.preventDefault();
                       setFormStep(3);
                       setCompletedSteps((prev) => [...prev, formStep]);
                     }}
                   >
-                    Back{" "}
+                    Proceed{" "}
                     <span>
                       <FaArrowRightLong />
                     </span>{" "}
@@ -379,9 +400,27 @@ const AddFarm = () => {
                   </div>
                 </div>
 
-                <div className="mt-8">
+                <div className="mt-8 flex items-center justify-between">
                   <Button
-                    className="w-full flex items-center justify-center gap-x-4"
+                    className="w-fit flex items-center justify-center gap-x-4"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setFormStep(formStep - 1);
+                      // Remove the current step from completedSteps
+                      setCompletedSteps((prev) =>
+                        prev.filter((step) => step !== formStep)
+                      );
+                    }}
+                    variant="secondary"
+                  >
+                    <span>
+                      <FaArrowLeftLong />
+                    </span>{" "}
+                    Previous{" "}
+                  </Button>
+
+                  <Button
+                    className="w-fit flex items-center justify-center gap-x-4"
                     onClick={(e) => {
                       e.preventDefault();
                       setFormStep(4);
@@ -527,9 +566,26 @@ const AddFarm = () => {
                   </div>
                 </div>
 
-                <div className="mt-8">
+                <div className="mt-8 flex items-center justify-between">
                   <Button
-                    className="w-full flex items-center justify-center gap-x-4"
+                    className="w-fit flex items-center justify-center gap-x-4"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setCompletedSteps((prev) =>
+                        prev.filter((step) => step !== formStep)
+                      );
+                      setFormStep(formStep - 1);
+                    }}
+                    variant="secondary"
+                  >
+                    <span>
+                      <FaArrowLeftLong />
+                    </span>{" "}
+                    Previous{" "}
+                  </Button>
+
+                  <Button
+                    className="w-fit flex items-center justify-center gap-x-4"
                     onClick={(e) => {
                       e.preventDefault();
                       setFormStep(5);
@@ -691,6 +747,15 @@ const AddFarm = () => {
                       </div>
                     </div>
                   </div>
+                </div>
+
+                <div className="mt-8 ">
+                  <Button className="w-full flex items-center justify-center gap-x-4">
+                    Submit For review
+                    <span>
+                      <FaArrowRightLong />
+                    </span>{" "}
+                  </Button>
                 </div>
               </div>
             )}

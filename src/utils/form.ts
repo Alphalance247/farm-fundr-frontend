@@ -34,6 +34,7 @@ export interface projectFormData {
   projectName: string;
   projectType: string;
   branchAddress: string;
+  expectedReturn: string;
   fundingDetails: string;
   description: string;
   investmentStart: string;

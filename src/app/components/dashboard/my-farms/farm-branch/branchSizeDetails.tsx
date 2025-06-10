@@ -2,7 +2,7 @@ import Label from "@/app/components/common/label";
 import Input from "@/app/components/common/input";
 import { branchFormData } from "@/utils/form";
 import Button from "@/app/components/common/Buttons";
-import { FaArrowRightLong } from "react-icons/fa6";
+import { FaArrowRightLong, FaArrowLeftLong } from "react-icons/fa6";
 import { FiDownload } from "react-icons/fi";
 import Image from "next/image";
 import { useState } from "react";
@@ -12,11 +12,15 @@ const BranchSizeDetails = ({
   setForm,
   setFile,
   setFormStep,
+  setCompletedSteps,
+  formStep,
 }: {
   form: branchFormData;
   setForm: (form: branchFormData) => void;
   setFile: (file: File) => void;
   setFormStep: (formStep: number) => void;
+  setCompletedSteps: (steps: number[] | ((prev: number[]) => number[])) => void;
+  formStep: number;
 }) => {
   const [preview, setPreview] = useState<string | null>(null);
 
@@ -158,15 +162,31 @@ const BranchSizeDetails = ({
         </div>
       </div>
 
-      <div className="mt-8">
+      <div className="mt-8 flex items-center justify-between">
         <Button
-          className="w-full flex items-center justify-center gap-x-4"
+          className="w-fit flex items-center justify-center gap-x-4"
+          onClick={(e) => {
+            e.preventDefault();
+            setCompletedSteps((prev) =>
+              prev.filter((step) => step !== formStep)
+            );
+            setFormStep(formStep - 1);
+          }}
+          variant="secondary"
+        >
+          <span>
+            <FaArrowLeftLong />
+          </span>{" "}
+          Previous
+        </Button>
+        <Button
+          className="w-fit flex items-center justify-center gap-x-4"
           onClick={(e) => {
             e.preventDefault();
             setFormStep(2);
           }}
         >
-          Proceed{" "}
+          Proceed to branch review
           <span>
             <FaArrowRightLong />
           </span>{" "}

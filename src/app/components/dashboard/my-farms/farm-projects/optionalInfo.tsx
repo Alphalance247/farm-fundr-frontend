@@ -2,7 +2,7 @@
 import Label from "@/app/components/common/label";
 import { projectFormData } from "@/utils/form";
 import Button from "@/app/components/common/Buttons";
-import { FaArrowRightLong } from "react-icons/fa6";
+import { FaArrowLeftLong, FaArrowRightLong } from "react-icons/fa6";
 import { useState } from "react";
 import Image from "next/image";
 import { FiDownload } from "react-icons/fi";
@@ -12,11 +12,15 @@ const OptionalInfo = ({
   setForm,
   setFormStep,
   setFile,
+  formStep,
+  setCompletedSteps,
 }: {
   form: projectFormData;
   setForm: (form: projectFormData) => void;
   setFormStep: (formStep: number) => void;
   setFile: (file: File) => void;
+  setCompletedSteps: (steps: number[] | ((prev: number[]) => number[])) => void;
+  formStep: number;
 }) => {
   const [preview, setPreview] = useState<string | null>(null);
 
@@ -125,15 +129,32 @@ const OptionalInfo = ({
         </div>
       </div>
 
-      <div className="mt-8">
+      <div className="mt-8 flex items-center justify-between">
         <Button
-          className="w-full flex items-center justify-center gap-x-4"
+          className="w-fit flex items-center justify-center gap-x-4"
+          onClick={(e) => {
+            e.preventDefault();
+            setCompletedSteps((prev) =>
+              prev.filter((step) => step !== formStep)
+            );
+            setFormStep(formStep - 1);
+          }}
+          variant="secondary"
+        >
+          <span>
+            <FaArrowLeftLong />
+          </span>{" "}
+          Previous
+        </Button>
+        <Button
+          className="w-fit flex items-center justify-center gap-x-4"
           onClick={(e) => {
             e.preventDefault();
             setFormStep(2);
+            setCompletedSteps((prev) => [...prev, formStep]);
           }}
         >
-          Proceed{" "}
+          Proceed to Project Review
           <span>
             <FaArrowRightLong />
           </span>{" "}

@@ -8,10 +8,14 @@ const ProjectInformation = ({
   form,
   setForm,
   setFormStep,
+  setCompletedSteps,
+  formStep,
 }: {
   form: projectFormData;
   setForm: (form: projectFormData) => void;
   setFormStep: (formStep: number) => void;
+  setCompletedSteps: (steps: number[] | ((prev: number[]) => number[])) => void;
+  formStep: number;
 }) => {
   return (
     <div>
@@ -102,6 +106,7 @@ const ProjectInformation = ({
           onClick={(e) => {
             e.preventDefault();
             setFormStep(2);
+            setCompletedSteps((prev) => [...prev, formStep]);
           }}
         >
           Proceed{" "}
