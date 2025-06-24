@@ -8,6 +8,11 @@ import Link from "next/link";
 import { useState } from "react";
 import { IoEye } from "react-icons/io5";
 import { FaRegEyeSlash } from "react-icons/fa";
+import axios from "axios";
+import toast from "react-hot-toast";
+import { AxiosError } from "axios";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useAuth } from "@/context/authContext";
 
 interface formState {
   email: string;
@@ -23,14 +28,95 @@ const Login = () => {
     password: false,
     confirm__password: false,
   });
-
+  const { login } = useAuth();
+  const [loading, setLoading] = useState(false);
+  const router = useRouter();
+  const searchParams = useSearchParams();
   const togglePasswordVisibility = (field: string) => {
     setShowPassword((prev) => ({ ...prev, [field]: !prev[field] }));
   };
 
+  // Get the redirect URL from query params
+  const redirectTo = searchParams.get("redirect") || "/farmer-dashboard";
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setForm((prev) => ({ ...prev, [name]: value }));
+  };
+
+  // Function to determine where to redirect based on user type and intended route
+  const getRedirectPath = (userType: string, intendedRoute?: string | null) => {
+    // If there's a specific intended route, check if user can access it
+    if (intendedRoute) {
+      // If user is farmer and trying to access farmer routes, allow it
+      if (
+        userType === "farmer" &&
+        intendedRoute.startsWith("/farmer-dashboard")
+      ) {
+        return intendedRoute;
+      }
+      // If user is investor and trying to access investor routes, allow it
+      if (
+        userType === "investor" &&
+        intendedRoute.startsWith("/investor-dashboard")
+      ) {
+        return intendedRoute;
+      }
+      // If user type doesn't match the intended route, redirect to their dashboard
+      if (userType === "farmer") {
+        return "/farmer-dashboard";
+      }
+      if (userType === "investor") {
+        return "/investor-dashboard";
+      }
+    }
+
+    // Default redirects based on user type
+    if (userType === "farmer") {
+      return "/farmer-dashboard";
+    }
+    if (userType === "investor") {
+      return "/investor-dashboard";
+    }
+
+    // Fallback
+    return "/";
+  };
+
+  const handleUserLogin = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setLoading(true);
+    await axios
+      .post("/api/login", { ...form })
+      .then((response) => {
+        setLoading(false);
+        console.log("Login response:", response);
+        console.log("Status:", response.status);
+        if (response.status >= 200 && response.status < 300) {
+          // Store in localStorage
+          const { fullname, user_type } = response?.data;
+          toast.success(`Login Successful Welcome back ${fullname}`);
+
+          login({ fullname, user_type });
+          const redirectPath = getRedirectPath(user_type, redirectTo);
+          router.push(redirectPath);
+          setForm({ email: "", password: "" });
+        } else {
+          toast.error("Error login please try again or contact Admin");
+        }
+      })
+      .catch((err) => {
+        setLoading(false);
+        // Extract the error message from the response
+        let errorMessage =
+          "An error occurred please try again or contact Admin";
+        if (err instanceof AxiosError) {
+          // Check if err is an instance of AxiosError
+          errorMessage = err.response?.data?.message || errorMessage;
+        }
+
+        toast.error(errorMessage);
+      });
   };
 
   return (
@@ -97,7 +183,7 @@ const Login = () => {
               <hr className="h-1 w-full md:w-44" />
             </div>
 
-            <form action="">
+            <form action="submit" onSubmit={handleUserLogin}>
               <div className="mb-4">
                 <label className="text-sm text-[#5F5F5F] mb-2 font-poppinsSemiBold">
                   Email
@@ -142,19 +228,17 @@ const Login = () => {
                 <Link href="/forgot-password"> forgot password?</Link>
               </p>
 
-              <Link href={"/verify-email"}>
-                <Button
-                  className="w-full flex items-center gap-x-4 justify-center text-center mx-auto"
-                  variant={"search"}
-                  size="small"
-                >
-                  <span>{"Login "}</span>
-                  <span>
-                    {" "}
-                    <GoArrowRight size={24} className="text-[#7C7C7C]" />
-                  </span>
-                </Button>
-              </Link>
+              <Button
+                className="w-full flex items-center gap-x-4 justify-center text-center mx-auto"
+                variant={"primary"}
+                size="small"
+              >
+                <span>{loading ? "Authenticating...." : "Login "}</span>
+                <span>
+                  {" "}
+                  <GoArrowRight size={24} className="text-[white]" />
+                </span>
+              </Button>
 
               <div>
                 <p className="text-lg font-poppinsRegular text-[#7C7C7C] mt-4 mb-10 text-center md:text-base">

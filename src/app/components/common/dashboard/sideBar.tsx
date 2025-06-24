@@ -78,7 +78,7 @@ const Sidebar: React.FC = () => {
   ];
 
   return (
-    <aside className="w-80 bg-white overflow-y-scroll h-screen">
+    <aside className="w-80 bg-white overflow-y-scroll h-screen lg:hidden">
       {/* Logo / Brand Name */}
       <div className="flex flex-col justify-between ">
         <div className="font-bold">

@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import OnBoardNav from "../components/common/onBoardNav";
 import Link from "next/link";
 import { IoIosArrowBack } from "react-icons/io";
@@ -17,16 +17,20 @@ const UserSelectPage: React.FC = () => {
     setSelect(userType);
   };
 
+  useEffect(() => {
+    localStorage.setItem("userType", select);
+  }, [select]);
+
   const data = [
     {
       svg: "/assets/UserOnboarding/1.svg",
-      usertype: "Investor",
+      usertype: "investor",
       desc: "Invest in farms and grow your wealth.",
     },
 
     {
       svg: "/assets/UserOnboarding/2.svg",
-      usertype: "Farmer",
+      usertype: "farmer",
       desc: "List your farm and secure funding from investors.",
     },
   ];
@@ -102,7 +106,7 @@ const UserSelectPage: React.FC = () => {
           </div>
 
           <div className="text-center relative md:z-20">
-            <Link href={select === "Investor" ? "/signup" : "/"}>
+            <Link href={select === "investor" ? "/signup" : "/signup"}>
               <Button
                 className={`w-[400px] flex items-center gap-x-4 justify-center text-center mx-auto ${
                   select === "" ? "cursor-not-allowed" : ""

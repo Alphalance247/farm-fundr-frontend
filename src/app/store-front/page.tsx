@@ -40,15 +40,13 @@ const StoreFront = () => {
       />
 
       <section className="max-w-[1300px] mx-auto px-4 py-10 md:px-4 md:py-12">
-        <div className="flex gap-3 justify-between mb-16">
-          <div className="">
+        <div className="flex gap-3 justify-between mb-16 lg:flex-col-reverse">
+          <div className="flex gap-x-2">
             {buttons.map((button) => (
-              <div key={button.id} className="inline-flex gap-x-2">
+              <div key={button.id} className="w-fit block lg:w-full">
                 <button
                   key={button.id}
-                  className={` rounded-xl p-2 ${
-                    button.id === 1 ? "" : "ml-3"
-                  } block text-sm font-poppinsRegular w-full text-[#7C7C7C] ${
+                  className={` rounded-xl p-2 block text-sm font-poppinsRegular w-full text-[#7C7C7C] ${
                     activeButton === button.name
                       ? "bg-[#51F4A6] border border-[#2D865B] text-[#282A03]"
                       : " border border-[#E2E2E2] bg-white"
@@ -61,37 +59,41 @@ const StoreFront = () => {
             ))}
           </div>
 
-          <div className="inline-flex gap-3">
-            <button className="flex items-center gap-2 text-sm font-poppinsRegular text-[#7C7C7C] bg-[#F6F6F6] p-[10px] rounded-lg">
-              All Project
-              <span className="text-sm font-poppinsRegular text-[#7C7C7C]">
-                <FaSortDown color="#6E7055" />
-              </span>
-            </button>
-            <button className="flex items-center gap-2 w-fit text-sm font-poppinsRegular text-[#7C7C7C] bg-[#F6F6F6] p-[10px] rounded-lg">
-              Filter by
-              <span className="text-sm font-poppinsRegular text-[#7C7C7C]">
-                <FaSortDown color="#6E7055" />
-              </span>
-            </button>
+          <div className="flex items-center gap-x-3 md:hidden">
+            <div className="flex items-center gap-3">
+              <button className="flex items-center gap-2 w-[111px] text-sm font-poppinsRegular text-[#7C7C7C] bg-[#F6F6F6] p-[10px] rounded-lg ">
+                All Project
+                <span className="text-sm font-poppinsRegular text-[#7C7C7C]">
+                  <FaSortDown color="#6E7055" />
+                </span>
+              </button>
+              <button className="flex items-center gap-2 text-sm w-[111px] font-poppinsRegular text-[#7C7C7C] bg-[#F6F6F6] p-[10px] rounded-lg">
+                Filter by
+                <span className="text-sm font-poppinsRegular text-[#7C7C7C]">
+                  <FaSortDown color="#6E7055" />
+                </span>
+              </button>
+            </div>
 
-            <Input
-              placeholder="Search"
-              type="text"
-              name="search"
-              value=""
-              className="w-[418px]"
-              variant="primary"
-              onChange={() => {}}
-            />
+            <div className="flex items-center gap-3">
+              <Input
+                placeholder="Search"
+                type="text"
+                name="search"
+                value=""
+                className="w-[310px] block lg:w-full"
+                variant="primary"
+                onChange={() => {}}
+              />
 
-            <Button className="flex items-center gap-2">
-              Search
-              <SearchIcon />
-            </Button>
+              <Button className="flex items-center gap-2 md:w-full">
+                Search
+                <SearchIcon />
+              </Button>
+            </div>
           </div>
         </div>
-        <div className="grid grid-cols-3 gap-10">
+        <div className="grid grid-cols-3 gap-10 xl:grid-cols-2 md:grid-cols-1 lg:gap-4">
           <StoreFontCard
             imageUrl="/assets/my-farms/f1.png"
             status="Active"

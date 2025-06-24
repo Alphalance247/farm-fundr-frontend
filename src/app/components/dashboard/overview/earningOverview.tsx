@@ -57,7 +57,7 @@ const EarningOverview = () => {
         </div>
       </div>
 
-      <div className="grid grid-cols-2 gap-x-4 gap-y-4">
+      <div className="grid grid-cols-2 gap-x-4 gap-y-4 xl:grid-cols-1">
         {data.map((item, index) => (
           <div key={index} className={`p-4 ${item?.bgColor} rounded-xl`}>
             <p className="text-xs font-poppinsRegular text-[#7C7C7C] mb-2">

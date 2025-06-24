@@ -8,10 +8,45 @@ import { useState } from "react";
 import Link from "next/link";
 import { IoIosArrowBack } from "react-icons/io";
 import UserVerification from "../components/common/userVerification";
+import toast from "react-hot-toast";
+import axios, { AxiosError } from "axios";
+import { environment } from "@/env/env.local";
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState("");
   const [activeComponent, setActiveComponent] = useState("forgot-password");
+  const [loading, setLoading] = useState(false);
+
+  const handleResetPassword = async () => {
+    try {
+      setLoading(true);
+      const res = await axios.post(
+        `${environment.baseUrl}${environment.forgotPassword}`,
+        {
+          email,
+        }
+      );
+
+      if (res.status === 200) {
+        toast.success("Reset link sent successfully");
+        setActiveComponent("reset-password");
+
+        localStorage.setItem("password_reset_email", email);
+      }
+
+      setLoading(false);
+    } catch (err) {
+      // Extract the error message from the response
+      let errorMessage = "An error occurred please try again or contact Admin";
+      if (err instanceof AxiosError) {
+        // Check if err is an instance of AxiosError
+        errorMessage = err.response?.data?.message || errorMessage;
+      }
+
+      toast.error(errorMessage);
+      setLoading(false);
+    }
+  };
 
   return (
     <section className="bg-[#FCFCFC] pb-20 relative">
@@ -73,9 +108,9 @@ const ForgotPassword = () => {
                   variant={email.length === 0 ? "search" : "primary"}
                   size="small"
                   disabled={email.length === 0}
-                  onClick={() => setActiveComponent("reset-password")}
+                  onClick={handleResetPassword}
                 >
-                  Send Reset Link
+                  {loading ? "Sending..." : "Send Reset Link"}
                   <span>
                     {" "}
                     <GoArrowRight size={24} className="text-[#7C7C7C]" />
@@ -92,7 +127,7 @@ const ForgotPassword = () => {
               />
 
               <div className="mt-10">
-                <Link href={"/verify-email"}>
+                <Link href={"https://mail.google.com/"}>
                   <Button
                     className={`w-full flex items-center gap-x-4 justify-center text-center mx-auto  ${
                       email.length === 0 ? "cursor-not-allowed" : ""

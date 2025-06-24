@@ -38,6 +38,7 @@ const Input: React.FC<InputProps> = ({
       value={value}
       readOnly={readonly}
       placeholder={placeholder}
+      required
       onChange={onChange}
       className={` font-poppinsRegular ${
         withWidth && "w-full"

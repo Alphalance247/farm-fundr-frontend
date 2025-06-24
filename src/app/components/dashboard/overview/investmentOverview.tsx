@@ -32,10 +32,7 @@ const InvestmentOverview = () => {
       <div className="flex justify-between  items-center mb-4">
         <SubHead text="Farm Investment Overview" />
         <div className="relative flex items-center gap-x-4">
-          <div
-            className="flex items-center gap-x-2 p-2 bg-white border border-[#d9d9d9] rounded-xl cursor-pointer w-fit"
-            // onClick={handleOpen}
-          >
+          <div className="flex items-center gap-x-2 p-2 bg-white border border-[#d9d9d9] rounded-xl cursor-pointer w-fit">
             <p className="">
               <span className="text-sm font-poppinsRegular text-[#7C7C7C]">
                 Today
@@ -56,7 +53,7 @@ const InvestmentOverview = () => {
         </div>
       </div>
 
-      <div className="grid grid-cols-2 gap-x-4 gap-y-4">
+      <div className="grid grid-cols-2 gap-x-4 gap-y-4 xl:grid-cols-1">
         {data.map((item, index) => (
           <div key={index} className={`p-4 ${item?.bgColor} rounded-xl`}>
             <p className="text-xs font-poppinsRegular text-[#7C7C7C] mb-2">

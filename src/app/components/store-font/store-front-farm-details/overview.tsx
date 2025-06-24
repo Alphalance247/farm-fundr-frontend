@@ -43,7 +43,7 @@ const Overview = () => {
 
   return (
     <div>
-      <div className="grid grid-cols-3 gap-x-4 gap-y-4">
+      <div className="grid grid-cols-3 gap-x-4 gap-y-4 lg:grid-cols-2">
         {data.map((el) => (
           <Link href={el?.href || "/"} key={el.id}>
             <div className="bg-[linear-gradient(90deg,#2D865B_0%,#12482F_100%)] flex flex-col gap-y-3 p-6 rounded-xl border border-[#F6F6F6]">
@@ -74,8 +74,8 @@ const Overview = () => {
         ))}
       </div>
 
-      <div className="grid grid-cols-2 gap-x-10 mt-8">
-        <div className="grid grid-cols-[2fr_1fr] gap-x-4">
+      <div className="grid grid-cols-2 gap-x-10 mt-8 lg:grid-cols-1 lg:gap-y-8">
+        <div className="grid grid-cols-[2fr_1fr] gap-x-4 lg:grid-cols-1 lg:gap-y-6">
           <div>
             <Image
               src="/assets/store-front/store1.png"
@@ -85,7 +85,7 @@ const Overview = () => {
               className="w-full h-full object-cover"
             />
           </div>
-          <div className="flex flex-col gap-y-2">
+          <div className="flex flex-col gap-y-2 lg:grid lg:grid-cols-3 lg:gap-x-6">
             <Image
               src="/assets/store-front/store2.png"
               alt="store-front-details"
@@ -136,7 +136,7 @@ const Overview = () => {
               Social Media Links
             </h4>
 
-            <div className="flex gap-x-20">
+            <div className="flex gap-x-20 md:gap-x-8 md:flex-col md:gap-y-6">
               <div className="flex items-center gap-x-[10px]">
                 <Image
                   src="/assets/ContactUs/instgram.svg"
@@ -182,7 +182,7 @@ const Overview = () => {
 
         <div className="flex flex-col gap-y-4">
           {/* first row */}
-          <div className="grid grid-cols-2 gap-x-8 border-b border-[#F6F6F6]">
+          <div className="grid grid-cols-2 gap-x-8 border-b border-[#F6F6F6] md:grid-cols-1">
             <div className="flex items-center justify-between py-4">
               <p className="text-[#7C7C7C] text-sm font-poppinsSemiBold">
                 farmer’s Name
@@ -202,7 +202,7 @@ const Overview = () => {
           </div>
 
           {/* second row */}
-          <div className="grid grid-cols-2 gap-x-8 border-b border-[#F6F6F6]">
+          <div className="grid grid-cols-2 gap-x-8 border-b border-[#F6F6F6] md:grid-cols-1">
             <div className="flex items-center justify-between py-4">
               <p className="text-[#7C7C7C] text-sm font-poppinsSemiBold">
                 Email
@@ -222,7 +222,7 @@ const Overview = () => {
           </div>
 
           {/* third row */}
-          <div className="grid grid-cols-2 gap-x-8 border-b border-[#F6F6F6]">
+          <div className="grid grid-cols-2 gap-x-8 border-b border-[#F6F6F6] md:grid-cols-1">
             <div className="flex items-center justify-between py-4">
               <p className="text-[#7C7C7C] text-sm font-poppinsSemiBold">
                 Verification Status
@@ -270,7 +270,7 @@ const Overview = () => {
           Comment From Investors
         </p>
 
-        <div className="grid grid-cols-3 gap-6 border-b border-[#E2E2E2] pb-6">
+        <div className="grid grid-cols-3 gap-6 border-b border-[#E2E2E2] pb-6 lg:grid-cols-2 md:grid-cols-1">
           <CustomerReviewCard />
           <CustomerReviewCard />
           <CustomerReviewCard />
@@ -279,7 +279,7 @@ const Overview = () => {
           <CustomerReviewCard />
         </div>
 
-        <div className="flex p-6 gap-x-10 w-[575px] rounded-2xl border border-[#E2E2E2] bg-white mt-6">
+        <div className="flex p-6 gap-x-10 w-[575px] rounded-2xl border border-[#E2E2E2] bg-white mt-6 md:flex-col md:gap-y-6 md:w-full md:p-3">
           <div>
             <p className="text-sm font-poppinsSemiBold text-[#5F5F5F] mb-4">
               Rate Your Experience
