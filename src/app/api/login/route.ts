@@ -1,6 +1,5 @@
 // src/app/api/login/route.ts
 import { NextRequest, NextResponse } from "next/server";
-import cookie from "cookie";
 import axios from "axios";
 import { environment } from "@/env/env.local";
 
@@ -23,16 +22,13 @@ export async function POST(request: NextRequest) {
       fullname,
       user_type,
     });
-    response.headers.set(
-      "Set-Cookie",
-      cookie.serialize("access_token", access_token, {
-        httpOnly: true,
-        sameSite: "lax",
-        secure: process.env.NODE_ENV === "production",
-        path: "/",
-        maxAge: 60 * 60, // 1 hour
-      })
-    );
+    response.cookies.set("access_token", access_token, {
+      httpOnly: true,
+      sameSite: "lax",
+      secure: process.env.NODE_ENV === "production",
+      path: "/",
+      maxAge: 60 * 60, // 1 hour
+    });
     return response;
   } catch (error) {
     console.log(error);
