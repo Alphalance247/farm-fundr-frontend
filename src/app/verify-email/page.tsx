@@ -7,20 +7,82 @@ import { useEffect, useState, useRef } from "react";
 import { GoArrowRight } from "react-icons/go";
 import { IoIosArrowBack } from "react-icons/io";
 import UserVerification from "../components/common/userVerification";
+import axios, { AxiosError } from "axios";
+import { environment } from "@/env/env.local";
+import toast from "react-hot-toast";
 
 const VerifyEmail = () => {
   const [tab, setTab] = useState<string>("verifyOtp");
   const [timer, setTimer] = useState<number>(30); // Countdown timer in seconds
   const [otp, setOtp] = useState<string[]>(new Array(6).fill(""));
   const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [loadingResendOtp, setLoadingResendOtp] = useState(false);
+  const [email, setEmail] = useState<string>("");
 
-  const handleEmailOtp = () => {
+  useEffect(() => {
+    const storedEmail = localStorage.getItem("email");
+    setEmail(storedEmail || "");
+  }, []);
+
+  const handleEmailOtp = async () => {
     setTab("verifyOtp");
     setTimer(30); // Reset the timer when switching to OTP verification
+    setLoadingResendOtp(true);
+    await axios
+      .post(environment.baseUrl + environment?.resentOtp, {
+        email: email,
+      })
+      .then((response) => {
+        setLoadingResendOtp(false);
+        if (response.status >= 200 && response.status < 300) {
+          toast.success("Otp resend succcessfully please check your email");
+        } else {
+          toast.error("Error sending otp please try again or contact Admin");
+        }
+      })
+      .catch((err) => {
+        setLoadingResendOtp(false);
+        // Extract the error message from the response
+        let errorMessage =
+          "An error occurred please try again or contact Admin";
+        if (err instanceof AxiosError) {
+          // Check if err is an instance of AxiosError
+          errorMessage = err.response?.data?.error || errorMessage;
+        }
+
+        toast.error(errorMessage);
+      });
   };
 
-  const handleSendEmailOtp = () => {
-    setTab("success");
+  const handleSendEmailOtp = async () => {
+    setLoading(true);
+    await axios
+      .post(environment.baseUrl + environment?.verifyEmail, {
+        otp: otp.join(""),
+        email: email,
+      })
+      .then((response) => {
+        setLoading(false);
+        if (response.status >= 200 && response.status < 300) {
+          toast.success("Email verified successfully");
+          setTab("success");
+        } else {
+          toast.error("Failed to verify email please try again");
+        }
+      })
+      .catch((err) => {
+        setLoading(false);
+        // Extract the error message from the response
+        let errorMessage =
+          "An error occurred please try again or contact Admin";
+        if (err instanceof AxiosError) {
+          // Check if err is an instance of AxiosError
+          errorMessage = err.response?.data?.error || errorMessage;
+        }
+
+        toast.error(errorMessage);
+      });
   };
 
   useEffect(() => {
@@ -112,6 +174,7 @@ const VerifyEmail = () => {
                     <input
                       key={index}
                       type="text"
+                      name="otp"
                       maxLength={1}
                       value={digit}
                       placeholder="-"
@@ -138,7 +201,7 @@ const VerifyEmail = () => {
                       }`}
                       onClick={timer === 0 ? handleEmailOtp : undefined}
                     >
-                      Resend
+                      {loadingResendOtp ? "resending..." : "Resend"}
                     </span>
                   </p>
                 </div>
@@ -157,26 +220,14 @@ const VerifyEmail = () => {
                     onClick={handleSendEmailOtp}
                     disabled={otp.some((digit) => digit === "")}
                   >
-                    Verify Account
+                    {loading ? "Loading....." : "Verify Account"}
                     <span>
                       {" "}
-                      <GoArrowRight size={24} className="text-[#7C7C7C]" />
+                      <GoArrowRight size={24} className="text-[white]" />
                     </span>
                   </Button>
                 </div>
               </div>
-
-              {/* <div className="mt-12 flex flex-col items-center">
-                <button
-                  className="text-[#7C7C7C] px-2 py-1 rounded-xl bg-[#F6F6F6] flex items-center gap-x-3 text-lg font-poppinsRegular hover:text-[#51F4A6]"
-                  onClick={() => setTab("sendOtp")}
-                >
-                  <span className=" bg-white rounded-full p- hover:bg-[#51F4A6]">
-                    <IoIosArrowBack size={14} color="#7C7C7C" />
-                  </span>{" "}
-                  Go Back{" "}
-                </button>
-              </div> */}
             </>
           ) : tab === "success" ? (
             <div>

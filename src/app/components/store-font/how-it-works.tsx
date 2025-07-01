@@ -64,7 +64,7 @@ const HowItWorks = () => {
             <p className={`text-base font-poppinsSemiBold  mb-3 ${el?.text}`}>
               {el.step}
             </p>
-            <div className="flex gap-x-6">
+            <div className="flex gap-x-6 md:flex-col md:gap-y-6">
               <Image src={el.image} alt="step1" width={100} height={100} />
 
               <div>

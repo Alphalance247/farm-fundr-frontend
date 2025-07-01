@@ -37,7 +37,7 @@ const WeatherReport: React.FC = ({}) => {
     <section className="mt-6 px-[22px] py-8 border border-[#E4E7EC] bg-[white] rounded-xl">
       <div className="flex justify-between  items-center mb-5">
         <SubHead text="Weather Report" />
-        <div className="relative flex items-center gap-x-4">
+        <div className="relative flex items-center gap-x-4 ">
           <div
             className="flex items-center gap-x-2 p-2 bg-white border border-[#d9d9d9] rounded-xl cursor-pointer w-fit"
             // onClick={handleOpen}
@@ -62,12 +62,12 @@ const WeatherReport: React.FC = ({}) => {
         </div>
       </div>
 
-      <div className="flex gap-x-4 flex-wrap gap-y-4">
+      <div className="flex gap-x-4 flex-wrap gap-y-4 xl:grid xl:grid-cols-3 md:grid-cols-2">
         {data.map((item, index) => {
           return (
             <div
               key={index}
-              className="px-3 py-4 border border-[#F6F6F6] bg-[#FCFCFC] rounded-md flex-1 w-fit"
+              className="px-3 py-4 border border-[#F6F6F6] bg-[#FCFCFC] rounded-md flex-1 w-fit xl:w-full"
             >
               <div className="flex items-center gap-x-2 mb-4">
                 <Image
@@ -99,7 +99,7 @@ const WeatherReport: React.FC = ({}) => {
             </p>
           </div>
 
-          <div className="flex items-center gap-x-3">
+          <div className="flex items-center gap-x-3 xl:flex-col xl:gap-y-4 xl:items-start">
             <div className="flex items-center gap-x-1">
               <Image
                 width={32}

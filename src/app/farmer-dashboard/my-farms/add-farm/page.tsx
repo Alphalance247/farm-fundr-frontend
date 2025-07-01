@@ -2,20 +2,32 @@
 import DashboardLayout from "../../../components/common/dashboardLayout";
 import { Topbar } from "../../../components/common/dashboard/topBar";
 import Image from "next/image";
-import { useState } from "react";
+import React, { useState } from "react";
 import GoBackBtn from "@/app/components/common/goBack";
 import Label from "@/app/components/common/label";
-import Input from "@/app/components/common/input";
 import Button from "@/app/components/common/Buttons";
-import { FaArrowRightLong } from "react-icons/fa6";
+import { FaArrowRightLong, FaArrowLeftLong } from "react-icons/fa6";
 import { FiDownload } from "react-icons/fi";
 import FarmDetails from "@/app/components/dashboard/my-farms/form-steps/farmDetails";
 import FarmHeading from "@/app/components/dashboard/my-farms/common/farmHeading";
 import EditBtn from "@/app/components/common/editBtn";
+import { useForm } from "react-hook-form";
+import {
+  step2Validation,
+  AddFarmFormData,
+  step3Validation,
+} from "@/utils/form";
+import InputField from "@/app/components/common/inputField";
+import { toast } from "react-hot-toast";
+import { AxiosError } from "axios";
+import axiosInstance from "@/lib/axios";
+import { environment } from "@/env/env.local";
 
 const AddFarm = () => {
   const [formStep, setFormStep] = useState(1);
   const [completedSteps, setCompletedSteps] = useState<number[]>([]);
+  const [useSameAsPhone, setUseSameAsPhone] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [form, setForm] = useState({
     country: "",
     state: "",
@@ -28,6 +40,9 @@ const AddFarm = () => {
     ownershipType: "",
     cacNumber: "",
     operatingSince: "",
+    farmEmail: "",
+    farmPhone: "",
+    city: "",
   });
   const [preview, setPreview] = useState<string | null>(null);
   const [file, setFile] = useState<File | null>(null);
@@ -40,8 +55,6 @@ const AddFarm = () => {
     image3: { file: null, preview: null },
     image4: { file: null, preview: null },
   });
-
-  console.log(form);
 
   const handlePdfChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFile = e.target.files?.[0];
@@ -67,6 +80,10 @@ const AddFarm = () => {
       details: `${form?.country} ,  ${form?.state} ` || "-",
     },
     {
+      name: "City",
+      details: form?.city || "-",
+    },
+    {
       name: "Farm Size",
       details: `${form?.farmSize} plot ` || "- plot",
     },
@@ -84,6 +101,33 @@ const AddFarm = () => {
     },
   ];
 
+  // React Hook Form for step 2
+  const {
+    register,
+    formState: { errors },
+    watch,
+    trigger,
+  } = useForm<AddFarmFormData>({
+    defaultValues: {
+      farmSize: form.farmSize,
+      fieldType: form.fieldType,
+      fieldDescription: form.fieldDescription,
+    },
+  });
+
+  const {
+    register: step3Register,
+    formState: step3FormState,
+    watch: step3Watch,
+    trigger: step3Trigger,
+  } = useForm<AddFarmFormData>({
+    defaultValues: {
+      ownershipType: form.ownershipType,
+      cacNumber: form.cacNumber,
+      operatingSince: form.operatingSince,
+    },
+  });
+
   // Update the file change handler to handle multiple images
   const handleFileChange = (
     e: React.ChangeEvent<HTMLInputElement>,
@@ -100,8 +144,215 @@ const AddFarm = () => {
           },
         }));
       } else {
-        alert("File must be less than 5MB");
+        toast.error("File must be less than 5MB");
       }
+    }
+  };
+
+  // Handle going back from step 2
+  const handleStep2Back = () => {
+    setCompletedSteps((prev) => prev.filter((step) => step !== formStep));
+    setFormStep(formStep - 1);
+  };
+
+  const handleStep2Proceed = async () => {
+    // Trigger validation for all fields
+    const isValid = await trigger();
+
+    if (isValid) {
+      // Get the current form values
+      const currentValues = watch();
+
+      // Update the main form state
+      setForm((prev) => ({
+        ...prev,
+        ...currentValues,
+      }));
+      // Move to next step
+      setFormStep(3);
+      setCompletedSteps((prev) => [...prev, formStep]);
+    }
+  };
+
+  // const handleStep3Proceed = async () => {
+  //   // Trigger validation for all fields
+  //   const isValid = await step3Trigger();
+  //   console.log("Step 3 validation result:", isValid);
+
+  //   // // Check if CAC document is uploaded
+  //   // if (!file) {
+  //   //   toast.error("Please upload your CAC registration document");
+  //   //   return;
+  //   // }
+
+  //   if (isValid) {
+  //     // Get the current form values
+  //     const currentValues = step3Watch();
+
+  //     // Update the main form state
+  //     setForm((prev) => ({
+  //       ...prev,
+  //       ...currentValues,
+  //     }));
+
+  //     // Move to next step
+  //     setFormStep(4);
+  //     setCompletedSteps((prev) => [...prev, formStep]);
+  //   }
+  // };
+
+  const handleStep3Proceed = async () => {
+    const isValid = await step3Trigger();
+    if (isValid) {
+      const currentValues = step3Watch();
+      setForm((prev) => ({
+        ...prev,
+        ...currentValues,
+      }));
+      setFormStep(4);
+      setCompletedSteps((prev) => [...prev, formStep]);
+    }
+  };
+
+  // Handle step 4 proceed button click
+  const handleStep4Proceed = async () => {
+    console.log("Step 4 Proceed clicked");
+
+    // Check if at least 3 images are uploaded
+    const uploadedImageCount = Object.values(uploadedImages).filter(
+      (img) => img.file !== null
+    ).length;
+
+    if (uploadedImageCount < 3) {
+      toast.error(
+        `Please upload at least 3 farm images. You have uploaded ${uploadedImageCount} image(s).`
+      );
+      return;
+    }
+
+    // Check for any validation errors
+    const isValid = await trigger();
+
+    if (isValid) {
+      // Move to next step
+      setFormStep(5);
+      setCompletedSteps((prev) => [...prev, formStep]);
+    }
+  };
+
+  const handleFinalSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    try {
+      setLoading(true);
+
+      // Create FormData for file upload
+      const formData = new FormData();
+
+      // Add farm data
+      formData.append("name", form.farmName);
+      formData.append("street", form.farmAddress);
+      formData.append("status", "published");
+      formData.append("country", form.country);
+      formData.append("state", form.state);
+      formData.append("farm_whatsapp_number", form.farmPhone);
+      formData.append("farm_phone_number", form.phone);
+      formData.append("farm_email", form.farmEmail);
+      formData.append("land_size", form.farmSize);
+      formData.append("land_size_type", form.fieldType);
+      formData.append("description", form.fieldDescription);
+      formData.append("land_ownership", form.ownershipType);
+      formData.append("cac_reg_no", form.cacNumber);
+      formData.append("started_date", form.operatingSince);
+      formData.append("city", form.city);
+
+      // Add files
+      if (file) {
+        formData.append("cac_reg_doc", file);
+      }
+
+      // Add images
+      Object.entries(uploadedImages).forEach(([, imageData]) => {
+        if (imageData.file) {
+          formData.append("images", imageData.file);
+        }
+      });
+
+      const res = await axiosInstance.post(environment.addFarm, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+
+      if (res.status === 201) {
+        toast.success(
+          res.data?.statusmessage || "Farm successfully submitted for review"
+        );
+
+        // Reset form
+        setFormStep(1);
+        setForm({
+          farmSize: "",
+          fieldType: "",
+          fieldDescription: "",
+          ownershipType: "",
+          cacNumber: "",
+          operatingSince: "",
+          farmEmail: "",
+          farmPhone: "",
+          farmName: "",
+          farmAddress: "",
+          country: "",
+          state: "",
+          phone: "",
+          city: "",
+        });
+
+        // Reset files
+        setFile(null);
+        setPreview(null);
+        setUploadedImages({
+          image1: { file: null, preview: null },
+          image2: { file: null, preview: null },
+          image3: { file: null, preview: null },
+          image4: { file: null, preview: null },
+        });
+
+        // Reset steps
+        setCompletedSteps([]);
+      }
+
+      setLoading(false);
+    } catch (err) {
+      // Extract the error message from the response
+      let errorMessage = "An error occurred please try again or contact Admin";
+      let errorDetails = null;
+
+      if (err instanceof AxiosError) {
+        // Check if err is an instance of AxiosError
+        errorMessage = err.response?.data?.statusmessage || errorMessage;
+        errorDetails = err.response?.data?.details;
+        // Show more specific error messages based on status code
+        if (err.response?.status === 401) {
+          errorMessage = "Authentication failed. Please login again.";
+        } else if (err.response?.status === 403) {
+          errorMessage = "You don't have permission to perform this action.";
+        } else if (err.response?.status === 422) {
+          errorMessage =
+            "Invalid data provided. Please check your form inputs.";
+        } else if (err.response?.status === 500) {
+          errorMessage = "Server error. Please try again later.";
+        }
+      }
+
+      toast.error(errorMessage);
+
+      // Log additional error details if available
+      if (errorDetails) {
+        console.error("📋 Error Details:", errorDetails);
+      }
+
+      setLoading(false);
     }
   };
 
@@ -110,10 +361,12 @@ const AddFarm = () => {
       <Topbar overview="My farm" />
 
       <main className="px-10 py-10 bg-gray-50 overflow-auto">
-        <div className="flex gap-x-6">
+        <div
+          className={`flex gap-x-6  ${formStep !== 5 ? "" : "justify-center"}`}
+        >
           {formStep !== 5 && (
             <div className="w-[30%]">
-              <GoBackBtn href="/my-farms" />
+              <GoBackBtn href="/farmer-dashboard/my-farms" />
 
               <div className="border border-[#FEF0B0] bg-[#FFFAE6] rounded-lg p-3 flex gap-x-5 items-start mt-6 ">
                 <Image
@@ -155,6 +408,8 @@ const AddFarm = () => {
                 ? "Set Up Your Farm Ownership"
                 : formStep === 4
                 ? "Farm Images"
+                : formStep === 5
+                ? "Project Summary"
                 : ""}
             </h3>
           </div>
@@ -179,7 +434,11 @@ const AddFarm = () => {
           </div>
 
           {/* form section */}
-          <form action="" className="w-[70%] mx-auto">
+          <form
+            action=""
+            className="w-[70%] mx-auto"
+            onSubmit={(e) => handleFinalSubmit(e)}
+          >
             {formStep === 1 && (
               <FarmDetails
                 form={form}
@@ -187,6 +446,8 @@ const AddFarm = () => {
                 setFormStep={setFormStep}
                 setCompletedSteps={setCompletedSteps}
                 formStep={formStep}
+                useSameAsPhone={useSameAsPhone}
+                setUseSameAsPhone={setUseSameAsPhone}
               />
             )}
             {/* second step */}
@@ -197,67 +458,76 @@ const AddFarm = () => {
                   <div className="grid grid-cols-2 gap-x-4">
                     <div>
                       <Label className="">Farm Size</Label>
-                      <Input
-                        name="farmSize"
-                        className=""
+
+                      <InputField
                         type="text"
-                        value={form?.farmSize}
-                        placeholder="Enter farm size"
-                        variant="tertiary"
-                        onChange={(e) =>
-                          setForm({ ...form, farmSize: e.target.value })
-                        }
+                        placeholder="Enter farm size (e.g., 10 or 10.5)"
+                        error={errors.farmSize?.message}
+                        className={`${errors.farmSize ? "border-red-500" : ""}`}
+                        {...register("farmSize", step2Validation.farmSize)}
                       />
                     </div>
 
                     <div>
-                      <Label>Field Type</Label>
+                      <Label>{" - "} </Label>
                       <select
-                        id="fieldType"
-                        name="fieldType"
-                        value={form?.fieldType || ""}
-                        onChange={(e) =>
-                          setForm({ ...form, fieldType: e.target.value })
-                        }
-                        className="w-full border bg-[#F6F6F6] focus:ring-[#51F4A6] focus:border-[#51F4A6] border-[#E0E0E0] rounded-md text-sm p-4 focus:outline-none focus:ring-1 text-[#7C7C7C] font-poppinsRegular"
+                        {...register("fieldType", step2Validation.fieldType)}
+                        className={`w-full border bg-[#F6F6F6] focus:ring-[#51F4A6] focus:border-[#51F4A6] border-[#E0E0E0] rounded-md text-sm p-4 focus:outline-none focus:ring-1 text-[#7C7C7C] font-poppinsRegular ${
+                          errors.fieldType ? "border-red-500" : ""
+                        }`}
                       >
                         <option value="">Select field type</option>
-
-                        <option value="">Loamy</option>
-                        <option value="">Sandy</option>
-                        <option value="">Clay</option>
+                        <option value="hectares">Hectares</option>
+                        <option value="acres">Acres</option>
+                        <option value="plots">plots</option>
                       </select>
+                      {errors.fieldType && (
+                        <p className="text-red-500 text-xs mt-1 font-poppinsRegular">
+                          {errors.fieldType.message}
+                        </p>
+                      )}
                     </div>
                   </div>
 
                   <div>
                     <Label>Description</Label>
-
                     <textarea
-                      name="fieldDescription"
-                      id=""
-                      value={form?.fieldDescription || ""}
+                      {...register(
+                        "fieldDescription",
+                        step2Validation.fieldDescription
+                      )}
                       cols={20}
                       rows={5}
-                      className="bg-[#F6F6F6] border-[#E2E2E2] border w-full text-[#7C7C7C] rounded-lg text-sm p-4 focus:ring-[#51F4A6]"
-                      placeholder="Enter description here"
-                      onChange={(e) => {
-                        setForm({ ...form, fieldDescription: e.target.value });
-                      }}
+                      className={`bg-[#F6F6F6] border-[#E2E2E2] border w-full text-[#7C7C7C] rounded-lg text-sm p-4 focus:ring-[#51F4A6] ${
+                        errors.fieldDescription ? "border-red-500" : ""
+                      }`}
+                      placeholder="Enter description here (minimum 10 characters)"
                     ></textarea>
+                    {errors.fieldDescription && (
+                      <p className="text-red-500 text-xs mt-1 font-poppinsRegular">
+                        {errors.fieldDescription.message}
+                      </p>
+                    )}
                   </div>
                 </div>
 
-                <div className="mt-8">
+                <div className="mt-8 flex items-center justify-between">
                   <Button
-                    className="w-full flex items-center justify-center gap-x-4"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      setFormStep(3);
-                      setCompletedSteps((prev) => [...prev, formStep]);
-                    }}
+                    className="w-fit flex items-center justify-center gap-x-4"
+                    onClick={handleStep2Back}
+                    variant="secondary"
                   >
-                    Back{" "}
+                    <span>
+                      <FaArrowLeftLong />
+                    </span>{" "}
+                    Previous
+                  </Button>
+
+                  <Button
+                    className="w-fit flex items-center justify-center gap-x-4"
+                    onClick={handleStep2Proceed}
+                  >
+                    Proceed{" "}
                     <span>
                       <FaArrowRightLong />
                     </span>{" "}
@@ -274,48 +544,52 @@ const AddFarm = () => {
                     <Label> Ownership Type</Label>
                     <select
                       id="ownershipType"
-                      name="ownershipType"
-                      value={form?.ownershipType || ""}
-                      onChange={(e) =>
-                        setForm({ ...form, ownershipType: e.target.value })
-                      }
-                      className="w-full border bg-[#F6F6F6] focus:ring-[#51F4A6] focus:border-[#51F4A6] border-[#E0E0E0] rounded-md text-sm p-4 focus:outline-none focus:ring-1 text-[#7C7C7C] font-poppinsRegular"
+                      {...step3Register(
+                        "ownershipType",
+                        step3Validation?.ownershipType
+                      )}
+                      className={`w-full border bg-[#F6F6F6] focus:ring-[#51F4A6] focus:border-[#51F4A6] border-[#E0E0E0] rounded-md text-sm p-4 focus:outline-none focus:ring-1 text-[#7C7C7C] font-poppinsRegular ${
+                        step3FormState.errors.ownershipType
+                          ? "border-red-500"
+                          : ""
+                      }`}
                     >
                       <option value="">Select ownership type</option>
 
-                      <option value="Investor">Investor</option>
-                      <option value="Manager">Manager</option>
-                      <option value="Consultant">Consultant</option>
+                      <option value="Owned">Owned</option>
+                      <option value="Leased">Leased</option>
                     </select>
+                    {step3FormState.errors.ownershipType && (
+                      <p className="text-red-500 text-xs mt-1 font-poppinsRegular">
+                        {step3FormState.errors.ownershipType.message}
+                      </p>
+                    )}
                   </div>
 
                   <div>
                     <Label className="">CAC registration Number</Label>
-                    <Input
-                      name="cacNumber"
-                      className=""
+                    <InputField
                       type="text"
-                      value={form?.cacNumber}
                       placeholder="Enter number here"
-                      variant="tertiary"
-                      onChange={(e) =>
-                        setForm({ ...form, cacNumber: e.target.value })
-                      }
+                      {...step3Register("cacNumber")}
                     />
                   </div>
 
                   <div>
                     <Label className="">Operating Since</Label>
-                    <Input
-                      name="operatingSince"
-                      className=""
+                    <InputField
                       type="date"
-                      value={form?.operatingSince}
                       placeholder="Enter date"
-                      variant="tertiary"
-                      onChange={(e) =>
-                        setForm({ ...form, operatingSince: e.target.value })
-                      }
+                      error={step3FormState.errors.operatingSince?.message}
+                      className={`${
+                        step3FormState.errors.operatingSince
+                          ? "border-red-500"
+                          : ""
+                      }`}
+                      {...step3Register(
+                        "operatingSince",
+                        step3Validation?.operatingSince
+                      )}
                     />
                   </div>
 
@@ -379,14 +653,28 @@ const AddFarm = () => {
                   </div>
                 </div>
 
-                <div className="mt-8">
+                <div className="mt-8 flex items-center justify-between">
                   <Button
-                    className="w-full flex items-center justify-center gap-x-4"
+                    className="w-fit flex items-center justify-center gap-x-4"
                     onClick={(e) => {
                       e.preventDefault();
-                      setFormStep(4);
-                      setCompletedSteps((prev) => [...prev, formStep]);
+                      setFormStep(formStep - 1);
+                      // Remove the current step from completedSteps
+                      setCompletedSteps((prev) =>
+                        prev.filter((step) => step !== formStep)
+                      );
                     }}
+                    variant="secondary"
+                  >
+                    <span>
+                      <FaArrowLeftLong />
+                    </span>{" "}
+                    Previous{" "}
+                  </Button>
+
+                  <Button
+                    className="w-fit flex items-center justify-center gap-x-4"
+                    onClick={handleStep3Proceed}
                   >
                     Proceed{" "}
                     <span>
@@ -527,14 +815,27 @@ const AddFarm = () => {
                   </div>
                 </div>
 
-                <div className="mt-8">
+                <div className="mt-8 flex items-center justify-between">
                   <Button
-                    className="w-full flex items-center justify-center gap-x-4"
+                    className="w-fit flex items-center justify-center gap-x-4"
                     onClick={(e) => {
                       e.preventDefault();
-                      setFormStep(5);
-                      setCompletedSteps((prev) => [...prev, formStep]);
+                      setCompletedSteps((prev) =>
+                        prev.filter((step) => step !== formStep)
+                      );
+                      setFormStep(formStep - 1);
                     }}
+                    variant="secondary"
+                  >
+                    <span>
+                      <FaArrowLeftLong />
+                    </span>{" "}
+                    Previous{" "}
+                  </Button>
+
+                  <Button
+                    className="w-fit flex items-center justify-center gap-x-4"
+                    onClick={handleStep4Proceed}
                   >
                     Proceed{" "}
                     <span>
@@ -611,7 +912,7 @@ const AddFarm = () => {
                     </div>
 
                     <div>
-                      {farmDetailsConfirmation.slice(0, 4).map((el, i) => (
+                      {farmDetailsConfirmation.slice(0, 5).map((el, i) => (
                         <div
                           key={i}
                           className="flex justify-between items-center py-3 border-t border-[#F6F6F6] font-poppinsRegular text-sm text-[#5F5F5F]"
@@ -640,7 +941,7 @@ const AddFarm = () => {
                     </div>
 
                     <div>
-                      {farmDetailsConfirmation.slice(4, 7).map((el, i) => (
+                      {farmDetailsConfirmation.slice(5, 8).map((el, i) => (
                         <div
                           key={i}
                           className="flex justify-between items-center py-3 border-t border-[#F6F6F6] font-poppinsRegular text-sm text-[#5F5F5F]"
@@ -691,6 +992,19 @@ const AddFarm = () => {
                       </div>
                     </div>
                   </div>
+                </div>
+
+                <div className="mt-8 ">
+                  <Button
+                    className="w-full flex items-center justify-center gap-x-4"
+                    type="submit"
+                    disabled={loading}
+                  >
+                    {loading ? "Submitting..." : "Submit For review"}
+                    <span>
+                      <FaArrowRightLong />
+                    </span>{" "}
+                  </Button>
                 </div>
               </div>
             )}

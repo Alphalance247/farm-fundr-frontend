@@ -5,24 +5,58 @@ import Button from "../components/common/Buttons";
 import { GoArrowRight } from "react-icons/go";
 import Input from "../components/common/input";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { IoEye } from "react-icons/io5";
 import { FaRegEyeSlash } from "react-icons/fa";
+import { useCallback } from "react";
+import axios, { AxiosError } from "axios";
+import { environment } from "@/env/env.local";
+import toast from "react-hot-toast";
+import { useRouter } from "next/navigation";
 
 interface formState {
-  fullname: "";
-  email: "";
-  password: "";
-  confirm__password: "";
+  fullname: string;
+  email: string;
+  password: string;
+  confirm__password: string;
+  user_type: string;
 }
 
 const SignUp = () => {
+  const [userType, setUserType] = useState<string>("");
+  useEffect(() => {
+    const storedUserType = localStorage.getItem("userType");
+    setUserType(storedUserType || "");
+  }, []);
+
   const [form, setForm] = useState<formState>({
     fullname: "",
     email: "",
     password: "",
     confirm__password: "",
+    user_type: userType || "",
   });
+  const router = useRouter();
+  const [error, setError] = useState<{ [key: string]: string }>({});
+  const [loading, setLoading] = useState<boolean>(false);
+  const passwordRegex = useMemo(
+    () =>
+      new RegExp(
+        "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[!@#$%^&*()_+\\-=[\\]{};':\"\\\\|,.<>/?]).{8,}$"
+      ),
+    []
+  );
+
+  const handleError = useCallback(
+    (field: string, returnMessage?: boolean) => {
+      if (returnMessage) {
+        return error[field];
+      } else {
+        return error[field] ? "border-red-800" : "";
+      }
+    },
+    [error]
+  );
 
   const [showPassword, setShowPassword] = useState<{ [key: string]: boolean }>({
     password: false,
@@ -33,10 +67,81 @@ const SignUp = () => {
     setShowPassword((prev) => ({ ...prev, [field]: !prev[field] }));
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setForm((prev) => ({ ...prev, [name]: value }));
-  };
+  const handleChange = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      const { name, value } = event.target;
+      setError((prev) => ({ ...prev, [name]: "" }));
+      if (name === "password" && !passwordRegex.test(value)) {
+        setError((prev) => ({
+          ...prev,
+          [name]:
+            "Password must contain at least 8 characters and must must be alphanumeric.",
+        }));
+      }
+      // Check password match for both fields
+      if (name === "confirm__password") {
+        if (value !== form.password) {
+          setError((prev) => ({
+            ...prev,
+            [name]: "Passwords don't match.",
+          }));
+        }
+      } else if (name === "password") {
+        if (form.confirm__password && form.confirm__password !== value) {
+          setError((prev) => ({
+            ...prev,
+            confirm__password: "Passwords don't match.",
+          }));
+        }
+      }
+
+      setForm((prev) => ({ ...prev, [name]: value }));
+    },
+    [passwordRegex, form]
+  );
+
+  const handleSubmit = useCallback(
+    async (event: React.FormEvent<HTMLFormElement>) => {
+      event.preventDefault();
+
+      for (const key in error) {
+        if (error[key]) {
+          return;
+        }
+      }
+
+      setLoading(true);
+      await axios
+        .post(environment.baseUrl + environment.registerUrl, { ...form })
+        .then((response) => {
+          setLoading(false);
+          if (response.status >= 200 && response.status < 300) {
+            toast.success(
+              "Registration successful, kindly check your mailbox for confirmation"
+            );
+            router.push("/verify-email");
+
+            localStorage.setItem("email", form.email);
+            setForm((prev) => ({ ...prev, fullname: "" }));
+          } else {
+            toast.error("Registration failed");
+          }
+        })
+        .catch((err) => {
+          setLoading(false);
+          // Extract the error message from the response
+          let errorMessage =
+            "An error occurred please try again or contact Admin";
+          if (err instanceof AxiosError) {
+            // Check if err is an instance of AxiosError
+            errorMessage = err.response?.data?.email || errorMessage;
+          }
+
+          toast.error(errorMessage);
+        });
+    },
+    [form, error, router]
+  );
 
   return (
     <section className="relative">
@@ -103,7 +208,7 @@ const SignUp = () => {
               <hr className="h-1 w-full md:w-44" />
             </div>
 
-            <form action="">
+            <form action="" onSubmit={handleSubmit}>
               <div className="grid grid-cols-2 gap-4 mb-4 md:grid-cols-1">
                 <div>
                   <label className="text-sm text-[#5F5F5F] mb-2 font-poppinsSemiBold">
@@ -147,6 +252,10 @@ const SignUp = () => {
                     placeholder="Enter Password"
                     variant="primary"
                   />
+
+                  <span className="text-red-800 text-sm font-normal leading-tight">
+                    {handleError("password", true)}
+                  </span>
                 </div>
 
                 <div className="absolute top-10 right-4">
@@ -173,6 +282,10 @@ const SignUp = () => {
                     placeholder="Confirm Password"
                     variant="primary"
                   />
+
+                  <span className="text-red-800 text-sm font-normal leading-tight">
+                    {handleError("confirm__password", true)}
+                  </span>
                 </div>
 
                 <div className="absolute top-10 right-4">
@@ -190,19 +303,18 @@ const SignUp = () => {
                 </div>
               </div>
 
-              <Link href={"/verify-email"}>
-                <Button
-                  className="w-full flex items-center gap-x-4 justify-center text-center mx-auto"
-                  variant={"search"}
-                  size="small"
-                >
-                  <span>{"Continue "}</span>
-                  <span>
-                    {" "}
-                    <GoArrowRight size={24} className="text-[#7C7C7C]" />
-                  </span>
-                </Button>
-              </Link>
+              <Button
+                className="w-full flex items-center gap-x-4 justify-center text-center mx-auto"
+                variant={"primary"}
+                size="small"
+                type="submit"
+              >
+                <span>{loading ? "Submitting.." : "Continue"}</span>
+                <span>
+                  {" "}
+                  <GoArrowRight size={24} className="text-[white]" />
+                </span>
+              </Button>
 
               <div>
                 <p className="text-lg font-poppinsRegular text-[#7C7C7C] mt-4 mb-10 text-center md:text-base">

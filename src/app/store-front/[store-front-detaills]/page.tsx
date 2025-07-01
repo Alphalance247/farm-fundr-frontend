@@ -40,13 +40,14 @@ const StoreFrontDetails = () => {
             <h3 className="text-2xl font-aristoBold text-[#5F5F5F] mt-8 mb-8">
               Organic Apple Harvest
             </h3>
-            <div className="grid grid-cols-2 gap-x-10">
-              <div>
+            <div className="grid grid-cols-2 gap-x-10 lg:grid-cols-1 lg:gap-y-6">
+              <div className="w-full">
                 <Image
                   src="/assets/store-front/store1.png"
                   alt="store-front-details"
                   width={609}
                   height={491}
+                  className="lg:w-full"
                 />
               </div>
               <div className="grid grid-cols-1 gap-y-2">
@@ -56,12 +57,14 @@ const StoreFrontDetails = () => {
                     alt="store-front-details"
                     width={296}
                     height={237}
+                    className="lg:w-full"
                   />
                   <Image
                     src="/assets/store-front/store3.png"
                     alt="store-front-details"
                     width={296}
                     height={237}
+                    className="lg:w-full lg:h-full"
                   />
                 </div>
 
@@ -70,6 +73,7 @@ const StoreFrontDetails = () => {
                   alt="store-front-details"
                   width={609}
                   height={237}
+                  className="lg:w-full lg:h-full"
                 />
               </div>
             </div>
@@ -90,9 +94,9 @@ const StoreFrontDetails = () => {
               </p>
             </div>
 
-            <div className="grid grid-cols-[2fr_1fr] gap-x-10 mt-6 pb-8 border-b border-[#E2E2E2]">
+            <div className="grid grid-cols-[2fr_1fr] gap-x-10 mt-6 pb-8 border-b border-[#E2E2E2] lg:grid-cols-1 lg:gap-y-8">
               <div className="p-4 bg-[#F6F6F6] rounded-xl flex-1">
-                <div className="flex gap-x-5 items-center border-b border-[#E4E7EC]">
+                <div className="flex gap-x-5 items-center border-b border-[#E4E7EC] md:flex-col">
                   {tabs.map((el, i) => (
                     <button
                       className={`${
@@ -205,7 +209,7 @@ const StoreFrontDetails = () => {
                 </button>
               </div>
 
-              <div className="grid grid-cols-3 gap-10">
+              <div className="grid grid-cols-3 gap-10 lg:grid-cols-2 md:grid-cols-1">
                 <StoreFontCard
                   imageUrl="/assets/my-farms/f1.png"
                   status="Active"

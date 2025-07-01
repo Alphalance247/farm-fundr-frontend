@@ -5,7 +5,6 @@ import Image from "next/image";
 import { useState } from "react";
 import FarmListTable from "@/app/components/dashboard/my-farms/farmsTable";
 import CreateNewFarmBtn from "@/app/components/dashboard/my-farms/createNewFarmBtn";
-import Link from "next/link";
 
 interface data {
   id: number;
@@ -63,9 +62,7 @@ const MyFarms = () => {
           </div>
 
           <div>
-            <Link href={"/farmer-dashboard/my-farms/add-farm"}>
-              <CreateNewFarmBtn />
-            </Link>
+            <CreateNewFarmBtn />
           </div>
         </div>
 

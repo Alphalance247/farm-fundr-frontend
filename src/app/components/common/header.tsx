@@ -7,11 +7,14 @@ import Link from "next/link";
 import Button from "./Buttons";
 import { motion } from "framer-motion";
 import { FaCaretDown } from "react-icons/fa";
+import { useAuth } from "@/context/authContext";
+import { useRouter } from "next/navigation";
 
 const Header = () => {
   const [activeMenu, setActiveMenu] = useState("Home");
   const [showMobileMenu, setShowMobileMenu] = useState(false);
   const [showDropDown, setShowDropDown] = useState<number | null>(null);
+  const router = useRouter();
 
   const navs = [
     { id: 1, name: "Home", scrollSection: "about", link: "/" },
@@ -81,6 +84,31 @@ const Header = () => {
     },
   ];
 
+  const { user, isAuthenticated, isLoading, logout, isLoggingOut } = useAuth();
+
+  console.log(user, isAuthenticated);
+
+  const handleLogout = async () => {
+    await logout();
+    router.push("/login");
+  };
+
+  // Loading skeleton component
+  const LoadingSkeleton = () => (
+    <div className="flex items-center gap-x-3 xl:hidden">
+      <div className="w-[180px] h-[40px] bg-gray-200 rounded-md animate-pulse"></div>
+      <div className="w-[180px] h-[40px] bg-gray-200 rounded-md animate-pulse"></div>
+    </div>
+  );
+
+  // Mobile loading skeleton
+  const MobileLoadingSkeleton = () => (
+    <div className="flex flex-col gap-y-6 md:block items-center">
+      <div className="w-[180px] h-[40px] bg-gray-200 rounded-md animate-pulse"></div>
+      <div className="w-[180px] h-[40px] bg-gray-200 rounded-md animate-pulse"></div>
+    </div>
+  );
+
   return (
     <header className="bg-[#EEFEF6] sticky z-[1000] top-0 h-[86px]">
       <div className="transition-all duration-500 max-w-[1300px] mx-auto px-8 flex justify-between items-center py-3 md:px-4">
@@ -93,6 +121,7 @@ const Header = () => {
           />
         </Link>
 
+        {/* Desktop Navigation */}
         <nav className="transition-all duration-500 xl:hidden">
           {navs.map((items, i) => {
             return (
@@ -143,19 +172,60 @@ const Header = () => {
           })}
         </nav>
 
+        {/* Desktop Auth Buttons */}
         <div className="flex items-center gap-x-3 xl:hidden">
-          <Link href={"/login"}>
-            <Button variant="secondary" size="small" className="w-[180px]">
-              Login
-            </Button>
-          </Link>
-          <Link href={"/user-select"}>
-            <Button className="w-fit" size="small">
-              Get Started
-            </Button>
-          </Link>
+          {isLoading ? (
+            <LoadingSkeleton />
+          ) : (
+            <>
+              {isAuthenticated ? (
+                <>
+                  <Link href={"/farmer-dashboard"}>
+                    <Button
+                      variant="secondary"
+                      size="small"
+                      className="w-[180px]"
+                    >
+                      Dashboard
+                    </Button>
+                  </Link>
+                  <Button
+                    variant="secondary"
+                    size="small"
+                    className={`w-[180px] ${
+                      isLoggingOut
+                        ? "opacity-50 cursor-not-allowed"
+                        : "cursor-pointer"
+                    }`}
+                    onClick={handleLogout}
+                    disabled={isLoggingOut}
+                  >
+                    {isLoggingOut ? "Logging out..." : "Logout"}
+                  </Button>
+                </>
+              ) : (
+                <>
+                  <Link href={"/login"}>
+                    <Button
+                      variant="secondary"
+                      size="small"
+                      className="w-[180px]"
+                    >
+                      Login
+                    </Button>
+                  </Link>
+                  <Link href={"/user-select"}>
+                    <Button className="w-fit" size="small">
+                      Get Started
+                    </Button>
+                  </Link>
+                </>
+              )}
+            </>
+          )}
         </div>
 
+        {/* Mobile Menu Toggle */}
         <div className="hidden lg:transition-all lg:duration-500 lg:grow xl:flex xl:justify-end xl:items-center xl:h-10 xl:gap-8 ">
           <button
             className="transition-all duration-500 text-black p-1 text-4xl hover:p-2"
@@ -166,6 +236,7 @@ const Header = () => {
         </div>
       </div>
 
+      {/* Mobile Menu */}
       <motion.div
         className={`xl:transition-all xl:duration-500 xl:overflow-hidden xl:bg-[#EEFEF6]  ${
           showMobileMenu ? "xl:h-auto" : "xl:h-0"
@@ -190,21 +261,57 @@ const Header = () => {
             );
           })}
 
+          {/* Mobile Auth Buttons */}
           <div className="flex flex-col gap-y-6 md:block items-center">
-            <Link href={"/login"}>
-              <Button
-                variant="secondary"
-                size="small"
-                className="w-[180px] md:mb-4"
-              >
-                Login
-              </Button>
-            </Link>
-            <Link href={"/user-select"}>
-              <Button className="w-fit" size="small">
-                Get Started
-              </Button>
-            </Link>
+            {isLoading ? (
+              <MobileLoadingSkeleton />
+            ) : (
+              <>
+                {isAuthenticated ? (
+                  <>
+                    <Link href={"/farmer-dashboard"}>
+                      <Button
+                        variant="secondary"
+                        size="small"
+                        className="w-[180px]"
+                      >
+                        Dashboard
+                      </Button>
+                    </Link>
+                    <Button
+                      variant="secondary"
+                      size="small"
+                      className={`w-[180px] ${
+                        isLoggingOut
+                          ? "opacity-50 cursor-not-allowed"
+                          : "cursor-pointer"
+                      }`}
+                      onClick={handleLogout}
+                      disabled={isLoggingOut}
+                    >
+                      {isLoggingOut ? "Logging out..." : "Logout"}
+                    </Button>
+                  </>
+                ) : (
+                  <>
+                    <Link href={"/login"}>
+                      <Button
+                        variant="secondary"
+                        size="small"
+                        className="w-[180px] md:mb-4"
+                      >
+                        Login
+                      </Button>
+                    </Link>
+                    <Link href={"/user-select"}>
+                      <Button className="w-fit" size="small">
+                        Get Started
+                      </Button>
+                    </Link>
+                  </>
+                )}
+              </>
+            )}
           </div>
         </nav>
       </motion.div>
