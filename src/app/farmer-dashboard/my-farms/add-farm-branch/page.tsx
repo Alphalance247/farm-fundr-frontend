@@ -5,6 +5,7 @@ import GoBackBtn from "@/app/components/common/goBack";
 import { useState } from "react";
 import BranchInformation from "@/app/components/dashboard/my-farms/farm-branch/branchInformation";
 import BranchSizeDetails from "@/app/components/dashboard/my-farms/farm-branch/branchSizeDetails";
+import toast from "react-hot-toast";
 
 const AddFarmBranch = () => {
   const [formStep, setFormStep] = useState(1);
@@ -21,7 +22,37 @@ const AddFarmBranch = () => {
     time: "",
   });
 
-  console.log(file);
+  // console.log(file);
+
+  const handleFinalSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const sizeValidation = /^[0-9]+(\.[0-9]+)?$/;
+    const branchSizeValidation = sizeValidation.test(form?.branchSize);
+    const errors = [];
+
+    if (file === null) {
+      errors.push("Upload farm images is required");
+    }
+
+    if (form?.fieldType === "") {
+      errors.push("Select field type is required");
+    }
+    if (!branchSizeValidation) {
+      errors.push("Branch size must be a number");
+    }
+    if (form?.workHours === "") {
+      errors.push("Work hours is required");
+    }
+    if (form?.time === "") {
+      errors.push("Off time is required");
+    }
+
+    if (errors.length > 0) {
+      toast.error(errors.join("\n"));
+    } else {
+      console.log("submitting details", form, file);
+    }
+  };
 
   return (
     <DashboardLayout>
@@ -85,7 +116,11 @@ const AddFarmBranch = () => {
             ))}
           </div>
 
-          <form action="" className="w-[70%] mx-auto">
+          <form
+            action="submit"
+            onSubmit={(e) => handleFinalSubmit(e)}
+            className="w-[70%] mx-auto"
+          >
             {formStep === 1 && (
               <BranchInformation
                 form={form}

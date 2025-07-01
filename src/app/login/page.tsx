@@ -5,7 +5,7 @@ import Button from "../components/common/Buttons";
 import { GoArrowRight } from "react-icons/go";
 import Input from "../components/common/input";
 import Link from "next/link";
-import { Suspense, useState } from "react";
+import { useState, Suspense } from "react";
 import { IoEye } from "react-icons/io5";
 import { FaRegEyeSlash } from "react-icons/fa";
 import axios from "axios";
@@ -20,69 +20,6 @@ interface formState {
 }
 
 const Login = () => {
-  const [form, setForm] = useState<formState>({
-    email: "",
-    password: "",
-  });
-  const [showPassword, setShowPassword] = useState<{ [key: string]: boolean }>({
-    password: false,
-    confirm__password: false,
-  });
-  const { login } = useAuth();
-  const [loading, setLoading] = useState(false);
-  const router = useRouter();
-  const searchParams = useSearchParams();
-  const togglePasswordVisibility = (field: string) => {
-    setShowPassword((prev) => ({ ...prev, [field]: !prev[field] }));
-  };
-
-  // Get the redirect URL from query params
-  const redirectTo = searchParams.get("redirect") || "/farmer-dashboard";
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setForm((prev) => ({ ...prev, [name]: value }));
-  };
-
-  // Function to determine where to redirect based on user type and intended route
-  const getRedirectPath = (userType: string, intendedRoute?: string | null) => {
-    // If there's a specific intended route, check if user can access it
-    if (intendedRoute) {
-      // If user is farmer and trying to access farmer routes, allow it
-      if (
-        userType === "farmer" &&
-        intendedRoute.startsWith("/farmer-dashboard")
-      ) {
-        return intendedRoute;
-      }
-      // If user is investor and trying to access investor routes, allow it
-      if (
-        userType === "investor" &&
-        intendedRoute.startsWith("/investor-dashboard")
-      ) {
-        return intendedRoute;
-      }
-      // If user type doesn't match the intended route, redirect to their dashboard
-      if (userType === "farmer") {
-        return "/farmer-dashboard";
-      }
-      if (userType === "investor") {
-        return "/investor-dashboard";
-      }
-    }
-
-    // Default redirects based on user type
-    if (userType === "farmer") {
-      return "/farmer-dashboard";
-    }
-    if (userType === "investor") {
-      return "/investor-dashboard";
-    }
-
-    // Fallback
-    return "/";
-  };
-
   // Loading component
   const LoginLoading = () => (
     <div className="bg-[#FCFCFC] px-10 py-5 rounded-[2.5rem] border border-[#CECECE] md:px-4">
@@ -96,73 +33,142 @@ const Login = () => {
     </div>
   );
 
-  const handleUserLogin = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    setLoading(true);
-    await axios
-      .post("/api/login", { ...form })
-      .then((response) => {
-        setLoading(false);
-        console.log("Login response:", response);
-        console.log("Status:", response.status);
-        if (response.status >= 200 && response.status < 300) {
-          // Store in localStorage
-          const { fullname, user_type } = response?.data;
-          toast.success(`Login Successful Welcome back ${fullname}`);
+  const LoginForm = () => {
+    const [form, setForm] = useState<formState>({
+      email: "",
+      password: "",
+    });
+    const [showPassword, setShowPassword] = useState<{
+      [key: string]: boolean;
+    }>({
+      password: false,
+      confirm__password: false,
+    });
+    const { login } = useAuth();
+    const [loading, setLoading] = useState(false);
+    const router = useRouter();
+    const searchParams = useSearchParams();
+    const togglePasswordVisibility = (field: string) => {
+      setShowPassword((prev) => ({ ...prev, [field]: !prev[field] }));
+    };
 
-          login({ fullname, user_type });
-          const redirectPath = getRedirectPath(user_type, redirectTo);
-          router.push(redirectPath);
-          setForm({ email: "", password: "" });
-        } else {
-          toast.error("Error login please try again or contact Admin");
+    // Get the redirect URL from query params
+    const redirectTo = searchParams.get("redirect") || "/farmer-dashboard";
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+      const { name, value } = e.target;
+      setForm((prev) => ({ ...prev, [name]: value }));
+    };
+
+    // Function to determine where to redirect based on user type and intended route
+    const getRedirectPath = (
+      userType: string,
+      intendedRoute?: string | null
+    ) => {
+      // If there's a specific intended route, check if user can access it
+      if (intendedRoute) {
+        // If user is farmer and trying to access farmer routes, allow it
+        if (
+          userType === "farmer" &&
+          intendedRoute.startsWith("/farmer-dashboard")
+        ) {
+          return intendedRoute;
         }
-      })
-      .catch((err) => {
-        setLoading(false);
-        // Extract the error message from the response
-        let errorMessage =
-          "An error occurred please try again or contact Admin";
-        if (err instanceof AxiosError) {
-          // Check if err is an instance of AxiosError
-          errorMessage = err.response?.data?.message || errorMessage;
+        // If user is investor and trying to access investor routes, allow it
+        if (
+          userType === "investor" &&
+          intendedRoute.startsWith("/investor-dashboard")
+        ) {
+          return intendedRoute;
         }
+        // If user type doesn't match the intended route, redirect to their dashboard
+        if (userType === "farmer") {
+          return "/farmer-dashboard";
+        }
+        if (userType === "investor") {
+          return "/investor-dashboard";
+        }
+      }
 
-        toast.error(errorMessage);
-      });
-  };
+      // Default redirects based on user type
+      if (userType === "farmer") {
+        return "/farmer-dashboard";
+      }
+      if (userType === "investor") {
+        return "/investor-dashboard";
+      }
 
-  return (
-    <section className="relative">
-      <div className="absolute bottom-0  z-[1] lg:hidden">
-        <Image
-          src="/assets/LandingPage/icons/position1.svg"
-          width={200}
-          height={400}
-          alt="positionlogo"
-          layout="responsive"
-        />
-      </div>
-      <div className="absolute top-0 right-0 z-[1] md:hidden">
-        <Image
-          src="/assets/UserOnboarding/rect.png"
-          width={150}
-          height={250}
-          alt="positionlogo"
-        />
-      </div>
+      // Fallback
+      return "/";
+    };
 
-      <Container>
-        <div className="grid grid-cols-2 gap-8 lg:grid-cols-1 relative z-10">
-          <div className="relative lg:hidden">
-            <Image
-              src="/assets/UserOnboarding/login.png"
-              width={580}
-              height={637}
-              alt="signImage"
-            />
-          </div>
-          <Suspense fallback={<LoginLoading />}>
+    const handleUserLogin = async (event: React.FormEvent<HTMLFormElement>) => {
+      event.preventDefault();
+      setLoading(true);
+      await axios
+        .post("/api/login", { ...form })
+        .then((response) => {
+          setLoading(false);
+          console.log("Login response:", response);
+          console.log("Status:", response.status);
+          if (response.status >= 200 && response.status < 300) {
+            // Store in localStorage
+            const { fullname, user_type } = response?.data;
+            toast.success(`Login Successful Welcome back ${fullname}`);
+
+            login({ fullname, user_type });
+            const redirectPath = getRedirectPath(user_type, redirectTo);
+            router.push(redirectPath);
+            setForm({ email: "", password: "" });
+          } else {
+            toast.error("Error login please try again or contact Admin");
+          }
+        })
+        .catch((err) => {
+          setLoading(false);
+          // Extract the error message from the response
+          let errorMessage =
+            "An error occurred please try again or contact Admin";
+          if (err instanceof AxiosError) {
+            // Check if err is an instance of AxiosError
+            errorMessage = err.response?.data?.message || errorMessage;
+          }
+
+          toast.error(errorMessage);
+        });
+    };
+
+    return (
+      <section className="relative">
+        <div className="absolute bottom-0  z-[1] lg:hidden">
+          <Image
+            src="/assets/LandingPage/icons/position1.svg"
+            width={200}
+            height={400}
+            alt="positionlogo"
+            layout="responsive"
+          />
+        </div>
+        <div className="absolute top-0 right-0 z-[1] md:hidden">
+          <Image
+            src="/assets/UserOnboarding/rect.png"
+            width={150}
+            height={250}
+            alt="positionlogo"
+          />
+        </div>
+
+        <Container>
+          <div className="grid grid-cols-2 gap-8 lg:grid-cols-1 relative z-10">
+            <div className="relative lg:hidden">
+              <Image
+                src="/assets/UserOnboarding/login.png"
+                width={580}
+                height={637}
+                alt="signImage"
+              />
+            </div>
+            {/* <Suspense fallback={<LoginLoading />}> */}
             <div className="bg-[#FCFCFC] px-10 py-5 rounded-[2.5rem] border border-[#CECECE] md:px-4">
               <h1 className="text-[#5F5F5F] font-aristoBold text-4xl text-center md:text-2xl">
                 Welcome Back!
@@ -245,6 +251,7 @@ const Login = () => {
                   className="w-full flex items-center gap-x-4 justify-center text-center mx-auto"
                   variant={"primary"}
                   size="small"
+                  type="submit"
                 >
                   <span>{loading ? "Authenticating...." : "Login "}</span>
                   <span>
@@ -263,10 +270,17 @@ const Login = () => {
                 </div>
               </form>
             </div>
-          </Suspense>
-        </div>
-      </Container>
-    </section>
+            {/* </Suspense> */}
+          </div>
+        </Container>
+      </section>
+    );
+  };
+
+  return (
+    <Suspense fallback={<LoginLoading />}>
+      <LoginForm />
+    </Suspense>
   );
 };
 

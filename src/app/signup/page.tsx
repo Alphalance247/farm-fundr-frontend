@@ -5,7 +5,7 @@ import Button from "../components/common/Buttons";
 import { GoArrowRight } from "react-icons/go";
 import Input from "../components/common/input";
 import Link from "next/link";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { IoEye } from "react-icons/io5";
 import { FaRegEyeSlash } from "react-icons/fa";
 import { useCallback } from "react";
@@ -23,7 +23,12 @@ interface formState {
 }
 
 const SignUp = () => {
-  const userType = localStorage.getItem("userType");
+  const [userType, setUserType] = useState<string>("");
+  useEffect(() => {
+    const storedUserType = localStorage.getItem("userType");
+    setUserType(storedUserType || "");
+  }, []);
+
   const [form, setForm] = useState<formState>({
     fullname: "",
     email: "",
@@ -115,6 +120,7 @@ const SignUp = () => {
               "Registration successful, kindly check your mailbox for confirmation"
             );
             router.push("/verify-email");
+
             localStorage.setItem("email", form.email);
             setForm((prev) => ({ ...prev, fullname: "" }));
           } else {
@@ -301,6 +307,7 @@ const SignUp = () => {
                 className="w-full flex items-center gap-x-4 justify-center text-center mx-auto"
                 variant={"primary"}
                 size="small"
+                type="submit"
               >
                 <span>{loading ? "Submitting.." : "Continue"}</span>
                 <span>

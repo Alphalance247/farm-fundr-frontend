@@ -3,6 +3,7 @@ import Input from "@/app/components/common/input";
 import { branchFormData } from "@/utils/form";
 import Button from "@/app/components/common/Buttons";
 import { FaArrowRightLong } from "react-icons/fa6";
+import { toast } from "react-hot-toast";
 
 const BranchInformation = ({
   form,
@@ -17,6 +18,32 @@ const BranchInformation = ({
   setCompletedSteps: (steps: number[] | ((prev: number[]) => number[])) => void;
   formStep: number;
 }) => {
+  const decriptionLength24 = form?.description.trim().length > 24;
+
+  const handleProceed = () => {
+    const errors = [];
+
+    if (form?.selectFarm === "") {
+      errors.push("Select Farm is required");
+    }
+    if (form?.branchName === "") {
+      errors.push("Branch Name is required");
+    }
+    if (form?.branchAddress === "") {
+      errors.push("Branch Address is required");
+    }
+    if (!decriptionLength24) {
+      errors.push("Description must be at least 24 characters");
+    }
+
+    if (errors.length > 0) {
+      toast.error(errors.join("\n"));
+    } else {
+      setFormStep(2);
+      setCompletedSteps((prev) => [...prev, formStep]);
+    }
+  };
+
   return (
     <div>
       <div className="p-6 bg-white mt-6 rounded-lg flex flex-col gap-y-6">
@@ -33,6 +60,7 @@ const BranchInformation = ({
 
             <option value="Loamy">Loamy</option>
             <option value="Loamy">Sandy</option>
+
             <option value="Loamy">Clay</option>
           </select>
         </div>
@@ -48,6 +76,8 @@ const BranchInformation = ({
             variant="tertiary"
             onChange={(e) => setForm({ ...form, branchName: e.target.value })}
           />
+          {}
+          <p>err</p>
         </div>
 
         <div>
@@ -85,10 +115,9 @@ const BranchInformation = ({
       <div className="mt-8">
         <Button
           className="w-full flex items-center justify-center gap-x-4"
-          onClick={(e) => {
-            e.preventDefault();
-            setFormStep(2);
-            setCompletedSteps((prev) => [...prev, formStep]);
+          type="button"
+          onClick={() => {
+            handleProceed();
           }}
         >
           Proceed{" "}

@@ -20,6 +20,7 @@ interface buttonProps {
   size?: buttonSize;
   className?: string;
   disabled?: boolean;
+  type?: "button" | "submit" | "reset";
 }
 
 const Button: React.FC<buttonProps> = ({
@@ -29,6 +30,7 @@ const Button: React.FC<buttonProps> = ({
   size = "small",
   className,
   disabled,
+  type = "button",
 }) => {
   const buttonColor = {
     primary:
@@ -64,6 +66,7 @@ const Button: React.FC<buttonProps> = ({
       onClick={onClick}
       className={` font-semibold  font-poppinsSemiBold md:text-xs ${buttonColor[variant]} ${buttonSize[size]} ${className}`}
       disabled={disabled}
+      type={type}
     >
       {children}
     </button>

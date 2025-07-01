@@ -13,7 +13,7 @@ export async function POST(request: NextRequest) {
       { headers: { "Content-Type": "application/json" } }
     );
 
-    const { access_token, username, fullname, user_type } = data;
+    const { access, username, fullname, user_type } = data;
 
     // Set token in HttpOnly cookie
     const response = NextResponse.json({
@@ -22,13 +22,15 @@ export async function POST(request: NextRequest) {
       fullname,
       user_type,
     });
-    response.cookies.set("access_token", access_token, {
-      httpOnly: true,
+
+    response.cookies.set("access", access, {
+      httpOnly: false,
       sameSite: "lax",
       secure: process.env.NODE_ENV === "production",
       path: "/",
-      maxAge: 60 * 60, // 1 hour
+      maxAge: 60 * 60 * 24 * 3, // 3 days
     });
+
     return response;
   } catch (error) {
     console.log(error);

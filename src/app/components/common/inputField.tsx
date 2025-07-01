@@ -1,10 +1,9 @@
 import React from "react";
+
 type InputVariant = "primary" | "secondary" | "tertiary";
 
 interface InputProps {
   type: string;
-  name: string;
-  value?: string;
   placeholder?: string;
   onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
   className?: string;
@@ -12,12 +11,11 @@ interface InputProps {
   withWidth?: boolean;
   readonly?: boolean;
   error?: string;
+  // Remove name from the interface since it will come from register
 }
 
-const Input: React.FC<InputProps> = ({
+const InputField: React.FC<InputProps> = ({
   type,
-  name,
-  value,
   placeholder,
   onChange,
   className,
@@ -25,6 +23,7 @@ const Input: React.FC<InputProps> = ({
   withWidth = true,
   readonly = false,
   error,
+  ...props // This will capture the register function and name
 }) => {
   const variantColor = {
     primary: "border-[#CECECE] p-4 border text-sm text-[#858585] rounded-xl",
@@ -32,23 +31,26 @@ const Input: React.FC<InputProps> = ({
     tertiary:
       "bg-[#F6F6F6] border border-[#E2E2E2] py-3 px-4 text-[#7C7C7C] rounded-lg",
   };
+
+  // If there's an error, add red border
+  const errorClass = error ? "border-red-500 focus:border-red-500" : "";
+
   return (
-    <div>
+    <div className="w-full">
       <input
         type={type}
-        name={name}
-        value={value}
         readOnly={readonly}
         placeholder={placeholder}
         required
         onChange={onChange}
-        className={` font-poppinsRegular ${
+        // Spread all props (including register function and name)
+        {...props}
+        className={`font-poppinsRegular ${
           withWidth && "w-full"
-        } outline-[#51F4A6]  ${variantColor[variant]} ${className} ${
-          error ? "border-red-500 focus:border-red-500" : ""
-        }`}
+        } outline-[#51F4A6] ${
+          variantColor[variant]
+        } ${errorClass} ${className}`}
       />
-
       {/* Show error message if there is one */}
       {error && (
         <p className="text-red-500 text-xs mt-1 font-poppinsRegular">{error}</p>
@@ -57,4 +59,4 @@ const Input: React.FC<InputProps> = ({
   );
 };
 
-export default Input;
+export default InputField;

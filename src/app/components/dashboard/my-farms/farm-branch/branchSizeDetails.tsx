@@ -6,6 +6,7 @@ import { FaArrowRightLong, FaArrowLeftLong } from "react-icons/fa6";
 import { FiDownload } from "react-icons/fi";
 import Image from "next/image";
 import { useState } from "react";
+import { toast } from "react-hot-toast";
 
 const BranchSizeDetails = ({
   form,
@@ -29,10 +30,15 @@ const BranchSizeDetails = ({
     if (selectedFile && selectedFile.size <= 10 * 1024 * 1024) {
       setFile(selectedFile);
       setPreview(URL.createObjectURL(selectedFile));
+    } else if (!selectedFile?.type.includes("image")) {
+      toast.error("Only image files are allowed");
+      return;
     } else {
-      alert("File must be less than 10MB");
+      toast.error("File must be less than 10MB");
+      return;
     }
   };
+
   return (
     <div>
       <div className="p-6 bg-white mt-6 rounded-lg flex flex-col gap-y-6">
@@ -181,10 +187,7 @@ const BranchSizeDetails = ({
         </Button>
         <Button
           className="w-fit flex items-center justify-center gap-x-4"
-          onClick={(e) => {
-            e.preventDefault();
-            setFormStep(2);
-          }}
+          type="submit"
         >
           Proceed to branch review
           <span>

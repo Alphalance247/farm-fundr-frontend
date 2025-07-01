@@ -18,7 +18,13 @@ const VerifyEmail = () => {
   const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
   const [loading, setLoading] = useState(false);
   const [loadingResendOtp, setLoadingResendOtp] = useState(false);
-  const email = localStorage.getItem("email");
+  const [email, setEmail] = useState<string>("");
+
+  useEffect(() => {
+    const storedEmail = localStorage.getItem("email");
+    setEmail(storedEmail || "");
+  }, []);
+
   const handleEmailOtp = async () => {
     setTab("verifyOtp");
     setTimer(30); // Reset the timer when switching to OTP verification
