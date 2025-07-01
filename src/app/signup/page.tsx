@@ -30,8 +30,6 @@ const SignUp = () => {
     setUserType(storedUserType || "");
   }, []);
 
-  console.log(userType);
-
   const [form, setForm] = useState<formState>({
     fullname: "",
     email: "",
@@ -46,8 +44,6 @@ const SignUp = () => {
       setForm((prev) => ({ ...prev, user_type: userType }));
     }
   }, [userType]);
-
-  console.log(form.user_type);
 
   const router = useRouter();
   const [error, setError] = useState<{ [key: string]: string }>({});
