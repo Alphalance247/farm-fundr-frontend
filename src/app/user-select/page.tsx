@@ -11,7 +11,7 @@ import { HiCheckCircle } from "react-icons/hi";
 import { FiCircle } from "react-icons/fi";
 
 const UserSelectPage: React.FC = () => {
-  const [select, setSelect] = useState<string>("");
+  const [select, setSelect] = useState<string>("investor");
 
   const handleUserSelect = (userType: string) => {
     setSelect(userType);
@@ -106,7 +106,7 @@ const UserSelectPage: React.FC = () => {
           </div>
 
           <div className="text-center relative md:z-20">
-            <Link href={select === "investor" ? "/signup" : "/signup"}>
+            <Link href={"/signup"}>
               <Button
                 className={`w-[400px] flex items-center gap-x-4 justify-center text-center mx-auto ${
                   select === "" ? "cursor-not-allowed" : ""
@@ -115,10 +115,15 @@ const UserSelectPage: React.FC = () => {
                 size="small"
                 disabled={select === "" ? true : false}
               >
-                <span>{"Learn More"}</span>
+                <span>{"Sign up as " + select}</span>
                 <span>
                   {" "}
-                  <GoArrowRight size={24} className="text-[#7C7C7C]" />
+                  <GoArrowRight
+                    size={24}
+                    className={
+                      select === "" ? "text-[#7C7C7C]" : "text-[white]"
+                    }
+                  />
                 </span>
               </Button>
             </Link>
