@@ -24,18 +24,31 @@ interface formState {
 
 const SignUp = () => {
   const [userType, setUserType] = useState<string>("");
+
   useEffect(() => {
     const storedUserType = localStorage.getItem("userType");
     setUserType(storedUserType || "");
   }, []);
+
+  console.log(userType);
 
   const [form, setForm] = useState<formState>({
     fullname: "",
     email: "",
     password: "",
     confirm__password: "",
-    user_type: userType || "",
+    user_type: "",
   });
+
+  // Sync userType to form.user_type
+  useEffect(() => {
+    if (userType) {
+      setForm((prev) => ({ ...prev, user_type: userType }));
+    }
+  }, [userType]);
+
+  console.log(form.user_type);
+
   const router = useRouter();
   const [error, setError] = useState<{ [key: string]: string }>({});
   const [loading, setLoading] = useState<boolean>(false);
