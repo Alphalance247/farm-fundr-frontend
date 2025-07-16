@@ -5,19 +5,28 @@ import { RiPencilFill } from "react-icons/ri";
 import StoreFrontHeading from "../common/storeFrontHeading";
 import { color } from "@/app/components/data";
 import { useTab } from "@/context/TabContext";
+import { useState } from "react";
+import Button from "../../common/Buttons";
 
 const CustomizeStore = () => {
   const { activeTab, setActiveTab } = useTab();
+  const [address, setAddress] = useState("");
+  const [address1, setAddress1] = useState("");
 
   return (
     <div>
-      <div className="flex flex-col border-b border-[#E4E7EC] pb-3 mb-8">
-        <h3 className="text-sm font-poppinsSemiBold text-[#5F5F5F]">
-          StoreFront Settings
-        </h3>
-        <p className="text-sm text-[#7C7C7C] font-poppinsRegular">
-          Customise your store front to fit your preference
-        </p>
+      <div className="flex justify-between border-b border-[#E4E7EC] pb-3 mb-8">
+        <div className="flex flex-col">
+          <h3 className="text-sm font-poppinsSemiBold text-[#5F5F5F] mb-3">
+            StoreFront Settings
+          </h3>
+          <p className="text-sm text-[#7C7C7C] font-poppinsRegular">
+            Customise your store front to fit your preference
+          </p>
+        </div>
+        <Button type="button" variant="primary" className="w-[160px]">
+          Save
+        </Button>
       </div>
 
       <div className="flex gap-x-4">
@@ -63,7 +72,7 @@ const CustomizeStore = () => {
             name="address"
             value="Lagos, Nigeria"
             variant="primary"
-            // onChange={(e) => setAddress(e.target.value)}
+            onChange={(e) => setAddress(e.target.value)}
           />
         </div>
         <div>
@@ -84,7 +93,7 @@ const CustomizeStore = () => {
             name="address"
             value="Lagos, Nigeria"
             variant="primary"
-            // onChange={(e) => setAddress(e.target.value)}
+            onChange={(e) => setAddress(e.target.value)}
           />
         </div>
       </div>

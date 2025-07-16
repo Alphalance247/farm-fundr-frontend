@@ -4,6 +4,7 @@ import Button from "../../common/Buttons";
 import { FaRegEnvelope } from "react-icons/fa";
 import { BsEyeFill } from "react-icons/bs";
 import Link from "next/link";
+import { getFarmDetails } from "@/stores/farms/getFarmDetails";
 
 const StoreFrontHeading = ({
   color,
@@ -17,6 +18,8 @@ const StoreFrontHeading = ({
   iconColor: string;
   withBorderRadius?: boolean;
 }) => {
+  const { data: farmDetails } = getFarmDetails();
+  const farm = farmDetails?.data;
   return (
     <div
       className={` relative ${
@@ -49,7 +52,7 @@ const StoreFrontHeading = ({
                 <h3
                   className={`text-[22px] ${textColor} leading-7 font-aristoBold `}
                 >
-                  FarmPady
+                  {farm?.farm?.name || "N/A"}
                 </h3>
                 {withBorderRadius || (
                   <p
@@ -63,7 +66,7 @@ const StoreFrontHeading = ({
               <p className={`${textColor} mb-1`}>
                 <span className="text-xs font-poppinsRegular"> Address:</span>{" "}
                 <span className="font-poppinsSemiBold text-xs">
-                  Lagos Nigeria{" "}
+                  {`${farm?.farm?.city}, ${farm?.farm?.country} ` || "N/A"}
                 </span>
               </p>
               {withBorderRadius && (
@@ -72,21 +75,27 @@ const StoreFrontHeading = ({
                     Farmer Name::
                   </span>{" "}
                   <span className="font-poppinsSemiBold text-xs">
-                    Aderibigbe Adigun
+                    {farm?.farm?.owner_name || "N/A"}
                   </span>
                 </p>
               )}
               <p className={`${textColor} mb-1`}>
                 <span className="text-xs font-poppinsRegular">CAC Reg No:</span>{" "}
-                <span className="font-poppinsSemiBold text-xs">CAC-12345</span>
+                <span className="font-poppinsSemiBold text-xs">
+                  {farm?.farm?.cac_reg_no || " N/A"}
+                </span>
               </p>
 
               {withBorderRadius && (
                 <p
                   className={`text-sm font-poppinsRegular mt-2 w-fit ${textColor} px-3 py-[6px] rounded-[79px] flex items-center justify-center gap-2 bg-[#FFFFFF33]`}
                 >
-                  <MdVerifiedUser className={`${badgeColor}`} size={16} />
-                  Verified
+                  {farm?.farm?.cac_reg_status !== "Unregistered" && (
+                    <MdVerifiedUser className={`${badgeColor}`} size={16} />
+                  )}
+                  {farm?.farm?.cac_reg_status !== "Unregistered"
+                    ? "Verified"
+                    : "Unverified"}
                 </p>
               )}
 

@@ -9,10 +9,12 @@ import { FaChevronDown } from "react-icons/fa";
 import { useEffect } from "react";
 import Heading from "./heading";
 import { IoIosMenu } from "react-icons/io";
+import { useAuth } from "@/context/authContext";
 
 export function Topbar({ overview }: { overview: string }) {
   // const [search, setSearch] = useState<string>("");
   const [dateTime, setDateTime] = useState<string>("21-02-2025. 12:02:00 PM");
+  const { user, isLoading, logout, isLoggingOut } = useAuth();
 
   useEffect(() => {
     const updateDateTime = () => {
@@ -108,27 +110,39 @@ export function Topbar({ overview }: { overview: string }) {
         <p className="text-sm font-poppinsRegular text-[#5F5F5F]">{dateTime}</p>
       </div>
 
-      <div className="flex justify-between gap-x-4 items-center py-[5px] px-6 bg-[#F6F6F6] rounded-2xl cursor-pointer hover:bg-[#cac6c6] xl:hidden">
-        <div className="flex items-center gap-x-3">
-          <Image
-            src="/assets/DashBoard/overview/avatar.svg"
-            width={40}
-            height={40}
-            alt="avatar"
-          />
-          <div>
-            <p className="text-[#282A03] text-sm font-poppinsSemiBold mb-1">
-              Nelson Ade
-            </p>
-            <p className="text-[#7C7C7C] text-xs font-poppinsRegular">
-              Nelson@gmail.com
-            </p>
-          </div>
+      {isLoading ? (
+        <div className="flex items-center gap-x-3 xl:hidden">
+          <div className="w-[180px] h-[40px] bg-gray-200 rounded-md animate-pulse"></div>
+          <div className="w-[180px] h-[40px] bg-gray-200 rounded-md animate-pulse"></div>
         </div>
-        <span>
-          <FaChevronDown color="#7C7C7C" size={20} />
-        </span>
-      </div>
+      ) : (
+        <div
+          className="flex justify-between gap-x-4 items-center py-[5px] px-6 bg-[#F6F6F6] rounded-2xl cursor-pointer hover:bg-[#cac6c6] xl:hidden"
+          onClick={logout}
+        >
+          <div className="flex items-center gap-x-3">
+            <Image
+              src="/assets/DashBoard/overview/avatar.svg"
+              width={40}
+              height={40}
+              alt="avatar"
+            />
+
+            <div>
+              <p className="text-[#282A03] text-sm font-poppinsSemiBold mb-1">
+                {user?.fullname}
+              </p>
+            </div>
+          </div>
+          {isLoggingOut ? (
+            <div className="animate-spin rounded-full h-6 w-6 border-t-2 border-b-2 border-orange-500"></div>
+          ) : (
+            <span>
+              <FaChevronDown color="#7C7C7C" size={20} />
+            </span>
+          )}
+        </div>
+      )}
     </header>
   );
 }

@@ -11,6 +11,7 @@ interface subscriptionTier {
   planType: string;
   prices: string;
   offer: string;
+  tier: string;
 }
 
 interface billingCadenceProps {
@@ -20,6 +21,9 @@ interface billingCadenceProps {
   planName: string;
   onClick?: React.MouseEventHandler<HTMLButtonElement>;
   onClickTranfer?: React.MouseEventHandler<HTMLButtonElement>;
+  subType: string;
+  setSubType: (subType: string) => void;
+  loading: boolean;
 }
 
 const BillingFrequency: React.FC<billingCadenceProps> = ({
@@ -29,8 +33,11 @@ const BillingFrequency: React.FC<billingCadenceProps> = ({
   planName,
   onClick,
   onClickTranfer,
+  setSubType,
+  subType,
+  loading,
 }) => {
-  const [subType, setSubType] = useState<string>("Pay monthly");
+  // const [subType, setSubType] = useState<string>("Pay monthly");
   const [paymentMethod, setPaymentMethod] = useState<string>("paystack");
   const [selectedPrice, setSelectedPrice] = useState<string>("");
 
@@ -69,7 +76,7 @@ const BillingFrequency: React.FC<billingCadenceProps> = ({
             >
               <div className="flex justify-between mb-2">
                 <p className="text-[#7C7C7C] text-sm font-poppinsSemiBold">
-                  {item?.planType}
+                  {item?.tier}
                 </p>
 
                 <span>
@@ -255,7 +262,7 @@ const BillingFrequency: React.FC<billingCadenceProps> = ({
                       src="/assets/DashBoard/subscription/paystack.svg"
                       alt="paystack"
                     />
-                    Pay with paystack
+                    {loading ? "processing...." : "Pay with paystack"}
                   </Button>
                 ) : (
                   <Button

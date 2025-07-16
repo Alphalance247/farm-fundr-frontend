@@ -29,19 +29,19 @@ const FarmerDashboard = () => {
   const data: data[] = [
     {
       text: "Create farm",
-      link: "/farmer-dashboard",
+      link: "/farmer-dashboard/my-farms/add-farm",
       img: "/assets/DashBoard/overview/plus.svg",
       bgColor: "bg-[#ECF2FF]",
     },
     {
       text: "Manage farms",
-      link: "/farmer-dashboard",
+      link: "/farmer-dashboard/my-farms",
       img: "/assets/DashBoard/overview/copy.svg",
       bgColor: "bg-[#EEFEF6]",
     },
     {
       text: "Withdraw Funds",
-      link: "/farmer-dashboard",
+      link: "/farmer-dashboard/wallet",
       img: "/assets/DashBoard/overview/bank.svg",
       bgColor: "bg-[#FFE6E6]",
     },

@@ -84,9 +84,7 @@ const Header = () => {
     },
   ];
 
-  const { user, isAuthenticated, isLoading, logout, isLoggingOut } = useAuth();
-
-  console.log(user, isAuthenticated);
+  const { isAuthenticated, isLoading, logout, isLoggingOut } = useAuth();
 
   const handleLogout = async () => {
     await logout();

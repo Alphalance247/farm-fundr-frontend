@@ -20,11 +20,13 @@ interface subscriceCardData {
   textColor2: string;
   iconColor: string;
   link: string;
+  id: string;
 }
 
 const Subscription = () => {
   const subscriceCardData: subscriceCardData[] = [
     {
+      id: "1",
       planName: "Basic plan",
       descriptionAvailable: true,
       description: "Popular",
@@ -52,6 +54,7 @@ const Subscription = () => {
     },
     {
       planName: "Standard plan",
+      id: "2",
       description: "",
       descriptionAvailable: false,
       planAmount: "N9,000/Per Month",
@@ -92,9 +95,10 @@ const Subscription = () => {
         </div>
 
         <div className="grid grid-cols-2 gap-x-10 max-w-[80%] mx-auto">
-          {subscriceCardData.map((items, i) => (
+          {subscriceCardData.map((items) => (
             <SubscribeCard
-              key={i}
+              key={items?.id}
+              id={items?.id}
               planName={items?.planName}
               description={items?.description}
               planAmount={items?.planAmount}

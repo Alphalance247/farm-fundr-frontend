@@ -205,6 +205,8 @@ export interface FarmFormData {
 export interface branchFormData {
   selectFarm: string;
   branchName: string;
+  city: string;
+  state: string;
   branchAddress: string;
   description: string;
   branchSize: string;
@@ -218,7 +220,6 @@ export interface projectFormData {
   selectBranch: string;
   projectName: string;
   projectType: string;
-  branchAddress: string;
   expectedReturn: string;
   fundingDetails: string;
   description: string;
@@ -228,7 +229,5 @@ export interface projectFormData {
   howItWorks: string;
   progressOvertime: string;
   branchSize: string;
-  fieldType: string;
-  workHours: string;
-  time: string;
+  plots: string;
 }

@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 import Button from "../../common/Buttons";
 import Link from "next/link";
+import { FiEdit, FiTrash2 } from "react-icons/fi";
 
 interface BranchFarmCardProps {
   branchName: string;
@@ -9,10 +10,11 @@ interface BranchFarmCardProps {
   address: string;
   projectsCount: string;
   openingHours: string;
-  status: "Active" | "Inactive";
+  status: boolean;
   imageUrl: string;
   onViewProjects?: () => void;
   href: string;
+  id: string;
 }
 
 const BranchFarmCard: React.FC<BranchFarmCardProps> = ({
@@ -24,7 +26,12 @@ const BranchFarmCard: React.FC<BranchFarmCardProps> = ({
   status,
   imageUrl,
   href,
+  id,
 }) => {
+  const [openDropdown, setOpenDropdown] = useState<string | null>(null);
+  const handleDropdownToggle = (farmId: string) => {
+    setOpenDropdown(openDropdown === farmId ? null : farmId);
+  };
   return (
     <div className="bg-white rounded-xl w-full shadow-lg">
       <div className="relative">
@@ -36,19 +43,52 @@ const BranchFarmCard: React.FC<BranchFarmCardProps> = ({
           height={142}
         />
         <div
-          className={`absolute bottom-4 right-4 px-3 py-1 flex items-center gap-x-1 border border-[#B0EECA] rounded-[8px] text-xs font-semibold bg-white text-[#00C853]`}
+          className={`absolute bottom-4 right-4 px-3 py-1 flex items-center gap-x-1 border  rounded-[8px] text-xs font-semibold bg-white  ${
+            status
+              ? "text-[#00C853] border-[#B0EECA]"
+              : " border-red-600 text-red-700"
+          }`}
         >
-          <Image
-            src="/assets/my-farms/7.svg"
-            alt="status"
-            width={16}
-            height={16}
-          />
-          <span>{status || "Active"}</span>
+          {status && (
+            <Image
+              src="/assets/my-farms/7.svg"
+              alt="status"
+              width={16}
+              height={16}
+            />
+          )}
+          <span>{status ? "Active" : "Inactive"}</span>
         </div>
-        <button className="absolute top-3 right-3 bg-[#F6F6F6] rounded-xl w-11 h-9 p-1 shadow">
-          <span className="text-xl text-[#7C7C7C]">⋯</span>
-        </button>
+
+        <div>
+          <button
+            className="absolute top-3 right-3 bg-[#F6F6F6] rounded-xl w-11 h-9 p-1 shadow"
+            onClick={() => handleDropdownToggle(id)}
+          >
+            <span className="text-xl text-[#7C7C7C]">⋯</span>
+          </button>
+
+          {openDropdown === id && (
+            <div className="absolute right-0 bottom-0 mt-2 w-28 bg-white rounded-lg shadow-lg border border-gray-200 z-50">
+              <div className="py-1">
+                <button
+                  // onClick={() => handleEditFarm(emp.id)}
+                  className="w-full px-2 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center gap-2"
+                >
+                  <FiEdit size={14} />
+                  Edit
+                </button>
+                <button
+                  // onClick={() => handleDeleteFarm(emp?.id, emp?.name)}
+                  className="w-full px-2 py-2 text-sm text-red-600 hover:bg-gray-100 flex items-center gap-2"
+                >
+                  <FiTrash2 size={14} />
+                  Delete
+                </button>
+              </div>
+            </div>
+          )}
+        </div>
       </div>
       <div className=" px-3 py-4 border border-[#F6F6F6]">
         <h3 className="text-xl font-aristoBold text-[#5F5F5F] mb-2">

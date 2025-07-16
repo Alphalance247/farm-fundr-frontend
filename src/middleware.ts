@@ -24,10 +24,5 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: [
-    "/farmer-dashboard",
-    "/farmer-dashboard/:path*",
-    "/investor-dashboard",
-    "/investor-dashboard/:path*",
-  ],
+  matcher: ["/farmer-dashboard/:path*", "/investor-dashboard/:path*"],
 };

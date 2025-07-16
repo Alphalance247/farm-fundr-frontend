@@ -1,9 +1,12 @@
+"use client";
 import Label from "@/app/components/common/label";
 import Input from "@/app/components/common/input";
 import { branchFormData } from "@/utils/form";
 import Button from "@/app/components/common/Buttons";
 import { FaArrowRightLong } from "react-icons/fa6";
 import { toast } from "react-hot-toast";
+import { getFarmListStore } from "@/stores/farms/getFarmList";
+import { useEffect } from "react";
 
 const BranchInformation = ({
   form,
@@ -11,14 +14,24 @@ const BranchInformation = ({
   setFormStep,
   setCompletedSteps,
   formStep,
+  setSelectedFarmId,
 }: {
   form: branchFormData;
   setForm: (form: branchFormData) => void;
   setFormStep: (formStep: number) => void;
+  setSelectedFarmId: (selectedFarmId: string) => void;
   setCompletedSteps: (steps: number[] | ((prev: number[]) => number[])) => void;
   formStep: number;
 }) => {
   const decriptionLength24 = form?.description.trim().length > 24;
+
+  const { data: farmList, loading, fetchFarmList } = getFarmListStore();
+
+  useEffect(() => {
+    fetchFarmList();
+  }, []);
+
+  const farmListData = farmList?.results?.farms || [];
 
   const handleProceed = () => {
     const errors = [];
@@ -53,15 +66,25 @@ const BranchInformation = ({
             id="selectFarm"
             name="selectFarm"
             value={form?.selectFarm || ""}
-            onChange={(e) => setForm({ ...form, selectFarm: e.target.value })}
+            onChange={(e) => {
+              setSelectedFarmId(e.target.value);
+              setForm({ ...form, selectFarm: e.target.value });
+            }}
             className="w-full border bg-[#F6F6F6] focus:ring-[#51F4A6] focus:border-[#51F4A6] border-[#E0E0E0] rounded-md text-sm p-4 focus:outline-none focus:ring-1 text-[#7C7C7C] font-poppinsRegular"
           >
             <option value="">Select field type</option>
 
-            <option value="Loamy">Loamy</option>
-            <option value="Loamy">Sandy</option>
-
-            <option value="Loamy">Clay</option>
+            {loading ? (
+              <option value="" disabled>
+                Loading farms...
+              </option>
+            ) : (
+              farmListData.map((farm) => (
+                <option key={farm.id} value={farm.id}>
+                  {farm.name}
+                </option>
+              ))
+            )}
           </select>
         </div>
 
@@ -76,8 +99,34 @@ const BranchInformation = ({
             variant="tertiary"
             onChange={(e) => setForm({ ...form, branchName: e.target.value })}
           />
-          {}
-          <p>err</p>
+        </div>
+
+        <div className="grid grid-cols-2 gap-2">
+          <div>
+            <Label className="">State</Label>
+            <Input
+              name="state"
+              className=""
+              type="text"
+              value={form?.state || ""}
+              placeholder="Enter farm state"
+              variant="tertiary"
+              onChange={(e) => setForm({ ...form, state: e.target.value })}
+            />
+          </div>
+
+          <div>
+            <Label className="">City</Label>
+            <Input
+              name="city"
+              className=""
+              type="text"
+              value={form?.city || ""}
+              placeholder="Enter farm city"
+              variant="tertiary"
+              onChange={(e) => setForm({ ...form, city: e.target.value })}
+            />
+          </div>
         </div>
 
         <div>

@@ -46,7 +46,7 @@ const CreateNewFarmBtn = () => {
             },
           ].map((el, i) => (
             <Link href={el?.link || "/"} key={i}>
-              <div className="px-4 py-3 text-[#7C7C7C] cursor-pointer w-full text-xs justify-between font-poppinsRegular flex gap-x-[10px] items-center hover:bg-[#424040]">
+              <div className="px-4 py-3 text-[#7C7C7C] cursor-pointer w-full text-xs justify-between font-poppinsRegular flex gap-x-[10px] items-center hover:bg-[#EEFEF6]">
                 {/* <span>
                   <FiPlus size={20} color="#0000008A" />
                 </span> */}

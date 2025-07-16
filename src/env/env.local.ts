@@ -1,6 +1,7 @@
 export const environment = {
   production: false,
   baseUrl: "https://padycvgcoops.name.ng/pady_api/",
+  imgBaserUrl: "https://padycvgcoops.name.ng/",
   registerUrl: "accounts/auth/register",
   loginUrl: "accounts/auth/login/token",
   verifyEmail: "accounts/auth/verify-otp?email",
