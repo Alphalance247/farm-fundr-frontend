@@ -14,6 +14,7 @@ export interface projectListDataSore {
     description: string;
     farm_name: string;
     ROI: number;
+    images: string[];
     project_location: string;
     project_images: {
       image: string;

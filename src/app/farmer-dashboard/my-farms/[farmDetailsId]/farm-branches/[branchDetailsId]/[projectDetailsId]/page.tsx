@@ -2,11 +2,11 @@ import ProjectDetails from "@/app/components/dashboard/my-farms/projectDetails/p
 import { JSX } from "react";
 
 type Props = {
-  params: {
+  params: Promise<{
     projectDetailsId: string;
     branchDetailsId: string;
     farmDetailsId: string;
-  };
+  }>;
 };
 
 export default async function ProjectDetailsPage({

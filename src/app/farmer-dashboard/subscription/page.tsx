@@ -82,7 +82,7 @@ const Subscription = () => {
   ];
   return (
     <DashboardLayout>
-      <Topbar overview="Wallet" />
+      <Topbar overview="Subscription" />
 
       <main className="px-10 py-8 bg-gray-50 overflow-auto">
         <div className=" mb-10">

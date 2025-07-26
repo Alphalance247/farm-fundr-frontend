@@ -69,7 +69,7 @@ const BranchDetails = ({
               return (
                 <Card
                   key={card?.id}
-                  projectImage={card?.project_images[0]?.image}
+                  projectImage={`https://padycvgcoops.name.ng/${card?.images[0]}`}
                   projectStatus={card?.status}
                   projectDescrip={`${card?.description?.slice(0, 40)}....`}
                   projectName={`${card?.name?.slice(0, 20)}...`}

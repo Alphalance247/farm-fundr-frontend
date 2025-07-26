@@ -11,6 +11,7 @@ import { getProjectDetails } from "@/stores/farms/getProjectDetails";
 import Spinner from "@/app/components/common/modals/spinner";
 import { IoMdArrowBack } from "react-icons/io";
 import Link from "next/link";
+import Image from "next/image";
 
 const ProjectDetails = ({
   projectDetailsId,
@@ -104,11 +105,14 @@ const ProjectDetails = ({
 
                   <div className="pt-6">
                     <div className="grid grid-cols-3 gap-3">
-                      {projectData?.project_images?.map((images, i) => (
-                        <img
+                      {projectData?.images?.map((images, i) => (
+                        <Image
                           width={i === 0 ? 556 : 177}
                           height={i === 0 ? 158 : 95}
-                          src={images?.image || "/assets/my-farms/no-img.avif"}
+                          src={
+                            `https://padycvgcoops.name.ng${images}` ||
+                            "/assets/my-farms/no-img.avif"
+                          }
                           alt={`Uploaded images`}
                           className={`object-cover w-full  rounded-[12px] border-dashed border border-[#51F4A6] ${
                             i === 0 ? "col-span-3 h-[158px]" : "h-[95px]"

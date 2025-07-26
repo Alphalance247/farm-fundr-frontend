@@ -2,10 +2,10 @@ import BranchDetails from "@/app/components/dashboard/my-farms/branchDetails/bra
 import { JSX } from "react";
 
 type Props = {
-  params: {
+  params: Promise<{
     farmDetailsId: string;
     branchDetailsId: string;
-  };
+  }>;
 };
 
 export default async function BranchDetailsPage({

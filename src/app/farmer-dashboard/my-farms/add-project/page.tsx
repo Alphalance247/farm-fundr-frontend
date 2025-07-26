@@ -12,7 +12,6 @@ import ProtectedRoute from "@/app/components/common/ProtectedRoute/protectedRout
 import SpinnerModal from "@/app/components/common/modals/SpinnerModal";
 import axiosInstance from "@/lib/axios";
 import { AxiosError } from "axios";
-import { set } from "react-hook-form";
 
 const AddPoject = () => {
   const [formStep, setFormStep] = useState(1);
@@ -21,6 +20,7 @@ const AddPoject = () => {
   const [selectedBranchId, setSelectedBranchId] = useState("");
   const [loading, setLoading] = useState(false);
   // const [loading, setLoading] = useState(false);
+
   const [form, setForm] = useState({
     selectFarm: "",
     selectBranch: "",
@@ -38,6 +38,7 @@ const AddPoject = () => {
     expectedReturn: "",
     plots: "",
   });
+
   const [uploadedImages, setUploadedImages] = useState<{
     [key: string]: { file: File | null; preview: string | null };
   }>({

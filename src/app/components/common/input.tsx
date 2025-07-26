@@ -12,6 +12,7 @@ interface InputProps {
   withWidth?: boolean;
   readonly?: boolean;
   error?: string;
+  disabled?: boolean;
 }
 
 const Input: React.FC<InputProps> = ({
@@ -25,6 +26,7 @@ const Input: React.FC<InputProps> = ({
   withWidth = true,
   readonly = false,
   error,
+  disabled,
 }) => {
   const variantColor = {
     primary: "border-[#CECECE] p-4 border text-sm text-[#858585] rounded-xl",
@@ -41,6 +43,7 @@ const Input: React.FC<InputProps> = ({
         readOnly={readonly}
         placeholder={placeholder}
         required
+        disabled={disabled}
         onChange={onChange}
         className={` font-poppinsRegular ${
           withWidth && "w-full"

@@ -109,12 +109,10 @@ const AddFarmBranch = () => {
         // Extract the error message from the response
         let errorMessage =
           "Please make sure all fields are filled correctly. and try again.";
-        let errorDetails = null;
 
         if (err instanceof AxiosError) {
           // Check if err is an instance of AxiosError
           errorMessage = err.response?.data?.statusmessage || errorMessage;
-          errorDetails = err.response?.data?.details;
         }
 
         toast.error(errorMessage);

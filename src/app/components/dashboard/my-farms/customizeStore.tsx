@@ -13,6 +13,8 @@ const CustomizeStore = () => {
   const [address, setAddress] = useState("");
   const [address1, setAddress1] = useState("");
 
+  console.log(address, address1, setAddress1);
+
   return (
     <div>
       <div className="flex justify-between border-b border-[#E4E7EC] pb-3 mb-8">

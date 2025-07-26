@@ -177,47 +177,47 @@ export default function FarmListTable() {
         withHeading={true}
       />
 
-      <div className="overflow-x-auto">
-        <table className="w-full min-w-full">
-          <thead className="bg-[#FAFEFF]">
-            <tr>
-              <th className="py-3 px-4 w-[10px] text-left">
-                <input type="checkbox" className="rounded border-gray-300" />
-              </th>
-              <th className="py-3 px-4 text-sm text-[#0B222A] font-poppinsSemiBold w-[200px] text-left">
-                Farm Name
-              </th>
-              <th className="py-3 px-4 text-sm  text-[#0B222A] font-poppinsSemiBold text-left w-[150px]">
-                Location
-              </th>
-              <th className="py-3 px-4 text-sm  text-[#0B222A] font-poppinsSemiBold text-left w-[150px]">
-                CAC Reg No
-              </th>
-              <th className="py-3 px-4 text-sm  text-[#0B222A] font-poppinsSemiBold text-left w-[100px]">
-                Branches
-              </th>
-              <th className="py-3 px-4 text-sm  text-[#0B222A] font-poppinsSemiBold text-left w-[50px]">
-                Status
-              </th>
-              <th className="py-3 px-4 text-sm  text-[#0B222A] font-poppinsSemiBold text-left w-[50px]">
-                Action
-              </th>
-            </tr>
-          </thead>
-          {totalFarmsTable.length === 0 ? (
-            <div className="flex pt-20 items-center h-screen">
-              <div className="flex flex-col items-center">
-                <p className="text-center pb-8 text-gray-500">
-                  No Farm created yet please create a farm to get started
-                </p>
-                <Link href={"/farmer-dashboard/my-farms/add-farm"}>
-                  <Button type="button" className="mt-4">
-                    Create Farm
-                  </Button>
-                </Link>
-              </div>
-            </div>
-          ) : (
+      {totalFarmsTable.length === 0 ? (
+        <div className="flex pt-20 items-center h-screen">
+          <div className="flex flex-col items-center">
+            <p className="text-center pb-8 text-gray-500">
+              No Farm created yet please create a farm to get started
+            </p>
+            <Link href={"/farmer-dashboard/my-farms/add-farm"}>
+              <Button type="button" className="mt-4">
+                Create Farm
+              </Button>
+            </Link>
+          </div>
+        </div>
+      ) : (
+        <div className="overflow-x-auto">
+          <table className="w-full min-w-full">
+            <thead className="bg-[#FAFEFF]">
+              <tr>
+                <th className="py-3 px-4 w-[10px] text-left">
+                  <input type="checkbox" className="rounded border-gray-300" />
+                </th>
+                <th className="py-3 px-4 text-sm text-[#0B222A] font-poppinsSemiBold w-[200px] text-left">
+                  Farm Name
+                </th>
+                <th className="py-3 px-4 text-sm  text-[#0B222A] font-poppinsSemiBold text-left w-[150px]">
+                  Location
+                </th>
+                <th className="py-3 px-4 text-sm  text-[#0B222A] font-poppinsSemiBold text-left w-[150px]">
+                  CAC Reg No
+                </th>
+                <th className="py-3 px-4 text-sm  text-[#0B222A] font-poppinsSemiBold text-left w-[100px]">
+                  Branches
+                </th>
+                <th className="py-3 px-4 text-sm  text-[#0B222A] font-poppinsSemiBold text-left w-[50px]">
+                  Status
+                </th>
+                <th className="py-3 px-4 text-sm  text-[#0B222A] font-poppinsSemiBold text-left w-[50px]">
+                  Action
+                </th>
+              </tr>
+            </thead>
             <tbody>
               {totalFarmsTable.map((emp) => (
                 <tr key={emp.id} className={`${emp?.bg}`}>
@@ -301,9 +301,9 @@ export default function FarmListTable() {
                 </tr>
               ))}
             </tbody>
-          )}
-        </table>
-      </div>
+          </table>
+        </div>
+      )}
     </section>
   );
 }

@@ -10,11 +10,12 @@ import { useEffect } from "react";
 import Heading from "./heading";
 import { IoIosMenu } from "react-icons/io";
 import { useAuth } from "@/context/authContext";
-
+import { useRouter } from "next/navigation";
 export function Topbar({ overview }: { overview: string }) {
   // const [search, setSearch] = useState<string>("");
   const [dateTime, setDateTime] = useState<string>("21-02-2025. 12:02:00 PM");
   const { user, isLoading, logout, isLoggingOut } = useAuth();
+  const router = useRouter();
 
   useEffect(() => {
     const updateDateTime = () => {
@@ -118,15 +119,25 @@ export function Topbar({ overview }: { overview: string }) {
       ) : (
         <div
           className="flex justify-between gap-x-4 items-center py-[5px] px-6 bg-[#F6F6F6] rounded-2xl cursor-pointer hover:bg-[#cac6c6] xl:hidden"
-          onClick={logout}
+          onClick={() => {
+            logout();
+            router.push("/login");
+          }}
         >
           <div className="flex items-center gap-x-3">
-            <Image
+            <div className="h-[40] w-[40] rounded-full bg-[#EEFEF6] text-[#2D865B] flex items-center justify-center text-[1.3rem] tracking-[0.34px] font-medium">
+              {user?.fullname
+                .split(" ")
+                .map((n) => n[0])
+                .join("")
+                .toUpperCase()}
+            </div>
+            {/* <Image
               src="/assets/DashBoard/overview/avatar.svg"
               width={40}
               height={40}
               alt="avatar"
-            />
+            /> */}
 
             <div>
               <p className="text-[#282A03] text-sm font-poppinsSemiBold mb-1">

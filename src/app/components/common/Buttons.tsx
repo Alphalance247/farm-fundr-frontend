@@ -9,7 +9,9 @@ type buttonVariant =
   | "googleBtn"
   | "subprimary"
   | "subsecondary"
-  | "subtertiary";
+  | "subtertiary"
+  | "danger"
+  | "dangerSecondary";
 
 type buttonSize = "small" | "medium" | "large" | "switch";
 
@@ -52,6 +54,9 @@ const Button: React.FC<buttonProps> = ({
 
     subtertiary:
       "bg-[transparent] border border-[#2D865B] text-white hover:opacity-[0.8] rounded-[2.5rem] hover:transition-all hover:duration-500 md:w-full",
+    danger: "border-[#FFB2B1] border text-[#FE0503] bg-white rounded-[2.5rem]",
+    dangerSecondary:
+      "border-[#FE0503] border text-[#FFFFFF] bg-[#FE0503] rounded-[2.5rem]",
   };
 
   const buttonSize = {

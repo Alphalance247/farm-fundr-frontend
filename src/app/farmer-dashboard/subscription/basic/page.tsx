@@ -8,6 +8,7 @@ import SuccessfulSubscription from "@/app/components/dashboard/subscription/succ
 import axiosInstance from "@/lib/axios";
 import { AxiosError } from "axios";
 import toast from "react-hot-toast";
+import { useRouter } from "next/navigation";
 
 interface SubTier {
   planType: string;
@@ -28,6 +29,7 @@ const BasicPlan = () => {
   const [subType, setSubType] = useState<string>("monthly");
   const [loading, setIsLoading] = useState(false);
   const [selectedPlan, setSelectedPlan] = useState<string>("");
+  const router = useRouter();
 
   useEffect(() => {
     const storedUserType = localStorage.getItem("selectedPlanId");
@@ -72,7 +74,8 @@ const BasicPlan = () => {
       });
 
       if (res.status === 200) {
-        toast.success("New Team created successfully");
+        toast.success("Payment link generated successfully, Redirecting......");
+        router.push(res?.data?.payment_link);
       } else {
         toast.error(
           res?.data?.message || "Failed to send payroll confirmation message"
@@ -95,13 +98,11 @@ const BasicPlan = () => {
 
   const handleTransferPayment = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("tranderffff");
     setShowModal(true);
   };
 
   const handlePaidTransfer = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("transfer successful");
     setSuccessfulTranfer(true);
   };
 
@@ -113,7 +114,7 @@ const BasicPlan = () => {
   return (
     // <div className="relative">
     <DashboardLayout>
-      <Topbar overview="Wallet" />
+      <Topbar overview="Subscription" />
 
       {data.map((item, i) => (
         <BillingFrequency

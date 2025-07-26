@@ -64,6 +64,7 @@ const FarmBranches = () => {
                 }}
                 href={`/farmer-dashboard/my-farms/${farmData?.id}/farm-branches/${data?.id}`}
                 key={data?.id}
+                id={data?.id}
               />
             ))}
           </div>

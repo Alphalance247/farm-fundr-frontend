@@ -29,7 +29,7 @@ const BranchInformation = ({
 
   useEffect(() => {
     fetchFarmList();
-  }, []);
+  }, [fetchFarmList]);
 
   const farmListData = farmList?.results?.farms || [];
 

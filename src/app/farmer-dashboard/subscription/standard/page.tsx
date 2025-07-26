@@ -75,10 +75,6 @@ const StandardPlan = () => {
       if (res.status === 200) {
         toast.success("Payment link generated successfully, Redirecting......");
         router.push(res?.data?.payment_link);
-      } else {
-        toast.error(
-          res?.data?.message || "Failed to send payroll confirmation message"
-        );
       }
       setIsLoading(false);
     } catch (err) {
@@ -114,7 +110,7 @@ const StandardPlan = () => {
   return (
     <div className="relative">
       <DashboardLayout>
-        <Topbar overview="Wallet" />
+        <Topbar overview="Subscription" />
 
         {data.map((item, i) => (
           <BillingFrequency

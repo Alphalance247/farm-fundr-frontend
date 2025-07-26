@@ -13,6 +13,7 @@ export interface projectsDetailsDataStore {
     plots: string;
     description: string;
     street: string;
+    images: string[];
     project_type: string;
     project_images: {
       image: string;

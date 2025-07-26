@@ -36,13 +36,13 @@ const ProjectInformation = ({
 
   useEffect(() => {
     fetchFarmList();
-  }, []);
+  }, [fetchFarmList]);
 
   useEffect(() => {
     if (selectedFarmId) {
       fetchBranchList(selectedFarmId);
     }
-  }, [selectedFarmId]);
+  }, [selectedFarmId, fetchBranchList]);
 
   const handleProceed = () => {
     const errors = [];

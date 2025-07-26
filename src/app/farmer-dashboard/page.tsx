@@ -14,6 +14,8 @@ import BidSummary from "../components/dashboard/overview/bidSummary";
 import Heading from "../components/common/dashboard/heading";
 import { useAuth } from "@/context/authContext";
 import ProtectedRoute from "../components/common/ProtectedRoute/protectedRoute";
+import { getKYCPercentageStore } from "@/stores/settings/getKycPercentage";
+import { useEffect } from "react";
 
 interface data {
   text?: string;
@@ -25,6 +27,11 @@ interface data {
 
 const FarmerDashboard = () => {
   const { user } = useAuth();
+  const { fetchUserKYC, data: kycData } = getKYCPercentageStore();
+
+  useEffect(() => {
+    fetchUserKYC();
+  }, [fetchUserKYC]);
 
   const data: data[] = [
     {
@@ -69,10 +76,14 @@ const FarmerDashboard = () => {
                   Profile Completion
                 </p>
                 <div className="w-full bg-[#F0F2F5] rounded-[20px] h-3 mb-2">
-                  <div className="bg-[#51F4A6] w-[70%] h-3 rounded-[20px]"></div>
+                  <div
+                    className="bg-[#51F4A6] w-[70%] h-3 rounded-[20px]"
+                    style={{ width: `${kycData?.kyc_percentage}%` }}
+                  ></div>
                 </div>
                 <p className="text-sm font-poppinsRegular text-[#FCFCFC] mb-4 md:text-[10px]">
-                  70% Complete • Complete profile to stand out
+                  {kycData?.kyc_percentage}% Complete • Complete profile to
+                  stand out
                 </p>
                 <Button className="w-fit" variant="secondary" size="small">
                   Complete profile
