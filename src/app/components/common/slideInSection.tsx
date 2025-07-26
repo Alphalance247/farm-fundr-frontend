@@ -1,6 +1,6 @@
 // components/SlideInSection.js
 "use client";
-import { motion } from "framer-motion";
+import { motion, Variants } from "framer-motion";
 import { ReactNode } from "react";
 
 const SlideInSection = ({ children }: { children: ReactNode }) => {
@@ -18,7 +18,7 @@ const SlideInSection = ({ children }: { children: ReactNode }) => {
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, amount: 0.2 }} // Trigger the animation when 20% of the section is in view
-      variants={variants}
+      variants={variants as Variants}
     >
       {children}
     </motion.div>

@@ -9,14 +9,27 @@ import { FaArrowDown } from "react-icons/fa6";
 import PendingPayment from "@/app/components/dashboard/overview/pendingPayment";
 import TransactionSearchTable from "@/app/components/dashboard/wallet/allTransaction";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import RequestPayoutUser from "@/app/components/dashboard/wallet/requestPayoutUser";
+import { getFarmerBalanceStore } from "@/stores/wallet/getFarmerBalance";
+import { getUserBankStore } from "@/stores/settings/getBankDetails";
 
 const Wallet = () => {
   const [showRequestPayoutModal, setShowRequestPayoutModal] = useState(false);
   const handleRequestPayoutModal = () => {
     setShowRequestPayoutModal(true);
   };
+  const {
+    data: farmerBalanceData,
+    loading,
+    fetchFarmerBalance,
+  } = getFarmerBalanceStore();
+  const { data, fetchUserBank, loading: loadingBank } = getUserBankStore();
+
+  useEffect(() => {
+    fetchFarmerBalance();
+    fetchUserBank();
+  }, [fetchFarmerBalance, fetchUserBank]);
 
   const handleCloseRequestPayoutModal = () => {
     setShowRequestPayoutModal(false);
@@ -25,6 +38,14 @@ const Wallet = () => {
   const handleCopy = (text: string) => {
     navigator.clipboard.writeText(text);
   };
+
+  // Loading skeleton component
+  const LoadingSkeleton = () => (
+    <span className="flex items-center gap-x-3 xl:hidden">
+      <span className="w-[180px] h-[40px] bg-gray-200 rounded-md animate-pulse"></span>
+      {/* <div className="w-[180px] h-[40px] bg-gray-200 rounded-md animate-pulse"></div> */}
+    </span>
+  );
 
   return (
     <DashboardLayout>
@@ -48,22 +69,36 @@ const Wallet = () => {
               </p>
               <div className="flex items-center gap-2 mb-4">
                 <h4 className="text-white text-[2rem] leading-9 font-poppinsSemiBold">
-                  N1,035,700.00
+                  {loading ? (
+                    <LoadingSkeleton />
+                  ) : (
+                    "N " +
+                      farmerBalanceData?.wallet?.balance?.toLocaleString() ||
+                    "N/A"
+                  )}{" "}
                 </h4>
                 <span className="text-white text-sm font-poppinsRegular">
                   <FaRegEyeSlash size={32} color="white" />
                 </span>
               </div>
               <p className="text-[#E9EAE6] text-sm font-poppinsRegular mb-2">
-                providus bank
+                {loadingBank ? (
+                  <LoadingSkeleton />
+                ) : (
+                  data?.bank_details?.bank_name || "N/A"
+                )}{" "}
               </p>
 
               <div className="flex items-center gap-x-3">
                 <p className="text-[white] text-xs font-poppinsRegular flex items-center gap-x-2">
                   Account Number :{" "}
-                  <span className="font-poppinsSemiBold text-sm text-[#E9EAE6]">
-                    0123456789
-                  </span>
+                  {loadingBank ? (
+                    <LoadingSkeleton />
+                  ) : (
+                    <span className="font-poppinsSemiBold text-sm text-[#E9EAE6]">
+                      {data?.bank_details?.account_number || "N/A"}
+                    </span>
+                  )}{" "}
                 </p>
 
                 <div

@@ -2,14 +2,19 @@
 import DashboardLayout from "@/app/components/common/dashboardLayout";
 import { Topbar } from "@/app/components/common/dashboard/topBar";
 import BillingFrequency from "@/app/components/dashboard/subscription/billingFrequency";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import TransferPopUP from "@/app/components/dashboard/subscription/transferPopUp";
 import SuccessfulSubscription from "@/app/components/dashboard/subscription/succesfulSubscription";
+import axiosInstance from "@/lib/axios";
+import { AxiosError } from "axios";
+import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 
 interface SubTier {
   planType: string;
   prices: string;
   offer: string;
+  tier: string;
 }
 
 interface data {
@@ -21,38 +26,69 @@ interface data {
 const StandardPlan = () => {
   const [showModal, setShowModal] = useState<boolean>(false);
   const [successfulTransfer, setSuccessfulTranfer] = useState<boolean>(false);
+  const [loading, setIsLoading] = useState(false);
+  const [subType, setSubType] = useState("monthly");
+  const [selectedPlan, setSelectedPlan] = useState<string>("");
+  const router = useRouter();
+
+  useEffect(() => {
+    const storedUserType = localStorage.getItem("selectedPlanId");
+    setSelectedPlan(storedUserType || "");
+  }, []);
   const data: data[] = [
     {
       heading: "",
       subhead: "",
       subTier: [
         {
-          planType: "Pay monthly",
+          planType: "monthly",
           prices: "6,500",
           offer: "",
+          tier: "Pay monthly",
         },
         {
-          planType: "Pay quarterly",
+          planType: "quarterly",
           prices: "20,530",
           offer: "Save 22%",
+          tier: "Pay quarterly",
         },
+
         {
-          planType: "Pay Bi-yearly",
-          prices: "31,750",
-          offer: "Save 33%",
-        },
-        {
-          planType: "Pay yearly",
+          planType: "yearly",
           prices: "46,180",
           offer: "Save 50%",
+          tier: "Pay yearly",
         },
       ],
     },
   ];
 
-  const handlePaystackPayment = (e: React.FormEvent) => {
+  const handlePaystackPayment = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("paysta");
+    try {
+      setIsLoading(true);
+      const res = await axiosInstance.post(`/farms/subscribe-payment-link`, {
+        payment_mode: subType,
+        subscription_plan_id: selectedPlan,
+      });
+
+      if (res.status === 200) {
+        toast.success("Payment link generated successfully, Redirecting......");
+        router.push(res?.data?.payment_link);
+      }
+      setIsLoading(false);
+    } catch (err) {
+      // Extract the error message from the response
+      let errorMessage = "An error occurred please try again or contact Admin";
+      if (err instanceof AxiosError) {
+        // Check if err is an instance of AxiosError
+        errorMessage = err.response?.data?.statusmessage || errorMessage;
+      }
+
+      toast.error(errorMessage);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const handleTransferPayment = (e: React.FormEvent) => {
@@ -74,7 +110,7 @@ const StandardPlan = () => {
   return (
     <div className="relative">
       <DashboardLayout>
-        <Topbar overview="Wallet" />
+        <Topbar overview="Subscription" />
 
         {data.map((item, i) => (
           <BillingFrequency
@@ -82,7 +118,10 @@ const StandardPlan = () => {
             planName="Standard Plan"
             subhead="Standard Plan"
             subscriptionTier={item?.subTier}
+            subType={subType}
+            setSubType={setSubType}
             key={i}
+            loading={loading}
             onClick={handlePaystackPayment}
             onClickTranfer={handleTransferPayment}
           />

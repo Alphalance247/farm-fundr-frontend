@@ -8,8 +8,10 @@ import { GoArrowRight } from "react-icons/go";
 import { useState } from "react";
 import SlideInSection from "../common/slideInSection";
 import { motion, AnimatePresence } from "framer-motion";
+import { useAuth } from "@/context/authContext";
 
 const Benefits = () => {
+  const { isAuthenticated } = useAuth();
   const [activeTab, setActiveTab] = useState<string>("investors");
   const data = [
     {
@@ -134,15 +136,17 @@ const Benefits = () => {
             </motion.div>
           </AnimatePresence>
 
-          <Button
-            size="medium"
-            className="flex items-center gap-x-4 justify-center mt-10 text-center w-[535px] mx-auto relative z-10"
-          >
-            <span>Get Started</span>
-            <span>
-              <GoArrowRight size={24} className="text-white" />
-            </span>
-          </Button>
+          {!isAuthenticated && (
+            <Button
+              size="medium"
+              className="flex items-center gap-x-4 justify-center mt-10 text-center w-[535px] mx-auto relative z-10"
+            >
+              <span>Get Started</span>
+              <span>
+                <GoArrowRight size={24} className="text-white" />
+              </span>
+            </Button>
+          )}
         </Container>
       </section>
     </SlideInSection>

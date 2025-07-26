@@ -7,7 +7,9 @@ interface SubHeadProps {
 
 const SubHead: React.FC<SubHeadProps> = ({ text, className = "" }) => {
   return (
-    <h2 className={`text-xl font-aristoBold text-[#5F5F5F]  ${className}`}>
+    <h2
+      className={`text-xl font-aristoBold text-[#5F5F5F] md:text-lg  ${className}`}
+    >
       {text}
     </h2>
   );

@@ -1,3 +1,4 @@
+"use client";
 import Container from "../common/container";
 import HeadingTextWithSubHead from "../common/headingTextWithSubHead";
 import Image from "next/image";
@@ -5,8 +6,10 @@ import Button from "../common/Buttons";
 import { GoArrowRight } from "react-icons/go";
 import SlideInSection from "../common/slideInSection";
 import Link from "next/link";
+import { useAuth } from "@/context/authContext";
 
 const HowItWorks = () => {
+  const { isAuthenticated } = useAuth();
   const data = [
     {
       bgColor: "#2D865B",
@@ -89,17 +92,19 @@ const HowItWorks = () => {
               })}
             </div>
           </div>
-          <Link href={"/user-select"}>
-            <Button
-              size="medium"
-              className="flex items-center gap-x-4 justify-center mt-10 text-center w-[535px] mx-auto relative z-[10]"
-            >
-              <span>Get Started</span>
-              <span>
-                <GoArrowRight size={24} className="text-white" />
-              </span>
-            </Button>
-          </Link>
+          {!isAuthenticated && (
+            <Link href={"/user-select"}>
+              <Button
+                size="medium"
+                className="flex items-center gap-x-4 justify-center mt-10 text-center w-[535px] mx-auto relative z-[10]"
+              >
+                <span>Get Started</span>
+                <span>
+                  <GoArrowRight size={24} className="text-white" />
+                </span>
+              </Button>
+            </Link>
+          )}
         </Container>
       </section>
     </SlideInSection>

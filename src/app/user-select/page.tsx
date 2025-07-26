@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import OnBoardNav from "../components/common/onBoardNav";
 import Link from "next/link";
 import { IoIosArrowBack } from "react-icons/io";
@@ -11,22 +11,26 @@ import { HiCheckCircle } from "react-icons/hi";
 import { FiCircle } from "react-icons/fi";
 
 const UserSelectPage: React.FC = () => {
-  const [select, setSelect] = useState<string>("");
+  const [select, setSelect] = useState<string>("investor");
 
   const handleUserSelect = (userType: string) => {
     setSelect(userType);
   };
 
+  useEffect(() => {
+    localStorage.setItem("userType", select);
+  }, [select]);
+
   const data = [
     {
       svg: "/assets/UserOnboarding/1.svg",
-      usertype: "Investor",
+      usertype: "investor",
       desc: "Invest in farms and grow your wealth.",
     },
 
     {
       svg: "/assets/UserOnboarding/2.svg",
-      usertype: "Farmer",
+      usertype: "farmer",
       desc: "List your farm and secure funding from investors.",
     },
   ];
@@ -102,7 +106,7 @@ const UserSelectPage: React.FC = () => {
           </div>
 
           <div className="text-center relative md:z-20">
-            <Link href={select === "Investor" ? "/signup" : "/"}>
+            <Link href={"/signup"}>
               <Button
                 className={`w-[400px] flex items-center gap-x-4 justify-center text-center mx-auto ${
                   select === "" ? "cursor-not-allowed" : ""
@@ -111,10 +115,15 @@ const UserSelectPage: React.FC = () => {
                 size="small"
                 disabled={select === "" ? true : false}
               >
-                <span>{"Learn More"}</span>
+                <span>{"Sign up as " + select}</span>
                 <span>
                   {" "}
-                  <GoArrowRight size={24} className="text-[#7C7C7C]" />
+                  <GoArrowRight
+                    size={24}
+                    className={
+                      select === "" ? "text-[#7C7C7C]" : "text-[white]"
+                    }
+                  />
                 </span>
               </Button>
             </Link>

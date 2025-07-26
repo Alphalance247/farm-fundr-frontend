@@ -49,11 +49,7 @@ const chartConfig = {
 
 export function FarmDistribution() {
   return (
-    <div className="grid grid-cols-2 gap-x-10 items-center">
-      {/* <CardHeader className="items-center pb-0">
-        <CardTitle>Pie Chart - Label List</CardTitle>
-        <CardDescription>January - June 2024</CardDescription>
-      </CardHeader> */}
+    <div className="grid grid-cols-2 gap-x-10 items-center lg:grid-cols-1 lg:gap-y-8">
       <CardContent className=" pb-0">
         <ChartContainer
           config={chartConfig}

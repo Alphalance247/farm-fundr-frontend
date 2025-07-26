@@ -78,7 +78,7 @@ const Sidebar: React.FC = () => {
   ];
 
   return (
-    <aside className="w-80 bg-white overflow-y-scroll h-screen">
+    <aside className="w-80 bg-white overflow-y-scroll h-screen lg:hidden">
       {/* Logo / Brand Name */}
       <div className="flex flex-col justify-between ">
         <div className="font-bold">
@@ -104,7 +104,7 @@ const Sidebar: React.FC = () => {
         </div>
 
         {/* Navigation Menu */}
-        <div className="mt-2 px-2 mb-20">
+        <div className="mt-2 px-2 mb-10">
           <nav className="">
             <ul className="flex flex-col gap-y-4">
               {sideBarData.map((item, i) => {
@@ -118,7 +118,11 @@ const Sidebar: React.FC = () => {
                               ? "border-b border-[#F0F2F5] pb-6"
                               : ""
                           }  hover:bg-[#F0F2F5] hover:animate-out hover:rounded-lg ${
-                            pathname === item?.link
+                            (
+                              item.text === "Dashboard"
+                                ? pathname === item?.link
+                                : pathname.startsWith(item?.link || "")
+                            )
                               ? "bg-[linear-gradient(90deg,#2D865B_0%,#12482F_100%)] text-[white] rounded-lg text-sm font-poppinsSemiBold"
                               : "bg-transparent text-[#7C7C7C] text-sm font-poppinsRegular"
                           }`}

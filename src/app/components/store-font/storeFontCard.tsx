@@ -119,7 +119,7 @@ const StoreFontCard: React.FC<StoreFontCardProps> = ({
         </div>
 
         <div className="flex items-center gap-x-3">
-          <div>
+          <div className="block w-full">
             <Button
               variant="primary"
               size="small"
@@ -130,18 +130,16 @@ const StoreFontCard: React.FC<StoreFontCardProps> = ({
               Bid Now
             </Button>
           </div>
-          <div>
-            <Link href={"/store-front/1"}>
-              <Button
-                className="w-full"
-                variant="secondary"
-                size="small"
-                onClick={onViewProjects}
-              >
-                View Details
-              </Button>
-            </Link>
-          </div>
+          <Link href={"/store-front/1"} className="block w-full">
+            <Button
+              className="w-full"
+              variant="secondary"
+              size="small"
+              onClick={onViewProjects}
+            >
+              View Details
+            </Button>
+          </Link>
         </div>
       </div>
     </div>
