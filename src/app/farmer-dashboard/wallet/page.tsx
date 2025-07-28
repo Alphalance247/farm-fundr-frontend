@@ -13,6 +13,7 @@ import { useEffect, useState } from "react";
 import RequestPayoutUser from "@/app/components/dashboard/wallet/requestPayoutUser";
 import { getFarmerBalanceStore } from "@/stores/wallet/getFarmerBalance";
 import { getUserBankStore } from "@/stores/settings/getBankDetails";
+import { getWalletTransactionStore } from "@/stores/wallet/getWalletTransactions";
 
 const Wallet = () => {
   const [showRequestPayoutModal, setShowRequestPayoutModal] = useState(false);
@@ -25,11 +26,13 @@ const Wallet = () => {
     fetchFarmerBalance,
   } = getFarmerBalanceStore();
   const { data, fetchUserBank, loading: loadingBank } = getUserBankStore();
+  const { fetchWalletTransaction } = getWalletTransactionStore();
 
   useEffect(() => {
     fetchFarmerBalance();
     fetchUserBank();
-  }, [fetchFarmerBalance, fetchUserBank]);
+    fetchWalletTransaction();
+  }, [fetchFarmerBalance, fetchUserBank, fetchWalletTransaction]);
 
   const handleCloseRequestPayoutModal = () => {
     setShowRequestPayoutModal(false);
@@ -51,7 +54,7 @@ const Wallet = () => {
     <DashboardLayout>
       <Topbar overview="Wallet" />
 
-      <main className="px-10 py-10 overflow-auto bg-gray-50">
+      <main className="px-10 py-10 overflow-auto h-full bg-gray-50">
         <div className=" mb-8">
           <h2 className="text-xl font-poppinsSemiBold text-[#5F5F5F]">
             Wallet
@@ -73,8 +76,7 @@ const Wallet = () => {
                     <LoadingSkeleton />
                   ) : (
                     "N " +
-                      farmerBalanceData?.wallet?.balance?.toLocaleString() ||
-                    "N/A"
+                      farmerBalanceData?.wallet?.balance?.toLocaleString() || ""
                   )}{" "}
                 </h4>
                 <span className="text-white text-sm font-poppinsRegular">
@@ -82,6 +84,7 @@ const Wallet = () => {
                 </span>
               </div>
               <p className="text-[#E9EAE6] text-sm font-poppinsRegular mb-2">
+                Bank Name:{" "}
                 {loadingBank ? (
                   <LoadingSkeleton />
                 ) : (
@@ -144,13 +147,15 @@ const Wallet = () => {
           <PendingPayment isTotalAvailable={false} />
         </div>
 
-        <TransactionSearchTable />
+        <div>
+          <TransactionSearchTable />
+        </div>
+        {showRequestPayoutModal && (
+          <RequestPayoutUser
+            handleRequestPayoutModal={handleCloseRequestPayoutModal}
+          />
+        )}
       </main>
-      {showRequestPayoutModal && (
-        <RequestPayoutUser
-          handleRequestPayoutModal={handleCloseRequestPayoutModal}
-        />
-      )}
     </DashboardLayout>
   );
 };

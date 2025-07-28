@@ -12,15 +12,18 @@ import BankDetails from "@/app/components/dashboard/settings/bankDetails";
 import Certifications from "@/app/components/dashboard/settings/Cetifications";
 import { useAuth } from "@/context/authContext";
 import { getKYCPercentageStore } from "@/stores/settings/getKycPercentage";
+import { getUserDetailsStore } from "@/stores/settings/getUserDetails";
 
 const Setting = () => {
   const [activeTab, setActiveTab] = useState<string>("Profile settings");
   const { user } = useAuth();
   const { fetchUserKYC, data } = getKYCPercentageStore();
+  const { fetchUserDetails } = getUserDetailsStore();
 
   useEffect(() => {
     fetchUserKYC();
-  }, [fetchUserKYC]);
+    fetchUserDetails();
+  }, [fetchUserKYC, fetchUserDetails]);
 
   const tabs: { id: number; name: string; icon: ReactNode }[] = [
     { id: 1, name: "Profile settings", icon: <IoPerson size={20} /> },

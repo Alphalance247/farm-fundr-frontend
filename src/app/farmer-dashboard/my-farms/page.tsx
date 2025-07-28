@@ -60,7 +60,7 @@ const MyFarms = () => {
     <ProtectedRoute requiredUserType="farmer">
       <DashboardLayout>
         <Topbar overview="My farm" />
-        <main className="px-10 py-10 bg-gray-50 overflow-auto">
+        <main className="px-10 py-10 bg-gray-50 overflow-auto h-full xl:px-4 xl:py-6">
           <div className="flex justify-between items-center">
             <div className="">
               <h2 className="text-xl font-poppinsSemiBold text-[#5F5F5F]">
@@ -88,12 +88,12 @@ const MyFarms = () => {
             </div>
           ) : (
             <>
-              <div className="grid grid-cols-4 gap-x-4 mt-10 mb-4">
+              <div className="grid grid-cols-4 gap-x-4 mt-10 mb-4  xl:grid-cols-3 xl:gap-4 lg:grid-cols-2 md:grid-cols-2 md:gap-2">
                 {data.map((item) => (
                   <div key={item.id} className="bg-white rounded-lg px-6 py-4">
                     <Image src={item.image} width={50} height={50} alt="farm" />
 
-                    <div className="flex items-center justify-between gap-y-2 pb-3 border-b border-[#F2F2F3] mt-2">
+                    <div className="flex items-center justify-between gap-y-2 pb-3 border-b border-[#F2F2F3] mt-2 md:flex-col md:items-start">
                       <h3 className="text-sm font-poppinsRegular text-[#34474E]">
                         {item.name}
                       </h3>

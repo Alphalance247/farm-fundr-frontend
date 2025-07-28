@@ -46,7 +46,7 @@ const FarmDetails = ({ farmDetailsId }: { farmDetailsId: string }) => {
       <DashboardLayout>
         <Topbar overview="My farm" />
 
-        <main className="px-10 py-10 bg-gray-50 overflow-auto">
+        <main className="px-10 py-10 bg-gray-50 overflow-auto xl:px-4 xl:py-6">
           <FarmHeadingOverview
             farmName={farmData?.name}
             overview={farmData?.description}
@@ -86,31 +86,30 @@ const FarmDetails = ({ farmDetailsId }: { farmDetailsId: string }) => {
                   </p>
                 </div>
 
-                <div className="mt-3 flex justify-between items-center gap-x-10 flex-wrap">
-                  <div className="border-r border-[#E4E7EC] pl-8 pr-12 flex flex-col gap-3 justify-center items-center">
-                    <Image
-                      src="/assets/my-farms/farmlogo.svg"
-                      alt="farmer"
-                      width={64}
-                      height={64}
-                    />
-                    <p className="text-xs font-poppinsRegular text-[#475367]">
-                      {farmData?.cac_reg_no || "N/A"}
-                    </p>
-
-                    {farmData?.cac_reg_status === "Unregistered" ? (
-                      <p className="text-sm font-poppinsRegular text-red-600 border-red-200 bg-[#FDEDED] px-3 py-1 rounded-lg flex items-center justify-center gap-2 border">
-                        Unverified
+                <div className="mt-3 flex justify-between items-center gap-x-10 flex-wrap lg:flex-nowrap lg:flex-col lg:gap-4 lg:items-start">
+                  <div className="flex gap-x-8">
+                    <div className="border-r border-[#E4E7EC] pl-8 pr-12 flex flex-col gap-3 justify-center items-center">
+                      <Image
+                        src="/assets/my-farms/farmlogo.svg"
+                        alt="farmer"
+                        width={64}
+                        height={64}
+                      />
+                      <p className="text-xs font-poppinsRegular text-[#475367]">
+                        {farmData?.cac_reg_no || "N/A"}
                       </p>
-                    ) : (
-                      <p className="text-sm font-poppinsRegular text-[#7C7C7C] bg-[#EEFEF6] px-3 py-1 rounded-lg flex items-center justify-center gap-2 border border-[#8AE6B0]">
-                        Verified
-                        <MdVerifiedUser size={16} color="#006E2E" />
-                      </p>
-                    )}
-                  </div>
 
-                  <div className="flex justify-between flex-1 flex-grow">
+                      {farmData?.cac_reg_status === "Unregistered" ? (
+                        <p className="text-sm font-poppinsRegular text-red-600 border-red-200 bg-[#FDEDED] px-3 py-1 rounded-lg flex items-center justify-center gap-2 border">
+                          Unverified
+                        </p>
+                      ) : (
+                        <p className="text-sm font-poppinsRegular text-[#7C7C7C] bg-[#EEFEF6] px-3 py-1 rounded-lg flex items-center justify-center gap-2 border border-[#8AE6B0]">
+                          Verified
+                          <MdVerifiedUser size={16} color="#006E2E" />
+                        </p>
+                      )}
+                    </div>
                     <div className="flex flex-col gap-y-5">
                       <FarmerInfo
                         title="Farmer’s Name"
@@ -121,6 +120,9 @@ const FarmDetails = ({ farmDetailsId }: { farmDetailsId: string }) => {
                         name={farmData?.created || "N/A"}
                       />
                     </div>
+                  </div>
+
+                  <div className="flex ">
                     <div className="flex flex-col gap-y-5">
                       <FarmerInfo
                         title="Location"

@@ -3,12 +3,15 @@ import { PiDotsThree } from "react-icons/pi";
 import { FaCaretDown } from "react-icons/fa";
 import Image from "next/image";
 import Button from "../../common/Buttons";
+import { getWalletTransactionStore } from "@/stores/wallet/getWalletTransactions";
 
 const PendingPayment = ({
   isTotalAvailable = true,
 }: {
   isTotalAvailable?: boolean;
 }) => {
+  const { data: transactionData } =
+    getWalletTransactionStore();
   return (
     <div
       className={`px-[22px] py-8 border border-[#E4E7EC] bg-[white] rounded-xl ${
@@ -52,51 +55,46 @@ const PendingPayment = ({
       )}
 
       <div className="flex flex-col gap-y-4 border-t border-t-[#E2E2E2] pt-2">
-        <div className="bg-[#FCFCFC] p-4 rounded-xl flex justify-between ">
-          <div className="flex items-center gap-x-2">
-            <Image
-              src="/assets/DashBoard/overview/arrdown.svg"
-              width={44}
-              height={50}
-              alt="arrow down"
-            />
-
-            <div className="text-[#5F5F5F] text-sm flex flex-col gap-y-1">
-              <p className="font-poppinsSemiBold">Organic Apple Farm</p>
-              <p className="font-poppinsRegular">Phase 4 Payment</p>
-              <p className="text-[#7C7C7C] text-xs font-poppinsRegular">
-                To be paid- Feb 25, 2025
+        {transactionData?.transactions?.length === 0 ? (
+          <div className="flex pt-20 items-center h-screen">
+            <div className="flex flex-col items-center">
+              <p className="text-center pb-8 text-gray-500">
+                No Transactions found yet
               </p>
             </div>
           </div>
+        ) : (
+          transactionData?.transactions
+            ?.filter((el) => el?.status === "pending")
+            ?.slice(0, 2)
+            ?.map((el, i) => (
+              <div
+                className="bg-[#FCFCFC] p-4 rounded-xl flex justify-between "
+                key={i}
+              >
+                <div className="flex items-center gap-x-2">
+                  <Image
+                    src="/assets/DashBoard/overview/arrdown.svg"
+                    width={44}
+                    height={50}
+                    alt="arrow down"
+                  />
 
-          <p className="text-[#5F5F5F] text-sm font-poppinsSemiBold">
-            N100,000
-          </p>
-        </div>
+                  <div className="text-[#5F5F5F] text-sm flex flex-col gap-y-1">
+                    <p className="font-poppinsSemiBold">Organic Apple Farm</p>
+                    <p className="font-poppinsRegular">Phase 4 Payment</p>
+                    <p className="text-[#7C7C7C] text-xs font-poppinsRegular">
+                      To be paid- Feb 25, 2025
+                    </p>
+                  </div>
+                </div>
 
-        <div className="bg-[#FCFCFC] p-4 rounded-xl flex justify-between">
-          <div className="flex items-center gap-x-2">
-            <Image
-              src="/assets/DashBoard/overview/arrdown.svg"
-              width={44}
-              height={50}
-              alt="arrow down"
-            />
-
-            <div className="text-[#5F5F5F] text-sm flex flex-col gap-y-1">
-              <p className="font-poppinsSemiBold">Organic Apple Farm</p>
-              <p className="font-poppinsRegular">Phase 4 Payment</p>
-              <p className="text-[#7C7C7C] text-xs font-poppinsRegular">
-                To be paid- Feb 25, 2025
-              </p>
-            </div>
-          </div>
-
-          <p className="text-[#5F5F5F] text-sm font-poppinsSemiBold">
-            N100,000
-          </p>
-        </div>
+                <p className="text-[#5F5F5F] text-sm font-poppinsSemiBold">
+                  {el?.amount}
+                </p>
+              </div>
+            ))
+        )}
 
         {isTotalAvailable && (
           <Button
