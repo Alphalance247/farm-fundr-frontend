@@ -28,12 +28,13 @@ const Farms = () => {
             address="87, Ringroad, Ibadan, Nigeria."
             projectsCount={"Projects- 7"}
             openingHours="Open 9am- Close 6pm"
-            status="Active"
             imageUrl="/assets/my-farms/2.png"
             onViewProjects={() => {
               /* handle click */
             }}
             href="/store-front/"
+            id="1"
+            status={false}
           />
           <BranchFarmCard
             branchName="Ibadan Branch"
@@ -41,12 +42,13 @@ const Farms = () => {
             address="87, Ringroad, Ibadan, Nigeria."
             projectsCount={"Projects- 7"}
             openingHours="Open 9am- Close 6pm"
-            status="Active"
             imageUrl="/assets/my-farms/2.png"
             onViewProjects={() => {
               /* handle click */
             }}
             href="/"
+            id="1"
+            status={false}
           />
           <BranchFarmCard
             href="/farmer-dashboard/my-farms/projects/Ibadan Branch"
@@ -55,11 +57,12 @@ const Farms = () => {
             address="87, Ringroad, Ibadan, Nigeria."
             projectsCount={"Projects- 7"}
             openingHours="Open 9am- Close 6pm"
-            status="Active"
             imageUrl="/assets/my-farms/2.png"
             onViewProjects={() => {
               /* handle click */
             }}
+            id="1"
+            status={false}
           />
           <BranchFarmCard
             href="/farmer-dashboard/my-farms/projects/Ibadan Branch"
@@ -68,11 +71,12 @@ const Farms = () => {
             address="87, Ringroad, Ibadan, Nigeria."
             projectsCount={"Projects- 7"}
             openingHours="Open 9am- Close 6pm"
-            status="Active"
             imageUrl="/assets/my-farms/2.png"
             onViewProjects={() => {
               /* handle click */
             }}
+            id="1"
+            status={false}
           />
           <BranchFarmCard
             href="/farmer-dashboard/my-farms/projects/Ibadan Branch"
@@ -81,11 +85,12 @@ const Farms = () => {
             address="87, Ringroad, Ibadan, Nigeria."
             projectsCount={"Projects- 7"}
             openingHours="Open 9am- Close 6pm"
-            status="Active"
             imageUrl="/assets/my-farms/2.png"
             onViewProjects={() => {
               /* handle click */
             }}
+            id="1"
+            status={false}
           />
           <BranchFarmCard
             href="/farmer-dashboard/my-farms/projects/Ibadan Branch"
@@ -94,11 +99,12 @@ const Farms = () => {
             address="87, Ringroad, Ibadan, Nigeria."
             projectsCount={"Projects- 7"}
             openingHours="Open 9am- Close 6pm"
-            status="Active"
             imageUrl="/assets/my-farms/2.png"
             onViewProjects={() => {
               /* handle click */
             }}
+            id="1"
+            status={false}
           />
         </div>
       </section>

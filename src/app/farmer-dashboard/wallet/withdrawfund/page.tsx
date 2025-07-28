@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Button from "@/app/components/common/Buttons";
 import { FaArrowRightLong } from "react-icons/fa6";
@@ -8,32 +8,63 @@ import BidConfirmModal from "@/app/components/common/modals/bidConfirmModal";
 import BackIcon from "@/app/components/common/backIcon";
 import { Topbar } from "@/app/components/common/dashboard/topBar";
 import DashboardLayout from "@/app/components/common/dashboardLayout";
+import { getUserBankStore } from "@/stores/settings/getBankDetails";
+import toast from "react-hot-toast";
+import axiosInstance from "@/lib/axios";
+import { AxiosError } from "axios";
+import { getFarmerBalanceStore } from "@/stores/wallet/getFarmerBalance";
+import Link from "next/link";
 
-const bankAccounts = [
-  {
-    id: 1,
-    name: "Access Bank",
-    number: "0012345678",
-    holder: "Nelson Mandela",
-    icon: "/assets/DashBoard/wallet/access.svg",
-  },
-  // Add more accounts as needed
-];
-
-const WALLET_BALANCE = 1307500; // Example balance
-const CHARGE_RATE = 0.0015; // 0.15%
+interface tranactionData {
+  data: {
+    amount: number;
+    bank_details: {
+      account_name: string;
+      account_number: string;
+      bank_name: string;
+    };
+    id: string;
+    status: string;
+  };
+}
 
 export default function WithdrawFundStep1() {
+  const { data, fetchUserBank } = getUserBankStore();
+  const { data: farmerBalanceData, fetchFarmerBalance } =
+    getFarmerBalanceStore();
+  const [transactionDetails, setTranactionDetails] =
+    useState<tranactionData | null>(null);
+
+  useEffect(() => {
+    fetchUserBank();
+    fetchFarmerBalance();
+  }, [fetchUserBank, fetchFarmerBalance]);
+
+  const bankData = data?.bank_details || null;
+  const details = transactionDetails?.data || null;
+
+  const bankAccounts = [
+    {
+      id: 1,
+      name: bankData?.bank_name || "N/A",
+      number: bankData?.account_number || "N/A",
+      holder: bankData?.account_name || "N/A",
+      icon: "/assets/DashBoard/wallet/access.svg",
+    },
+  ];
+
   const [selectedBank, setSelectedBank] = useState(bankAccounts[0]);
-  const [withdrawAll, setWithdrawAll] = useState(true);
-  const [amount, setAmount] = useState(WALLET_BALANCE);
+  const [withdrawAll, setWithdrawAll] = useState(false);
+  const [loading, setIsLoading] = useState(false);
+
   const [showTransactionDetails, setShowTransactionDetails] =
     useState("enterAmount");
   const [showBidConfirmModal, setShowBidConfirmModal] = useState(false);
-
+  const WALLET_BALANCE = farmerBalanceData?.wallet?.balance || 0; // Example balance
+  const [amount, setAmount] = useState(WALLET_BALANCE);
+  const CHARGE_RATE = 0.0015; // 0.15%
   const charges = Math.round(amount * CHARGE_RATE);
   const expectedCredit = amount - charges;
-
   const handleGotNextStep = () => {
     setShowTransactionDetails("nextStep");
   };
@@ -48,13 +79,35 @@ export default function WithdrawFundStep1() {
     setWithdrawAll(value === WALLET_BALANCE);
   };
 
-  const handleCloseModal = () => {
-    setShowBidConfirmModal(false);
-  };
-
-  const handleConfirmWithdraw = (e: React.MouseEvent<HTMLButtonElement>) => {
+  const handleConfirmWithdraw = async (
+    e: React.MouseEvent<HTMLButtonElement>
+  ) => {
     e.preventDefault();
-    setShowBidConfirmModal(true);
+
+    try {
+      setIsLoading(true);
+      const res = await axiosInstance.post(`farms/wallet/withdraw`, {
+        amount,
+      });
+
+      if (res.status === 201) {
+        setShowBidConfirmModal(true);
+        setTranactionDetails(res?.data);
+      }
+
+      setIsLoading(false);
+    } catch (err) {
+      // Extract the error message from the response
+      let errorMessage = "An error occurred please try again or contact Admin";
+      if (err instanceof AxiosError) {
+        // Check if err is an instance of AxiosError
+        errorMessage = err.response?.data?.statusmessage || errorMessage;
+      }
+
+      toast.error(errorMessage);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -70,6 +123,7 @@ export default function WithdrawFundStep1() {
               alt="withdrawfund"
             />
           </div>
+
           <div className="bg-white shadow p-8">
             <div className="flex items-center justify-between mb-6">
               <h2 className="mb-2 font-aristoBold text-3xl text-[#5F5F5F]">
@@ -109,7 +163,7 @@ export default function WithdrawFundStep1() {
             <div className="bg-[#FFFAE6] text-[#B29301] w-fit mx-auto p-2 rounded mb-4 text-center text-xs">
               <span> Security measure:</span>{" "}
               <span className="font-poppinsSemiBold">
-                Your Payout Will Be Sent Within 24 Hours
+                Your Payout Will Be Sent Within 24 Hours.
               </span>
             </div>
 
@@ -146,12 +200,24 @@ export default function WithdrawFundStep1() {
                       </label>
                       <input
                         type="text"
-                        className="w-full p-3 border text-sm font-poppinsSemiBold rounded-xl text-[#5F5F5F] bg-[#F6F6F6] border-[#E2E2E2]"
+                        className={`w-full p-3 border text-sm font-poppinsSemiBold rounded-xl text-[#5F5F5F] bg-[#F6F6F6]  outline-none ${
+                          amount > WALLET_BALANCE
+                            ? "border-red-600"
+                            : "border-[#E2E2E2]"
+                        }`}
                         value={amount.toLocaleString()}
                         onChange={handleAmountChange}
                         disabled={withdrawAll}
                       />
+                      {amount > WALLET_BALANCE ? (
+                        <p className="text-red-600 text-sm">
+                          withdrawal amount cannot exceed wallet balance{" "}
+                        </p>
+                      ) : (
+                        ""
+                      )}
                     </div>
+                    {/*  */}
                     <div className="flex items-center mt-2">
                       <input
                         type="checkbox"
@@ -189,8 +255,16 @@ export default function WithdrawFundStep1() {
 
                   <div className="flex flex-col gap-y-4">
                     <Button
-                      className="w-full flex items-center justify-center"
+                      className={`w-full flex items-center justify-center  ${
+                        amount > WALLET_BALANCE
+                          ? " cursor-not-allowed opacity-60"
+                          : "cursor-pointer"
+                      }`}
                       onClick={handleGotNextStep}
+                      disabled={amount > WALLET_BALANCE}
+                      variant={
+                        amount > WALLET_BALANCE ? "googleBtn" : "primary"
+                      }
                     >
                       Proceed{" "}
                       <span>
@@ -198,9 +272,11 @@ export default function WithdrawFundStep1() {
                         <FaArrowRightLong color="#FCFCFC" className="ml-2" />
                       </span>
                     </Button>
-                    <Button variant="secondary" className="w-full">
-                      Cancel
-                    </Button>
+                    <Link href={"/farmer-dashboard/wallet"}>
+                      <Button variant="secondary" className="w-full">
+                        Cancel
+                      </Button>
+                    </Link>
                   </div>
                 </div>
               ) : (
@@ -216,7 +292,7 @@ export default function WithdrawFundStep1() {
                         height={22}
                         alt="bank"
                       />{" "}
-                      <span>{selectedBank?.name}</span>
+                      <span>{bankAccounts[0]?.name}</span>
                     </p>
                   </div>
                   <div className="flex justify-between items-center pb-3 border-b border-b-[#F6F6F6]">
@@ -224,7 +300,7 @@ export default function WithdrawFundStep1() {
                       Account Name
                     </p>
                     <p className="text-sm font-poppinsSemiBold text-[#5F5F5F]">
-                      {selectedBank?.holder}
+                      {bankAccounts[0]?.holder}
                     </p>
                   </div>
                   <div className="flex justify-between items-center pb-3 border-b border-b-[#F6F6F6]">
@@ -232,7 +308,7 @@ export default function WithdrawFundStep1() {
                       Account Number
                     </p>
                     <p className="text-sm font-poppinsSemiBold text-[#5F5F5F]">
-                      {selectedBank?.number}
+                      {bankAccounts[0]?.number}
                     </p>
                   </div>
                   <div className="flex justify-between items-center pb-3 border-b border-b-[#F6F6F6]">
@@ -270,8 +346,9 @@ export default function WithdrawFundStep1() {
                     <Button
                       className="w-full flex items-center justify-center"
                       onClick={handleConfirmWithdraw}
+                      type="button"
                     >
-                      Proceed{" "}
+                      {loading ? "Withdrawing...." : "Proceed"}{" "}
                       <span>
                         {" "}
                         <FaArrowRightLong color="#FCFCFC" className="ml-2" />
@@ -291,14 +368,14 @@ export default function WithdrawFundStep1() {
           </div>
           {showBidConfirmModal && (
             <BidConfirmModal
-              amount={amount}
-              status="Pending"
-              accountName={selectedBank?.holder}
-              accountNumber={selectedBank?.number}
-              bank={selectedBank?.name}
-              onClose={handleCloseModal}
+              amount={details?.amount || 0}
+              status={details?.status || ""}
+              accountName={details?.bank_details?.account_name || ""}
+              accountNumber={details?.bank_details?.account_number || ""}
+              bank={details?.bank_details?.bank_name || ""}
+              onClose={() => {}}
               charges={charges.toLocaleString()}
-              transactionId="1234567890"
+              transactionId={details?.id || ""}
               transactionDate="2021-01-01"
               paymentMethod="Bank Transfer"
               img={selectedBank?.icon}

@@ -9,14 +9,30 @@ import { FaArrowDown } from "react-icons/fa6";
 import PendingPayment from "@/app/components/dashboard/overview/pendingPayment";
 import TransactionSearchTable from "@/app/components/dashboard/wallet/allTransaction";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import RequestPayoutUser from "@/app/components/dashboard/wallet/requestPayoutUser";
+import { getFarmerBalanceStore } from "@/stores/wallet/getFarmerBalance";
+import { getUserBankStore } from "@/stores/settings/getBankDetails";
+import { getWalletTransactionStore } from "@/stores/wallet/getWalletTransactions";
 
 const Wallet = () => {
   const [showRequestPayoutModal, setShowRequestPayoutModal] = useState(false);
   const handleRequestPayoutModal = () => {
     setShowRequestPayoutModal(true);
   };
+  const {
+    data: farmerBalanceData,
+    loading,
+    fetchFarmerBalance,
+  } = getFarmerBalanceStore();
+  const { data, fetchUserBank, loading: loadingBank } = getUserBankStore();
+  const { fetchWalletTransaction } = getWalletTransactionStore();
+
+  useEffect(() => {
+    fetchFarmerBalance();
+    fetchUserBank();
+    fetchWalletTransaction();
+  }, [fetchFarmerBalance, fetchUserBank, fetchWalletTransaction]);
 
   const handleCloseRequestPayoutModal = () => {
     setShowRequestPayoutModal(false);
@@ -26,11 +42,19 @@ const Wallet = () => {
     navigator.clipboard.writeText(text);
   };
 
+  // Loading skeleton component
+  const LoadingSkeleton = () => (
+    <span className="flex items-center gap-x-3 xl:hidden">
+      <span className="w-[180px] h-[40px] bg-gray-200 rounded-md animate-pulse"></span>
+      {/* <div className="w-[180px] h-[40px] bg-gray-200 rounded-md animate-pulse"></div> */}
+    </span>
+  );
+
   return (
     <DashboardLayout>
       <Topbar overview="Wallet" />
 
-      <main className="px-10 py-10 overflow-auto bg-gray-50">
+      <main className="px-10 py-10 overflow-auto h-full bg-gray-50">
         <div className=" mb-8">
           <h2 className="text-xl font-poppinsSemiBold text-[#5F5F5F]">
             Wallet
@@ -48,22 +72,36 @@ const Wallet = () => {
               </p>
               <div className="flex items-center gap-2 mb-4">
                 <h4 className="text-white text-[2rem] leading-9 font-poppinsSemiBold">
-                  N1,035,700.00
+                  {loading ? (
+                    <LoadingSkeleton />
+                  ) : (
+                    "N " +
+                      farmerBalanceData?.wallet?.balance?.toLocaleString() || ""
+                  )}{" "}
                 </h4>
                 <span className="text-white text-sm font-poppinsRegular">
                   <FaRegEyeSlash size={32} color="white" />
                 </span>
               </div>
               <p className="text-[#E9EAE6] text-sm font-poppinsRegular mb-2">
-                providus bank
+                Bank Name:{" "}
+                {loadingBank ? (
+                  <LoadingSkeleton />
+                ) : (
+                  data?.bank_details?.bank_name || "N/A"
+                )}{" "}
               </p>
 
               <div className="flex items-center gap-x-3">
                 <p className="text-[white] text-xs font-poppinsRegular flex items-center gap-x-2">
                   Account Number :{" "}
-                  <span className="font-poppinsSemiBold text-sm text-[#E9EAE6]">
-                    0123456789
-                  </span>
+                  {loadingBank ? (
+                    <LoadingSkeleton />
+                  ) : (
+                    <span className="font-poppinsSemiBold text-sm text-[#E9EAE6]">
+                      {data?.bank_details?.account_number || "N/A"}
+                    </span>
+                  )}{" "}
                 </p>
 
                 <div
@@ -109,13 +147,15 @@ const Wallet = () => {
           <PendingPayment isTotalAvailable={false} />
         </div>
 
-        <TransactionSearchTable />
+        <div>
+          <TransactionSearchTable />
+        </div>
+        {showRequestPayoutModal && (
+          <RequestPayoutUser
+            handleRequestPayoutModal={handleCloseRequestPayoutModal}
+          />
+        )}
       </main>
-      {showRequestPayoutModal && (
-        <RequestPayoutUser
-          handleRequestPayoutModal={handleCloseRequestPayoutModal}
-        />
-      )}
     </DashboardLayout>
   );
 };

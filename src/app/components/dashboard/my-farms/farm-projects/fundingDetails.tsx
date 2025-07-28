@@ -3,6 +3,7 @@ import Input from "@/app/components/common/input";
 import { projectFormData } from "@/utils/form";
 import Button from "@/app/components/common/Buttons";
 import { FaArrowLeftLong, FaArrowRightLong } from "react-icons/fa6";
+import { toast } from "react-hot-toast";
 
 const FundingDetails = ({
   form,
@@ -17,22 +18,66 @@ const FundingDetails = ({
   setCompletedSteps: (steps: number[] | ((prev: number[]) => number[])) => void;
   formStep: number;
 }) => {
+  const handleProceed = () => {
+    const errors = [];
+
+    if (form?.fundingDetails === "") {
+      errors.push("Total Funding is required");
+    }
+    if (form?.expectedReturn === "") {
+      errors.push("Expected Return (ROI) is required");
+    }
+    if (form?.investmentStart === "") {
+      errors.push("Investment Start date is required");
+    }
+    if (form?.investmentEnd === "") {
+      errors.push("Investment End date is required");
+    }
+    if (form?.paymentType === "") {
+      errors.push("Payment Structure is required");
+    }
+    if (form?.plots === "") {
+      errors.push("plots field is required");
+    }
+
+    if (errors.length > 0) {
+      toast.error(errors.join("\n"));
+    } else {
+      setFormStep(3);
+      setCompletedSteps((prev) => [...prev, formStep]);
+    }
+  };
   return (
     <div>
       <div className="p-6 bg-white mt-6 rounded-lg flex flex-col gap-y-6">
-        <div>
-          <Label className="">Total Funding</Label>
-          <Input
-            name="fundingDetails"
-            className=""
-            type="text"
-            value={form?.fundingDetails}
-            placeholder="Enter farm size"
-            variant="tertiary"
-            onChange={(e) =>
-              setForm({ ...form, fundingDetails: e.target.value })
-            }
-          />
+        <div className="grid grid-cols-2 gap-x-6">
+          <div>
+            <Label className="">Total Funding</Label>
+            <Input
+              name="fundingDetails"
+              className=""
+              type="number"
+              value={form?.fundingDetails}
+              placeholder="Enter total funding"
+              variant="tertiary"
+              onChange={(e) =>
+                setForm({ ...form, fundingDetails: e.target.value })
+              }
+            />
+          </div>
+
+          <div>
+            <Label className="">Plots</Label>
+            <Input
+              name="plots"
+              className=""
+              type="number"
+              value={form?.plots}
+              placeholder="Enter number of plots"
+              variant="tertiary"
+              onChange={(e) => setForm({ ...form, plots: e.target.value })}
+            />
+          </div>
         </div>
 
         <div>
@@ -45,7 +90,7 @@ const FundingDetails = ({
               max="100"
               type="range"
               value={form?.expectedReturn}
-              placeholder="Enter farm size"
+              placeholder="Enter expected return"
               onChange={(e) =>
                 setForm({ ...form, expectedReturn: e.target.value })
               }
@@ -107,11 +152,8 @@ const FundingDetails = ({
           >
             <option value="">Select type</option>
 
-            <option value="Milestones (Every Month)">
-              Milestones (Every Month)
-            </option>
-            <option value="Lump Sum (Once)">Lump Sum (Once)</option>
-            <option value="Both">Both</option>
+            <option value="milestone">Milestones (Every Month)</option>
+            <option value="lump sum">Lump Sum (Once)</option>
           </select>
         </div>
       </div>
@@ -135,11 +177,7 @@ const FundingDetails = ({
         </Button>
         <Button
           className="w-fit flex items-center justify-center gap-x-4"
-          onClick={(e) => {
-            e.preventDefault();
-            setFormStep(3);
-            setCompletedSteps((prev) => [...prev, formStep]);
-          }}
+          onClick={handleProceed}
         >
           Proceed{" "}
           <span>

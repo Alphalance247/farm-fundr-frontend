@@ -1,7 +1,9 @@
+"use client";
 import Image from "next/image";
 import Button from "@/app/components/common/Buttons";
 import { IoCheckmarkCircleOutline } from "react-icons/io5";
 import Link from "next/link";
+import { useState, useEffect } from "react";
 
 interface subscribeProps {
   planName: string;
@@ -21,6 +23,7 @@ interface subscribeProps {
   textColor2: string;
   iconColor: string;
   link: string;
+  id: string;
 }
 
 const SubscribeCard: React.FC<subscribeProps> = ({
@@ -41,7 +44,20 @@ const SubscribeCard: React.FC<subscribeProps> = ({
   iconColor,
   textColor2,
   link,
+  id,
 }) => {
+  const [select, setSelect] = useState<string>("");
+
+  const handleSelectedPlan = (userType: string) => {
+    setSelect(userType);
+  };
+
+  useEffect(() => {
+    localStorage.setItem("selectedPlanId", select);
+  }, [select]);
+
+  console.log(select);
+
   return (
     <div className={`${bgColor} p-6 border border-[#E4E7EC] rounded-xl`}>
       <div className="flex justify-between items-center mb-3">
@@ -77,7 +93,11 @@ const SubscribeCard: React.FC<subscribeProps> = ({
         </p>
       </div>
       <Link href={link}>
-        <Button size="medium" className="w-full">
+        <Button
+          size="medium"
+          className="w-full"
+          onClick={() => handleSelectedPlan(id)}
+        >
           Select Plan
         </Button>
       </Link>

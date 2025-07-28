@@ -27,14 +27,14 @@ const BranchSizeDetails = ({
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFile = e.target.files?.[0];
-    if (selectedFile && selectedFile.size <= 10 * 1024 * 1024) {
+    if (selectedFile && selectedFile.size <= 5 * 1024 * 1024) {
       setFile(selectedFile);
       setPreview(URL.createObjectURL(selectedFile));
     } else if (!selectedFile?.type.includes("image")) {
       toast.error("Only image files are allowed");
       return;
     } else {
-      toast.error("File must be less than 10MB");
+      toast.error("File must be less than 5MB");
       return;
     }
   };
@@ -42,69 +42,45 @@ const BranchSizeDetails = ({
   return (
     <div>
       <div className="p-6 bg-white mt-6 rounded-lg flex flex-col gap-y-6">
-        <div className="grid grid-cols-2 gap-2">
-          <div>
-            <Label className="">Branch Size</Label>
-            <Input
-              name="branchSize"
-              className=""
-              type="text"
-              value={form?.branchSize}
-              placeholder="Enter farm size"
-              variant="tertiary"
-              onChange={(e) => setForm({ ...form, branchSize: e.target.value })}
-            />
-          </div>
-          <div>
-            <Label>Select Farm</Label>
-            <select
-              id="fieldType"
-              name="fieldType"
-              value={form?.fieldType || ""}
-              onChange={(e) => setForm({ ...form, fieldType: e.target.value })}
-              className="w-full border bg-[#F6F6F6] focus:ring-[#51F4A6] focus:border-[#51F4A6] border-[#E0E0E0] rounded-md text-sm p-4 focus:outline-none focus:ring-1 text-[#7C7C7C] font-poppinsRegular"
-            >
-              <option value="">Select field type</option>
-
-              <option value="Loamy">Loamy</option>
-              <option value="Loamy">Sandy</option>
-              <option value="Loamy">Clay</option>
-            </select>
-          </div>
+        <div>
+          <Label className="">Branch Size (plots, hectares, e.g 20)</Label>
+          <Input
+            name="branchSize"
+            className=""
+            type="text"
+            value={form?.branchSize}
+            placeholder="Enter farm size"
+            variant="tertiary"
+            onChange={(e) => setForm({ ...form, branchSize: e.target.value })}
+          />
         </div>
 
         <div className="grid grid-cols-2 gap-2">
           <div>
-            <Label>Work Hours</Label>
-            <select
-              id="workHours"
-              name="workHours"
-              value={form?.workHours || ""}
-              onChange={(e) => setForm({ ...form, workHours: e.target.value })}
-              className="w-full border bg-[#F6F6F6] focus:ring-[#51F4A6] focus:border-[#51F4A6] border-[#E0E0E0] rounded-md text-sm p-4 focus:outline-none focus:ring-1 text-[#7C7C7C] font-poppinsRegular"
-            >
-              <option value="">8:00am</option>
+            <Label>Work Hours (7am - 7pm)</Label>
 
-              <option value="8:00am">9:00am</option>
-              <option value="8:00am">8:00am</option>
-              <option value="8:00am">8:00am</option>
-            </select>
+            <Input
+              name="workHours"
+              className=""
+              type="text"
+              value={form?.workHours || ""}
+              placeholder="Enter farm working hours"
+              variant="tertiary"
+              onChange={(e) => setForm({ ...form, workHours: e.target.value })}
+            />
           </div>
           <div>
-            <Label>Off time</Label>
-            <select
-              id="time"
+            <Label>Off time (7pm - 7am)</Label>
+
+            <Input
               name="time"
               value={form?.time || ""}
+              className=""
+              type="text"
+              placeholder="Enter farm off time"
+              variant="tertiary"
               onChange={(e) => setForm({ ...form, time: e.target.value })}
-              className="w-full border bg-[#F6F6F6] focus:ring-[#51F4A6] focus:border-[#51F4A6] border-[#E0E0E0] rounded-md text-sm p-4 focus:outline-none focus:ring-1 text-[#7C7C7C] font-poppinsRegular"
-            >
-              <option value="">9:00pm</option>
-
-              <option value="9:00pm">9:00pm</option>
-              <option value="9:00pm">9:00pm</option>
-              <option value="9:00pm">9:00pm</option>
-            </select>
+            />
           </div>
         </div>
 

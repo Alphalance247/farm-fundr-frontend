@@ -6,6 +6,11 @@ import TransactionSearch, {
 } from "../../dashboard/wallet/transactionSearch";
 import { PiDotsThreeVertical } from "react-icons/pi";
 import Image from "next/image";
+import { getFarmListStore } from "@/stores/farms/getFarmList";
+import Link from "next/link";
+import Button from "../../common/Buttons";
+import { FiEdit, FiTrash2 } from "react-icons/fi";
+import DeleteFarm from "./deleteFarm";
 
 interface Employee {
   id: number;
@@ -113,9 +118,55 @@ export default function FarmListTable() {
   const [searchQuery, setSearchQuery] = useState("");
   const [sortBy, setSortBy] = useState<SortOption>("firstName");
   const [filterBy, setFilterBy] = useState<FilterOption>("all");
+  const [openDropdown, setOpenDropdown] = useState<string | null>(null);
+  const [openDeleteModal, setOpenDeleteModal] = useState(false);
+  const [selectedFarmId, setSelectedFarmId] = useState("");
+  const [selectedFarmName, setSelectedFarmName] = useState("");
+
+  const { data: farmList } = getFarmListStore();
+
+  const totalFarms = farmList?.results?.farms.map((farm, idx) => ({
+    ...farm,
+    bg: DUMMY_EMPLOYEES[idx % DUMMY_EMPLOYEES.length]?.bg || "bg-[white]",
+    statusColor:
+      DUMMY_EMPLOYEES[idx % DUMMY_EMPLOYEES.length]?.statusColor ||
+      "bg-[#DEA304]",
+  }));
+
+  const totalFarmsTable = totalFarms || [];
+
+  const handleDropdownToggle = (farmId: string) => {
+    setOpenDropdown(openDropdown === farmId ? null : farmId);
+  };
+
+  // const handleEditFarm = (farmId: string) => {
+  //   // Navigate to edit farm page
+  //   window.location.href = `/farmer-dashboard/my-farms/${farmId}/edit`;
+  // };
+
+  const handleDeleteFarm = (farmId: string, farmName: string) => {
+    setOpenDeleteModal(true);
+    setSelectedFarmId(farmId);
+    setSelectedFarmName(farmName);
+  };
+
+  // Close dropdown when clicking outside
+  const handleClickOutside = () => {
+    setOpenDropdown(null);
+  };
 
   return (
-    <section className="">
+    <section className="relative">
+      {openDropdown !== null && (
+        <div className="fixed inset-0 z-40" onClick={handleClickOutside} />
+      )}
+      {openDeleteModal && selectedFarmId && selectedFarmName && (
+        <DeleteFarm
+          onCloseModal={() => setOpenDeleteModal(false)}
+          selectedFarmId={selectedFarmId}
+          selectedFarmName={selectedFarmName}
+        />
+      )}
       <TransactionSearch
         searchQuery={searchQuery}
         sortBy={sortBy}
@@ -126,84 +177,143 @@ export default function FarmListTable() {
         withHeading={true}
       />
 
-      <div className="overflow-x-auto">
-        <table className="w-full min-w-full">
-          <thead className="bg-[#FAFEFF]">
-            <tr>
-              <th className="py-3 px-4 w-[10px] text-left">
-                <input type="checkbox" className="rounded border-gray-300" />
-              </th>
-              <th className="py-3 px-4 text-sm text-[#0B222A] font-poppinsSemiBold w-[200px] text-left">
-                Farm Name
-              </th>
-              <th className="py-3 px-4 text-sm  text-[#0B222A] font-poppinsSemiBold text-left w-[150px]">
-                Location
-              </th>
-              <th className="py-3 px-4 text-sm  text-[#0B222A] font-poppinsSemiBold text-left w-[150px]">
-                CAC Reg No
-              </th>
-              <th className="py-3 px-4 text-sm  text-[#0B222A] font-poppinsSemiBold text-left w-[100px]">
-                Branches
-              </th>
-              <th className="py-3 px-4 text-sm  text-[#0B222A] font-poppinsSemiBold text-left w-[50px]">
-                Status
-              </th>
-              <th className="py-3 px-4 text-sm  text-[#0B222A] font-poppinsSemiBold text-left w-[50px]">
-                Action
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {DUMMY_EMPLOYEES.map((emp) => (
-              <tr key={emp.id} className={`${emp?.bg}`}>
-                <td className="py-3 px-4">
-                  <input type="checkbox" className="rounded" />
-                </td>
-                <td className="py-3 px-4">
-                  <span className="text-[#1B2229] text-sm font-poppinsRegular flex items-center gap-2">
-                    <Image
-                      src={emp.typeIcons || "/assets/my-farms/farmpic.svg"}
-                      alt={emp.name}
-                      width={40}
-                      height={40}
-                    />
-                    {emp.transactionId}
-                  </span>
-                </td>
-                <td
-                  className={`py-3 px-4 text-sm font-poppinsRegular ${emp?.nameColor}`}
-                >
-                  <span className="flex items-center gap-2">{emp?.name}</span>
-                </td>
-                <td
-                  className={`py-3 px-4 text-sm font-poppinsRegular ${emp?.nameColor}`}
-                >
-                  {emp.description}
-                </td>
-                <td
-                  className={`py-3 px-4 font-poppinsSemiBold text-sm ${emp?.amountColor}`}
-                >
-                  {emp.amount}
-                </td>
-
-                <td className="py-3 px-4 text-sm text-[#2F2F33]">
-                  <span
-                    className={`py-2 px-5 ${emp?.statusColor} text-white rounded-xl font-poppinsRegular tracking-[-2%]`}
-                  >
-                    {emp?.status}
-                  </span>
-                </td>
-
-                <td className="py-3 px-4">
-                  <div className="w-8 h-8 bg-white p-2 rounded-lg border-[#E4E7EC] border cursor-pointer">
-                    <PiDotsThreeVertical color="#001F3F" size={16} />
-                  </div>
-                </td>
+      {totalFarmsTable.length === 0 ? (
+        <div className="flex pt-20 items-center h-screen">
+          <div className="flex flex-col items-center">
+            <p className="text-center pb-8 text-gray-500">
+              No Farm created yet please create a farm to get started
+            </p>
+            <Link href={"/farmer-dashboard/my-farms/add-farm"}>
+              <Button type="button" className="mt-4">
+                Create Farm
+              </Button>
+            </Link>
+          </div>
+        </div>
+      ) : (
+        <div className="overflow-x-auto">
+          <table className="w-full min-w-[1000px] md:w-[800px]">
+            <thead className="bg-[#FAFEFF]">
+              <tr>
+                <th className="py-3 px-4 w-[10px] text-left">
+                  <input type="checkbox" className="rounded border-gray-300" />
+                </th>
+                <th className="py-3 px-4 text-sm text-[#0B222A] font-poppinsSemiBold w-[200px] text-left">
+                  Farm Name
+                </th>
+                <th className="py-3 px-4 text-sm  text-[#0B222A] font-poppinsSemiBold text-left w-[50px] hidden md:block">
+                  Status
+                </th>
+                <th className="py-3 px-4 text-sm  text-[#0B222A] font-poppinsSemiBold text-left w-[150px]">
+                  Location
+                </th>
+                <th className="py-3 px-4 text-sm  text-[#0B222A] font-poppinsSemiBold text-left w-[150px]">
+                  CAC Reg No
+                </th>
+                <th className="py-3 px-4 text-sm  text-[#0B222A] font-poppinsSemiBold text-left w-[100px]">
+                  Branches
+                </th>
+                <th className="py-3 px-4 text-sm  text-[#0B222A] font-poppinsSemiBold text-left w-[50px] md:hidden">
+                  Status
+                </th>
+                <th className="py-3 px-4 text-sm  text-[#0B222A] font-poppinsSemiBold text-left w-[50px]">
+                  Action
+                </th>
               </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+            </thead>
+            <tbody>
+              {totalFarmsTable.map((emp) => (
+                <tr key={emp.id} className={`${emp?.bg}`}>
+                  <td className="py-3 px-4">
+                    <input type="checkbox" className="rounded" />
+                  </td>
+                  <td className="py-3 px-4">
+                    <Link href={"/farmer-dashboard/my-farms/" + emp?.id}>
+                      <div>
+                        <span className="text-[#1B2229] text-sm font-poppinsRegular flex items-center gap-2 hover:underline underline-offset-2">
+                          <Image
+                            src={"/assets/my-farms/farmpic.svg"}
+                            alt={emp.name}
+                            width={40}
+                            height={40}
+                          />
+                          <span> {emp?.name}</span>
+                        </span>
+                      </div>
+                    </Link>
+                  </td>
+                  <td className="py-3 px-4 text-sm text-[#2F2F33] hidden md:block">
+                    <span
+                      className={`py-2 px-5 ${emp?.statusColor} text-white rounded-xl font-poppinsRegular tracking-[-2%]`}
+                    >
+                      {emp?.status}
+                    </span>
+                  </td>
+                  <td
+                    className={`py-3 px-4 text-sm font-poppinsRegular`}
+                    style={{ color: emp?.color }}
+                  >
+                    <span className="flex items-center gap-2">
+                      {emp?.city}, {emp?.country}
+                    </span>
+                  </td>
+                  <td
+                    className={`py-3 px-4 text-sm font-poppinsRegular `}
+                    style={{ color: emp?.color }}
+                  >
+                    {emp?.cac_reg_no || "N/A"}
+                  </td>
+                  <td
+                    className={`py-3 px-4 font-poppinsSemiBold text-sm`}
+                    style={{ color: emp?.color }}
+                  >
+                    {emp?.farm_branches_count || 0}
+                  </td>
+
+                  <td className="py-3 px-4 text-sm text-[#2F2F33] md:hidden">
+                    <span
+                      className={`py-2 px-5 ${emp?.statusColor} text-white rounded-xl font-poppinsRegular tracking-[-2%] `}
+                    >
+                      {emp?.status}
+                    </span>
+                  </td>
+
+                  <td
+                    className="py-3 px-4 relative"
+                    onClick={() => handleDropdownToggle(emp?.id)}
+                  >
+                    <p className="w-8 h-8 bg-white p-2 rounded-lg border-[#E4E7EC] border cursor-pointer">
+                      <PiDotsThreeVertical color="#001F3F" size={16} />
+                    </p>
+
+                    {/* Dropdown Menu */}
+                    {openDropdown === emp?.id && (
+                      <div className="absolute right-24 bottom-0 mt-2 w-28 bg-white rounded-lg shadow-lg border border-gray-200 z-50">
+                        <div className="py-1">
+                          <button
+                            // onClick={() => handleEditFarm(emp.id)}
+                            className="w-full px-2 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center gap-2"
+                          >
+                            <FiEdit size={14} />
+                            Edit
+                          </button>
+                          <button
+                            onClick={() => handleDeleteFarm(emp?.id, emp?.name)}
+                            className="w-full px-2 py-2 text-sm text-red-600 hover:bg-gray-100 flex items-center gap-2"
+                          >
+                            <FiTrash2 size={14} />
+                            Delete
+                          </button>
+                        </div>
+                      </div>
+                    )}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
     </section>
   );
 }
