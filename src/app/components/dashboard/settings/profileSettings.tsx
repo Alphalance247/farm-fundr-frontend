@@ -9,18 +9,21 @@ import SettingHeading from "./common/settingHeading";
 import axiosInstance from "@/lib/axios";
 import toast from "react-hot-toast";
 import { AxiosError } from "axios";
+import { getUserDetailsStore } from "@/stores/settings/getUserDetails";
 
 const ProfileSettings = () => {
+  const { data } = getUserDetailsStore();
+  const userDetails = data?.user_details;
   const [loading, setIsLoading] = useState(false);
   const [form, setForm] = useState({
-    fullname: "",
-    email: "",
-    city: "",
-    username: "",
-    state: "",
-    country: "",
-    phone: "",
-    street_address: "",
+    fullname: userDetails?.first_name || "",
+    email: userDetails?.email || "",
+    city: userDetails?.city || "",
+    username: userDetails?.username || "",
+    state: userDetails?.state || "",
+    country: userDetails?.country || "",
+    phone: userDetails?.phone || "",
+    street_address: userDetails?.street_address || "",
   });
 
   const handleProfileUpdate = async (e: React.FormEvent) => {
@@ -59,6 +62,7 @@ const ProfileSettings = () => {
       setIsLoading(false);
     }
   };
+
   return (
     <section className="mt-8">
       <SettingHeading

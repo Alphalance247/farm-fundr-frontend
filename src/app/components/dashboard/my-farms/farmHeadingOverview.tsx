@@ -28,7 +28,7 @@ const FarmHeadingOverview = ({
 
       <div className="flex justify-between items-center">
         <div className="flex items-center gap-x-3">
-          <div className="">
+          <div className="lg:w-[70%]">
             <h2 className="text-xl font-poppinsSemiBold text-[#5F5F5F]">
               {farmName || "Green Valley farm"}
             </h2>
@@ -37,11 +37,11 @@ const FarmHeadingOverview = ({
             </p>
           </div>
 
-          <p
+          {/* <p
             className={`text-sm  w-fit font-poppinsRegular  px-3 py-1 border  rounded-xl bg-[#E7F6EC] ${"bg-[#E7F6EC] text-[#006E2E] border-[#B0EECA]"}`}
           >
             {"Active"}
-          </p>
+          </p> */}
         </div>
 
         {isProjectDetails ? (

@@ -15,10 +15,25 @@ import { AxiosError } from "axios";
 import { getFarmerBalanceStore } from "@/stores/wallet/getFarmerBalance";
 import Link from "next/link";
 
+interface tranactionData {
+  data: {
+    amount: number;
+    bank_details: {
+      account_name: string;
+      account_number: string;
+      bank_name: string;
+    };
+    id: string;
+    status: string;
+  };
+}
+
 export default function WithdrawFundStep1() {
   const { data, fetchUserBank } = getUserBankStore();
   const { data: farmerBalanceData, fetchFarmerBalance } =
     getFarmerBalanceStore();
+  const [transactionDetails, setTranactionDetails] =
+    useState<tranactionData | null>(null);
 
   useEffect(() => {
     fetchUserBank();
@@ -26,6 +41,7 @@ export default function WithdrawFundStep1() {
   }, [fetchUserBank, fetchFarmerBalance]);
 
   const bankData = data?.bank_details || null;
+  const details = transactionDetails?.data || null;
 
   const bankAccounts = [
     {
@@ -76,6 +92,7 @@ export default function WithdrawFundStep1() {
 
       if (res.status === 201) {
         setShowBidConfirmModal(true);
+        setTranactionDetails(res?.data);
       }
 
       setIsLoading(false);
@@ -351,14 +368,14 @@ export default function WithdrawFundStep1() {
           </div>
           {showBidConfirmModal && (
             <BidConfirmModal
-              amount={amount}
-              status="Pending"
-              accountName={selectedBank?.holder}
-              accountNumber={selectedBank?.number}
-              bank={selectedBank?.name}
+              amount={details?.amount || 0}
+              status={details?.status || ""}
+              accountName={details?.bank_details?.account_name || ""}
+              accountNumber={details?.bank_details?.account_number || ""}
+              bank={details?.bank_details?.bank_name || ""}
               onClose={() => {}}
               charges={charges.toLocaleString()}
-              transactionId="1234567890"
+              transactionId={details?.id || ""}
               transactionDate="2021-01-01"
               paymentMethod="Bank Transfer"
               img={selectedBank?.icon}

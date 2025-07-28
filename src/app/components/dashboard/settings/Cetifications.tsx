@@ -6,11 +6,14 @@ import Button from "../../common/Buttons";
 import axiosInstance from "@/lib/axios";
 import toast from "react-hot-toast";
 import { AxiosError } from "axios";
+import { getUserDetailsStore } from "@/stores/settings/getUserDetails";
 
 export default function Certifications() {
+  const { data } = getUserDetailsStore();
+  const userDetails = data?.user_details;
   const [form, setForm] = useState({
-    highest_education: "",
-    university: "",
+    highest_education: userDetails?.highest_education || "",
+    university: userDetails?.university || "",
   });
   const [loading, setIsLoading] = useState(false);
   const handleCertificationUpdate = async (e: React.FormEvent) => {

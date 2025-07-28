@@ -192,7 +192,7 @@ export default function FarmListTable() {
         </div>
       ) : (
         <div className="overflow-x-auto">
-          <table className="w-full min-w-full">
+          <table className="w-full min-w-[1000px] md:w-[800px]">
             <thead className="bg-[#FAFEFF]">
               <tr>
                 <th className="py-3 px-4 w-[10px] text-left">
@@ -200,6 +200,9 @@ export default function FarmListTable() {
                 </th>
                 <th className="py-3 px-4 text-sm text-[#0B222A] font-poppinsSemiBold w-[200px] text-left">
                   Farm Name
+                </th>
+                <th className="py-3 px-4 text-sm  text-[#0B222A] font-poppinsSemiBold text-left w-[50px] hidden md:block">
+                  Status
                 </th>
                 <th className="py-3 px-4 text-sm  text-[#0B222A] font-poppinsSemiBold text-left w-[150px]">
                   Location
@@ -210,7 +213,7 @@ export default function FarmListTable() {
                 <th className="py-3 px-4 text-sm  text-[#0B222A] font-poppinsSemiBold text-left w-[100px]">
                   Branches
                 </th>
-                <th className="py-3 px-4 text-sm  text-[#0B222A] font-poppinsSemiBold text-left w-[50px]">
+                <th className="py-3 px-4 text-sm  text-[#0B222A] font-poppinsSemiBold text-left w-[50px] md:hidden">
                   Status
                 </th>
                 <th className="py-3 px-4 text-sm  text-[#0B222A] font-poppinsSemiBold text-left w-[50px]">
@@ -239,6 +242,13 @@ export default function FarmListTable() {
                       </div>
                     </Link>
                   </td>
+                  <td className="py-3 px-4 text-sm text-[#2F2F33] hidden md:block">
+                    <span
+                      className={`py-2 px-5 ${emp?.statusColor} text-white rounded-xl font-poppinsRegular tracking-[-2%]`}
+                    >
+                      {emp?.status}
+                    </span>
+                  </td>
                   <td
                     className={`py-3 px-4 text-sm font-poppinsRegular`}
                     style={{ color: emp?.color }}
@@ -260,9 +270,9 @@ export default function FarmListTable() {
                     {emp?.farm_branches_count || 0}
                   </td>
 
-                  <td className="py-3 px-4 text-sm text-[#2F2F33]">
+                  <td className="py-3 px-4 text-sm text-[#2F2F33] md:hidden">
                     <span
-                      className={`py-2 px-5 ${emp?.statusColor} text-white rounded-xl font-poppinsRegular tracking-[-2%]`}
+                      className={`py-2 px-5 ${emp?.statusColor} text-white rounded-xl font-poppinsRegular tracking-[-2%] `}
                     >
                       {emp?.status}
                     </span>

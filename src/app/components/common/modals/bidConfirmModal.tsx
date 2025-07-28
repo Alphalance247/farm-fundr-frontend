@@ -7,7 +7,7 @@ import Link from "next/link";
 interface BidConfirmModalProps {
   onClose: () => void;
   amount: number;
-  status: "Pending" | "Completed" | "Failed";
+  status: string;
   accountName: string;
   accountNumber: string;
   bank: string;

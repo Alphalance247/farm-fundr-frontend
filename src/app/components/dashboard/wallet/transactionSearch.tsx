@@ -24,8 +24,8 @@ export default function TransactionSearch({
   withHeading,
 }: TransactionSearchProps) {
   return (
-    <div className="mb-6 px-4 py-6">
-      <div className="flex items-center justify-between">
+    <div className="mb-6 px-4 py-6 overflow-x-auto">
+      <div className="flex items-center justify-between xl:flex-col xl:items-start xl:gap-y-6">
         {withHeading && (
           <h4 className="text-sm font-poppinsSemiBold text-[#5F5F5F]">
             All Transactions
