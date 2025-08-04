@@ -12,6 +12,7 @@ import Spinner from "@/app/components/common/modals/spinner";
 import { IoMdArrowBack } from "react-icons/io";
 import Link from "next/link";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 const ProjectDetails = ({
   projectDetailsId,
@@ -23,6 +24,7 @@ const ProjectDetails = ({
   farmDetailsId: string;
 }) => {
   const { fetchProjectsDetails, data, loading, error } = getProjectDetails();
+  const router = useRouter();
 
   useEffect(() => {
     fetchProjectsDetails(projectDetailsId);
@@ -100,7 +102,13 @@ const ProjectDetails = ({
                   <div className="flex gap-x-2 items-center justify-center pb-4 border-b border-[#F6F6F6]">
                     {" "}
                     <FarmHeading text="Project Image" />
-                    <EditBtn onButtonEdit={() => {}} />
+                    <EditBtn
+                      onButtonEdit={() => {
+                        router.push(
+                          "/farmer-dashboard/my-farms/update-project"
+                        );
+                      }}
+                    />
                   </div>
 
                   <div className="pt-6">
@@ -128,7 +136,13 @@ const ProjectDetails = ({
                   <div className="flex gap-x-2 items-center justify-center pt-6 border-t border-[#F6F6F6] mb-4">
                     {" "}
                     <FarmHeading text="Branch Information" />
-                    <EditBtn onButtonEdit={() => {}} />
+                    <EditBtn
+                      onButtonEdit={() => {
+                        router.push(
+                          "/farmer-dashboard/my-farms/update-project"
+                        );
+                      }}
+                    />
                   </div>
 
                   <div>
@@ -159,7 +173,13 @@ const ProjectDetails = ({
                   <div className="flex gap-x-2 items-center justify-center pt-6 border-t border-[#F6F6F6] mb-4">
                     {" "}
                     <FarmHeading text="Branch Set Up" />
-                    <EditBtn onButtonEdit={() => {}} />
+                    <EditBtn
+                      onButtonEdit={() => {
+                        router.push(
+                          "/farmer-dashboard/my-farms/update-project"
+                        );
+                      }}
+                    />
                   </div>
 
                   <div>

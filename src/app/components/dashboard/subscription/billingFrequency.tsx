@@ -5,7 +5,6 @@ import Input from "../../common/input";
 import Button from "../../common/Buttons";
 import React, { useState, useEffect } from "react";
 import { MdOutlineRadioButtonChecked } from "react-icons/md";
-import { FaRegCircleCheck } from "react-icons/fa6";
 
 interface subscriptionTier {
   planType: string;
@@ -200,8 +199,8 @@ const BillingFrequency: React.FC<billingCadenceProps> = ({
                   readonly={true}
                   variant="primary"
                 />
-
-                {paymentMethod === "paystack" && (
+              </div>
+              {/* {paymentMethod === "paystack" && (
                   <p className="flex items-center mt-2 gap-x-2 font-poppinsRegular text-sm text-[#5F5F5F]">
                     {" "}
                     <span>
@@ -247,7 +246,7 @@ const BillingFrequency: React.FC<billingCadenceProps> = ({
                     variant="primary"
                   />
                 </div>
-              </div>
+              </div> */}
 
               <div className="mt-4">
                 {paymentMethod === "paystack" ? (

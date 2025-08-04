@@ -10,11 +10,10 @@ const PendingPayment = ({
 }: {
   isTotalAvailable?: boolean;
 }) => {
-  const { data: transactionData } =
-    getWalletTransactionStore();
+  const { data: transactionData } = getWalletTransactionStore();
   return (
     <div
-      className={`px-[22px] py-8 border border-[#E4E7EC] bg-[white] rounded-xl ${
+      className={`px-[22px] py-8 border border-[#E4E7EC] bg-[white] rounded-xl h-fit ${
         isTotalAvailable && "mt-6"
       }`}
     >
@@ -56,12 +55,10 @@ const PendingPayment = ({
 
       <div className="flex flex-col gap-y-4 border-t border-t-[#E2E2E2] pt-2">
         {transactionData?.transactions?.length === 0 ? (
-          <div className="flex pt-20 items-center h-screen">
-            <div className="flex flex-col items-center">
-              <p className="text-center pb-8 text-gray-500">
-                No Transactions found yet
-              </p>
-            </div>
+          <div className="flex pt-20 items-center justify-center h-fit">
+            <p className="text-center pb-8 text-gray-500">
+              No Transactions found yet
+            </p>
           </div>
         ) : (
           transactionData?.transactions

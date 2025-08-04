@@ -31,7 +31,6 @@ const FarmDetails = ({ farmDetailsId }: { farmDetailsId: string }) => {
 
   const tabs: { id: number; name: string }[] = [
     { id: 1, name: `Branches (${farmBranchData?.length})` },
-    { id: 2, name: "Draft (1)" },
     { id: 3, name: "StoreFront Settings" },
   ];
 
@@ -180,7 +179,6 @@ const FarmDetails = ({ farmDetailsId }: { farmDetailsId: string }) => {
                     <FarmBranches />
                   )}
 
-                  {activeTab === "Draft (1)" && <p>Draft (1)</p>}
                   {activeTab === "StoreFront Settings" && <CustomizeStore />}
                 </div>
               </div>

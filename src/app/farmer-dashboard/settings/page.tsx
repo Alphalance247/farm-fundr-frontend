@@ -18,7 +18,7 @@ const Setting = () => {
   const [activeTab, setActiveTab] = useState<string>("Profile settings");
   const { user } = useAuth();
   const { fetchUserKYC, data } = getKYCPercentageStore();
-  const { fetchUserDetails } = getUserDetailsStore();
+  const { fetchUserDetails, data: userDetails } = getUserDetailsStore();
 
   useEffect(() => {
     fetchUserKYC();
@@ -100,7 +100,13 @@ const Setting = () => {
               ))}
             </div>
 
-            {activeTab === "Profile settings" && <ProfileSettings />}
+            {activeTab === "Profile settings" && (
+              <>
+                {userDetails && (
+                  <ProfileSettings UserDetails={userDetails.user_details} />
+                )}
+              </>
+            )}
             {activeTab === "Bank Details" && <BankDetails />}
             {activeTab === "Award/Qualification" && <Certifications />}
           </div>

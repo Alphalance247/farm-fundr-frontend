@@ -133,12 +133,10 @@ export default function TransactionSearchTable() {
         onFilterChange={setFilterBy}
       />
       {transactionData?.transactions?.length === 0 ? (
-        <div className="flex pt-20 items-center h-screen">
-          <div className="flex flex-col items-center">
-            <p className="text-center pb-8 text-gray-500">
-              No Transactions found yet
-            </p>
-          </div>
+        <div className="flex pt-10 items-center justify-center h-fit">
+          <p className="text-center pb-8 text-gray-500">
+            No Transactions found yet
+          </p>
         </div>
       ) : (
         <div className="overflow-x-auto">
@@ -198,14 +196,18 @@ export default function TransactionSearchTable() {
                   <td
                     className={`py-3 px-4 font-poppinsSemiBold text-sm  text-[#DEA304]`} //${emp?.amountColor}
                   >
-                    {emp.amount}
+                    N {emp.amount}
                   </td>
                   <td className="py-3 px-4 text-[#34474E] text-sm font-poppinsRegular">
                     {/* {emp?.date} */} 2012-12-09
                   </td>
                   <td className="py-3 px-4 text-sm text-[#2F2F33]">
                     <span
-                      className={`py-2 px-5  bg-[#DEA304] text-white rounded-xl font-poppinsRegular tracking-[-2%]`} //${emp?.statusColor}
+                      className={`py-2 px-5  ${
+                        emp?.status === "pending"
+                          ? "bg-[#DEA304]"
+                          : "bg-[#00C853]"
+                      } text-white rounded-xl font-poppinsRegular tracking-[-2%]`} //${emp?.statusColor}
                     >
                       {emp?.status}
                     </span>
