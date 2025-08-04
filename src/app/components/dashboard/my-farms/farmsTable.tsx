@@ -178,7 +178,7 @@ export default function FarmListTable() {
       />
 
       {totalFarmsTable.length === 0 ? (
-        <div className="flex pt-20 items-center h-screen">
+        <div className="flex pt-20 items-center h-fit justify-center">
           <div className="flex flex-col items-center">
             <p className="text-center pb-8 text-gray-500">
               No Farm created yet please create a farm to get started
@@ -244,7 +244,11 @@ export default function FarmListTable() {
                   </td>
                   <td className="py-3 px-4 text-sm text-[#2F2F33] hidden md:block">
                     <span
-                      className={`py-2 px-5 ${emp?.statusColor} text-white rounded-xl font-poppinsRegular tracking-[-2%]`}
+                      className={`py-2 px-5  text-white rounded-xl font-poppinsRegular tracking-[-2%] ${
+                        emp?.status !== "published"
+                          ? "bg-[#DEA304]"
+                          : "bg-[#00C853]"
+                      }`}
                     >
                       {emp?.status}
                     </span>
@@ -272,7 +276,11 @@ export default function FarmListTable() {
 
                   <td className="py-3 px-4 text-sm text-[#2F2F33] md:hidden">
                     <span
-                      className={`py-2 px-5 ${emp?.statusColor} text-white rounded-xl font-poppinsRegular tracking-[-2%] `}
+                      className={`py-2 px-5 text-white rounded-xl font-poppinsRegular tracking-[-2%] ${
+                        emp?.status !== "published"
+                          ? "bg-[#DEA304]"
+                          : "bg-[#00C853]"
+                      }`}
                     >
                       {emp?.status}
                     </span>
@@ -290,13 +298,15 @@ export default function FarmListTable() {
                     {openDropdown === emp?.id && (
                       <div className="absolute right-24 bottom-0 mt-2 w-28 bg-white rounded-lg shadow-lg border border-gray-200 z-50">
                         <div className="py-1">
-                          <button
-                            // onClick={() => handleEditFarm(emp.id)}
-                            className="w-full px-2 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center gap-2"
-                          >
-                            <FiEdit size={14} />
-                            Edit
-                          </button>
+                          <Link href={"/farmer-dashboard/my-farms/update-farm"}>
+                            <button
+                              // onClick={() => handleEditFarm(emp.id)}
+                              className="w-full px-2 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center gap-2"
+                            >
+                              <FiEdit size={14} />
+                              Edit
+                            </button>
+                          </Link>
                           <button
                             onClick={() => handleDeleteFarm(emp?.id, emp?.name)}
                             className="w-full px-2 py-2 text-sm text-red-600 hover:bg-gray-100 flex items-center gap-2"

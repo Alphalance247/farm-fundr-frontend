@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Input from "../../common/input";
 import Label from "../../common/label";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import PhoneInput from "react-phone-number-input";
 import "react-phone-number-input/style.css";
 import Button from "../../common/Buttons";
@@ -11,19 +11,34 @@ import toast from "react-hot-toast";
 import { AxiosError } from "axios";
 import { getUserDetailsStore } from "@/stores/settings/getUserDetails";
 
-const ProfileSettings = () => {
-  const { data } = getUserDetailsStore();
-  const userDetails = data?.user_details;
+interface UserDetails {
+  fullname: string;
+  email: string;
+  city: string;
+  username: string;
+  state: string;
+  country: string;
+  phone: string;
+  street_address: string;
+}
+
+const ProfileSettings = ({ UserDetails }: { UserDetails: UserDetails }) => {
+  console.log(UserDetails);
+  const { fetchUserDetails } = getUserDetailsStore();
+  useEffect(() => {
+    fetchUserDetails();
+  }, [fetchUserDetails]);
+  // const userDetails = data?.user_details;
   const [loading, setIsLoading] = useState(false);
   const [form, setForm] = useState({
-    fullname: userDetails?.first_name || "",
-    email: userDetails?.email || "",
-    city: userDetails?.city || "",
-    username: userDetails?.username || "",
-    state: userDetails?.state || "",
-    country: userDetails?.country || "",
-    phone: userDetails?.phone || "",
-    street_address: userDetails?.street_address || "",
+    fullname: UserDetails?.fullname || "",
+    email: UserDetails?.email || "",
+    city: UserDetails?.city || "",
+    username: UserDetails?.username || "",
+    state: UserDetails?.state || "",
+    country: UserDetails?.country || "",
+    phone: UserDetails?.phone || "",
+    street_address: UserDetails?.street_address || "",
   });
 
   const handleProfileUpdate = async (e: React.FormEvent) => {

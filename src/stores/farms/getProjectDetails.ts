@@ -25,6 +25,11 @@ export interface projectsDetailsDataStore {
     status: string;
     cac_reg_status: string;
     owner_name: string;
+    start_date: string;
+    end_date: string;
+    payment_structure: string;
+    budget: string;
+    ROI: string;
   };
 }
 

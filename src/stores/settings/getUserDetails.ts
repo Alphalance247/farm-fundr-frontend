@@ -16,6 +16,7 @@ export interface userDetailsDataStore {
     university: string;
     username: string;
     whatsapp_number: string;
+    fullname: string;
   };
 }
 
