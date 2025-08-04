@@ -41,14 +41,23 @@ const BankDetails = () => {
     resetIsLoadingBankDetails,
   ] = useBoolean(false);
   const [form, setForm] = useState({
-    bank_name: data?.bank_details?.bank_name || "",
-    account_number: data?.bank_details?.account_number || "",
-    account_name: data?.bank_details?.account_name || "",
+    bank_name: "",
+    account_number: "",
+    account_name: "",
     bank_code: "",
     otp_code: "",
   });
 
-  console.log(form);
+  useEffect(() => {
+    if (data?.bank_details) {
+      setForm((prev) => ({
+        ...prev,
+        bank_name: data.bank_details.bank_name || "",
+        account_number: data.bank_details.account_number || "",
+        account_name: data.bank_details.account_name || "",
+      }));
+    }
+  }, [data]);
 
   const handleAddBankDetails = async () => {
     try {
@@ -58,7 +67,7 @@ const BankDetails = () => {
         bank_code: selectedBankCode,
       });
 
-      if (res.status === 200) {
+      if (res.status === 201) {
         toast.success(res.data.statusmessage);
       }
       setForm({

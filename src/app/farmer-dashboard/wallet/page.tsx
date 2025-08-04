@@ -2,9 +2,8 @@
 import DashboardLayout from "../../components/common/dashboardLayout";
 import { Topbar } from "../../components/common/dashboard/topBar";
 import { MdOutlineFileCopy } from "react-icons/md";
-import { MdAddAlarm } from "react-icons/md";
 import Button from "@/app/components/common/Buttons";
-import { FaRegEyeSlash } from "react-icons/fa";
+import { FaPlus, FaRegEyeSlash } from "react-icons/fa";
 import { FaArrowDown } from "react-icons/fa6";
 import PendingPayment from "@/app/components/dashboard/overview/pendingPayment";
 import TransactionSearchTable from "@/app/components/dashboard/wallet/allTransaction";
@@ -17,9 +16,9 @@ import { getWalletTransactionStore } from "@/stores/wallet/getWalletTransactions
 
 const Wallet = () => {
   const [showRequestPayoutModal, setShowRequestPayoutModal] = useState(false);
-  const handleRequestPayoutModal = () => {
-    setShowRequestPayoutModal(true);
-  };
+  // const handleRequestPayoutModal = () => {
+  //   setShowRequestPayoutModal(true);
+  // };
   const {
     data: farmerBalanceData,
     loading,
@@ -65,7 +64,7 @@ const Wallet = () => {
         </div>
 
         <div className="grid grid-cols-2 gap-x-4 mb-8">
-          <div className="bg-[url('/assets/DashBoard/wallet/bg-green.png')] bg-cover bg-center bg-no-repeat rounded-xl p-6">
+          <div className="bg-[url('/assets/DashBoard/wallet/bg-green.png')] bg-cover bg-center bg-no-repeat rounded-xl p-6 h-fit">
             <div className="mb-24">
               <p className="text-sm font-poppinsSemiBold text-white mb-2">
                 Wallet Balance
@@ -83,44 +82,55 @@ const Wallet = () => {
                   <FaRegEyeSlash size={32} color="white" />
                 </span>
               </div>
-              <p className="text-[#E9EAE6] text-sm font-poppinsRegular mb-2">
-                Bank Name:{" "}
-                {loadingBank ? (
-                  <LoadingSkeleton />
-                ) : (
-                  data?.bank_details?.bank_name || "N/A"
-                )}{" "}
-              </p>
 
-              <div className="flex items-center gap-x-3">
-                <p className="text-[white] text-xs font-poppinsRegular flex items-center gap-x-2">
-                  Account Number :{" "}
-                  {loadingBank ? (
-                    <LoadingSkeleton />
-                  ) : (
-                    <span className="font-poppinsSemiBold text-sm text-[#E9EAE6]">
-                      {data?.bank_details?.account_number || "N/A"}
-                    </span>
-                  )}{" "}
-                </p>
-
-                <div
-                  className="bg-[#E9EAE6] cursor-pointer rounded-[8px] px-2 py-1 flex items-center gap-x-2"
-                  onClick={() => handleCopy("1234567890")}
-                >
-                  <p className="text-[#282A03] font-poppinsRegular text-sm">
-                    copy
+              {data?.bank_details?.account_name ? (
+                <div>
+                  <p className="text-[#E9EAE6] text-sm font-poppinsRegular mb-2">
+                    Bank Name:{" "}
+                    {loadingBank ? (
+                      <LoadingSkeleton />
+                    ) : (
+                      data?.bank_details?.bank_name || "N/A"
+                    )}{" "}
                   </p>
-                  <span>
-                    {" "}
-                    <MdOutlineFileCopy size={15} color="#282A03" />
-                  </span>
+
+                  <div className="flex items-center gap-x-3">
+                    <p className="text-[white] text-xs font-poppinsRegular flex items-center gap-x-2">
+                      Account Number :{" "}
+                      {loadingBank ? (
+                        <LoadingSkeleton />
+                      ) : (
+                        <span className="font-poppinsSemiBold text-sm text-[#E9EAE6]">
+                          {data?.bank_details?.account_number || "N/A"}
+                        </span>
+                      )}{" "}
+                    </p>
+
+                    <div
+                      className="bg-[#E9EAE6] cursor-pointer rounded-[8px] px-2 py-1 flex items-center gap-x-2"
+                      onClick={() => handleCopy("1234567890")}
+                    >
+                      <p className="text-[#282A03] font-poppinsRegular text-sm">
+                        copy
+                      </p>
+                      <span>
+                        {" "}
+                        <MdOutlineFileCopy size={15} color="#282A03" />
+                      </span>
+                    </div>
+                  </div>
                 </div>
-              </div>
+              ) : (
+                <div className="mt-6">
+                  <p className="text-[#E9EAE6] text-sm font-poppinsRegular mb-6">
+                    No bank details found
+                  </p>
+                </div>
+              )}
             </div>
 
             <div className="flex items-center gap-x-4">
-              <div>
+              {/* <div>
                 <Button
                   className="flex items-center justify-center gap-x-2 w-full"
                   onClick={handleRequestPayoutModal}
@@ -128,13 +138,26 @@ const Wallet = () => {
                   <MdAddAlarm />
                   Request payout
                 </Button>
-              </div>
+              </div> */}
+              {!data?.bank_details?.account_name && (
+                <Link href="/farmer-dashboard/settings">
+                  <Button className="text-[#E9EAE6] text-sm font-poppinsRegular flex items-center gap-x-2">
+                    <FaPlus size={15} color="#E9EAE6" />
+                    Add bank details
+                  </Button>
+                </Link>
+              )}
 
               <div>
                 <Link href="/farmer-dashboard/wallet/withdrawfund">
                   <Button
                     variant="subprimary"
-                    className="flex items-center justify-center gap-x-2 w-full"
+                    disabled={!data?.bank_details?.account_name}
+                    className={`flex items-center justify-center gap-x-2 w-full ${
+                      !data?.bank_details?.account_name
+                        ? "opacity-50 cursor-not-allowed"
+                        : ""
+                    }`}
                   >
                     <FaArrowDown size={18} color="#2D865B" />
                     Withdraw funds

@@ -22,17 +22,19 @@ const BranchDetails = ({
     fetchProjectsList(branchId, farmId);
   }, [fetchProjectsList, branchId, farmId]);
 
-  const projectsCard = data?.data || [];
+  const projectsCard = data?.results?.data || [];
+
+  console.log(projectsCard);
 
   return (
     <DashboardLayout>
       <Topbar overview="My farm" />
 
-      <main className="px-10 py-10 bg-gray-50 overflow-auto">
+      <main className="px-10 py-10 bg-gray-50 overflow-auto h-screen">
         <FarmHeadingOverview
           farmName="Lagos Branch Project"
           overview={`Overview of Lagos Branch Projects(${
-            data?.data?.length || "0"
+            data?.results?.data?.length || "0"
           })`}
           goBackLink={`/farmer-dashboard/my-farms/${farmId}/farm-branches/`}
         />
@@ -53,11 +55,11 @@ const BranchDetails = ({
             </div>
           </div>
         ) : projectsCard?.length === 0 ? (
-          <div className="flex flex-col items-center h-screen pt-20">
+          <div className="flex flex-col items-center h-fit pt-20">
             <p className="text-center text-gray-500">
               No Project created under this branch yet
             </p>
-            <Link href={"/farmer-dashboard/my-farms/add-farm-branch"}>
+            <Link href={"/farmer-dashboard/my-farms/add-project"}>
               <Button type="button" className="mt-10">
                 Create Your Branch Project
               </Button>
@@ -79,7 +81,7 @@ const BranchDetails = ({
                   btnText1="Update"
                   btnText2="View Details"
                   projectROI={card?.ROI?.toString()}
-                  btnTextLink1={`/farmer-dashboard/my-farms/${farmId}/farm-branches/${branchId}/${card?.id}`}
+                  btnTextLink1={`/farmer-dashboard/my-farms/update-project`}
                   btnTextLink2={`/farmer-dashboard/my-farms/${farmId}/farm-branches/${branchId}/${card?.id}`}
                 />
               );

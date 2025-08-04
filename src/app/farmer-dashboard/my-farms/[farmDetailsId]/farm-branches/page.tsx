@@ -25,7 +25,7 @@ const FarmBranches = () => {
     <DashboardLayout>
       <Topbar overview="My farm" />
 
-      <main className="px-10 py-10 bg-gray-50 overflow-auto">
+      <main className="px-10 py-10 bg-gray-50 overflow-auto h-full">
         <FarmHeadingOverview
           farmName={farmData?.name}
           overview={farmData?.description}
@@ -33,7 +33,7 @@ const FarmBranches = () => {
         />
 
         {farmBranchData?.length === 0 ? (
-          <div className="flex flex-col items-center h-screen pt-14">
+          <div className="flex flex-col items-center h-fit pt-20">
             <p className="text-center pb-4 text-gray-500">
               No branch created yet please create branch
             </p>

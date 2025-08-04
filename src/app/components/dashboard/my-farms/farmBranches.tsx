@@ -41,7 +41,7 @@ const FarmBranches = () => {
       </div>
 
       {farmBranchData?.length === 0 ? (
-        <div className="flex flex-col pt-20 items-center h-screen">
+        <div className="flex flex-col pt-5 items-center h-fit">
           <p className="text-center pb-4 text-gray-500">
             No branch created yet please create branch
           </p>

@@ -27,23 +27,14 @@ const FarmHeadingOverview = ({
       </div>
 
       <div className="flex justify-between items-center">
-        <div className="flex items-center gap-x-3">
-          <div className="lg:w-[70%]">
-            <h2 className="text-xl font-poppinsSemiBold text-[#5F5F5F]">
-              {farmName || "Green Valley farm"}
-            </h2>
-            <p className="text-sm font-poppinsRegular text-[#7C7C7C] mt-3">
-              {overview}
-            </p>
-          </div>
-
-          {/* <p
-            className={`text-sm  w-fit font-poppinsRegular  px-3 py-1 border  rounded-xl bg-[#E7F6EC] ${"bg-[#E7F6EC] text-[#006E2E] border-[#B0EECA]"}`}
-          >
-            {"Active"}
-          </p> */}
+        <div className="w-[70%] lg:w-[70%]">
+          <h2 className="text-xl font-poppinsSemiBold text-[#5F5F5F]">
+            {farmName || "Green Valley farm"}
+          </h2>
+          <p className="text-sm font-poppinsRegular text-[#7C7C7C] mt-3 w-[60%] break-all">
+            {overview}
+          </p>
         </div>
-
         {isProjectDetails ? (
           <Button>Save Changes</Button>
         ) : (

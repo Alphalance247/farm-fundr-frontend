@@ -3,24 +3,26 @@ import { create } from "zustand";
 import axiosInstance from "@/lib/axios";
 
 export interface projectListDataSore {
-  data: {
-    id: string;
-    name: string;
-    city: string;
-    country: string;
-    cac_reg_no: string;
-    farm_branches_count: number;
-    status: string;
-    description: string;
-    farm_name: string;
-    ROI: number;
-    images: string[];
-    project_location: string;
-    project_images: {
-      image: string;
-      is_main: boolean;
+  results: {
+    data: {
+      id: string;
+      name: string;
+      city: string;
+      country: string;
+      cac_reg_no: string;
+      farm_branches_count: number;
+      status: string;
+      description: string;
+      farm_name: string;
+      ROI: number;
+      images: string[];
+      project_location: string;
+      project_images: {
+        image: string;
+        is_main: boolean;
+      }[];
     }[];
-  }[];
+  };
 }
 
 interface projectListStore {
