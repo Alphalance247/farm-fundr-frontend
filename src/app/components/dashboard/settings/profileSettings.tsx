@@ -10,6 +10,7 @@ import axiosInstance from "@/lib/axios";
 import toast from "react-hot-toast";
 import { AxiosError } from "axios";
 import { getUserDetailsStore } from "@/stores/settings/getUserDetails";
+import { environment } from "@/env/env.local";
 
 interface UserDetails {
   fullname: string;
@@ -20,11 +21,31 @@ interface UserDetails {
   country: string;
   phone: string;
   street_address: string;
+  image: string;
 }
 
 const ProfileSettings = ({ UserDetails }: { UserDetails: UserDetails }) => {
-  console.log(UserDetails);
+  const getImageUrl = (imagePath: string | null | undefined): string | null => {
+    if (!imagePath) return null;
+    if (imagePath.startsWith("http")) return imagePath;
+    return `${environment.imgBaserUrl}${imagePath}`;
+  };
   const { fetchUserDetails } = getUserDetailsStore();
+  const [preview, setPreview] = useState<string | null>(
+    getImageUrl(UserDetails?.image)
+  );
+  const [file, setFile] = useState<File | null>(null);
+
+  const handlePictureUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const selectedFile = e.target.files?.[0];
+    if (selectedFile && selectedFile.size <= 5 * 1024 * 1024) {
+      setFile(selectedFile);
+      setPreview(URL.createObjectURL(selectedFile));
+    } else {
+      alert("File must be less than 5MB");
+    }
+  };
+
   useEffect(() => {
     fetchUserDetails();
   }, [fetchUserDetails]);
@@ -45,24 +66,41 @@ const ProfileSettings = ({ UserDetails }: { UserDetails: UserDetails }) => {
     e.preventDefault();
     try {
       setIsLoading(true);
-      const res = await axiosInstance.patch(`accounts/auth/update-profile`, {
-        ...form,
+      // Create FormData to handle file upload
+      const formData = new FormData();
+
+      // Append form fields
+      Object.entries(form).forEach(([key, value]) => {
+        if (value) {
+          formData.append(key, value);
+        }
       });
+
+      // Append file if selected
+      if (file) {
+        formData.append("image", file);
+      }
+
+      // else if (UserDetails?.image) {
+      //   // Send the existing image path to preserve it
+      //   formData.append("image", UserDetails.image);
+      // }
+      const res = await axiosInstance.patch(
+        `accounts/auth/update-profile`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
 
       if (res.status === 200) {
         toast.success("Profile update successfully");
+        // Refresh user details after successful update
+        await fetchUserDetails();
       }
-      setForm({
-        ...form,
-        city: "",
-        state: "",
-        fullname: "",
-        username: "",
-        street_address: "",
-        phone: "",
-        country: "",
-        email: "",
-      });
+
       setIsLoading(false);
     } catch (err) {
       // Extract the error message from the response
@@ -95,16 +133,36 @@ const ProfileSettings = ({ UserDetails }: { UserDetails: UserDetails }) => {
           </p>
 
           <div>
-            <Image
-              src="/assets/settings/profile.png"
-              height={84}
-              width={84}
-              alt="profileImage"
-              className="ml-8"
-            />
-            <button className="mt-4 px-6 py-3 bg-[#51F4A6] rounded-[5px] font-poppinsSemiBold text-sm text-[#282A03]">
+            {preview ? (
+              <Image
+                src={preview || ""}
+                height={84}
+                width={84}
+                alt="profileImage"
+                className="ml-8 h-[84px] w-[84px] rounded-full"
+              />
+            ) : (
+              <Image
+                src="/assets/settings/profile.png"
+                height={84}
+                width={84}
+                alt="profileImage"
+                className="ml-8"
+              />
+            )}
+            <label
+              className="mt-4 px-6 py-3 bg-[#51F4A6] rounded-[5px] font-poppinsSemiBold text-sm text-[#282A03] block w-fit cursor-pointer"
+              id="image-upload"
+            >
+              <input
+                id="image-upload"
+                type="file"
+                accept="image/*"
+                onChange={handlePictureUpload}
+                className="hidden"
+              />
               Upload Image
-            </button>
+            </label>
           </div>
         </div>
 

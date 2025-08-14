@@ -27,6 +27,32 @@ axiosInstance.interceptors.request.use(
   }
 );
 
+axiosInstance.interceptors.response.use(
+  (response) => response,
+  async (error) => {
+    if (error.response?.status === 401) {
+      if (typeof window !== "undefined") {
+        // Clear cookies
+        document.cookie =
+          "access=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+
+        // Clear localStorage
+        localStorage.removeItem("fullname");
+        localStorage.removeItem("user_type");
+        localStorage.removeItem("user");
+
+        // Dispatch custom event for other components to listen to
+        window.dispatchEvent(new CustomEvent("sessionConflict"));
+
+        // Redirect to login page
+        window.location.href = "/login";
+      }
+    }
+
+    return Promise.reject(error);
+  }
+);
+
 // Add response interceptor to log errors
 axiosInstance.interceptors.response.use(
   (response) => {
