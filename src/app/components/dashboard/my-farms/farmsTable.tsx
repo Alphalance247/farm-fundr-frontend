@@ -11,6 +11,7 @@ import Link from "next/link";
 import Button from "../../common/Buttons";
 import { FiEdit, FiTrash2 } from "react-icons/fi";
 import DeleteFarm from "./deleteFarm";
+import { useRouter } from "next/navigation";
 
 interface Employee {
   id: number;
@@ -122,8 +123,8 @@ export default function FarmListTable() {
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
   const [selectedFarmId, setSelectedFarmId] = useState("");
   const [selectedFarmName, setSelectedFarmName] = useState("");
-
   const { data: farmList } = getFarmListStore();
+  const router = useRouter();
 
   const totalFarms = farmList?.results?.farms.map((farm, idx) => ({
     ...farm,
@@ -139,15 +140,16 @@ export default function FarmListTable() {
     setOpenDropdown(openDropdown === farmId ? null : farmId);
   };
 
-  // const handleEditFarm = (farmId: string) => {
-  //   // Navigate to edit farm page
-  //   window.location.href = `/farmer-dashboard/my-farms/${farmId}/edit`;
-  // };
-
   const handleDeleteFarm = (farmId: string, farmName: string) => {
     setOpenDeleteModal(true);
     setSelectedFarmId(farmId);
     setSelectedFarmName(farmName);
+  };
+
+  const handleEditFarm = (farmId: string) => {
+    // Store the farm ID in localStorage
+    localStorage.setItem("selectedEditFarmId", farmId);
+    router.push("/farmer-dashboard/my-farms/update-farm");
   };
 
   // Close dropdown when clicking outside
@@ -298,15 +300,13 @@ export default function FarmListTable() {
                     {openDropdown === emp?.id && (
                       <div className="absolute right-24 bottom-0 mt-2 w-28 bg-white rounded-lg shadow-lg border border-gray-200 z-50">
                         <div className="py-1">
-                          <Link href={"/farmer-dashboard/my-farms/update-farm"}>
-                            <button
-                              // onClick={() => handleEditFarm(emp.id)}
-                              className="w-full px-2 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center gap-2"
-                            >
-                              <FiEdit size={14} />
-                              Edit
-                            </button>
-                          </Link>
+                          <button
+                            onClick={() => handleEditFarm(emp.id)}
+                            className="w-full px-2 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center gap-2"
+                          >
+                            <FiEdit size={14} />
+                            Edit
+                          </button>
                           <button
                             onClick={() => handleDeleteFarm(emp?.id, emp?.name)}
                             className="w-full px-2 py-2 text-sm text-red-600 hover:bg-gray-100 flex items-center gap-2"

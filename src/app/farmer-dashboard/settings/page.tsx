@@ -13,6 +13,8 @@ import Certifications from "@/app/components/dashboard/settings/Cetifications";
 import { useAuth } from "@/context/authContext";
 import { getKYCPercentageStore } from "@/stores/settings/getKycPercentage";
 import { getUserDetailsStore } from "@/stores/settings/getUserDetails";
+import Image from "next/image";
+import { environment } from "@/env/env.local";
 
 const Setting = () => {
   const [activeTab, setActiveTab] = useState<string>("Profile settings");
@@ -54,13 +56,26 @@ const Setting = () => {
 
         <div className="mt-8">
           <div className="bg-[#226646] flex items-center gap-6 rounded-xl py-12 px-12">
-            <div className="h-[135px] w-[135px] rounded-full bg-[#EEFEF6] text-[#2D865B] flex items-center justify-center text-[54px] tracking-[0.34px] font-medium">
-              {user?.fullname
-                .split(" ")
-                .map((n) => n[0])
-                .join("")
-                .toUpperCase()}
-            </div>
+            {userDetails?.user_details?.image ? (
+              <Image
+                src={
+                  `${environment?.imgBaserUrl}${userDetails?.user_details?.image}` ||
+                  ""
+                }
+                height={135}
+                width={135}
+                alt="profileImage"
+                className="ml-8 h-[135px] w-[135px]  rounded-full"
+              />
+            ) : (
+              <div className="h-[135px] w-[135px] rounded-full bg-[#EEFEF6] text-[#2D865B] flex items-center justify-center text-[54px] tracking-[0.34px] font-medium">
+                {user?.fullname
+                  .split(" ")
+                  .map((n) => n[0])
+                  .join("")
+                  .toUpperCase()}
+              </div>
+            )}
 
             <div>
               <h5 className="text-[#FFFFFF] text-3xl font-aristoBold mb-2">

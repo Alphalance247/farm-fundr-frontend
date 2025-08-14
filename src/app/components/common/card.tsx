@@ -13,7 +13,7 @@ const Card = ({
   projectLocation,
   btnText1,
   btnText2,
-  btnTextLink1,
+  onUpdateClick,
   btnTextLink2,
   withRating = true,
 }: // projectRating,
@@ -34,6 +34,7 @@ const Card = ({
   btnTextLink1?: string;
   btnTextLink2?: string;
   withRating?: boolean;
+  onUpdateClick?: () => void;
 }) => {
   return (
     <div className="border border-[#E2E2E2] shadow-sm bg-white py-5 px-6 rounded-[20px]">
@@ -145,11 +146,14 @@ const Card = ({
       )}
 
       <div className={`flex items-center gap-x-3  ${withRating ? "" : "pt-6"}`}>
-        <Link href={btnTextLink1 || "/"}>
-          <Button variant="tertiary" size="small" className="w-fit">
-            {btnText1 || " Bid Now"}
-          </Button>
-        </Link>
+        <Button
+          variant="tertiary"
+          size="small"
+          className="w-fit"
+          onClick={onUpdateClick}
+        >
+          {btnText1 || " Bid Now"}
+        </Button>
         <Link href={btnTextLink2 || "/"}>
           <Button className="w-fit" variant="secondary" size="small">
             {btnText2 || "View Details"}

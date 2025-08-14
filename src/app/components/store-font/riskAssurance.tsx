@@ -1,7 +1,10 @@
+import { getFarmPageProjectDetails } from "@/stores/farmpage/farmPageProjectDetails";
+
 const RiskAssurance = () => {
+  const { data: projectDetailsData } = getFarmPageProjectDetails();
   return (
     <div>
-      <p className="text-sm text-[#7C7C7C] font-poppinsRegular">
+      {/* <p className="text-sm text-[#7C7C7C] font-poppinsRegular">
         At Nelson Ade Farms, we prioritize building a trustworthy and
         sustainable platform for all stakeholders. To minimize risks and ensure
         the success of projects, we have implemented a comprehensive risk
@@ -58,7 +61,8 @@ const RiskAssurance = () => {
             sustainability of agricultural projects.
           </li>
         </ul>
-      </div>
+      </div> */}
+      {projectDetailsData?.data?.project?.risk_assurance || "N/A"}
     </div>
   );
 };

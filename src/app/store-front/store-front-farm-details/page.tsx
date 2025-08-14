@@ -4,9 +4,12 @@ import { color } from "@/app/components/data";
 import StoreFontFooter from "@/app/components/store-font/storeFontFooter";
 import { useTab } from "@/context/TabContext";
 import GoBackBtn from "@/app/components/common/goBack";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Overview from "@/app/components/store-font/store-front-farm-details/overview";
 import FarmersProfile from "@/app/components/store-font/store-front-farm-details/farmersProfile";
+import { getFarmPageListStore } from "@/stores/farmpage/farmPageList";
+import Spinner from "@/app/components/common/modals/spinner";
+import ErrorFetch from "@/app/components/common/errorFetch";
 
 const StoreFrontFarmDetails = () => {
   const { activeTab } = useTab();
@@ -15,14 +18,26 @@ const StoreFrontFarmDetails = () => {
     { id: 1, name: "Overview" },
     { id: 2, name: "Farmer’s Profile" },
   ];
+  const { data, loading, error, fetchFarmPageList } = getFarmPageListStore();
+
+  const farmPageData = data?.farm_data;
+
+  useEffect(() => {
+    fetchFarmPageList();
+  }, [fetchFarmPageList]);
   return (
     <div>
       <StoreFrontHeading
-        color={color[activeTab]?.color}
-        textColor={color[activeTab]?.textColor}
-        badgeColor={color[activeTab]?.badgeColor}
-        iconColor={color[activeTab]?.iconColor}
+        color={color[activeTab].color}
+        textColor={color[activeTab].textColor}
+        badgeColor={color[activeTab].badgeColor}
+        iconColor={color[activeTab].iconColor}
         withBorderRadius={false}
+        farmerAddress={`${farmPageData?.street}, ${farmPageData?.country}`}
+        farmName={farmPageData?.name}
+        farmerName={farmPageData?.owner_name}
+        cacRegNo={farmPageData?.cac_reg_no || "N/A"}
+        verifiedText={farmPageData?.cac_reg_no ? "Verified" : "Unverified"}
       />
 
       <section className="max-w-[1300px] mx-auto px-4 py-10 md:px-4 md:py-12 mt-8">
@@ -43,10 +58,21 @@ const StoreFrontFarmDetails = () => {
           ))}
         </div>
 
-        <div className="mt-8">
-          {activeBtn === "Overview" && <Overview />}
-          {activeBtn === "Farmer’s Profile" && <FarmersProfile />}
-        </div>
+        {loading ? (
+          <Spinner />
+        ) : error ? (
+          <ErrorFetch
+            message="Error fetching Farm details"
+            onRefetch={() => {
+              fetchFarmPageList();
+            }}
+          />
+        ) : (
+          <div className="mt-8">
+            {activeBtn === "Overview" && <Overview />}
+            {activeBtn === "Farmer’s Profile" && <FarmersProfile />}
+          </div>
+        )}
       </section>
 
       <StoreFontFooter />

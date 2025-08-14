@@ -1,7 +1,6 @@
 "use client";
 import DashboardLayout from "../../../components/common/dashboardLayout";
 import { Topbar } from "../../../components/common/dashboard/topBar";
-import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import Label from "@/app/components/common/label";
 import { FiDownload } from "react-icons/fi";
@@ -17,22 +16,35 @@ import Button from "@/app/components/common/Buttons";
 import { getFarmListStore } from "@/stores/farms/getFarmList";
 import { getBranchListStore } from "@/stores/farms/getBranchList";
 import { getProjectDetails } from "@/stores/farms/getProjectDetails";
+import { useRouter } from "next/navigation";
+import Image from "next/image";
+import { environment } from "@/env/env.local";
 
-const UpdateFarm = () => {
+const UpdateProject = () => {
   const [loadingProject, setLoading] = useState(false);
-  console.log(loadingProject);
   const [selectedFarmId, setSelectedFarmId] = useState("");
   const [selectedBranchId, setSelectedBranchId] = useState("");
+  const [selectedProjectId, setSelectedProjectId] = useState("");
   const { data: farmList, loading, fetchFarmList } = getFarmListStore();
   const { fetchBranchList, data: branchList } = getBranchListStore();
-  const farmListData = farmList?.results?.farms || [];
-  const farmBranchData = branchList?.results?.data || [];
+  const router = useRouter();
+
+  const farmListData = farmList?.results?.farms;
+  const farmBranchData = branchList?.results?.data;
 
   const { fetchProjectsDetails, data } = getProjectDetails();
 
+  // Get the farm ID from localStorage on component mount
   useEffect(() => {
-    fetchProjectsDetails("4");
-  }, [fetchProjectsDetails]);
+    const storedProjectId = localStorage.getItem("selectedEditFarmId");
+    if (storedProjectId) {
+      fetchProjectsDetails(storedProjectId);
+      setSelectedProjectId(storedProjectId);
+    } else {
+      // If no farm ID is stored, redirect back to farms list
+      window.location.href = `/farmer-dashboard/my-farms/${selectedFarmId}/farm-branches/${selectedBranchId}/${storedProjectId}`;
+    }
+  }, [fetchProjectsDetails, selectedBranchId, selectedFarmId]);
 
   const projectData = data?.data;
 
@@ -45,8 +57,6 @@ const UpdateFarm = () => {
       fetchBranchList(selectedFarmId);
     }
   }, [selectedFarmId, fetchBranchList]);
-
-  console.log(projectData);
 
   const [form, setForm] = useState({
     selectFarm: "",
@@ -74,6 +84,8 @@ const UpdateFarm = () => {
     image4: { file: null, preview: null },
   });
 
+  console.log(uploadedImages);
+
   useEffect(() => {
     if (projectData) {
       setForm((prev) => ({
@@ -93,29 +105,78 @@ const UpdateFarm = () => {
         expectedReturn: projectData?.ROI || "",
         plots: projectData?.plots || "",
       }));
-      setUploadedImages((prev) => ({
-        ...prev,
-      }));
+    }
+    // Prefill images with backend data
+    if (projectData?.images && projectData.images.length > 0) {
+      const imageKeys = ["image1", "image2", "image3", "image4"];
+      const newUploadedImages: {
+        [key: string]: { file: File | null; preview: string | null };
+      } = {
+        image1: { file: null, preview: null },
+        image2: { file: null, preview: null },
+        image3: { file: null, preview: null },
+        image4: { file: null, preview: null },
+      };
+
+      // Map backend images to the image slots
+      projectData.images.forEach((projectImage, index) => {
+        if (index < imageKeys.length) {
+          const imageKey = imageKeys[index];
+          newUploadedImages[imageKey] = {
+            file: null, // Keep as null since we're displaying existing images
+            preview: projectImage, // Use the image URL from backend
+          };
+        }
+      });
+
+      setUploadedImages(newUploadedImages);
     }
   }, [projectData]);
+
+  // Add a new useEffect to handle farm and branch selection after data is loaded
+  useEffect(() => {
+    if (projectData && farmListData && farmListData?.length > 0) {
+      // Find the farm ID that matches the farm name from project data
+      const matchingFarm = farmListData?.find(
+        (farm) => farm.name === projectData.farm_name
+      );
+      if (matchingFarm) {
+        setForm((prev) => ({
+          ...prev,
+          selectFarm: matchingFarm.id,
+        }));
+        setSelectedFarmId(matchingFarm.id);
+      }
+    }
+  }, [projectData, farmListData]);
+
+  // Add another useEffect to handle branch selection after branches are loaded
+  useEffect(() => {
+    if (
+      projectData &&
+      farmBranchData &&
+      farmBranchData?.length > 0 &&
+      selectedFarmId
+    ) {
+      // Find the branch ID that matches the branch name from project data
+      const matchingBranch = farmBranchData?.find(
+        (branch) => branch.name === projectData.farm_branch_name
+      );
+      if (matchingBranch) {
+        setForm((prev) => ({
+          ...prev,
+          selectBranch: matchingBranch.id,
+        }));
+        setSelectedBranchId(matchingBranch.id);
+      }
+    }
+  }, [projectData, farmBranchData, selectedFarmId]);
 
   const handleProjectSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    // Check if at least 3 images are uploaded
-    const uploadedImageCount = Object.values(uploadedImages).filter(
-      (img) => img.file !== null
-    ).length;
-
     const decriptionLength24 = form?.howItWorks.trim().length > 100;
 
-    if (uploadedImageCount < 3) {
-      toast.error(
-        `Please upload at least 3 farm images. You have uploaded ${uploadedImageCount} image(s).`
-      );
-
-      return;
-    }
     if (!decriptionLength24) {
       toast.error("Description must be at least 100 characters long.");
       return;
@@ -146,7 +207,7 @@ const UpdateFarm = () => {
         });
 
         // Make API call to create project
-        const response = await axiosInstance.post(
+        const response = await axiosInstance.patch(
           `/farms/${selectedFarmId}/branches/${selectedBranchId}/projects/`,
           formData,
           {
@@ -160,6 +221,9 @@ const UpdateFarm = () => {
           // Reset form and uploaded images after successful submission
           toast.success(
             response.data.message || "Project created successfully!"
+          );
+          router.push(
+            `/farmer-dashboard/my-farms/${selectedFarmId}/farm-branches/${selectedBranchId}/${selectedProjectId}`
           );
 
           setForm({
@@ -219,8 +283,6 @@ const UpdateFarm = () => {
       }
     }
   };
-
-  console.log(form, uploadedImages);
 
   return (
     <ProtectedRoute requiredUserType="farmer">
@@ -284,9 +346,9 @@ const UpdateFarm = () => {
                                     <Image
                                       width={556}
                                       height={158}
-                                      src={uploadedImages.image1.preview}
+                                      src={`${environment?.imgBaserUrl}${uploadedImages.image1.preview}`}
                                       alt="Uploaded image1"
-                                      className="object-cover w-full"
+                                      className="object-cover w-full h-[300px] rounded-lg"
                                     />
                                   </div>
 
@@ -344,9 +406,9 @@ const UpdateFarm = () => {
                                       <Image
                                         width={177}
                                         height={95}
-                                        src={preview}
+                                        src={`${environment?.imgBaserUrl}${preview}`}
                                         alt={`Uploaded ${key}`}
-                                        className="object-cover w-full"
+                                        className="object-cover w-full h-[95px] rounded-lg"
                                       />
                                       <div className="flex items-center justify-center absolute gap-x-1 bg-[#FFFFFFE5] px-2 py-1 cursor-pointer rounded-lg bottom-[4rem] right-[3rem]">
                                         <p className="text-xs font-poppinsRegular text-[#616161]">
@@ -410,7 +472,7 @@ const UpdateFarm = () => {
                           Loading farms...
                         </option>
                       ) : (
-                        farmListData.map((farm) => (
+                        farmListData?.map((farm) => (
                           <option key={farm.id} value={farm.id}>
                             {farm.name}
                           </option>
@@ -441,7 +503,7 @@ const UpdateFarm = () => {
                           Loading branch...
                         </option>
                       ) : (
-                        farmBranchData.map((farm) => (
+                        farmBranchData?.map((farm) => (
                           <option key={farm.id} value={farm.id}>
                             {farm.name}
                           </option>
@@ -669,4 +731,4 @@ const UpdateFarm = () => {
   );
 };
 
-export default UpdateFarm;
+export default UpdateProject;

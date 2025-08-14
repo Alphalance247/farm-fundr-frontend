@@ -1,10 +1,12 @@
+import { getFarmPageProjectDetails } from "@/stores/farmpage/farmPageProjectDetails";
 import Image from "next/image";
 
 const FarmPerformance = () => {
+  const { data: projectDetailsData } = getFarmPageProjectDetails();
   return (
     <div>
       <ul className="list-disc pb-4 border-b border-[#E2E2E2]">
-        <li className="text-sm text-[#7C7C7C] font-poppinsRegular mb-5 ml-6">
+        {/* <li className="text-sm text-[#7C7C7C] font-poppinsRegular mb-5 ml-6">
           Consistent Growth: Over the last three harvest seasons, the Organic
           Apple Harvest project has achieved steady growth in yield and
           profitability, averaging an annual increase of 8% in output due to
@@ -30,7 +32,10 @@ const FarmPerformance = () => {
           returns but also become part of a movement that champions healthier
           food production, environmental conservation, and rural community
           empowerment.
-        </p>
+        </p> */}
+        <li className="text-sm text-[#7C7C7C] font-poppinsRegular mb-5 ml-6">
+          {projectDetailsData?.data?.project?.progress_over_time || "N/A"}
+        </li>
       </ul>
 
       <div className="bg-white border border-[#F6F6F6] rounded-xl p-4 shadow-lg mt-10">
