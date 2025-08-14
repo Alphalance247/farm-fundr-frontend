@@ -17,6 +17,7 @@ export interface userDetailsDataStore {
     username: string;
     whatsapp_number: string;
     fullname: string;
+    image: string;
   };
 }
 

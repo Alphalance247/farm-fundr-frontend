@@ -1,6 +1,8 @@
+import { getFarmPageProjectDetails } from "@/stores/farmpage/farmPageProjectDetails";
 import Image from "next/image";
 
 const HowItWorks = () => {
+  const { data: projectDetailsData } = getFarmPageProjectDetails();
   const data: {
     id: number;
     step: string;
@@ -41,10 +43,9 @@ const HowItWorks = () => {
     <div>
       <div className="flex flex-col gap-y-10 border-b border-[#E2E2E2] pb-8">
         <p className="text-sm text-[#7C7C7C] font-poppinsRegular">
-          FarmPady investors contribute to funding the cultivation, maintenance,
-          and harvesting of organic apples.
+          {projectDetailsData?.data?.project?.how_it_works}
         </p>
-        <p className="text-sm text-[#7C7C7C] font-poppinsRegular">
+        {/* <p className="text-sm text-[#7C7C7C] font-poppinsRegular">
           The investment covers essential costs like organic fertilizers,
           irrigation, pest control (via natural methods), labor, and packaging.
           Once harvested, the apples are sold through established channels,
@@ -55,7 +56,7 @@ const HowItWorks = () => {
           Profits are distributed to investors based on their share of the
           project, with FarmPady handling the logistics, sales, and marketing to
           maximize returns.
-        </p>
+        </p> */}
       </div>
 
       <div className="mt-10 flex flex-col gap-y-12">

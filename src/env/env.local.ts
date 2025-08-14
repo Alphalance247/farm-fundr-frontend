@@ -9,4 +9,6 @@ export const environment = {
   forgotPassword: "accounts/auth/password-reset-email",
   setPassword: "accounts/auth/set-new-password",
   addFarm: "farms/",
+  UpdateFarm: "/farms/",
+  farmPageBaseUrl: "https://bandele-farm.padycvgcoops.name.ng/pady_api/farms",
 };

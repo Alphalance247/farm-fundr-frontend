@@ -48,7 +48,9 @@ export const getProjectDetails = create<projectsDetailsStore>((set) => ({
   fetchProjectsDetails: async (farmDetailsId: string) => {
     set({ loading: true, error: null });
     try {
-      const res = await axiosInstance.get(`farms/projects/${farmDetailsId}`);
+      const res = await axiosInstance.get(
+        `/farmpage/branches/projects/${farmDetailsId}`
+      );
       set({ data: res.data, loading: false });
     } catch (err) {
       if (err instanceof AxiosError) {

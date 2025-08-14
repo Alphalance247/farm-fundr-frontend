@@ -5,11 +5,16 @@ import Button from "../common/Buttons";
 import Link from "next/link";
 
 interface StoreFontCardProps {
-  status: "Active" | "Inactive";
+  status: string;
   imageUrl: string;
   onViewProjects?: () => void;
   href: string;
   onViewBid?: () => void;
+  projectName: string;
+  farmName: string;
+  projectDescription: string;
+  projectROI: string;
+  projAddress: string;
 }
 
 const StoreFontCard: React.FC<StoreFontCardProps> = ({
@@ -17,6 +22,12 @@ const StoreFontCard: React.FC<StoreFontCardProps> = ({
   imageUrl,
   onViewProjects,
   onViewBid,
+  projectName,
+  farmName,
+  projectDescription,
+  projectROI,
+  projAddress,
+  href,
 }) => {
   return (
     <div className="bg-white rounded-xl w-full shadow-lg">
@@ -39,9 +50,9 @@ const StoreFontCard: React.FC<StoreFontCardProps> = ({
           />
           <span>{status || "Active"}</span>
         </div>
-        <button className="absolute top-3 right-3 bg-[#F6F6F6] rounded-xl w-11 h-9 p-1 shadow">
+        {/* <button className="absolute top-3 right-3 bg-[#F6F6F6] rounded-xl w-11 h-9 p-1 shadow">
           <span className="text-xl text-[#7C7C7C]">⋯</span>
-        </button>
+        </button> */}
       </div>
       <div className="px-3 py-4">
         <div className="flex items-start gap-x-5 mb-2">
@@ -53,17 +64,18 @@ const StoreFontCard: React.FC<StoreFontCardProps> = ({
           />
           <div className="">
             <p className="text-2xl font-aristoBold font-semibold text-[#5F5F5F] mb-1">
-              Organic Apple Harvest
+              {projectName || " Organic Apple Harvest"}
             </p>
             <p className="text-xs font-poppinsRegular text-[#7C7C7C]">
-              Farm name: Farmfundr farm
+              Farm name: {farmName || "Farmfundr farm"}
             </p>
           </div>
         </div>
         <p className="text-sm font-poppinsRegular text-[#7C7C7C] mb-4">
-          Invest in sustainable apple farming.
+          {projectDescription || "Invest in sustainable apple farming."}
         </p>
-        <div className="py-4 border-t border-b border-[#F2F2F2] flex justify-between">
+
+        <div className="py-4 border-t  flex flex-col gap-y-3 justify-between">
           <div className="flex items-center gap-x-2">
             <Image
               src="/assets/LandingPage/card/analytics.svg"
@@ -74,7 +86,36 @@ const StoreFontCard: React.FC<StoreFontCardProps> = ({
             <p className="text-sm text-[#7C7C7C]">
               <span className="font-poppinsRegular">ROI:</span>{" "}
               <span className=" font-poppinsSemiBold font-semibold">
-                15% Annually
+                {projectROI || "15%"} Annually
+              </span>
+            </p>
+          </div>
+
+          <div className="flex items-center gap-x-2 border-t pt-3 border-[#F2F2F2]">
+            <Image
+              src="/assets/LandingPage/card/location.svg"
+              width={24}
+              height={24}
+              alt="open"
+            />
+            <p className="text-sm text-[#7C7C7C] font-poppinsRegular">
+              {projAddress || "Lagos, Nigeria."}
+            </p>
+          </div>
+        </div>
+
+        {/* <div className="py-4 border-t border-b border-[#F2F2F2] flex justify-between">
+          <div className="flex items-center gap-x-2">
+            <Image
+              src="/assets/LandingPage/card/analytics.svg"
+              width={24}
+              height={24}
+              alt="open"
+            />
+            <p className="text-sm text-[#7C7C7C]">
+              <span className="font-poppinsRegular">ROI:</span>{" "}
+              <span className=" font-poppinsSemiBold font-semibold">
+                {projectROI || "15%"} Annually
               </span>
             </p>
           </div>
@@ -87,7 +128,7 @@ const StoreFontCard: React.FC<StoreFontCardProps> = ({
               alt="open"
             />
             <p className="text-sm text-[#7C7C7C] font-poppinsRegular">
-              Lagos, Nigeria.
+              {projAddress || "Lagos, Nigeria."}
             </p>
           </div>
         </div>
@@ -116,7 +157,7 @@ const StoreFontCard: React.FC<StoreFontCardProps> = ({
               />
             </p>
           </div>
-        </div>
+        </div> */}
 
         <div className="flex items-center gap-x-3">
           <div className="block w-full">
@@ -130,7 +171,7 @@ const StoreFontCard: React.FC<StoreFontCardProps> = ({
               Bid Now
             </Button>
           </div>
-          <Link href={"/store-front/1"} className="block w-full">
+          <Link href={href || "/store-front"} className="block w-full">
             <Button
               className="w-full"
               variant="secondary"

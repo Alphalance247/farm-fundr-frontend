@@ -3,13 +3,17 @@ import { SearchIcon } from "lucide-react";
 import StoreFrontHeading from "../components/dashboard/common/storeFrontHeading";
 import { color } from "../components/data";
 import { TabProvider, useTab } from "@/context/TabContext";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Input from "../components/common/input";
 import Button from "../components/common/Buttons";
 import StoreFontCard from "../components/store-font/storeFontCard";
 import { FaSortDown } from "react-icons/fa";
 import StoreFontFooter from "../components/store-font/storeFontFooter";
 import PlaceBid from "../components/store-font/placeBid";
+import { getFarmPageListStore } from "@/stores/farmpage/farmPageList";
+import { getFarmPageProjectListStore } from "@/stores/farmpage/farmPageProjectList";
+import ErrorFetch from "../components/common/errorFetch";
+import Spinner from "../components/common/modals/spinner";
 
 const StoreFront = () => {
   const { activeTab } = useTab();
@@ -20,6 +24,20 @@ const StoreFront = () => {
     { id: 2, name: "Open" },
     { id: 3, name: "Closed" },
   ];
+  const { data, fetchFarmPageList } = getFarmPageListStore();
+  const {
+    data: projectDataList,
+    error,
+    loading,
+    fetchFarmPageProjectList,
+  } = getFarmPageProjectListStore();
+
+  const farmPageData = data?.farm_data;
+
+  useEffect(() => {
+    fetchFarmPageList();
+    fetchFarmPageProjectList();
+  }, [fetchFarmPageList, fetchFarmPageProjectList]);
 
   const handleBid = () => {
     setShowBidModal((prev) => !prev);
@@ -37,6 +55,11 @@ const StoreFront = () => {
         badgeColor={color[activeTab].badgeColor}
         iconColor={color[activeTab].iconColor}
         withBorderRadius={false}
+        farmerAddress={`${farmPageData?.street} ${farmPageData?.country}`}
+        farmName={farmPageData?.name}
+        farmerName={farmPageData?.owner_name}
+        cacRegNo={farmPageData?.cac_reg_no || "N/A"}
+        verifiedText={farmPageData?.cac_reg_no ? "Verified" : "Unverified"}
       />
 
       <section className="max-w-[1300px] mx-auto px-4 py-10 md:px-4 md:py-12">
@@ -93,57 +116,46 @@ const StoreFront = () => {
             </div>
           </div>
         </div>
-        <div className="grid grid-cols-3 gap-10 xl:grid-cols-2 md:grid-cols-1 lg:gap-4">
-          <StoreFontCard
-            imageUrl="/assets/my-farms/f1.png"
-            status="Active"
-            onViewProjects={() => {
-              /* handle click */
+
+        {loading ? (
+          <Spinner />
+        ) : error ? (
+          <ErrorFetch
+            message="Error Fetching branch List"
+            onRefetch={() => {
+              fetchFarmPageProjectList();
             }}
-            href="/farmer-dashboard/my-farms/projects/Ibadan Branch"
-            onViewBid={handleBid}
           />
-          <StoreFontCard
-            imageUrl="/assets/my-farms/2.png"
-            status="Active"
-            onViewProjects={() => {
-              /* handle click */
-            }}
-            href="/farmer-dashboard/my-farms/projects/Ibadan Branch"
-          />
-          <StoreFontCard
-            imageUrl="/assets/my-farms/f2.png"
-            status="Active"
-            onViewProjects={() => {
-              /* handle click */
-            }}
-            href="/farmer-dashboard/my-farms/projects/Ibadan Branch"
-          />
-          <StoreFontCard
-            imageUrl="/assets/my-farms/f3.png"
-            status="Active"
-            onViewProjects={() => {
-              /* handle click */
-            }}
-            href="/farmer-dashboard/my-farms/projects/Ibadan Branch"
-          />
-          <StoreFontCard
-            imageUrl="/assets/my-farms/f4.png"
-            status="Active"
-            onViewProjects={() => {
-              /* handle click */
-            }}
-            href="/farmer-dashboard/my-farms/projects/Ibadan Branch"
-          />
-          <StoreFontCard
-            imageUrl="/assets/my-farms/f5.png"
-            status="Active"
-            onViewProjects={() => {
-              /* handle click */
-            }}
-            href="/farmer-dashboard/my-farms/projects/Ibadan Branch"
-          />
-        </div>
+        ) : (
+          <>
+            {projectDataList?.projects?.length === 0 ? (
+              <p>No project found yet</p>
+            ) : (
+              <div className="grid grid-cols-3 gap-10 xl:grid-cols-2 md:grid-cols-1 lg:gap-4">
+                {projectDataList?.projects?.map((card) => (
+                  <StoreFontCard
+                    key={card?.id}
+                    farmName={card?.farm_name}
+                    projAddress={`${card?.project_location}`}
+                    projectDescription={`${card?.description?.slice(
+                      0,
+                      40
+                    )}....`}
+                    projectName={`${card?.name?.slice(0, 20)}...`}
+                    projectROI={card?.ROI?.toString()}
+                    imageUrl={`https://padycvgcoops.name.ng/${card?.images[0]}`}
+                    status={card?.status}
+                    onViewProjects={() => {
+                      /* handle click */
+                    }}
+                    href={`/store-front/${card?.id}`}
+                    onViewBid={handleBid}
+                  />
+                ))}
+              </div>
+            )}
+          </>
+        )}
       </section>
 
       <StoreFontFooter />

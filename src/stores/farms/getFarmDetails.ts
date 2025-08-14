@@ -21,6 +21,20 @@ export interface farmDetailsDataStore {
       cac_reg_status: string;
       description: string;
       owner_name: string;
+      state: string;
+      images: string[];
+      farm_phone_number: string;
+      farm_whatsapp_number: string;
+      street: string;
+      land_size: string;
+      land_size_type: string;
+      land_ownership: string;
+      started_date: string;
+      farm_email: string;
+      cac_reg_doc: File;
+      farm_images: {
+        image: string;
+      }[];
     };
     branches: {
       id: string;
