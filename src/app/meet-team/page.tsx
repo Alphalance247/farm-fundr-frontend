@@ -14,7 +14,7 @@ const MeetOurTeam = () => {
       <Contact
         bg="bg-[linear-gradient(90deg,#2D865B_0%,#12482F_100%)]"
         text="Ready to collaborate with farmers to build sustainable wealth?"
-        btnText="Get Started with FarmFundr"
+        btnText="Get Started with FarmPady"
         textColor="text-[white]"
       />
       <Contact

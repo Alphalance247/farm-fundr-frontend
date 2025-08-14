@@ -24,7 +24,7 @@ const Farms = () => {
         <div className="grid grid-cols-3 gap-x-10 gap-y-10 mt-8">
           <BranchFarmCard
             branchName="Ibadan Branch"
-            farmName="Farmfundr Farm"
+            farmName="Farmpady Farm"
             address="87, Ringroad, Ibadan, Nigeria."
             projectsCount={"Projects- 7"}
             openingHours="Open 9am- Close 6pm"
@@ -38,7 +38,7 @@ const Farms = () => {
           />
           <BranchFarmCard
             branchName="Ibadan Branch"
-            farmName="Farmfundr Farm"
+            farmName="Farmpady Farm"
             address="87, Ringroad, Ibadan, Nigeria."
             projectsCount={"Projects- 7"}
             openingHours="Open 9am- Close 6pm"
@@ -53,7 +53,7 @@ const Farms = () => {
           <BranchFarmCard
             href="/farmer-dashboard/my-farms/projects/Ibadan Branch"
             branchName="Ibadan Branch"
-            farmName="Farmfundr Farm"
+            farmName="Farmpady Farm"
             address="87, Ringroad, Ibadan, Nigeria."
             projectsCount={"Projects- 7"}
             openingHours="Open 9am- Close 6pm"
@@ -67,7 +67,7 @@ const Farms = () => {
           <BranchFarmCard
             href="/farmer-dashboard/my-farms/projects/Ibadan Branch"
             branchName="Ibadan Branch"
-            farmName="Farmfundr Farm"
+            farmName="Farmpady Farm"
             address="87, Ringroad, Ibadan, Nigeria."
             projectsCount={"Projects- 7"}
             openingHours="Open 9am- Close 6pm"
@@ -81,7 +81,7 @@ const Farms = () => {
           <BranchFarmCard
             href="/farmer-dashboard/my-farms/projects/Ibadan Branch"
             branchName="Ibadan Branch"
-            farmName="Farmfundr Farm"
+            farmName="Farmpady Farm"
             address="87, Ringroad, Ibadan, Nigeria."
             projectsCount={"Projects- 7"}
             openingHours="Open 9am- Close 6pm"
@@ -95,7 +95,7 @@ const Farms = () => {
           <BranchFarmCard
             href="/farmer-dashboard/my-farms/projects/Ibadan Branch"
             branchName="Ibadan Branch"
-            farmName="Farmfundr Farm"
+            farmName="Farmpady Farm"
             address="87, Ringroad, Ibadan, Nigeria."
             projectsCount={"Projects- 7"}
             openingHours="Open 9am- Close 6pm"

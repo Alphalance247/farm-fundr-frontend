@@ -273,7 +273,7 @@ const FarmerDashboard = () => {
                       <IoMdMail size={24} fill="#2D865B" />
                     </span>
                     <p className="text-sm font-poppinsRegular text-[#282A03] md:text-sm">
-                      Email: support@farmfundr.com
+                      Email: support@farmpady.com
                     </p>
                   </div>
                   <div className="flex items-center gap-x-1">

@@ -56,7 +56,7 @@ const StoreFontCard: React.FC<StoreFontCardProps> = ({
               Organic Apple Harvest
             </p>
             <p className="text-xs font-poppinsRegular text-[#7C7C7C]">
-              Farm name: Farmfundr farm
+              Farm name: Farmpady farm
             </p>
           </div>
         </div>

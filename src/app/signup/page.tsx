@@ -189,7 +189,7 @@ const SignUp = () => {
               Let’s get started
             </h1>
             <p className="text-lg font-poppinsRegular text-[#7C7C7C] mt-2 text-center mb-8 md:text-base md:mb-4">
-              Create your account on Farmfundr
+              Create your account on Farmpady
             </p>
 
             <Button

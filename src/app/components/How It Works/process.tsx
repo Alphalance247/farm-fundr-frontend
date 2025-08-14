@@ -23,35 +23,35 @@ const Process = () => {
     {
       step: "1",
       description: "Register/Login",
-      answer: `FarmFundr is a platform where investors and farmers connect to
+      answer: `FarmPady is a platform where investors and farmers connect to
           collaborate on Agricultural products, fostering partnerships that
           drive agricultural innovation and mutual growth`,
     },
     {
       step: "2",
       description: " Complete KYC Verification",
-      answer: `FarmFundr is a platform where investors and farmers connect to
+      answer: `FarmPady is a platform where investors and farmers connect to
           collaborate on Agricultural products, fostering partnerships that
           drive agricultural innovation and mutual growth`,
     },
     {
       step: "3",
       description: "Search for Projects to Bid On",
-      answer: `FarmFundr is a platform where investors and farmers connect to
+      answer: `FarmPady is a platform where investors and farmers connect to
           collaborate on Agricultural products, fostering partnerships that
           drive agricultural innovation and mutual growth`,
     },
     {
       step: "4",
       description: "Select mode of operation",
-      answer: `FarmFundr is a platform where investors and farmers connect to
+      answer: `FarmPady is a platform where investors and farmers connect to
           collaborate on Agricultural products, fostering partnerships that
           drive agricultural innovation and mutual growth`,
     },
     {
       step: "5",
       description: "Monitor your Investment",
-      answer: `FarmFundr is a platform where investors and farmers connect to
+      answer: `FarmPady is a platform where investors and farmers connect to
           collaborate on Agricultural products, fostering partnerships that
           drive agricultural innovation and mutual growth`,
     },
@@ -61,42 +61,42 @@ const Process = () => {
     {
       step: "1",
       description: "Register/Login",
-      answer: `FarmFundr is a platform where investors and farmers connect to
+      answer: `FarmPady is a platform where investors and farmers connect to
           collaborate on Agricultural products, fostering partnerships that
           drive agricultural innovation and mutual growth`,
     },
     {
       step: "2",
       description: "Complete KYC Verification",
-      answer: `FarmFundr is a platform where investors and farmers connect to
+      answer: `FarmPady is a platform where investors and farmers connect to
           collaborate on Agricultural products, fostering partnerships that
           drive agricultural innovation and mutual growth`,
     },
     {
       step: "3",
       description: "Create and setup farm",
-      answer: `FarmFundr is a platform where investors and farmers connect to
+      answer: `FarmPady is a platform where investors and farmers connect to
           collaborate on Agricultural products, fostering partnerships that
           drive agricultural innovation and mutual growth`,
     },
     {
       step: "4",
       description: "Create and publish your project",
-      answer: `FarmFundr is a platform where investors and farmers connect to
+      answer: `FarmPady is a platform where investors and farmers connect to
           collaborate on Agricultural products, fostering partnerships that
           drive agricultural innovation and mutual growth`,
     },
     {
       step: "5",
       description: "Review and Accept/reject investor bids",
-      answer: `FarmFundr is a platform where investors and farmers connect to
+      answer: `FarmPady is a platform where investors and farmers connect to
           collaborate on Agricultural products, fostering partnerships that
           drive agricultural innovation and mutual growth`,
     },
     {
       step: "6",
       description: "Run Project",
-      answer: `FarmFundr is a platform where investors and farmers connect to
+      answer: `FarmPady is a platform where investors and farmers connect to
           collaborate on Agricultural products, fostering partnerships that
           drive agricultural innovation and mutual growth`,
     },

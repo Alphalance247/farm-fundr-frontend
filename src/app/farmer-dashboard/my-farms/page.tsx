@@ -53,7 +53,7 @@ const MyFarms = () => {
 
   const tabs: { id: number; name: string }[] = [
     { id: 1, name: "My Farms" },
-    { id: 2, name: "Draft (1)" },
+    // { id: 2, name: "Draft (1)" },
   ];
 
   return (
@@ -124,8 +124,8 @@ const MyFarms = () => {
 
                 <div className="mt-4">
                   {activeTab === "My Farms" && <FarmListTable />}
-
-                  {activeTab === "Draft (1)" && <p>Draft (1)</p>}
+                  {/* 
+                  {activeTab === "Draft (1)" && <p>Draft (1)</p>} */}
                 </div>
               </div>
             </>

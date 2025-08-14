@@ -70,7 +70,7 @@ const Card = ({
             {projectName || "Organic Apple Harvest"}
           </p>
           <p className="text-xs font-poppinsRegular text-[#7C7C7C]">
-            Farm name: {projectFarm || "Farmfundr farm"}
+            Farm name: {projectFarm || "Farmpady farm"}
           </p>
         </div>
       </div>

@@ -24,7 +24,7 @@ const Farms = () => {
         <div className="grid grid-cols-3 gap-x-10 gap-y-10 mt-8">
           <FarmCard
             branchName="Ibadan Branch"
-            farmName="Farmfundr Farm"
+            farmName="Farmpady Farm"
             address="87, Ringroad, Ibadan, Nigeria."
             projectsCount={"Branches - 7"}
             openingHours="Open 9am- Close 6pm"
@@ -34,7 +34,7 @@ const Farms = () => {
           />
           <FarmCard
             branchName="Ibadan Branch"
-            farmName="Farmfundr Farm"
+            farmName="Farmpady Farm"
             address="87, Ringroad, Ibadan, Nigeria."
             projectsCount={"Branches - 7"}
             openingHours="Open 9am- Close 6pm"
@@ -44,7 +44,7 @@ const Farms = () => {
           />
           <FarmCard
             branchName="Ibadan Branch"
-            farmName="Farmfundr Farm"
+            farmName="Farmpady Farm"
             address="87, Ringroad, Ibadan, Nigeria."
             projectsCount={"Branches - 7"}
             openingHours="Open 9am- Close 6pm"
@@ -54,7 +54,7 @@ const Farms = () => {
           />
           <FarmCard
             branchName="Ibadan Branch"
-            farmName="Farmfundr Farm"
+            farmName="Farmpady Farm"
             address="87, Ringroad, Ibadan, Nigeria."
             projectsCount={"Branches - 7"}
             openingHours="Open 9am- Close 6pm"
@@ -64,7 +64,7 @@ const Farms = () => {
           />
           <FarmCard
             branchName="Ibadan Branch"
-            farmName="Farmfundr Farm"
+            farmName="Farmpady Farm"
             address="87, Ringroad, Ibadan, Nigeria."
             projectsCount={"Branches - 7"}
             openingHours="Open 9am- Close 6pm"
@@ -74,7 +74,7 @@ const Farms = () => {
           />
           <FarmCard
             branchName="Ibadan Branch"
-            farmName="Farmfundr Farm"
+            farmName="Farmpady Farm"
             address="87, Ringroad, Ibadan, Nigeria."
             projectsCount={"Branches - 7"}
             openingHours="Open 9am- Close 6pm"

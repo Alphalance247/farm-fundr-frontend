@@ -63,7 +63,7 @@ const CustomersFeedbacks = () => {
             heading={"What our customers are saying"}
             alignment="text-center"
             subhead={
-              "Explore testimonials showcasing clients’ success stories with FarmFundr, highlighting the transformative agricultural investment journeys they’ve experienced."
+              "Explore testimonials showcasing clients’ success stories with FarmPady, highlighting the transformative agricultural investment journeys they’ve experienced."
             }
           />
 

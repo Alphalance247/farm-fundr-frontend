@@ -257,7 +257,7 @@ const VerifyEmail = () => {
                   Verify your email
                 </p>
                 <p className="text-lg text-[#7C7C7C] font-poppinsRegular mb-10">
-                  Thank you for signing up with Farmfundr! Please click{" "}
+                  Thank you for signing up with Farmpady! Please click{" "}
                   <span className="font-poppinsSemiBold">“Send Code”</span>
                   button to receive a one time password for your email
                   verification.

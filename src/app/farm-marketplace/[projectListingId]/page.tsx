@@ -250,7 +250,7 @@ const ProjectListingPage: React.FC = () => {
                   </p>
 
                   <p className="text-lg text-[#7C7C7C] font-poppinsRegular mb-4">
-                    FarmFundr investors contribute to funding the cultivation,
+                    FarmPady investors contribute to funding the cultivation,
                     maintenance, and harvesting of organic apples. The
                     investment covers essential costs like organic fertilizers,
                     irrigation, pest control (via natural methods), labor, and
@@ -258,7 +258,7 @@ const ProjectListingPage: React.FC = () => {
                     established channels, including wholesale markets, organic
                     food stores, and direct-to-consumer delivery. Profits are
                     distributed to investors based on their share of the
-                    project, with FarmFundr handling the logistics, sales, and
+                    project, with FarmPady handling the logistics, sales, and
                     marketing to maximize returns.
                   </p>
                 </div>
