@@ -121,7 +121,7 @@ const Process = () => {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 20 }}
             transition={{ duration: 0.5 }}
-            className="grid grid-cols-2 gap-10 items-center mt-4 lg:items-start md:grid-cols-1"
+            className="grid grid-cols-2 gap-10 items-center mt-4 xl:items-start lg:grid-cols-1"
           >
             <div>
               <Image
@@ -132,6 +132,7 @@ const Process = () => {
                 }
                 width={577}
                 height={573}
+                className="xl:w-full"
                 alt=""
               />
             </div>

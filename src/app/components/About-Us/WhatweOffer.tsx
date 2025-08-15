@@ -48,10 +48,10 @@ const WhatWeOffer = () => {
                 } lg:gap-x-10 md:flex-col md:gap-y-8`}
               >
                 <div className="w-[40%] lg:w-[55%] md:w-full">
-                  <p className="text-2xl font-aristoBold text-[#2D865B] mb-2">
+                  <p className="text-2xl text-left md:text-center font-aristoBold text-[#2D865B] mb-2">
                     {el?.title}
                   </p>
-                  <p className="text-[#7C7C7C] text-lg font-poppinsRegular">
+                  <p className="text-[#7C7C7C] text-left md:text-center text-lg font-poppinsRegular">
                     {el?.description}
                   </p>
                 </div>

@@ -54,7 +54,7 @@ const AboutUsCommon: React.FC<aboutUsProp> = ({
           >
             <div>
               {paragraphHeading && (
-                <p className="mb-9 text-lg font-poppinsSemiBold pb-2 text-[#282A03] border-b-[3px] border-[#51F4A6] w-fit">
+                <p className="mb-9 text-lg lg:mx-auto font-poppinsSemiBold pb-2 text-[#282A03] border-b-[3px] border-[#51F4A6] w-fit">
                   Get to know us
                 </p>
               )}
