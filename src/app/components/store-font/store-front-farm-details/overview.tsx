@@ -2,11 +2,12 @@ import Link from "next/link";
 import Image from "next/image";
 import { GoArrowRight } from "react-icons/go";
 import { MdOutlineVerifiedUser } from "react-icons/md";
-import CustomerReviewCard from "../../common/customerReviewCard";
-import { FaStar } from "react-icons/fa";
-import Button from "../../common/Buttons";
+import { getFarmPageListStore } from "@/stores/farmpage/farmPageList";
 
 const Overview = () => {
+  const { data: farmData } = getFarmPageListStore();
+
+  const farmPageData = farmData?.farm_data;
   const data: {
     id: number;
     name: string;
@@ -20,7 +21,7 @@ const Overview = () => {
       name: "Branches",
       href: "/store-front/store-branches",
       icon: "/assets/store-front/farmicon.svg",
-      numberOfBranches: 10,
+      numberOfBranches: farmPageData?.farm_branches_count || 0,
       viewBtn: "View",
     },
     {
@@ -28,7 +29,7 @@ const Overview = () => {
       name: "Projects",
       href: "/store-front",
       icon: "/assets/store-front/farmicon.svg",
-      numberOfBranches: 10,
+      numberOfBranches: farmPageData?.projects_count || 0,
       viewBtn: "View",
     },
     {
@@ -36,14 +37,14 @@ const Overview = () => {
       name: "Other farms",
       href: "/store-front/farms",
       icon: "/assets/store-front/farmicon.svg",
-      numberOfBranches: 3,
+      numberOfBranches: farmData?.other_farms || 0,
       viewBtn: "View",
     },
   ];
 
   return (
     <div>
-      <div className="grid grid-cols-3 gap-x-4 gap-y-4 lg:grid-cols-2">
+      <div className="grid grid-cols-3 gap-x-4 gap-y-4 lg:grid-cols-2 md:grid-cols-1">
         {data.map((el) => (
           <Link href={el?.href || "/"} key={el.id}>
             <div className="bg-[linear-gradient(90deg,#2D865B_0%,#12482F_100%)] flex flex-col gap-y-3 p-6 rounded-xl border border-[#F6F6F6]">
@@ -52,7 +53,7 @@ const Overview = () => {
                   key={el.id}
                   className="text-white text-base font-poppinsRegular"
                 >
-                  {el.name}
+                  {el.name || "N/A"}
                 </p>
                 <Image src={el.icon} alt={el.name} width={48} height={48} />
               </div>
@@ -78,34 +79,46 @@ const Overview = () => {
         <div className="grid grid-cols-[2fr_1fr] gap-x-4 lg:grid-cols-1 lg:gap-y-6">
           <div>
             <Image
-              src="/assets/store-front/store1.png"
+              src={
+                `https://padycvgcoops.name.ng/${farmPageData?.farm_images[0]?.image}` ||
+                "/assets/my-farms/no-img.avif"
+              }
               alt="store-front-details"
               width={408}
               height={290}
-              className="w-full h-full object-cover"
+              className="w-[480px] h-[320px] rounded-lg object-cover "
             />
           </div>
           <div className="flex flex-col gap-y-2 lg:grid lg:grid-cols-3 lg:gap-x-6">
             <Image
-              src="/assets/store-front/store2.png"
+              src={
+                `https://padycvgcoops.name.ng/${farmPageData?.farm_images[1]?.image}` ||
+                "/assets/my-farms/no-img.avif"
+              }
               alt="store-front-details"
               width={169}
               height={87}
-              className="w-full h-full object-cover"
+              className="w-[200px] h-[100px] rounded-lg object-cover"
             />
             <Image
-              src="/assets/store-front/store3.png"
+              src={
+                `https://padycvgcoops.name.ng/${farmPageData?.farm_images[2]?.image}` ||
+                "/assets/my-farms/no-img.avif"
+              }
               alt="store-front-details"
               width={169}
               height={87}
-              className="w-full h-full object-cover"
+              className="w-[200px] h-[100px] rounded-lg object-cover"
             />
             <Image
-              src="/assets/store-front/store4.png"
+              src={
+                `https://padycvgcoops.name.ng/${farmPageData?.farm_images[3]?.image}` ||
+                "/assets/my-farms/no-img.avif"
+              }
               alt="store-front-details"
               width={169}
               height={87}
-              className="w-full h-full object-cover"
+              className="w-[200px] h-[100px] rounded-lg object-cover"
             />
           </div>
         </div>
@@ -113,12 +126,10 @@ const Overview = () => {
         <div className="flex flex-col gap-y-8 justify-between h-full">
           <div>
             <h4 className="text-[#5F5F5F] text-base font-poppinsSemiBold mb-3">
-              About FarmPady
+              About {farmPageData?.name}
             </h4>
             <p className="text-sm font-poppinsRegular text-[#7C7C7C]">
-              Established on March 21, 2025, FarmPady has expanded to 5 branches
-              across the country, managed by farmer, Aderibigbe Adigun. Verified
-              by CAC and our team, CAC Reg No: 123456789.
+              {farmPageData?.description}
             </p>
           </div>
 
@@ -127,7 +138,7 @@ const Overview = () => {
               Farm Size
             </h4>
             <p className="text-sm font-poppinsRegular text-[#7C7C7C]">
-              2 acres of land
+              {farmPageData?.land_size} acres of land
             </p>
           </div>
 
@@ -188,7 +199,7 @@ const Overview = () => {
                 farmer’s Name
               </p>
               <p className="text-[#5F5F5F] text-base font-poppinsSemiBold">
-                Aderibigbe Adigun
+                {farmPageData?.owner_name || "N/A"}
               </p>
             </div>
             <div className="flex items-center justify-between py-4">
@@ -196,7 +207,7 @@ const Overview = () => {
                 Farm Address
               </p>
               <p className="text-[#5F5F5F] text-base font-poppinsSemiBold">
-                Ibadan, Nigeria
+                {`${farmPageData?.street}` || "N/A"}
               </p>
             </div>
           </div>
@@ -208,7 +219,7 @@ const Overview = () => {
                 Email
               </p>
               <p className="text-[#5F5F5F] text-base font-poppinsSemiBold">
-                farmpady@gmail.com
+                {farmPageData?.farm_email || "N/A"}
               </p>
             </div>
             <div className="flex items-center justify-between py-4">
@@ -216,7 +227,7 @@ const Overview = () => {
                 Contact
               </p>
               <p className="text-[#5F5F5F] text-base font-poppinsSemiBold">
-                090123456789
+                {farmPageData?.farm_phone_number || "N/A"}
               </p>
             </div>
           </div>
@@ -228,40 +239,46 @@ const Overview = () => {
                 Verification Status
               </p>
               <p className="text-[#2D865B] text-xs font-poppinsSemiBold flex items-center gap-x-2">
-                <span>
-                  {" "}
-                  <MdOutlineVerifiedUser
-                    color="white"
-                    fill="#00C853"
-                    size={25}
-                  />
-                </span>
-                Verified
+                {farmPageData?.verified ? (
+                  <span>
+                    {" "}
+                    <MdOutlineVerifiedUser
+                      color="white"
+                      fill="#00C853"
+                      size={25}
+                    />
+                    Verified
+                  </span>
+                ) : (
+                  "Unverified"
+                )}
               </p>
             </div>
             <div className="flex items-center justify-between py-4">
               <p className="text-[#7C7C7C] text-sm font-poppinsSemiBold">
                 Branches
               </p>
-              <p className="text-[#5F5F5F] text-base font-poppinsSemiBold">5</p>
+              <p className="text-[#5F5F5F] text-base font-poppinsSemiBold">
+                {farmPageData?.farm_branches_count || 0}
+              </p>
             </div>
           </div>
 
           {/* fourth row */}
-          <div className="grid grid-cols-2 gap-x-8 border-b border-[#F6F6F6]">
+          <div className="grid grid-cols-2 gap-x-8 border-b border-[#F6F6F6] lg:grid-cols-1">
             <div className="flex items-center justify-between py-4">
               <p className="text-[#7C7C7C] text-sm font-poppinsSemiBold">
                 Start Date
               </p>
               <p className="text-[#7C7C7C] text-sm font-poppinsSemiBold">
-                March 21, 2025.
+                {farmPageData?.started_date || "N/A"}
               </p>
             </div>
           </div>
         </div>
       </div>
 
-      <div className="bg-white border border-[#F6F6F6] rounded-xl p-4 shadow-lg mt-12">
+      {/* <div className="bg-white border border-[#F6F6F6] rounded-xl p-4 shadow-lg mt-12">
         <h4 className="text-[#5F5F5F] text-base font-poppinsSemiBold mb-4 pb-3 border-b border-[#F6F6F6]">
           farm Review
         </h4>
@@ -315,7 +332,7 @@ const Overview = () => {
             </Button>
           </div>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };

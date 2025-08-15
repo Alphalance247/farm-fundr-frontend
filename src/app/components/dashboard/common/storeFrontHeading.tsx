@@ -11,12 +11,22 @@ const StoreFrontHeading = ({
   textColor,
   badgeColor,
   withBorderRadius = true,
+  verifiedText,
+  farmerAddress,
+  farmerName,
+  cacRegNo,
+  farmName,
 }: {
   color: string;
   textColor: string;
   badgeColor: string;
   iconColor: string;
   withBorderRadius?: boolean;
+  verifiedText?: string;
+  farmerAddress?: string;
+  farmerName?: string;
+  cacRegNo?: string;
+  farmName?: string;
 }) => {
   const { data: farmDetails } = getFarmDetails();
   const farm = farmDetails?.data;
@@ -31,9 +41,9 @@ const StoreFrontHeading = ({
         alt="customize-store"
         width={420}
         height={468}
-        className="absolute top-0 right-0 lg:w-[200px] lg:h-[200px] md:w-[100px] md:h-[100px]"
+        className="absolute z-[1] top-0 right-0 lg:w-[200px] lg:h-[200px] md:w-[100px] md:h-[100px]"
       />
-      <div className="max-w-[1300px]  mx-auto">
+      <div className="max-w-[1300px]  mx-auto relative z-10">
         <div className=" pt-10 pl-4 pb-8 ">
           <div className="flex items-center gap-x-6">
             <Image
@@ -52,21 +62,25 @@ const StoreFrontHeading = ({
                 <h3
                   className={`text-[22px] ${textColor} leading-7 font-aristoBold `}
                 >
-                  {farm?.farm?.name || "N/A"}
+                  {farm?.farm?.name || farmName}
                 </h3>
                 {withBorderRadius || (
                   <p
                     className={`text-sm font-poppinsRegular w-fit text-[#226646] px-3 py-[6px] rounded-[79px] flex items-center justify-center gap-2 bg-[#FFFFFF]`}
                   >
-                    <MdVerifiedUser fill="#00C853" size={16} />
-                    Verified
+                    {verifiedText === "verified" ? (
+                      <MdVerifiedUser fill="#00C853" size={16} />
+                    ) : (
+                      ""
+                    )}
+                    {verifiedText}
                   </p>
                 )}
               </div>
               <p className={`${textColor} mb-1`}>
                 <span className="text-xs font-poppinsRegular"> Address:</span>{" "}
                 <span className="font-poppinsSemiBold text-xs">
-                  {`${farm?.farm?.city}, ${farm?.farm?.country} ` || "N/A"}
+                  {farm?.farm?.country || farmerAddress}
                 </span>
               </p>
               {withBorderRadius && (
@@ -75,14 +89,14 @@ const StoreFrontHeading = ({
                     Farmer Name::
                   </span>{" "}
                   <span className="font-poppinsSemiBold text-xs">
-                    {farm?.farm?.owner_name || "N/A"}
+                    {farm?.farm?.owner_name || farmerName}
                   </span>
                 </p>
               )}
               <p className={`${textColor} mb-1`}>
                 <span className="text-xs font-poppinsRegular">CAC Reg No:</span>{" "}
                 <span className="font-poppinsSemiBold text-xs">
-                  {farm?.farm?.cac_reg_no || " N/A"}
+                  {farm?.farm?.cac_reg_no || cacRegNo}
                 </span>
               </p>
 

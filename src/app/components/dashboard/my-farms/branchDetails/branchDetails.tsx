@@ -8,6 +8,7 @@ import { useEffect } from "react";
 import Spinner from "@/app/components/common/modals/spinner";
 import Button from "@/app/components/common/Buttons";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 const BranchDetails = ({
   farmId,
@@ -17,14 +18,18 @@ const BranchDetails = ({
   branchId: string;
 }) => {
   const { data, fetchProjectsList, error, loading } = getProjectsListStore();
+  const router = useRouter();
 
   useEffect(() => {
     fetchProjectsList(branchId, farmId);
   }, [fetchProjectsList, branchId, farmId]);
 
-  const projectsCard = data?.results?.data || [];
+  const handleUpdate = (projectId: string) => {
+    localStorage.setItem("selectedEditFarmId", projectId);
+    router.push("/farmer-dashboard/my-farms/update-project");
+  };
 
-  console.log(projectsCard);
+  const projectsCard = data?.results?.data || [];
 
   return (
     <DashboardLayout>
@@ -76,12 +81,13 @@ const BranchDetails = ({
                   projectDescrip={`${card?.description?.slice(0, 40)}....`}
                   projectName={`${card?.name?.slice(0, 20)}...`}
                   projectFarm={card?.farm_name}
+                  onUpdateClick={() => handleUpdate(card?.id)}
                   withRating={false}
                   projectLocation={`${card?.project_location}`}
                   btnText1="Update"
                   btnText2="View Details"
                   projectROI={card?.ROI?.toString()}
-                  btnTextLink1={`/farmer-dashboard/my-farms/update-project`}
+                  // btnTextLink1={`/farmer-dashboard/my-farms/update-project`}
                   btnTextLink2={`/farmer-dashboard/my-farms/${farmId}/farm-branches/${branchId}/${card?.id}`}
                 />
               );

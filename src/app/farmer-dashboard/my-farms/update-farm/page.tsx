@@ -18,14 +18,31 @@ import "react-phone-number-input/style.css";
 import GoBackBtn from "@/app/components/common/goBack";
 import Button from "@/app/components/common/Buttons";
 import { getFarmDetails } from "@/stores/farms/getFarmDetails";
+import { useRouter } from "next/navigation";
 
 const UpdateFarm = () => {
   const { data, fetchFarmDetails } = getFarmDetails();
+  const [selectedEditFarmId, setSelectedEditFarmId] = useState("");
+  const farmData = data?.data?.farm;
+  const router = useRouter();
+
+  // Get the farm ID from localStorage on component mount
+  useEffect(() => {
+    const storedFarmId = localStorage.getItem("selectedEditFarmId");
+    if (storedFarmId) {
+      setSelectedEditFarmId(storedFarmId);
+      // Fetch farm details using the stored ID
+      fetchFarmDetails(storedFarmId);
+    } else {
+      // If no farm ID is stored, redirect back to farms list
+      window.location.href = "/farmer-dashboard/my-farms";
+    }
+  }, [fetchFarmDetails]);
 
   useEffect(() => {
-    fetchFarmDetails("6");
-  }, [fetchFarmDetails]);
-  console.log(data);
+    fetchFarmDetails(selectedEditFarmId);
+  }, [fetchFarmDetails, selectedEditFarmId]);
+
   const [loading, setLoading] = useState(false);
   const [form, setForm] = useState({
     country: "",
@@ -43,10 +60,68 @@ const UpdateFarm = () => {
     farmPhone: "",
     city: "",
   });
+  // Update the state to handle multiple images
+  const [uploadedImages, setUploadedImages] = useState<{
+    [key: string]: { file: File | null; preview: string | null };
+  }>({
+    image1: { file: null, preview: null },
+    image2: { file: null, preview: null },
+    image3: { file: null, preview: null },
+    image4: { file: null, preview: null },
+  });
   const [preview, setPreview] = useState<string | null>(null);
   const [file, setFile] = useState<File | null>(null);
   const [countries, setCountries] = useState<ICountry[]>([]);
   const [states, setStates] = useState<IState[]>([]);
+
+  useEffect(() => {
+    if (farmData) {
+      setForm((prev) => ({
+        ...prev,
+        country: farmData?.country || "",
+        state: farmData?.state || "",
+        phone: farmData?.farm_whatsapp_number || "",
+        farmName: farmData?.name || "",
+        farmAddress: farmData?.street || "",
+        farmSize: farmData?.land_size || "",
+        fieldType: farmData?.land_size_type || "",
+        fieldDescription: farmData?.description || "",
+        ownershipType: farmData?.land_ownership || "",
+        cacNumber: farmData?.cac_reg_no || "",
+        operatingSince: farmData?.started_date || "",
+        farmEmail: farmData?.farm_email || "",
+        farmPhone: farmData?.farm_phone_number || "",
+        city: farmData?.city || "",
+      }));
+
+      setFile(farmData?.cac_reg_doc);
+
+      // Prefill images with backend data
+      if (farmData?.farm_images && farmData?.farm_images.length > 0) {
+        const imageKeys = ["image1", "image2", "image3", "image4"];
+        const newUploadedImages: {
+          [key: string]: { file: File | null; preview: string | null };
+        } = {
+          image1: { file: null, preview: null },
+          image2: { file: null, preview: null },
+          image3: { file: null, preview: null },
+          image4: { file: null, preview: null },
+        };
+
+        // Map backend images to the image slots
+        farmData?.images.forEach((projectImage, index) => {
+          if (index < imageKeys.length) {
+            const imageKey = imageKeys[index];
+            newUploadedImages[imageKey] = {
+              file: null, // Keep as null since we're displaying existing images
+              preview: projectImage,
+            };
+          }
+        });
+        setUploadedImages(newUploadedImages);
+      }
+    }
+  }, [farmData]);
 
   // Load countries on component mount
   useEffect(() => {
@@ -67,15 +142,6 @@ const UpdateFarm = () => {
     };
     loadStates();
   }, [form?.country]);
-  // Update the state to handle multiple images
-  const [uploadedImages, setUploadedImages] = useState<{
-    [key: string]: { file: File | null; preview: string | null };
-  }>({
-    image1: { file: null, preview: null },
-    image2: { file: null, preview: null },
-    image3: { file: null, preview: null },
-    image4: { file: null, preview: null },
-  });
 
   const handlePdfChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFile = e.target.files?.[0];
@@ -146,45 +212,21 @@ const UpdateFarm = () => {
         }
       });
 
-      const res = await axiosInstance.post(environment.addFarm, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
+      const res = await axiosInstance.put(
+        `${environment.addFarm}${selectedEditFarmId}`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
 
-      if (res.status === 201) {
+      if (res.status === 200) {
         toast.success(
-          res.data?.statusmessage || "Farm successfully submitted for review"
+          res.data?.statusmessage || "Farm details successfully updated"
         );
-
-        setForm({
-          farmSize: "",
-          fieldType: "",
-          fieldDescription: "",
-          ownershipType: "",
-          cacNumber: "",
-          operatingSince: "",
-          farmEmail: "",
-          farmPhone: "",
-          farmName: "",
-          farmAddress: "",
-          country: "",
-          state: "",
-          phone: "",
-          city: "",
-        });
-
-        // Reset files
-        setFile(null);
-        setPreview(null);
-        setUploadedImages({
-          image1: { file: null, preview: null },
-          image2: { file: null, preview: null },
-          image3: { file: null, preview: null },
-          image4: { file: null, preview: null },
-        });
-
-        // Reset steps
+        router.push("/farmer-dashboard/my-farms");
       }
 
       setLoading(false);
@@ -212,7 +254,7 @@ const UpdateFarm = () => {
         {loading && (
           <SpinnerModal
             onClose={() => {}}
-            message="Uploading farm details, please wait this might take a while...."
+            message="Updating farm details, please wait this might take a while...."
           />
         )}
 
@@ -264,9 +306,9 @@ const UpdateFarm = () => {
                                   <Image
                                     width={556}
                                     height={158}
-                                    src={uploadedImages.image1.preview}
+                                    src={`${environment?.imgBaserUrl}${uploadedImages.image1.preview}`}
                                     alt="Uploaded image1"
-                                    className="object-cover w-full"
+                                    className="object-cover w-[759px] h-[308px]"
                                   />
                                 </div>
 
@@ -323,9 +365,9 @@ const UpdateFarm = () => {
                                     <Image
                                       width={177}
                                       height={95}
-                                      src={preview}
+                                      src={`${environment?.imgBaserUrl}${preview}`}
                                       alt={`Uploaded ${key}`}
-                                      className="object-cover w-full"
+                                      className="object-cover w-[257px] h-[125px]"
                                     />
                                     <div className="flex items-center justify-center absolute gap-x-1 bg-[#FFFFFFE5] px-2 py-1 cursor-pointer rounded-lg bottom-[4rem] right-[3rem]">
                                       <p className="text-xs font-poppinsRegular text-[#616161]">
@@ -476,6 +518,24 @@ const UpdateFarm = () => {
                       value={form?.phone || ""}
                       onChange={(value) =>
                         setForm({ ...form, phone: value || "" })
+                      }
+                      className={`${PhoneInput} outline-green-400`}
+                      numberInputProps={{
+                        className: `outline-none border-[#E0E0E0] bg-[#F6F6F6] border-[1px] text-[#5F5F5F] rounded-tr-md rounded-br-md rounded-tl-none rounded-bl-none text-sm w-[100%] px-3 py-[14px]`,
+                      }}
+                    />
+                  </div>
+
+                  <div>
+                    <Label>Farm Phone Number</Label>
+                    <PhoneInput
+                      placeholder="8140686688"
+                      international
+                      defaultCountry="NG"
+                      required
+                      value={form?.farmPhone || ""}
+                      onChange={(value) =>
+                        setForm({ ...form, farmPhone: value || "" })
                       }
                       className={`${PhoneInput} outline-green-400`}
                       numberInputProps={{
