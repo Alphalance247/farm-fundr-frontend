@@ -55,18 +55,18 @@ const Footer = () => {
           alt="footer logo"
           className="mx-auto"
         />
-        <div className="py-10 px-5 border-[#51F4A6]  border flex justify-between gap-20 rounded-[20px] mt-16 lg:gap-10 md:flex-col">
-          <div className="w-[45%] lg:w-[60%] md:w-full">
-            <p className="text-[white] text-4xl font-aristoBold mb-6">
+        <div className="py-10 px-5 border-[#51F4A6]  border flex justify-between gap-20 rounded-[20px] mt-16 lg:gap-10 lg:flex-col">
+          <div className="w-[45%] xl:w-[60%] lg:w-full">
+            <p className="text-[white] text-left lg:text-center text-4xl font-aristoBold mb-6">
               Subscribe to our newsletter
             </p>
-            <p className="text-lg font-poppinsRegular text-white">
+            <p className="text-lg text-left lg:text-center font-poppinsRegular text-white">
               Receive weekly newsletter to stay informed on the latest trends of
               your investment
             </p>
           </div>
 
-          <div className="w-[37%] lg:w-[60%] md:w-full">
+          <div className="w-[37%] xl:w-[60%] lg:w-full">
             <div className="flex gap-x-2 mb-6 md:flex-col md:gap-y-6">
               <input
                 type="text"
@@ -76,7 +76,7 @@ const Footer = () => {
               <Button variant="tertiary">Subscribe</Button>
             </div>
 
-            <p className="text-xs text-white">
+            <p className="text-xs text-left lg:text-center text-white">
               By submitting your email address, you agree to receive weekly news
               from farmpady.{" "}
               <span className="text-[#51F4A6] underline-offset-2">
@@ -93,10 +93,11 @@ const Footer = () => {
             <Image
               src="/assets/LandingPage/icons/fundrlogo.svg"
               width={187}
+              className="md:mx-auto"
               height={41}
               alt="logo"
             />
-            <p className="mt-4 text-lg font-poppinsRegular text-[#FFFFFF]">
+            <p className="mt-4 text-lg text-left md:text-center font-poppinsRegular text-[#FFFFFF]">
               Empowering Farmers, Connecting Investors.
             </p>
 
@@ -120,7 +121,7 @@ const Footer = () => {
             {navs.map((items) => {
               return (
                 <div key={items?.id}>
-                  <ul className="grid grid-cols-3 justify-between gap-x-28 lg:gap-x-10 md:grid-cols-1 md:mb-6">
+                  <ul className="grid grid-cols-3 justify-between gap-x-28 lg:gap-x-10 md:grid-cols-3 md:mb-2">
                     <li
                       className={`${
                         activeMenu === items?.name1

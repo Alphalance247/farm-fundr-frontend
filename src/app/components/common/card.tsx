@@ -43,7 +43,7 @@ const Card = ({
           width={336}
           height={185}
           alt="land"
-          className="w-[308px] h-[169px] rounded-md"
+          className="w-[308px] xl:w-full h-[169px] rounded-md"
         />
         <p className="border-[#B0EECA] border px-4 py-1 absolute bottom-[-1rem] right-[1rem] flex items-center bg-white text-[#00C853] rounded-lg">
           <span className="mr-1">
@@ -144,14 +144,26 @@ const Card = ({
         </div>
       )}
 
-      <div className={`flex items-center gap-x-3  ${withRating ? "" : "pt-6"}`}>
+      <div
+        className={`flex flex-row lg:flex-col items-center gap-y-3 gap-x-3  ${
+          withRating ? "" : "pt-6"
+        }`}
+      >
         <Link href={btnTextLink1 || "/"}>
-          <Button variant="tertiary" size="small" className="w-fit">
+          <Button
+            variant="tertiary"
+            size="switch"
+            className="w-full px-8  xl:px-14 lg:px-28 sm:px-36  py-3 "
+          >
             {btnText1 || " Bid Now"}
           </Button>
         </Link>
         <Link href={btnTextLink2 || "/"}>
-          <Button className="w-fit" variant="secondary" size="small">
+          <Button
+            className="w-full px-8 xl:px-14 lg:px-24 sm:px-32 py-3"
+            variant="secondary"
+            size="switch"
+          >
             {btnText2 || "View Details"}
           </Button>
         </Link>

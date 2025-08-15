@@ -53,10 +53,11 @@ const HowItWorks = () => {
             withSubHead={false}
             className="text-center mb-16 lg:mb-12"
           />
-          <div className="grid grid-cols-2 gap-x-20 mb-20 xl:gap-x-12 lg:gap-x-8 md:grid-cols-1 md:gap-y-12">
+          <div className="grid grid-cols-2 gap-x-20 mb-20 xl:gap-x-12 lg:gap-x-8 xl:grid-cols-1 xl:gap-y-12">
             <Image
               width={577}
               height={536}
+              className="w-full"
               src="/assets/LandingPage/images/2.png"
               alt="frame1"
             />

@@ -94,7 +94,7 @@ const Benefits = () => {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: 20 }}
               transition={{ duration: 0.5 }}
-              className="grid grid-cols-2 gap-x-20 mb-20 lg:gap-x-10 md:grid-cols-1 md:gap-y-12"
+              className="grid grid-cols-2 gap-x-20 mb-20 lg:gap-x-10 xl:grid-cols-1 xl:gap-y-12"
             >
               <div className="flex flex-col gap-y-6">
                 {tab.map((item, i) => {
@@ -126,6 +126,7 @@ const Benefits = () => {
               <Image
                 width={577}
                 height={595}
+                className="w-full"
                 src={
                   activeTab === "investors"
                     ? "/assets/LandingPage/images/1.png"

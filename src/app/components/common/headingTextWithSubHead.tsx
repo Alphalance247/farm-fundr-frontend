@@ -28,7 +28,7 @@ const HeadingTextWithSubHead: React.FC<propsMarging> = ({
     <>
       <div className={className}>
         <h1
-          className={`text-5xl text-[#5f5f5f] font-bold font-aristoBold xl:text-4xl lg:text-2xl`}
+          className={`text-5xl  text-[#5f5f5f] font-bold font-aristoBold xl:text-4xl lg:text-2xl`}
         >
           {heading}
         </h1>
@@ -47,7 +47,7 @@ const HeadingTextWithSubHead: React.FC<propsMarging> = ({
 
       {withSubHead && (
         <p
-          className={`text-lg text-[#7C7C7C] font-poppinsRegular ${alignment} lg:text-base`}
+          className={`text-lg text-left lg:text-center text-[#7C7C7C] font-poppinsRegular ${alignment} lg:text-base`}
         >
           {subhead}
         </p>

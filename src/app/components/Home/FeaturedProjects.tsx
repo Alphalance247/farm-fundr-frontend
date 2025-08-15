@@ -29,7 +29,7 @@ const FeaturedProject = () => {
             className="text-center mb-16 lg:mb-12"
           />
 
-          <div className="grid grid-cols-3 gap-x-6 lg:grid-cols-2 lg:gap-x-4 lg:gap-y-10 md:grid-cols-1 md:gap-y-8">
+          <div className="grid grid-cols-3 gap-x-6 xl:grid-cols-2 lg:gap-x-4 lg:gap-y-10 md:grid-cols-1 md:gap-y-8">
             <Card />
             <Card />
             <Card />

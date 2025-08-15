@@ -37,11 +37,11 @@ const MeetTeam = () => {
             </div>
 
             <div className="relative z-10 py-28 w-[45%] mx-auto lg:w-[60%] lg:mr-[1rem] md:w-[95%] md:mr-0 md:px-1">
-              <h3 className="text-6xl font-aristoBold font-bold text-[#51F4A6] mb-6">
+              <h3 className="text-6xl text-left md:text-center font-aristoBold font-bold text-[#51F4A6] mb-6">
                 {" "}
                 FarmPady Team
               </h3>
-              <p className=" font-poppinsSemiBold text-2xl text-[#FFFFFF] mb-16">
+              <p className=" font-poppinsSemiBold text-left md:text-center text-2xl text-[#FFFFFF] mb-16">
                 Get to meet our professional team on this platform
               </p>
               <Link href={"/meet-team"}>

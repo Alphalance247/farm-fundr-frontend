@@ -50,7 +50,7 @@ const AboutUsCommon: React.FC<aboutUsProp> = ({
           )}
 
           <div
-            className={`grid grid-cols-2 gap-x-12 md:grid-cols-1 gap-y-10 ${alignment} `}
+            className={`grid grid-cols-2 gap-x-12 lg:grid-cols-1 gap-y-10 ${alignment} `}
           >
             <div>
               {paragraphHeading && (
@@ -64,7 +64,7 @@ const AboutUsCommon: React.FC<aboutUsProp> = ({
                   heading ||
                   "Empowering farmers and growing investments through collaboration"
                 }
-                className="mb-8 text-left lg:mb-3"
+                className="mb-8 text-left lg:text-center lg:mb-3"
                 subhead={
                   subhead ||
                   "FarmPady is a platform designed to connect farmers and investors, fostering  collaboration and innovation in the agricultural sector. The platform aims to drive  agricultural growth and sustainability while providing mutual benefits to farmers  and investors"
@@ -74,7 +74,7 @@ const AboutUsCommon: React.FC<aboutUsProp> = ({
               {btnAvailable && (
                 <Button
                   size="medium"
-                  className="flex items-center gap-x-4 justify-center mt-10 lg:mt-4 md:mt-8"
+                  className="flex lg:mx-auto items-center gap-x-4 justify-center mt-10 lg:mt-4 md:mt-8"
                 >
                   <span>{btnText || "Learn More"}</span>
                   <span>
@@ -87,6 +87,7 @@ const AboutUsCommon: React.FC<aboutUsProp> = ({
             <Image
               width={577}
               height={573}
+              className="w-full"
               src={imgUrl || "/assets/LandingPage/images/5.png"}
               alt="frame1"
             />
