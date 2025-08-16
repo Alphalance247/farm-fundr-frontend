@@ -246,8 +246,6 @@ const UpdateFarm = () => {
     }
   };
 
-  console.log(form, uploadedImages);
-
   return (
     <ProtectedRoute requiredUserType="farmer">
       <DashboardLayout>

@@ -122,7 +122,7 @@ const StoreFrontHeading = ({
                   Send a message
                 </Button>
 
-                <Link href="/store-front/store-front-farm-details">
+                <Link href="/farm-page/farm-page-farm-details">
                   <Button
                     className="w-fit flex items-center justify-center gap-2"
                     variant="secondary"
