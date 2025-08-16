@@ -23,37 +23,27 @@ const Process = () => {
     {
       step: "1",
       description: "Register/Login",
-      answer: `FarmPady is a platform where investors and farmers connect to
-          collaborate on Agricultural products, fostering partnerships that
-          drive agricultural innovation and mutual growth`,
+      answer: `Sign up or log in with your full name, email, and password to get started.`,
     },
     {
       step: "2",
       description: " Complete KYC Verification",
-      answer: `FarmPady is a platform where investors and farmers connect to
-          collaborate on Agricultural products, fostering partnerships that
-          drive agricultural innovation and mutual growth`,
+      answer: `Upload your ID and required details to verify your account.`,
     },
     {
       step: "3",
       description: "Search for Projects to Bid On",
-      answer: `FarmPady is a platform where investors and farmers connect to
-          collaborate on Agricultural products, fostering partnerships that
-          drive agricultural innovation and mutual growth`,
+      answer: `Browse and select farm projects that match your interests`,
     },
     {
       step: "4",
       description: "Select mode of operation",
-      answer: `FarmPady is a platform where investors and farmers connect to
-          collaborate on Agricultural products, fostering partnerships that
-          drive agricultural innovation and mutual growth`,
+      answer: `Choose your preferred investment type - lump-sum, or milestone`,
     },
     {
       step: "5",
       description: "Monitor your Investment",
-      answer: `FarmPady is a platform where investors and farmers connect to
-          collaborate on Agricultural products, fostering partnerships that
-          drive agricultural innovation and mutual growth`,
+      answer: `Get live updates and performance reports on your investments.`,
     },
   ];
 
@@ -61,44 +51,32 @@ const Process = () => {
     {
       step: "1",
       description: "Register/Login",
-      answer: `FarmPady is a platform where investors and farmers connect to
-          collaborate on Agricultural products, fostering partnerships that
-          drive agricultural innovation and mutual growth`,
+      answer: `Sign up or log in with your full name, email, and password to get started.`,
     },
     {
       step: "2",
       description: "Complete KYC Verification",
-      answer: `FarmPady is a platform where investors and farmers connect to
-          collaborate on Agricultural products, fostering partnerships that
-          drive agricultural innovation and mutual growth`,
+      answer: `Upload your ID and details to verify your farmer profile.`,
     },
     {
       step: "3",
       description: "Create and setup farm",
-      answer: `FarmPady is a platform where investors and farmers connect to
-          collaborate on Agricultural products, fostering partnerships that
-          drive agricultural innovation and mutual growth`,
+      answer: `Add your farm details, location, and crops you grow.`,
     },
     {
       step: "4",
       description: "Create and publish your project",
-      answer: `FarmPady is a platform where investors and farmers connect to
-          collaborate on Agricultural products, fostering partnerships that
-          drive agricultural innovation and mutual growth`,
+      answer: `Describe your project, funding needs, and goals, then make it public.`,
     },
     {
       step: "5",
       description: "Review and Accept/reject investor bids",
-      answer: `FarmPady is a platform where investors and farmers connect to
-          collaborate on Agricultural products, fostering partnerships that
-          drive agricultural innovation and mutual growth`,
+      answer: `Check investor offers and decide which to accept or reject.`,
     },
     {
       step: "6",
       description: "Run Project",
-      answer: `FarmPady is a platform where investors and farmers connect to
-          collaborate on Agricultural products, fostering partnerships that
-          drive agricultural innovation and mutual growth`,
+      answer: `Start farming with secured funding and update investors on progress.`,
     },
   ];
 

@@ -15,8 +15,8 @@ const HowItWorks = () => {
       <Contact
         bg="bg-[#EEFEF6]"
         text="Got any questions?"
-        btnText="Meet team"
-        url="/meet-team"
+        btnText="Send us a message"
+        url="/contact-us"
         textColor="text-[#5F5F5F]"
       />
       <AboutUsCommon
