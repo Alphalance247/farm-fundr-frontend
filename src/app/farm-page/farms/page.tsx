@@ -19,7 +19,7 @@ const Farms = () => {
       />
 
       <section className="max-w-[1300px] mx-auto px-4 py-10 md:px-4 md:py-12 mt-8">
-        <GoBackBtn href="/store-front" />
+        <GoBackBtn href="/farm-page" />
 
         <div className="grid grid-cols-3 gap-x-10 gap-y-10 mt-8">
           <FarmCard

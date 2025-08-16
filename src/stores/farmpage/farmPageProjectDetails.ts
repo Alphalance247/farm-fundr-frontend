@@ -41,7 +41,10 @@ interface projectsDetailsStore {
   data: projectsDetailsDataStore | null;
   loading: boolean;
   error: string | null;
-  fetchProjectsDetails: (projectDetailsId: string) => Promise<void>;
+  fetchProjectsDetails: (
+    farmName: string,
+    projectDetailsId: string
+  ) => Promise<void>;
 }
 
 export const getFarmPageProjectDetails = create<projectsDetailsStore>(
@@ -50,11 +53,14 @@ export const getFarmPageProjectDetails = create<projectsDetailsStore>(
     loading: false,
     error: null,
 
-    fetchProjectsDetails: async (projectDetailsId: string) => {
+    fetchProjectsDetails: async (
+      farmName: string,
+      projectDetailsId: string
+    ) => {
       set({ loading: true, error: null });
       try {
         const res = await axios.get(
-          `${environment?.farmPageBaseUrl}/farmpage/branches/projects/${projectDetailsId}`
+          `https://${farmName}.${environment?.farmPageBaseUrl}/farmpage/branches/projects/${projectDetailsId}`
         );
         set({ data: res.data, loading: false });
       } catch (err) {

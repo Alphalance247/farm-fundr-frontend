@@ -28,7 +28,7 @@ interface farmPageProjectListStore {
   data: farmPageProjectDataStore | null;
   loading: boolean;
   error: string | null;
-  fetchFarmPageProjectList: () => Promise<void>;
+  fetchFarmPageProjectList: (farmName: string) => Promise<void>;
 }
 
 export const getFarmPageProjectListStore = create<farmPageProjectListStore>(
@@ -37,11 +37,11 @@ export const getFarmPageProjectListStore = create<farmPageProjectListStore>(
     loading: false,
     error: null,
 
-    fetchFarmPageProjectList: async () => {
+    fetchFarmPageProjectList: async (farmName: string) => {
       set({ loading: true, error: null });
       try {
         const res = await axios.get(
-          `${environment?.farmPageBaseUrl}/farmpage/branches/projects`
+          `https://${farmName}.${environment?.farmPageBaseUrl}/farmpage/branches/projects`
         );
         set({ data: res.data, loading: false });
       } catch (err) {

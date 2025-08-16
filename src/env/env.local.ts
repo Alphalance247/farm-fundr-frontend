@@ -10,5 +10,6 @@ export const environment = {
   setPassword: "accounts/auth/set-new-password",
   addFarm: "farms/",
   UpdateFarm: "/farms/",
-  farmPageBaseUrl: "https://bandele-farm.padycvgcoops.name.ng/pady_api/farms",
+  ////azeez-farm.farmpady.com
+  farmPageBaseUrl: "padycvgcoops.name.ng/pady_api/farms",
 };
