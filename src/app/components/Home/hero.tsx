@@ -21,7 +21,8 @@ const Hero = () => {
               Welcome to FarmPady
             </p>
             <h1 className="text-white  text-center text-7xl font-bold font-aristoBold mb-6 md:text-4xl">
-              <span className="text-[#51F4A6]">Empower</span> Farmers, Grow your
+              <span className="text-[#51F4A6]">Invest in </span>  Farmers, Grow your
+
               <span className="text-[#51F4A6]"> Wealth</span>.
             </h1>
             <p className="text-2xl text-center  mx-auto font-poppinsRegular font-medium mb-10 text-white w-[80%] md:text-base">
