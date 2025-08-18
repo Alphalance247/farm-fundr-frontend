@@ -1,7 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
 import DashboardLayout from "../../components/common/dashboardLayout";
-import { Topbar } from "../../components/common/dashboard/topBar";
 import GoBackBtn from "@/app/components/common/goBack";
 import { IoPerson } from "react-icons/io5";
 import { IoSchoolSharp } from "react-icons/io5";
@@ -49,8 +48,6 @@ const Setting = () => {
 
   return (
     <DashboardLayout>
-      <Topbar overview="Settings" />
-
       <main className="px-10 py-8 bg-gray-50 h-full overflow-auto">
         <GoBackBtn href="/farmer-dashboard" />
 

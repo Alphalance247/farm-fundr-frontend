@@ -1,6 +1,5 @@
 "use client";
 import DashboardLayout from "../../../components/common/dashboardLayout";
-import { Topbar } from "../../../components/common/dashboard/topBar";
 import Image from "next/image";
 import { useState } from "react";
 import GoBackBtn from "@/app/components/common/goBack";
@@ -159,8 +158,6 @@ const AddPoject = () => {
   return (
     <ProtectedRoute requiredUserType="farmer">
       <DashboardLayout>
-        <Topbar overview="My farm" />
-
         {loading && (
           <SpinnerModal
             message="Creating project, please wait... This may take a few minutes."
@@ -168,7 +165,7 @@ const AddPoject = () => {
           />
         )}
 
-        <main className="px-10 py-10 bg-gray-50 overflow-auto">
+        <main className="px-10 py-10 bg-gray-50 overflow-y-auto">
           <div className="flex gap-x-6">
             {formStep !== 5 && (
               <div className="w-[30%]">

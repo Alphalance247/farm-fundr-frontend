@@ -85,7 +85,7 @@ interface farmPageListStore {
   data: farmPageDataStore | null;
   loading: boolean;
   error: string | null;
-  fetchFarmPageList: () => Promise<void>;
+  fetchFarmPageList: (farmName: string) => Promise<void>;
 }
 
 export const getFarmPageListStore = create<farmPageListStore>((set) => ({
@@ -93,10 +93,12 @@ export const getFarmPageListStore = create<farmPageListStore>((set) => ({
   loading: false,
   error: null,
 
-  fetchFarmPageList: async () => {
+  fetchFarmPageList: async (farmName: string) => {
     set({ loading: true, error: null });
     try {
-      const res = await axios.get(`${environment?.farmPageBaseUrl}/farmpage`);
+      const res = await axios.get(
+        `https://${farmName}.${environment?.farmPageBaseUrl}/farmpage`
+      );
       set({ data: res.data, loading: false });
     } catch (err) {
       if (err instanceof AxiosError) {

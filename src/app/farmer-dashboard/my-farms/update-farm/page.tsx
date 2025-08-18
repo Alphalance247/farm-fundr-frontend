@@ -1,6 +1,5 @@
 "use client";
 import DashboardLayout from "../../../components/common/dashboardLayout";
-import { Topbar } from "../../../components/common/dashboard/topBar";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import Label from "@/app/components/common/label";
@@ -246,8 +245,6 @@ const UpdateFarm = () => {
     }
   };
 
-  console.log(form, uploadedImages);
-
   return (
     <ProtectedRoute requiredUserType="farmer">
       <DashboardLayout>
@@ -258,9 +255,7 @@ const UpdateFarm = () => {
           />
         )}
 
-        <Topbar overview="My farm" />
-
-        <main className="px-10 py-10 bg-gray-50 overflow-auto">
+        <main className="px-10 py-10 bg-gray-50 overflow-y-auto">
           <GoBackBtn href="/farmer-dashboard/my-farms" />
           <div className="mt-6 text-center">
             <h5 className="text-xl font-semibold text-[#5F5F5F]">Edit Farm</h5>
