@@ -19,7 +19,7 @@ const Overview = () => {
     {
       id: 1,
       name: "Branches",
-      href: "/store-front/store-branches",
+      href: "/farm-page/farm-branches",
       icon: "/assets/store-front/farmicon.svg",
       numberOfBranches: farmPageData?.farm_branches_count || 0,
       viewBtn: "View",
@@ -27,7 +27,7 @@ const Overview = () => {
     {
       id: 2,
       name: "Projects",
-      href: "/store-front",
+      href: "/farm-page",
       icon: "/assets/store-front/farmicon.svg",
       numberOfBranches: farmPageData?.projects_count || 0,
       viewBtn: "View",
@@ -35,7 +35,7 @@ const Overview = () => {
     {
       id: 3,
       name: "Other farms",
-      href: "/store-front/farms",
+      href: "/farm-page/farms",
       icon: "/assets/store-front/farmicon.svg",
       numberOfBranches: farmData?.other_farms || 0,
       viewBtn: "View",

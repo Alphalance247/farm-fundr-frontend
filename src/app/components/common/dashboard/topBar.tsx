@@ -11,6 +11,7 @@ import Heading from "./heading";
 import { IoIosMenu } from "react-icons/io";
 import { useAuth } from "@/context/authContext";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 export function Topbar({ overview }: { overview: string }) {
   // const [search, setSearch] = useState<string>("");
@@ -46,14 +47,25 @@ export function Topbar({ overview }: { overview: string }) {
   };
   return (
     <header className="flex items-center justify-between gap-x-6 h-[93px] px-10 py-5 bg-white shadow-sm sticky top-0 z-10 md:p-4">
-      <div className="hidden xl:block">
+      <div className="">
+        <Link href={"/"}>
+          <Image
+            src="/assets/LandingPage/icons/fundrlogo.svg"
+            width={169}
+            height={41}
+            alt="alluviumlogo"
+          />
+        </Link>
+      </div>
+
+      {/* <div className="hidden xl:block">
         <Image
           src="/assets/DashBoard/overview/mobile-logo.svg"
           width={32}
           height={35}
           alt="alluviumlogo"
         />
-      </div>
+      </div> */}
 
       <div className="hidden items-center gap-x-3 xl:flex">
         <Image

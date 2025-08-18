@@ -1,4 +1,4 @@
-import StoreFrontDetails from "@/app/components/store-font/store-front-project-details/page";
+import StoreFrontDetails from "@/app/components/store-font/store-front-project-details/storeFrontDetails";
 import { JSX } from "react";
 
 export default async function StoreFontProjectDetails({

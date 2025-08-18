@@ -29,7 +29,7 @@ interface farmPageBranchListStore {
   data: farmPageBranchDataStore | null;
   loading: boolean;
   error: string | null;
-  fetchFarmPageBranchList: () => Promise<void>;
+  fetchFarmPageBranchList: (farmName: string) => Promise<void>;
 }
 
 export const getFarmPageBranchesListStore = create<farmPageBranchListStore>(
@@ -38,11 +38,11 @@ export const getFarmPageBranchesListStore = create<farmPageBranchListStore>(
     loading: false,
     error: null,
 
-    fetchFarmPageBranchList: async () => {
+    fetchFarmPageBranchList: async (farmName: string) => {
       set({ loading: true, error: null });
       try {
         const res = await axios.get(
-          `${environment?.farmPageBaseUrl}/farmpage/branches`
+          `https://${farmName}.${environment?.farmPageBaseUrl}/farmpage/branches`
         );
         set({ data: res.data, loading: false });
       } catch (err) {

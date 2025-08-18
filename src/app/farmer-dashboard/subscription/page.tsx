@@ -1,5 +1,4 @@
 import DashboardLayout from "../../components/common/dashboardLayout";
-import { Topbar } from "../../components/common/dashboard/topBar";
 import SubscribeCard from "@/app/components/dashboard/subscription/subscribeCard";
 
 interface subscriceCardData {
@@ -82,8 +81,6 @@ const Subscription = () => {
   ];
   return (
     <DashboardLayout>
-      <Topbar overview="Subscription" />
-
       <main className="px-10 py-8 bg-gray-50 overflow-auto">
         <div className=" mb-10">
           <h2 className="text-xl font-poppinsSemiBold text-[#5F5F5F]">

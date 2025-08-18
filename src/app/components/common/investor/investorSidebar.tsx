@@ -7,12 +7,10 @@ import {
   MdOutlineMessage,
   MdOutlineAnalytics,
   MdOutlineAccountBalanceWallet,
-  MdOutlinePayment,
 } from "react-icons/md";
 import { TbReportAnalytics } from "react-icons/tb";
 import { CiSettings } from "react-icons/ci";
 import { PiHeadsetLight } from "react-icons/pi";
-import Subsribe from "../../dashboard/subscribe";
 import { GoSignOut } from "react-icons/go";
 
 interface sideBarData {
@@ -25,26 +23,26 @@ interface sideBarData {
   textColor?: string;
 }
 
-const Sidebar: React.FC = () => {
+const InvestorSidebar: React.FC = () => {
   const pathname = usePathname();
 
   const sideBarData: sideBarData[] = [
     {
       text: "Dashboard",
-      link: "/farmer-dashboard",
+      link: "/investor-dashboard",
       icons: <HiOutlineHome size={20} />,
     },
     {
-      text: "My Farms",
-      link: "/farmer-dashboard/my-farms",
+      text: "My Investments",
+      link: "/investor-dashboard/investment",
       icons: <TbReportAnalytics size={20} />,
       notification: "10",
       bgColor: "bg-[#F2F2F2]",
       textColor: "text-[#2D865B]",
     },
     {
-      text: "Message",
-      link: "/farmer-dashboard/message",
+      text: "Bids",
+      link: "/investor-dashboard/bids",
       icons: <MdOutlineMessage size={20} />,
       notification: "10",
       bgColor: "bg-[#2D865B]",
@@ -52,19 +50,15 @@ const Sidebar: React.FC = () => {
     },
     {
       text: "Analytics",
-      link: "/farmer-dashboard/analytics",
+      link: "/investor-dashboard/analytics",
       icons: <MdOutlineAnalytics size={20} />,
     },
     {
       text: "Wallet",
-      link: "/farmer-dashboard/wallet",
+      link: "/investor-dashboard/wallet",
       icons: <MdOutlineAccountBalanceWallet size={20} />,
     },
-    {
-      text: "Subscription",
-      link: "/farmer-dashboard/subscription",
-      icons: <MdOutlinePayment size={20} />,
-    },
+
     {
       text: "Settings",
       link: "/farmer-dashboard/settings",
@@ -78,7 +72,7 @@ const Sidebar: React.FC = () => {
   ];
 
   return (
-    <aside className="bg-white overflow-y-scroll lg:hidden">
+    <aside className="bg-white overflow-y-auto lg:hidden">
       {/* Logo / Brand Name */}
       <div className="flex flex-col justify-between ">
         <div className="font-bold">
@@ -150,8 +144,6 @@ const Sidebar: React.FC = () => {
         </div>
       </div>
 
-      <Subsribe />
-
       <div className="flex justify-between items-center py-4 pl-2 pr-2 pb-10 mt-3">
         <div className="flex items-center gap-x-3">
           <Image
@@ -177,4 +169,4 @@ const Sidebar: React.FC = () => {
   );
 };
 
-export default Sidebar;
+export default InvestorSidebar;

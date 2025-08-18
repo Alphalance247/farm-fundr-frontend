@@ -1,6 +1,5 @@
 "use client";
 import DashboardLayout from "../../../components/common/dashboardLayout";
-import { Topbar } from "../../../components/common/dashboard/topBar";
 import Image from "next/image";
 import React, { useState } from "react";
 import GoBackBtn from "@/app/components/common/goBack";
@@ -323,8 +322,6 @@ const AddFarm = () => {
             message="Uploading farm details, please wait this might take a while...."
           />
         )}
-
-        <Topbar overview="My farm" />
 
         <main className="px-10 py-10 bg-gray-50 overflow-auto">
           <div

@@ -1,6 +1,5 @@
 "use client";
 import DashboardLayout from "@/app/components/common/dashboardLayout";
-import { Topbar } from "@/app/components/common/dashboard/topBar";
 import BillingFrequency from "@/app/components/dashboard/subscription/billingFrequency";
 import { useState, useEffect } from "react";
 import TransferPopUP from "@/app/components/dashboard/subscription/transferPopUp";
@@ -110,8 +109,6 @@ const StandardPlan = () => {
   return (
     <div className="relative">
       <DashboardLayout>
-        <Topbar overview="Subscription" />
-
         {data.map((item, i) => (
           <BillingFrequency
             heading="Billings"

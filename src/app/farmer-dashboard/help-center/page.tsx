@@ -1,6 +1,5 @@
 "use client";
 import DashboardLayout from "../../components/common/dashboardLayout";
-import { Topbar } from "../../components/common/dashboard/topBar";
 import { FaShapes } from "react-icons/fa";
 import {
   MdOutlinePayment,
@@ -173,8 +172,6 @@ const FarmerDashboard = () => {
   ];
   return (
     <DashboardLayout>
-      <Topbar overview="Help Center" />
-
       <main className=" overflow-auto pb-12">
         <div className="text-center px-8 pt-16 pb-32 bg-[linear-gradient(90deg,#2D865B_0%,#12482F_100%)]">
           <h1 className="text-2xl font-aristoBold text-white mb-2">
