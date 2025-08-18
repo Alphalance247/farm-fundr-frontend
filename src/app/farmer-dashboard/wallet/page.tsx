@@ -1,6 +1,5 @@
 "use client";
 import DashboardLayout from "../../components/common/dashboardLayout";
-import { Topbar } from "../../components/common/dashboard/topBar";
 import { MdOutlineFileCopy } from "react-icons/md";
 import Button from "@/app/components/common/Buttons";
 import { FaPlus, FaRegEyeSlash } from "react-icons/fa";
@@ -51,8 +50,6 @@ const Wallet = () => {
 
   return (
     <DashboardLayout>
-      <Topbar overview="Wallet" />
-
       <main className="px-10 py-10 overflow-auto h-full bg-gray-50">
         <div className=" mb-8">
           <h2 className="text-xl font-poppinsSemiBold text-[#5F5F5F]">

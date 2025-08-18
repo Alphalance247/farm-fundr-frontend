@@ -1,6 +1,5 @@
 "use client";
 import DashboardLayout from "../../../components/common/dashboardLayout";
-import { Topbar } from "../../../components/common/dashboard/topBar";
 import React, { useEffect, useState } from "react";
 import Label from "@/app/components/common/label";
 import { FiDownload } from "react-icons/fi";
@@ -83,8 +82,6 @@ const UpdateProject = () => {
     image3: { file: null, preview: null },
     image4: { file: null, preview: null },
   });
-
-  console.log(uploadedImages);
 
   useEffect(() => {
     if (projectData) {
@@ -293,8 +290,6 @@ const UpdateProject = () => {
             message="Uploading farm details, please wait this might take a while...."
           />
         )}
-
-        <Topbar overview="My farm" />
 
         <main className="px-10 py-10 bg-gray-50 overflow-auto">
           <GoBackBtn href="/farmer-dashboard/my-farms" />

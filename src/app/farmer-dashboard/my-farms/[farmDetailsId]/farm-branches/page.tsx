@@ -1,5 +1,4 @@
 "use client";
-import { Topbar } from "@/app/components/common/dashboard/topBar";
 import DashboardLayout from "@/app/components/common/dashboardLayout";
 import BranchFarmCard from "@/app/components/dashboard/my-farms/branchCard";
 import FarmHeadingOverview from "@/app/components/dashboard/my-farms/farmHeadingOverview";
@@ -23,8 +22,6 @@ const FarmBranches = () => {
 
   return (
     <DashboardLayout>
-      <Topbar overview="My farm" />
-
       <main className="px-10 py-10 bg-gray-50 overflow-auto h-full">
         <FarmHeadingOverview
           farmName={farmData?.name}

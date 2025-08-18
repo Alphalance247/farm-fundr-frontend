@@ -1,6 +1,5 @@
 "use client";
 import DashboardLayout from "../../components/common/dashboardLayout";
-import { Topbar } from "../../components/common/dashboard/topBar";
 import Image from "next/image";
 import { useState, useEffect } from "react";
 import FarmListTable from "@/app/components/dashboard/my-farms/farmsTable";
@@ -59,8 +58,7 @@ const MyFarms = () => {
   return (
     <ProtectedRoute requiredUserType="farmer">
       <DashboardLayout>
-        <Topbar overview="My farm" />
-        <main className="px-10 py-10 bg-gray-50 overflow-auto h-full xl:px-4 xl:py-6">
+        <main className="px-10 py-10 bg-gray-50 overflow-y-scroll h-full xl:px-4 xl:py-6">
           <div className="flex justify-between items-center">
             <div className="">
               <h2 className="text-xl font-poppinsSemiBold text-[#5F5F5F]">

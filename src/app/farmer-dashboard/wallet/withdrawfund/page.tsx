@@ -6,7 +6,6 @@ import { FaArrowRightLong } from "react-icons/fa6";
 import { IoPencilSharp } from "react-icons/io5";
 import BidConfirmModal from "@/app/components/common/modals/bidConfirmModal";
 import BackIcon from "@/app/components/common/backIcon";
-import { Topbar } from "@/app/components/common/dashboard/topBar";
 import DashboardLayout from "@/app/components/common/dashboardLayout";
 import { getUserBankStore } from "@/stores/settings/getBankDetails";
 import toast from "react-hot-toast";
@@ -112,7 +111,6 @@ export default function WithdrawFundStep1() {
 
   return (
     <DashboardLayout>
-      <Topbar overview="Wallet" />
       <main className="overflow-auto bg-gray-50">
         <section className="bg-white grid grid-cols-[40%_auto] rounded-xl">
           <div className="bg-[#EEFEF6] justify-center flex items-center">
