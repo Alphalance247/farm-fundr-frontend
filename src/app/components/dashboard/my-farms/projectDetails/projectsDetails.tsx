@@ -76,6 +76,8 @@ const ProjectDetails = ({
           farmName={projectData?.name || "N/A"}
           goBackLink={`/farmer-dashboard/my-farms/${farmDetailsId}/farm-branches/${branchDetailsId}`}
           isProjectDetails={true}
+          isBranch={false}
+          isProject={false}
         />
         {loading ? (
           <Spinner />

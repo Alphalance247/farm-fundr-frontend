@@ -19,12 +19,11 @@ const Setting = () => {
   const [activeTab, setActiveTab] = useState<string>("Profile settings");
   const { user } = useAuth();
   const { fetchUserKYC, data } = getKYCPercentageStore();
-  const { fetchUserDetails, data: userDetails } = getUserDetailsStore();
+  const { data: userDetails } = getUserDetailsStore();
 
   useEffect(() => {
     fetchUserKYC();
-    fetchUserDetails();
-  }, [fetchUserKYC, fetchUserDetails]);
+  }, [fetchUserKYC]);
 
   const tabs: { id: number; name: string; icon: ReactNode }[] = [
     { id: 1, name: "Profile settings", icon: <IoPerson size={20} /> },

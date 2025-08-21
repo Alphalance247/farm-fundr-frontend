@@ -4,8 +4,6 @@ import Image from "next/image";
 import { HiOutlineHome } from "react-icons/hi2";
 import { usePathname } from "next/navigation";
 import {
-  MdOutlineMessage,
-  MdOutlineAnalytics,
   MdOutlineAccountBalanceWallet,
   MdOutlinePayment,
 } from "react-icons/md";
@@ -14,6 +12,8 @@ import { CiSettings } from "react-icons/ci";
 import { PiHeadsetLight } from "react-icons/pi";
 import Subsribe from "../../dashboard/subscribe";
 import { GoSignOut } from "react-icons/go";
+import { useEffect } from "react";
+import { getFarmListStore } from "@/stores/farms/getFarmList";
 
 interface sideBarData {
   heading?: string;
@@ -27,6 +27,12 @@ interface sideBarData {
 
 const Sidebar: React.FC = () => {
   const pathname = usePathname();
+  const { data: farmList, fetchFarmList } = getFarmListStore();
+  const farmData = farmList?.results?.extra_data?.total_farms ?? null;
+
+  useEffect(() => {
+    fetchFarmList();
+  }, [fetchFarmList]);
 
   const sideBarData: sideBarData[] = [
     {
@@ -38,23 +44,23 @@ const Sidebar: React.FC = () => {
       text: "My Farms",
       link: "/farmer-dashboard/my-farms",
       icons: <TbReportAnalytics size={20} />,
-      notification: "10",
+      notification: farmData?.toString() || "0",
       bgColor: "bg-[#F2F2F2]",
       textColor: "text-[#2D865B]",
     },
-    {
-      text: "Message",
-      link: "/farmer-dashboard/message",
-      icons: <MdOutlineMessage size={20} />,
-      notification: "10",
-      bgColor: "bg-[#2D865B]",
-      textColor: "text-white",
-    },
-    {
-      text: "Analytics",
-      link: "/farmer-dashboard/analytics",
-      icons: <MdOutlineAnalytics size={20} />,
-    },
+    // {
+    //   text: "Message",
+    //   link: "/farmer-dashboard/message",
+    //   icons: <MdOutlineMessage size={20} />,
+    //   notification: "10",
+    //   bgColor: "bg-[#2D865B]",
+    //   textColor: "text-white",
+    // },
+    // {
+    //   text: "Analytics",
+    //   link: "/farmer-dashboard/analytics",
+    //   icons: <MdOutlineAnalytics size={20} />,
+    // },
     {
       text: "Wallet",
       link: "/farmer-dashboard/wallet",

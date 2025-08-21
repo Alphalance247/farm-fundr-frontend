@@ -133,6 +133,7 @@ const AddFarmBranch = () => {
             />
           </div>
         )}
+
         <main className="px-10 py-10 bg-gray-50 overflow-auto">
           <div className="flex gap-x-6">
             <div className="w-[30%]">

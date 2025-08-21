@@ -28,7 +28,7 @@ export default function TransactionSearch({
       <div className="flex items-center justify-between xl:flex-col xl:items-start xl:gap-y-6">
         {withHeading && (
           <h4 className="text-sm font-poppinsSemiBold text-[#5F5F5F]">
-            All Transactions
+            All Farms
           </h4>
         )}
 

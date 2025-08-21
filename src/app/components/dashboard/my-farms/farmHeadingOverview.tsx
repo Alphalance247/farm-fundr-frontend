@@ -8,8 +8,12 @@ const FarmHeadingOverview = ({
   overview,
   goBackLink,
   isProjectDetails,
+  isBranch,
+  isProject,
 }: {
   farmName?: string;
+  isProject: boolean;
+  isBranch: boolean;
   overview?: string;
   goBackLink?: string;
   isProjectDetails?: boolean;
@@ -38,7 +42,7 @@ const FarmHeadingOverview = ({
         {isProjectDetails ? (
           <Button>Save Changes</Button>
         ) : (
-          <CreateNewFarmBtn />
+          <CreateNewFarmBtn isBranch={isBranch} isProject={isProject} />
         )}
       </div>
     </div>

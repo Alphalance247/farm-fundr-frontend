@@ -603,7 +603,7 @@ const AddFarm = () => {
                               </div>
                             </div>
                           ) : (
-                            <div className="bg-[#EEFEF6] border border-[#51F4A6] border-dashed flex flex-col gap-y-3 cursor-pointer items-center w-full py-6 rounded-xl">
+                            <div className="bg-[#EEFEF6] border border-[#51F4A6] border-dashed flex flex-col gap-y-3 cursor-pointer items-center w-full py-24 rounded-xl">
                               <span>
                                 <FiDownload size={24} color="#2D865B" />{" "}
                               </span>
@@ -687,7 +687,7 @@ const AddFarm = () => {
                                         height={158}
                                         src={uploadedImages.image1.preview}
                                         alt="Uploaded image1"
-                                        className="object-cover w-full"
+                                        className="object-cover rounded-xl w-full h-[458px]"
                                       />
                                     </div>
 
@@ -702,7 +702,7 @@ const AddFarm = () => {
                                   </div>
                                 </div>
                               ) : (
-                                <div className="bg-[#EEFEF6] border border-[#51F4A6] border-dashed flex flex-col gap-y-3 cursor-pointer items-center w-full py-6 rounded-xl">
+                                <div className="bg-[#EEFEF6] border border-[#51F4A6] border-dashed flex flex-col gap-y-3 cursor-pointer items-center w-full py-24  rounded-xl">
                                   <span>
                                     <FiDownload size={24} color="#2D865B" />
                                   </span>
@@ -719,7 +719,7 @@ const AddFarm = () => {
                         </div>
                       </div>
 
-                      <div className="grid grid-cols-3 gap-4">
+                      <div className="grid grid-cols-1 gap-4">
                         {Object.entries(uploadedImages)
                           .filter(([key]) => key !== "image1")
                           .map(([key, { preview }]) => (
@@ -746,7 +746,7 @@ const AddFarm = () => {
                                           height={95}
                                           src={preview}
                                           alt={`Uploaded ${key}`}
-                                          className="object-cover w-full"
+                                          className="object-cover w-full h-[458px]"
                                         />
                                         <div className="flex items-center justify-center absolute gap-x-1 bg-[#FFFFFFE5] px-2 py-1 cursor-pointer rounded-lg bottom-[4rem] right-[3rem]">
                                           <p className="text-xs font-poppinsRegular text-[#616161]">
@@ -895,8 +895,8 @@ const AddFarm = () => {
                             Description
                           </p>
 
-                          <p className="bg-[#FCFCFC] border p-5 border-[#F6F6F6] rounded-xl text-[#5F5F5F] font-poppinsSemiBold">
-                            We specialize in apple
+                          <p className="bg-[#FCFCFC] border p-5 border-[#F6F6F6] rounded-xl text-[#5F5F5F] font-poppinsSemiBold text-wrap w-fit break-all">
+                            {form?.fieldDescription}
                           </p>
                         </div>
                       </div>
