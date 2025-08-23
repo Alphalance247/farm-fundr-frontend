@@ -11,7 +11,8 @@ interface TransactionSearchProps {
   onSearchChange: (value: string) => void;
   onSortChange: (value: SortOption) => void;
   onFilterChange: (value: FilterOption) => void;
-  withHeading: boolean;
+  withHeading?: boolean; // optional
+  headingText?: string; // optional custom title
 }
 
 export default function TransactionSearch({
@@ -21,14 +22,15 @@ export default function TransactionSearch({
   onSearchChange,
   onSortChange,
   onFilterChange,
-  withHeading,
+  withHeading = true, 
+  headingText = "All Transactions", 
 }: TransactionSearchProps) {
   return (
     <div className="mb-6 px-4 py-6 overflow-x-auto">
       <div className="flex items-center justify-between xl:flex-col xl:items-start xl:gap-y-6">
         {withHeading && (
           <h4 className="text-sm font-poppinsSemiBold text-[#5F5F5F]">
-            All Transactions
+            {headingText}
           </h4>
         )}
 
@@ -48,7 +50,6 @@ export default function TransactionSearch({
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-[#71717A] w-4 h-4" />
             </div>
           </div>
-
           <div className="flex items-center gap-2">
             <span className="text-sm font-medium text-[#71717A]">All</span>
             <select
@@ -56,14 +57,11 @@ export default function TransactionSearch({
               onChange={(e) => onFilterChange(e.target.value as FilterOption)}
               className="border border-[#E3E3E5] rounded-lg px-4 py-2 text-base font-medium text-[#2F2F33] focus:outline-none focus:ring-1 focus:ring-[#E37915] focus:border-[#E37915] min-w-[140px]"
             >
-              <option value="all" className="">
-                All
-              </option>
+              <option value="all">All</option>
               <option value="active">Pending</option>
               <option value="inactive">Completed</option>
             </select>
           </div>
-
           <div className="flex items-center gap-2">
             <span className="text-sm font-medium text-[#71717A]">Modified</span>
             <select
@@ -82,5 +80,4 @@ export default function TransactionSearch({
   );
 }
 
-// Export types for reuse
 export type { SortOption, FilterOption };
