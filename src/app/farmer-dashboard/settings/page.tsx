@@ -55,7 +55,7 @@ const Setting = () => {
             {userDetails?.user_details?.image ? (
               <Image
                 src={
-                  `${environment?.imgBaserUrl}${userDetails?.user_details?.image}` ||
+                  `${environment?.imgBaserUrl}/${userDetails?.user_details?.image}/` ||
                   ""
                 }
                 height={135}
