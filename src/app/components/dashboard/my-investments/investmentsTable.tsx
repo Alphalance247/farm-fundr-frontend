@@ -104,7 +104,7 @@ export default function ProjectTable() {
         withHeading={true}
       />
       <div className="overflow-x-auto">
-        <table className="w-full border-collapse rounded-lg overflow-hidden">
+        <table className="min-w-full border-collapse rounded-lg overflow-hidden">
           <thead className="bg-[#FAFEFF]">
             <tr>
               <th className="py-3 px-4 text-sm text-[#0B222A] text-left">

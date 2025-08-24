@@ -64,8 +64,8 @@ export default function ProjectList() {
           </div>
         </div>
       </div>
-      <div className="overflow-x-auto border border-[#E4E7EC] hide-scrollbar rounded-xl">
-        <table className="min-w-full border-collapse rounded-lg overflow-hidden">
+      <div className="overflow-x-auto border border-[#E4E7EC]">
+        <table className="w-full border-collapse hide-scrollbar rounded-lg overflow-hidden">
           <thead className="bg-[#EEFEF6]">
             <tr>
               <th className="px-4 py-3 text-left text-sm font-poppinsSemiBold text-[#0B222A]">
@@ -121,11 +121,11 @@ export default function ProjectList() {
           </tbody>
         </table>
       </div>
-          <div className="mt-4 flex justify-center">
-            <Button variant="secondary" size="medium">
-              View All Investments
-            </Button>
-          </div>
+      <div className="mt-4 flex justify-center">
+        <Button variant="secondary" size="medium">
+          View All Investments
+        </Button>
+      </div>
     </section>
   );
 }
