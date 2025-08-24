@@ -1,4 +1,4 @@
-const Heading = ({
+const  Heading = ({
   overview,
   className,
 }: {
