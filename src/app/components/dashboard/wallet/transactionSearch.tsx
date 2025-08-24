@@ -23,7 +23,6 @@ export default function TransactionSearch({
   onSortChange,
   onFilterChange,
   withHeading = true, 
-  headingText = "All Transactions", 
 }: TransactionSearchProps) {
   return (
     <div className="mb-6 px-4 py-6 overflow-x-auto">
