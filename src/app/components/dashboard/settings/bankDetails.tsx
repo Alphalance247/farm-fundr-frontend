@@ -173,6 +173,12 @@ const BankDetails = () => {
     }
   };
 
+  // Check if user has bank details
+  const hasBankDetails =
+    data?.bank_details?.account_name &&
+    data?.bank_details?.account_number &&
+    data?.bank_details?.bank_name;
+
   return (
     <section className="mt-8 pb-8 border-b">
       {isLoadingBankDetails && (
@@ -241,7 +247,7 @@ const BankDetails = () => {
         subHead="Update your bank details to receive payment"
       />
 
-      {updateOverview ? (
+      {hasBankDetails && !updateOverview ? (
         <div className="w-[50%] mx-auto pt-8">
           <div className="border border-[#E2E2E2] p-6 flex justify-between gap-x-8 items-center  rounded-xl">
             <div className="flex gap-x-6 items-center">
@@ -269,7 +275,7 @@ const BankDetails = () => {
                 variant="subprimary"
                 type="button"
                 onClick={() => {
-                  setUpdateOverview(false);
+                  setUpdateOverview(true);
                 }}
               >
                 Update Bank
@@ -396,7 +402,7 @@ const BankDetails = () => {
                   ? "cursor-not-allowed opacity-60"
                   : ""
               }`}
-              onClick={() => setUpdateOverview(true)}
+              onClick={() => setUpdateOverview(false)}
               type="button"
             >
               Add bank

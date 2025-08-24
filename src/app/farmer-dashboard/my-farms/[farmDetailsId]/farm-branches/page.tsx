@@ -27,6 +27,8 @@ const FarmBranches = () => {
           farmName={farmData?.name}
           overview={farmData?.description}
           goBackLink={`/farmer-dashboard/my-farms/${farmData?.id}`}
+          isProject={false}
+          isBranch={true}
         />
 
         {farmBranchData?.length === 0 ? (

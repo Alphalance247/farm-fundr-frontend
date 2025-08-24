@@ -34,11 +34,13 @@ const BranchDetails = ({
     <DashboardLayout>
       <main className="px-10 py-10 bg-gray-50 overflow-y-auto h-full">
         <FarmHeadingOverview
-          farmName="Lagos Branch Project"
-          overview={`Overview of Lagos Branch Projects(${
+          farmName={projectsCard[0]?.farm_branch_name}
+          overview={`Overview of ${projectsCard[0]?.farm_branch_name}(${
             data?.results?.data?.length || "0"
           })`}
           goBackLink={`/farmer-dashboard/my-farms/${farmId}/farm-branches/`}
+          isProject={true}
+          isBranch={false}
         />
 
         {loading ? (

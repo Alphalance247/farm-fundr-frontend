@@ -152,7 +152,6 @@ const FundingDetails = ({
           >
             <option value="">Select type</option>
 
-            <option value="milestone">Milestones (Every Month)</option>
             <option value="lump sum">Lump Sum (Once)</option>
           </select>
         </div>
