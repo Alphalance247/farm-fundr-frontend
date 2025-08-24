@@ -28,7 +28,7 @@ const ProfileSettings = ({ UserDetails }: { UserDetails: UserDetails }) => {
   const getImageUrl = (imagePath: string | null | undefined): string | null => {
     if (!imagePath) return null;
     if (imagePath.startsWith("http")) return imagePath;
-    return `${environment.imgBaserUrl}${imagePath}`;
+    return `${environment.imgBaserUrl}${imagePath}/`;
   };
   const { fetchUserDetails } = getUserDetailsStore();
   const [preview, setPreview] = useState<string | null>(
@@ -134,13 +134,14 @@ const ProfileSettings = ({ UserDetails }: { UserDetails: UserDetails }) => {
 
           <div>
             {preview ? (
-              <Image
-                src={preview || ""}
-                height={84}
-                width={84}
-                alt="profileImage"
-                className="ml-8 h-[84px] w-[84px] rounded-full"
-              />
+              // <Image
+              //   src={preview || ""}
+              //   height={84}
+              //   width={84}
+              //   alt="profileImage"
+              //   className="ml-8 h-[84px] w-[84px] rounded-full"
+              // />
+              ""
             ) : (
               <Image
                 src="/assets/settings/profile.png"
