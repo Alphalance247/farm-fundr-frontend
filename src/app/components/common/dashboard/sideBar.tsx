@@ -12,7 +12,7 @@ import { CiSettings } from "react-icons/ci";
 import { PiHeadsetLight } from "react-icons/pi";
 import Subsribe from "../../dashboard/subscribe";
 import { GoSignOut } from "react-icons/go";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { getFarmListStore } from "@/stores/farms/getFarmList";
 
 interface sideBarData {
@@ -25,7 +25,15 @@ interface sideBarData {
   textColor?: string;
 }
 
-const Sidebar: React.FC = () => {
+interface mobileMenuProps {
+  showMobileMenu: boolean;
+  setShowMobile: (showMobileMenu: boolean) => void;
+}
+
+const Sidebar: React.FC<mobileMenuProps> = ({
+  showMobileMenu,
+  setShowMobile,
+}) => {
   const pathname = usePathname();
   const { data: farmList, fetchFarmList } = getFarmListStore();
   const farmData = farmList?.results?.extra_data?.total_farms ?? null;
@@ -83,13 +91,40 @@ const Sidebar: React.FC = () => {
     },
   ];
 
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node)
+      ) {
+        setShowMobile(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [showMobileMenu, setShowMobile]);
+
   return (
-    <aside className="bg-white overflow-y-scroll lg:hidden">
+    <aside
+      className={`bg-white overflow-y-scroll  ${
+        showMobileMenu
+          ? "lg:block lg:absolute lg:w-[80%] lg:z-20 lg:overflow-y-auto lg:h-auto"
+          : "lg:hidden"
+      } `}
+      ref={dropdownRef}
+    >
       {/* Logo / Brand Name */}
       <div className="flex flex-col justify-between ">
         <div className="font-bold">
           <div className="flex justify-end items-end mt-2">
-            <button>
+            <button
+              className={`cursor-pointer`}
+              onClick={() => setShowMobile(!showMobileMenu)}
+            >
               <Image
                 src="/assets/DashBoard/closeIcon.svg"
                 width={35}
