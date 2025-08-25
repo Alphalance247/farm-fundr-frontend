@@ -1,13 +1,12 @@
 "use client";
 import { BiSearch } from "react-icons/bi";
 import { FaTimesCircle } from "react-icons/fa";
-import { IoNotificationsOutline } from "react-icons/io5";
+import { IoClose, IoNotificationsOutline } from "react-icons/io5";
 import { useRef, useState } from "react";
 import Image from "next/image";
 import { FaChevronDown } from "react-icons/fa";
 import { useEffect } from "react";
 import Heading from "./heading";
-import { IoIosMenu } from "react-icons/io";
 import { useAuth } from "@/context/authContext";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
@@ -17,9 +16,17 @@ import Button from "../Buttons";
 import ModalOverlay from "../modals/modalOverlay";
 import BackIcon from "../backIcon";
 import { getUserDetailsStore } from "@/stores/settings/getUserDetails";
-import { environment } from "@/env/env.local";
+import { FiMenu } from "react-icons/fi";
 
-export function Topbar({ overview }: { overview: string }) {
+export function Topbar({
+  overview,
+  showMobileMenu,
+  setShowMobile,
+}: {
+  overview: string;
+  showMobileMenu: boolean;
+  setShowMobile: (showMobileMenu: boolean) => void;
+}) {
   const { fetchUserDetails, data: userDetails } = getUserDetailsStore();
   useEffect(() => {
     fetchUserDetails();
@@ -78,16 +85,17 @@ export function Topbar({ overview }: { overview: string }) {
     return (
       <div>
         {userDetails?.user_details?.image ? (
-          <Image
-            src={
-              `${environment?.imgBaserUrl}${userDetails?.user_details?.image}` ||
-              ""
-            }
-            height={40}
-            width={40}
-            alt="profileImage"
-            className="h-[40px] w-[40px]  rounded-full"
-          />
+          // <Image
+          //   src={
+          //     `${environment?.imgBaserUrl}/${userDetails?.user_details?.image}/` ||
+          //     ""
+          //   }
+          //   height={40}
+          //   width={40}
+          //   alt="profileImage"
+          //   className="h-[40px] w-[40px]  rounded-full"
+          // />
+          ""
         ) : (
           <div className="h-[40px] w-[40px] rounded-full bg-[#EEFEF6] text-[#2D865B] flex items-center justify-center text-[1.3rem] tracking-[0.34px] font-medium">
             {user?.fullname
@@ -101,7 +109,7 @@ export function Topbar({ overview }: { overview: string }) {
     );
   };
   return (
-    <header className="flex items-center justify-between gap-x-6 h-[93px] px-10 py-5 bg-white shadow-sm sticky top-0 z-10 md:p-4">
+    <header className="flex items-center justify-between gap-x-6 h-[93px] px-10 py-5 bg-white shadow-sm sticky top-0 z-10 lg:px-2">
       <div className="">
         <Link href={"/"}>
           <Image
@@ -114,7 +122,7 @@ export function Topbar({ overview }: { overview: string }) {
       </div>
 
       <div className="flex items-center gap-x-3">
-        <div className="hidden items-center gap-x-3 xl:flex">
+        {/* <div className="hidden items-center gap-x-3 xl:flex">
           <Image
             src="/assets/DashBoard/overview/profile.svg"
             width={32}
@@ -128,14 +136,8 @@ export function Topbar({ overview }: { overview: string }) {
               4
             </p>
           </div>
-
-          <div className="w-10 h-10 rounded-full bg-[#F6F6F6] flex items-center justify-center cursor-pointer">
-            <IoIosMenu color="#0000008A" fill="#0000008A" />
-          </div>
-        </div>
-
+        </div> */}
         <Heading overview={overview} className="lg:hidden" />
-
         <div className="relative lg:hidden">
           <BiSearch
             className="absolute top-4 left-2"
@@ -159,20 +161,39 @@ export function Topbar({ overview }: { overview: string }) {
             // withWidth={false}
           />
         </div>
-
-        <div className="rounded-full bg-[#F6F6F6] w-16 h-16 flex items-center justify-center relative cursor-pointer hover:bg-[#cac6c6] md:lg:hidden">
-          <IoNotificationsOutline size={38} color="#4E4E4E" />
+        <Image
+          src="/assets/DashBoard/overview/profile.svg"
+          width={32}
+          height={32}
+          alt="profile"
+          className="hidden lg:block"
+        />
+        <div className="rounded-full bg-[#F6F6F6] w-16 h-16 flex items-center justify-center relative cursor-pointer hover:bg-[#cac6c6] lg:w-10 lg:h-10 ">
+          <IoNotificationsOutline
+            className="text-[38px] lg:text-2xl"
+            color="#4E4E4E"
+          />
           <p className="w-4 h-4 text-[10px] flex flex-col items-center justify-center rounded-full absolute bg-[#EA5455] text-white top-3 right-4">
             4
           </p>
+        </div>{" "}
+        <div className="w-10 h-10 rounded-full bg-[#F6F6F6] items-center justify-center cursor-pointer hidden lg:flex">
+          <button
+            className="transition-all duration-500 text-black text-4xl hover:p-2"
+            onClick={() => setShowMobile(!showMobileMenu)}
+          >
+            {showMobileMenu ? (
+              <IoClose fill="#0000008A" size={20} color="#0000008A" />
+            ) : (
+              <FiMenu fill="#0000008A" size={20} color="#0000008A" />
+            )}
+          </button>
         </div>
-
         <div className="px-6 py-4 rounded-[40px] bg-[#F6F6F6] w-[full] xl:hidden">
           <p className="text-sm font-poppinsRegular text-[#5F5F5F]">
             {dateTime}
           </p>
         </div>
-
         {isLoading ? (
           <div className="flex items-center gap-x-3 xl:hidden">
             <div className="w-[180px] h-[40px] bg-gray-200 rounded-md animate-pulse"></div>
