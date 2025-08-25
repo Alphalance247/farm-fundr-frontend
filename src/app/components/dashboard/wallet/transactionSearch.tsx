@@ -39,10 +39,10 @@ export default function TransactionSearch({
         >
           {/* Search Section */}
           <div
-            className="grid gap-2 items-center 
-                  lg:grid-cols-1 grid-cols-2"
+            className="flex flex-row lg:flex-col gap-2  items-center 
+                  "
           >
-            <p className="text-sm font-poppinsRegular text-[#71717A]">
+            <p className="text-sm font-poppinsRegular w-full text-[#71717A]">
               Filter By
             </p>
             <div className="relative w-full lg:w-[600px]  md:w-[250px] flex items-center gap-2">
