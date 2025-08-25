@@ -177,23 +177,33 @@ const FarmerDashboard = () => {
           <h1 className="text-2xl font-aristoBold text-white mb-2">
             Help Center
           </h1>
-          <p className="text-white text-sm font-poppinsRegular  w-[50%] mx-auto">
+          <p className="text-white text-sm font-poppinsRegular lg:w-full w-[50%] mx-auto">
             Browse through the sections below or reach out to our support team
             if you need further assistance.
           </p>
         </div>
 
         <div className="mt-[-4rem] max-w-[1000px] mx-auto">
-          <div className=" flex items-center gap-x-8 justify-center">
+          <div
+            className="
+      grid gap-4 
+      grid-cols-5 lg:px-4 
+      lg:grid-cols-3 
+    
+      justify-items-center
+    "
+          >
             {tabsBtn.map((items, i) => (
               <button
-                className={`py-6 px-10 border-[1.76px] shadow-md rounded-[21.16px] flex gap-y-2 flex-col justify-center w-fit items-center h-[126px] ${
-                  tab === items?.text
-                    ? "bg-[#EEFEF6] border-[#2D865B]"
-                    : " bg-white border-[#E8E8E8]"
-                }`}
                 key={i}
                 onClick={() => setTab(items?.text)}
+                className={`py-6 px-6 sm:px-8 border-[1.5px] shadow-md rounded-[20px] 
+          flex flex-col gap-2 items-center justify-center h-[126px] w-full
+          ${
+            tab === items?.text
+              ? "bg-[#EEFEF6] border-[#2D865B]"
+              : "bg-white border-[#E8E8E8]"
+          }`}
               >
                 <span
                   className={`${
@@ -202,7 +212,7 @@ const FarmerDashboard = () => {
                 >
                   {items?.icons}
                 </span>
-                <span className="text-sm text-[#5F5F5F] font-poppinsSemiBold">
+                <span className="text-sm lg:text-xs  text-[#5F5F5F] font-poppinsSemiBold">
                   {items?.text}
                 </span>
               </button>
@@ -211,7 +221,7 @@ const FarmerDashboard = () => {
 
           <div className="mt-8">
             {faqs.map((el, i) => (
-              <div key={i} className="flex flex-col gap-y-4">
+              <div key={i} className="flex lg:px-4 flex-col gap-y-4">
                 {tab === el?.tab &&
                   el?.feedback?.map((el, i) => (
                     <div
@@ -244,7 +254,7 @@ const FarmerDashboard = () => {
 
                       {isOpen === i && (
                         <div className="bg-[#FFFFFF] px-6 pb-4  pt-3 rounded-br-[10px] rounded-bl-[10px]">
-                          <p className="text-sm font-poppinsRegular text-[#282A03] w-[50%] md:text-sm">
+                          <p className="text-sm font-poppinsRegular lg:w-full text-[#282A03] w-[50%] md:text-sm">
                             {el?.answer}
                           </p>
                         </div>

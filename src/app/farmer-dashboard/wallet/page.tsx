@@ -60,14 +60,14 @@ const Wallet = () => {
           </p>
         </div>
 
-        <div className="grid grid-cols-2 gap-x-4 mb-8">
+        <div className="grid grid-cols-2 xl:grid-cols-1 lg:gap-y-4 gap-x-4 mb-8">
           <div className="bg-[url('/assets/DashBoard/wallet/bg-green.png')] bg-cover bg-center bg-no-repeat rounded-xl p-6 h-fit">
             <div className="mb-24">
               <p className="text-sm font-poppinsSemiBold text-white mb-2">
                 Wallet Balance
               </p>
               <div className="flex items-center gap-2 mb-4">
-                <h4 className="text-white text-[2rem] leading-9 font-poppinsSemiBold">
+                <h4 className="text-white text-[2rem] lg:text-xl leading-9 font-poppinsSemiBold">
                   {loading ? (
                     <LoadingSkeleton />
                   ) : (
@@ -118,15 +118,15 @@ const Wallet = () => {
                   </div>
                 </div>
               ) : (
-                <div className="mt-6">
-                  <p className="text-[#E9EAE6] text-sm font-poppinsRegular mb-6">
+                <div className="mt-3">
+                  <p className="text-[#E9EAE6] text-sm font-poppinsRegular mb-3">
                     No bank details found
                   </p>
                 </div>
               )}
             </div>
 
-            <div className="flex items-center gap-x-4">
+            <div className="flex flex-row md:flex-col lg:gap-y-4 items-center gap-x-4">
               {/* <div>
                 <Button
                   className="flex items-center justify-center gap-x-2 w-full"
@@ -138,7 +138,7 @@ const Wallet = () => {
               </div> */}
               {!data?.bank_details?.account_name && (
                 <Link href="/farmer-dashboard/settings">
-                  <Button className="text-[#E9EAE6] text-sm font-poppinsRegular flex items-center gap-x-2">
+                  <Button className="text-[#E9EAE6] text-sm lg:!w-full lg:!px-12 lg:!py-4 font-poppinsRegular flex items-center gap-x-2">
                     <FaPlus size={15} color="#E9EAE6" />
                     Add bank details
                   </Button>
@@ -150,7 +150,7 @@ const Wallet = () => {
                   <Button
                     variant="subprimary"
                     disabled={!data?.bank_details?.account_name}
-                    className={`flex items-center justify-center gap-x-2 w-full ${
+                    className={`flex items-center justify-center lg:!px-12 lg:!py-3  gap-x-2 lg:!w-full ${
                       !data?.bank_details?.account_name
                         ? "opacity-50 cursor-not-allowed"
                         : ""

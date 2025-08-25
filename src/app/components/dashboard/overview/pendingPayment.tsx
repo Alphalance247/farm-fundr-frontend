@@ -17,11 +17,11 @@ const PendingPayment = ({
         isTotalAvailable && "mt-6"
       }`}
     >
-      <div className="flex justify-between  items-center mb-4">
+      <div className="flex flex-row md:flex-col justify-between md:items-start md:gap-2 items-center mb-4">
         <SubHead text="Pending Payment" />
         <div className="relative flex items-center gap-x-4">
           <div
-            className="flex items-center gap-x-2 p-2 bg-white border border-[#d9d9d9] rounded-xl cursor-pointer w-fit"
+            className="flex items-center  gap-x-2 p-2 bg-white border border-[#d9d9d9] rounded-xl cursor-pointer w-fit"
             // onClick={handleOpen}
           >
             <p className="">
