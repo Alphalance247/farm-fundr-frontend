@@ -5,6 +5,8 @@ import { FaRegEnvelope } from "react-icons/fa";
 import { BsEyeFill } from "react-icons/bs";
 import Link from "next/link";
 import { getFarmDetails } from "@/stores/farms/getFarmDetails";
+import { VscUnverified } from "react-icons/vsc";
+import { useState } from "react";
 
 const StoreFrontHeading = ({
   color,
@@ -30,6 +32,21 @@ const StoreFrontHeading = ({
 }) => {
   const { data: farmDetails } = getFarmDetails();
   const farm = farmDetails?.data;
+
+  const [preview, setPreview] = useState<string | null>("");
+  const [file, setFile] = useState<File | null>(null);
+  console.log(file);
+
+  const handlePictureUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const selectedFile = e.target.files?.[0];
+    if (selectedFile && selectedFile.size <= 5 * 1024 * 1024) {
+      setFile(selectedFile);
+      setPreview(URL.createObjectURL(selectedFile));
+    } else {
+      alert("File must be less than 5MB");
+    }
+  };
+
   return (
     <div
       className={` relative ${
@@ -44,19 +61,51 @@ const StoreFrontHeading = ({
         className="absolute z-[1] top-0 right-0 lg:w-[200px] lg:h-[200px] md:w-[100px] md:h-[100px]"
       />
       <div className="max-w-[1300px]  mx-auto relative z-10">
-        <div className=" pt-10 pl-4 pb-8 ">
+        <div className=" pt-10 pl-4 pb-8">
           <div className="flex items-center gap-x-6">
-            <Image
-              src={
-                withBorderRadius
-                  ? "/assets/my-farms/storeLogo.png"
-                  : "/assets/my-farms/uneditfarmpic.png"
-              }
-              alt="customize-store"
-              width={208}
-              height={168}
-              className="md:w-[80px] md:h-[85px]"
-            />
+            {/*  */}
+            {!withBorderRadius ? (
+              <Image
+                src={"/assets/my-farms/uneditfarmpic.png"}
+                alt="customize-store"
+                width={208}
+                height={168}
+                className="md:w-[80px] md:h-[85px] cursor-pointer"
+              />
+            ) : (
+              <div>
+                <label className="mt-4 px-6 py-3 " id="image-upload">
+                  <input
+                    id="image-upload"
+                    type="file"
+                    accept="image/*"
+                    onChange={handlePictureUpload}
+                    className="hidden"
+                  />
+
+                  {preview ? (
+                    <Image
+                      src={preview || ""}
+                      alt="profileImage"
+                      width={208}
+                      height={168}
+                      className="w-[208px] rounded-full h-[218px] md:w-[80px] md:h-[85px] cursor-pointer"
+                    />
+                  ) : (
+                    <Image
+                      src="/assets/my-farms/storeLogo.png"
+                      alt="profileImage"
+                      width={208}
+                      height={168}
+                      className="w-[208px] rounded-lg h-[218px] md:w-[80px] md:h-[85px] cursor-pointer"
+                    />
+                  )}
+                </label>
+              </div>
+            )}
+
+            {/*  */}
+
             <div>
               <div className="flex gap-x-3 items-center mb-1">
                 <h3
@@ -104,8 +153,10 @@ const StoreFrontHeading = ({
                 <p
                   className={`text-sm font-poppinsRegular mt-2 w-fit ${textColor} px-3 py-[6px] rounded-[79px] flex items-center justify-center gap-2 bg-[#FFFFFF33]`}
                 >
-                  {farm?.farm?.cac_reg_status !== "Unregistered" && (
+                  {farm?.farm?.cac_reg_status !== "Unregistered" ? (
                     <MdVerifiedUser className={`${badgeColor}`} size={16} />
+                  ) : (
+                    <VscUnverified className={`${badgeColor}`} size={16} />
                   )}
                   {farm?.farm?.cac_reg_status !== "Unregistered"
                     ? "Verified"
@@ -145,7 +196,7 @@ const StoreFrontHeading = ({
               </Button>
             </Link>
 
-            <Link href="/store-front/store-front-farm-details">
+            <Link href="/farm-page/farm-page-farm-details">
               <Button
                 className="w-fit flex items-center justify-center gap-2"
                 variant="secondary"

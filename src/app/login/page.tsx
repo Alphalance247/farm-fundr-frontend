@@ -116,7 +116,10 @@ const Login = () => {
             const { fullname, user_type } = response?.data;
             toast.success(`Login Successful Welcome back ${fullname}`);
 
-            login({ fullname, user_type });
+            login({
+              fullname, user_type,
+              profileImage: ""
+            });
             const redirectPath = getRedirectPath(user_type, redirectTo);
             router.push(redirectPath);
             setForm({ email: "", password: "" });

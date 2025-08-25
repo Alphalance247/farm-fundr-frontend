@@ -12,6 +12,7 @@ export interface projectListDataSore {
       cac_reg_no: string;
       farm_branches_count: number;
       status: string;
+      farm_branch_name: string;
       description: string;
       farm_name: string;
       ROI: number;

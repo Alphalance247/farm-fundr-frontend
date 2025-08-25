@@ -1,7 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
 import DashboardLayout from "../../components/common/dashboardLayout";
-import { Topbar } from "../../components/common/dashboard/topBar";
 import GoBackBtn from "@/app/components/common/goBack";
 import { IoPerson } from "react-icons/io5";
 import { IoSchoolSharp } from "react-icons/io5";
@@ -20,12 +19,11 @@ const Setting = () => {
   const [activeTab, setActiveTab] = useState<string>("Profile settings");
   const { user } = useAuth();
   const { fetchUserKYC, data } = getKYCPercentageStore();
-  const { fetchUserDetails, data: userDetails } = getUserDetailsStore();
+  const { data: userDetails } = getUserDetailsStore();
 
   useEffect(() => {
     fetchUserKYC();
-    fetchUserDetails();
-  }, [fetchUserKYC, fetchUserDetails]);
+  }, [fetchUserKYC]);
 
   const tabs: { id: number; name: string; icon: ReactNode }[] = [
     { id: 1, name: "Profile settings", icon: <IoPerson size={20} /> },
@@ -49,8 +47,6 @@ const Setting = () => {
 
   return (
     <DashboardLayout>
-      <Topbar overview="Settings" />
-
       <main className="px-10 py-8 bg-gray-50 h-full overflow-auto">
         <GoBackBtn href="/farmer-dashboard" />
 
@@ -59,7 +55,7 @@ const Setting = () => {
             {userDetails?.user_details?.image ? (
               <Image
                 src={
-                  `${environment?.imgBaserUrl}${userDetails?.user_details?.image}` ||
+                  `${environment?.imgBaserUrl}/${userDetails?.user_details?.image}/` ||
                   ""
                 }
                 height={135}

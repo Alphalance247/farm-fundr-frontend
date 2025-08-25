@@ -1,6 +1,5 @@
 "use client";
 import DashboardLayout from "@/app/components/common/dashboardLayout";
-import { Topbar } from "@/app/components/common/dashboard/topBar";
 import { MdVerifiedUser } from "react-icons/md";
 import FarmerInfo from "@/app/components/dashboard/my-farms/farmerInfo";
 import Image from "next/image";
@@ -40,15 +39,21 @@ const FarmDetails = ({ farmDetailsId }: { farmDetailsId: string }) => {
     }
   }, [farmBranchData?.length]);
 
+  const description: string = farmData?.description ?? "";
+
   return (
     <TabProvider>
       <DashboardLayout>
-        <Topbar overview="My farm" />
-
         <main className="px-10 py-10 bg-gray-50 overflow-auto xl:px-4 xl:py-6">
           <FarmHeadingOverview
             farmName={farmData?.name}
-            overview={farmData?.description}
+            overview={`  ${
+              description?.length > 100
+                ? description.slice(0, 5) + ".........."
+                : description
+            }`}
+            isProject={false}
+            isBranch={true}
           />
 
           {loading ? (

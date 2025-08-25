@@ -1,8 +1,6 @@
 "use client";
 import DashboardLayout from "../../components/common/dashboardLayout";
-import { Topbar } from "../../components/common/dashboard/topBar";
 import Image from "next/image";
-import { useState, useEffect } from "react";
 import FarmListTable from "@/app/components/dashboard/my-farms/farmsTable";
 import CreateNewFarmBtn from "@/app/components/dashboard/my-farms/createNewFarmBtn";
 import ProtectedRoute from "@/app/components/common/ProtectedRoute/protectedRoute";
@@ -17,12 +15,7 @@ interface data {
   totalFarms: number;
 }
 const MyFarms = () => {
-  const [activeTab, setActiveTab] = useState<string>("My Farms");
   const { data: farmList, loading, error, fetchFarmList } = getFarmListStore();
-
-  useEffect(() => {
-    fetchFarmList();
-  }, [fetchFarmList]);
 
   const data: data[] = [
     {
@@ -51,16 +44,10 @@ const MyFarms = () => {
     },
   ];
 
-  const tabs: { id: number; name: string }[] = [
-    { id: 1, name: "My Farms" },
-    { id: 2, name: "Draft (1)" },
-  ];
-
   return (
     <ProtectedRoute requiredUserType="farmer">
       <DashboardLayout>
-        <Topbar overview="My farm" />
-        <main className="px-10 py-10 bg-gray-50 overflow-auto h-full xl:px-4 xl:py-6">
+        <main className="px-10 py-10 bg-gray-50 overflow-y-scroll h-full xl:px-4 xl:py-6">
           <div className="flex justify-between items-center">
             <div className="">
               <h2 className="text-xl font-poppinsSemiBold text-[#5F5F5F]">
@@ -72,7 +59,7 @@ const MyFarms = () => {
             </div>
 
             <div>
-              <CreateNewFarmBtn />
+              <CreateNewFarmBtn isBranch={false} isProject={false} />
             </div>
           </div>
           {loading ? (
@@ -106,7 +93,7 @@ const MyFarms = () => {
               </div>
 
               <div className="mt-8">
-                <div className="flex gap-x-5 items-center border-b border-[#E4E7EC]">
+                {/* <div className="flex gap-x-5 items-center border-b border-[#E4E7EC]">
                   {tabs.map((el, i) => (
                     <button
                       className={`${
@@ -120,12 +107,10 @@ const MyFarms = () => {
                       {el.name}
                     </button>
                   ))}
-                </div>
+                </div> */}
 
                 <div className="mt-4">
-                  {activeTab === "My Farms" && <FarmListTable />}
-
-                  {activeTab === "Draft (1)" && <p>Draft (1)</p>}
+                  <FarmListTable />
                 </div>
               </div>
             </>
