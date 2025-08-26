@@ -3,7 +3,6 @@ import DashboardLayout from "../components/common/dashboardLayout";
 import Button from "../components/common/Buttons";
 import Image from "next/image";
 import Link from "next/link";
-import WeatherReport from "../components/dashboard/overview/weatherReports";
 import InvestmentOverview from "../components/dashboard/overview/investmentOverview";
 import EarningOverview from "../components/dashboard/overview/earningOverview";
 import PendingPayment from "../components/dashboard/overview/pendingPayment";
@@ -16,6 +15,10 @@ import ProtectedRoute from "../components/common/ProtectedRoute/protectedRoute";
 import { getKYCPercentageStore } from "@/stores/settings/getKycPercentage";
 import { useEffect, useState } from "react";
 import { MdOutlineDateRange } from "react-icons/md";
+import { getDashboardStore } from "@/stores/farmer-dashboard/dashboard";
+import { getFarmersEarnings } from "@/stores/farmer-dashboard/earnings";
+import { getFarmerBidsStore } from "@/stores/farmer-dashboard/bids";
+import { getFarmerNotification } from "@/stores/farmer-dashboard/notifications";
 
 interface data {
   text?: string;
@@ -28,6 +31,23 @@ interface data {
 const FarmerDashboard = () => {
   const { user } = useAuth();
   const { fetchUserKYC, data: kycData } = getKYCPercentageStore();
+  const { fetchDashboardData } = getDashboardStore();
+  const { fetchFarmerEarnings } = getFarmersEarnings();
+  const { fetchFarmerBids } = getFarmerBidsStore();
+  const { fetchNotification } = getFarmerNotification();
+
+  useEffect(() => {
+    fetchFarmerEarnings();
+    fetchFarmerBids();
+    fetchDashboardData();
+    fetchNotification();
+  }, [
+    fetchFarmerEarnings,
+    fetchFarmerBids,
+    fetchDashboardData,
+    fetchNotification,
+  ]);
+
   const date = new Date();
   date.getUTCDay();
   const [greeting, setGreeting] = useState("");
@@ -87,6 +107,7 @@ const FarmerDashboard = () => {
     },
   ];
   const dat = kycData?.kyc_percentage || 0;
+
   return (
     <ProtectedRoute requiredUserType="farmer">
       <DashboardLayout>
@@ -202,7 +223,7 @@ const FarmerDashboard = () => {
             </div>
           </div>
 
-          <WeatherReport />
+          {/* <WeatherReport /> */}
 
           <div className="grid grid-cols-2 gap-x-6 mt-6 xl:gap-x-3 md:grid-cols-1">
             <div>
