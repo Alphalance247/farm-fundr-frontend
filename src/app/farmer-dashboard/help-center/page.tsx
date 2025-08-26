@@ -186,7 +186,7 @@ const FarmerDashboard = () => {
         <div className="mt-[-4rem] max-w-[1000px] mx-auto">
           <div
             className="
-      grid gap-4 
+      grid gap-4 md:gap-x-2
       grid-cols-5 lg:px-4 
       lg:grid-cols-3 
     
@@ -198,7 +198,7 @@ const FarmerDashboard = () => {
                 key={i}
                 onClick={() => setTab(items?.text)}
                 className={`py-6 px-6 sm:px-8 border-[1.5px] shadow-md rounded-[20px] 
-          flex flex-col gap-2 items-center justify-center h-[126px] w-full
+          flex flex-col gap-2 items-center justify-center h-[126px] md:h-[100px]  w-full
           ${
             tab === items?.text
               ? "bg-[#EEFEF6] border-[#2D865B]"
@@ -212,7 +212,7 @@ const FarmerDashboard = () => {
                 >
                   {items?.icons}
                 </span>
-                <span className="text-sm lg:text-xs  text-[#5F5F5F] font-poppinsSemiBold">
+                <span className="text-sm lg:text-xs   text-[#5F5F5F] font-poppinsSemiBold">
                   {items?.text}
                 </span>
               </button>
@@ -254,7 +254,7 @@ const FarmerDashboard = () => {
 
                       {isOpen === i && (
                         <div className="bg-[#FFFFFF] px-6 pb-4  pt-3 rounded-br-[10px] rounded-bl-[10px]">
-                          <p className="text-sm font-poppinsRegular lg:w-full text-[#282A03] w-[50%] md:text-sm">
+                          <p className="text-sm font-poppinsRegular text-justify lg:w-full text-[#282A03] w-[50%] md:text-sm">
                             {el?.answer}
                           </p>
                         </div>

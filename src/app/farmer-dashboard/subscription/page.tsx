@@ -81,7 +81,7 @@ const Subscription = () => {
   ];
   return (
     <DashboardLayout>
-      <main className="px-10 py-8 bg-gray-50 overflow-auto">
+      <main className="px-10 md:px-4 lg:px-8 py-8 bg-gray-50 overflow-auto">
         <div className=" mb-10">
           <h2 className="text-xl font-poppinsSemiBold text-[#5F5F5F]">
             Subscription
@@ -91,7 +91,7 @@ const Subscription = () => {
           </p>
         </div>
 
-        <div className="grid grid-cols-2 gap-x-10 max-w-[80%] mx-auto">
+        <div className="grid grid-cols-2 lg:max-w-full md:grid-cols-1 md:gap-y-6 gap-x-10 max-w-[80%] mx-auto">
           {subscriceCardData.map((items) => (
             <SubscribeCard
               key={items?.id}

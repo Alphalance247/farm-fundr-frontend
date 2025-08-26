@@ -51,7 +51,7 @@ const BillingFrequency: React.FC<billingCadenceProps> = ({
   }, [subType, subscriptionTier]);
 
   return (
-    <main className="px-10 py-8 bg-gray-50 overflow-auto">
+    <main className="px-10 lg:px-8 md:px-4 py-8 bg-gray-50 overflow-auto">
       <div className=" mb-4">
         <h2 className="text-xl font-poppinsSemiBold text-[#5F5F5F]">
           {heading}
@@ -61,10 +61,10 @@ const BillingFrequency: React.FC<billingCadenceProps> = ({
         </p>
       </div>
       <div>
-        <div className="flex gap-x-4 items-center">
+        <div className="grid grid-cols-3 md:grid-cols-1   gap-4 items-center">
           {subscriptionTier.map((item, i) => (
             <div
-              className={`rounded-xl border border-[#E2E2E2] p-2 w-[200px] cursor-pointer  ${
+              className={`rounded-xl border border-[#E2E2E2] p-2 w-[200px] md:w-full cursor-pointer  ${
                 subType === item?.planType ? "bg-[#EEFEF6]" : "bg-transparent"
               }`}
               onClick={() => {
@@ -73,7 +73,7 @@ const BillingFrequency: React.FC<billingCadenceProps> = ({
               }}
               key={i}
             >
-              <div className="flex justify-between mb-2">
+              <div className="flex justify-between mb-2 md:mb-4">
                 <p className="text-[#7C7C7C] text-sm font-poppinsSemiBold">
                   {item?.tier}
                 </p>
@@ -110,7 +110,7 @@ const BillingFrequency: React.FC<billingCadenceProps> = ({
             Payment Method
           </p>
 
-          <div className="flex items-center gap-x-10">
+          <div className="grid grid-cols-2 md:grid-cols-1 md:gap-4 items-center gap-x-10">
             <div
               className="flex items-center gap-x-3 cursor-pointer"
               onClick={() => setPaymentMethod("paystack")}
@@ -163,7 +163,7 @@ const BillingFrequency: React.FC<billingCadenceProps> = ({
           <div className="">
             <form
               action=""
-              className="bg-white rounded-[8px] p-4 w-[50%] flex flex-col gap-y-4"
+              className="bg-white rounded-[8px] p-4 w-[50%] md:w-full flex flex-col gap-y-4"
             >
               <div>
                 <label
