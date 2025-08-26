@@ -3,27 +3,30 @@ import { FaCaretDown } from "react-icons/fa";
 import { PiDotsThree } from "react-icons/pi";
 import SubHead from "../common/sectionHeading";
 import Image from "next/image";
+import { getDashboardStore } from "@/stores/farmer-dashboard/dashboard";
 import { FarmDistribution } from "../chart/UserOverviewChart/farmDistribution";
 
 interface data {
   investor: string;
   icon: string;
-  number: string;
+  number: number;
   bgColor: string;
 }
 
 const InvestmentOverview = () => {
+  const { data: dashboardData } = getDashboardStore();
+
   const data: data[] = [
     {
       investor: "Total Investors engaged",
       icon: "/assets/DashBoard/overview/peopleicon.svg",
-      number: "12",
+      number: dashboardData?.data?.total_investors_engaged || 0,
       bgColor: "bg-[#ECF2FF]",
     },
     {
       investor: "Ongoing Investment Deals",
       icon: "/assets/DashBoard/overview/bag.svg",
-      number: "3",
+      number: dashboardData?.data?.ongoing_investments || 0,
       bgColor: "bg-[#EEFEF6]",
     },
   ];

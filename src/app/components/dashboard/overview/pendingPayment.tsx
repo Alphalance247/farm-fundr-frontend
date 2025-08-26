@@ -4,6 +4,8 @@ import { FaCaretDown } from "react-icons/fa";
 import Image from "next/image";
 import Button from "../../common/Buttons";
 import { getWalletTransactionStore } from "@/stores/wallet/getWalletTransactions";
+import { getFarmersEarnings } from "@/stores/farmer-dashboard/earnings";
+import Link from "next/link";
 
 const PendingPayment = ({
   isTotalAvailable = true,
@@ -11,6 +13,8 @@ const PendingPayment = ({
   isTotalAvailable?: boolean;
 }) => {
   const { data: transactionData } = getWalletTransactionStore();
+  const { data: farmerEarningData } = getFarmersEarnings();
+
   return (
     <div
       className={`px-[22px] py-8 border border-[#E4E7EC] bg-[white] rounded-xl h-fit ${
@@ -49,7 +53,9 @@ const PendingPayment = ({
           <p className="mb-1 text-sm font-poppinsRegular text-[#5F5F5F]">
             Total
           </p>
-          <h4 className=" font-poppinsSemiBold text-[#5F5F5F]">N500,000.00</h4>
+          <h4 className=" font-poppinsSemiBold text-[#5F5F5F]">
+            N {farmerEarningData?.earnings?.pending_withdrawals}
+          </h4>
         </div>
       )}
 
@@ -94,13 +100,15 @@ const PendingPayment = ({
         )}
 
         {isTotalAvailable && (
-          <Button
-            variant="secondary"
-            size="small"
-            className="w-[180px] mt-6 mx-auto"
-          >
-            View All
-          </Button>
+          <Link href={"/farmer-dashboard/wallet"} className="mx-auto">
+            <Button
+              variant="secondary"
+              size="small"
+              className="w-[180px] mt-6 mx-auto text-center"
+            >
+              View All
+            </Button>
+          </Link>
         )}
       </div>
     </div>
