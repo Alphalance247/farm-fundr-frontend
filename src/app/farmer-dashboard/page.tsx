@@ -19,6 +19,9 @@ import { getDashboardStore } from "@/stores/farmer-dashboard/dashboard";
 import { getFarmersEarnings } from "@/stores/farmer-dashboard/earnings";
 import { getFarmerBidsStore } from "@/stores/farmer-dashboard/bids";
 import { getFarmerNotification } from "@/stores/farmer-dashboard/notifications";
+import FarmingSummarySkeleton from "../components/dashboard/overview/skeletons/farmingSummarySkeleton";
+import RecentActivitySkeleton from "../components/dashboard/overview/skeletons/recentActivitySkeleton";
+import InvestmentOverviewSkeleton from "../components/dashboard/overview/skeletons/investmentOverviewSkeleton";
 
 interface data {
   text?: string;
@@ -31,10 +34,13 @@ interface data {
 const FarmerDashboard = () => {
   const { user } = useAuth();
   const { fetchUserKYC, data: kycData } = getKYCPercentageStore();
-  const { fetchDashboardData } = getDashboardStore();
-  const { fetchFarmerEarnings } = getFarmersEarnings();
-  const { fetchFarmerBids } = getFarmerBidsStore();
+  const { fetchDashboardData,  loading: isDashboardLoading } = getDashboardStore();
+  const { fetchFarmerEarnings, loading: isEarningsLoading } = getFarmersEarnings();
+  const { fetchFarmerBids, loading: isBidsLoading } = getFarmerBidsStore();
   const { fetchNotification } = getFarmerNotification();
+  
+  // Combined loading state
+  const isLoading = isDashboardLoading || isEarningsLoading || isBidsLoading;
 
   useEffect(() => {
     fetchFarmerEarnings();
@@ -227,14 +233,14 @@ const FarmerDashboard = () => {
 
           <div className="grid grid-cols-2 gap-x-6 mt-6 xl:gap-x-3 md:grid-cols-1">
             <div>
-              <InvestmentOverview />
+              {isLoading ? <InvestmentOverviewSkeleton /> : <InvestmentOverview />}
               <EarningOverview />
               <PendingPayment />
             </div>
 
             <div>
-              <FarmingSummary />
-              <RecentActivity />
+              {isLoading ? <FarmingSummarySkeleton /> : <FarmingSummary />}
+              {isLoading ? <RecentActivitySkeleton /> : <RecentActivity />}
               <BidSummary />
             </div>
           </div>
