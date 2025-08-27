@@ -123,7 +123,7 @@ const ProfileSettings = ({ UserDetails }: { UserDetails: UserDetails }) => {
         subHead="Update your profile and personal details here"
       />
 
-      <div className="mt-8 pb-10 border-b border-[#E4E7EC] grid grid-cols-[1fr_2fr]">
+      <div className="mt-8 pb-10 border-b lg:grid-cols-1 lg:gap-4 border-[#E4E7EC] grid grid-cols-[1fr_2fr]">
         <div>
           <h6 className=" font-poppinsSemiBold text-lg text-[#666666]">
             Your Profile Photo
@@ -152,7 +152,7 @@ const ProfileSettings = ({ UserDetails }: { UserDetails: UserDetails }) => {
               />
             )}
             <label
-              className="mt-4 px-6 py-3 bg-[#51F4A6] rounded-[5px] font-poppinsSemiBold text-sm text-[#282A03] block w-fit cursor-pointer"
+              className="mt-4 px-6 py-3 bg-[#51F4A6] rounded-[5px] font-poppinsSemiBold text-sm text-[#282A03] block w-fit lg:w-full lg:text-center cursor-pointer"
               id="image-upload"
             >
               <input
@@ -169,7 +169,7 @@ const ProfileSettings = ({ UserDetails }: { UserDetails: UserDetails }) => {
 
         <form action="post" onSubmit={handleProfileUpdate}>
           <div className="flex flex-col gap-y-8">
-            <div className="grid grid-cols-2 gap-6">
+            <div className="grid grid-cols-2 md:grid-cols-1  gap-6">
               <div>
                 <Label className="block mb-1">Full Name </Label>
                 <Input
@@ -202,7 +202,7 @@ const ProfileSettings = ({ UserDetails }: { UserDetails: UserDetails }) => {
               </div>
             </div>
 
-            <div className="grid grid-cols-2 gap-6">
+            <div className="grid grid-cols-2 md:grid-cols-1  gap-6">
               <div>
                 <Label className="block mb-1">Email Address</Label>
                 <Input
@@ -233,7 +233,7 @@ const ProfileSettings = ({ UserDetails }: { UserDetails: UserDetails }) => {
               </div>
             </div>
 
-            <div className="grid grid-cols-2 gap-6">
+            <div className="grid grid-cols-2 md:grid-cols-1  gap-6">
               <div>
                 <Label className="block mb-1">Street Address</Label>
                 <Input
@@ -263,7 +263,7 @@ const ProfileSettings = ({ UserDetails }: { UserDetails: UserDetails }) => {
               </div>
             </div>
 
-            <div className="grid grid-cols-2 gap-6">
+            <div className="grid grid-cols-2  md:grid-cols-1 gap-6">
               <div>
                 <Label className="block mb-1">State</Label>
                 <Input
