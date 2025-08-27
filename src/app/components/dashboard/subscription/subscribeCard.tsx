@@ -59,7 +59,7 @@ const SubscribeCard: React.FC<subscribeProps> = ({
   console.log(select);
 
   return (
-    <div className={`${bgColor} p-6 border border-[#E4E7EC] rounded-xl`}>
+    <div className={`${bgColor} p-6 md:p-4 border border-[#E4E7EC] rounded-xl`}>
       <div className="flex justify-between items-center mb-3">
         <p className=" text-[2rem] font-aristoBold text-[#5F5F5F]">
           {planName}

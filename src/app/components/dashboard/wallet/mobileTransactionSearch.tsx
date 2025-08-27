@@ -70,7 +70,7 @@ const TransactionFilterMobile = () => {
   };
 
   return (
-    <div className="lg:block p-4 hidden w-full mb-6">
+    <div className="lg:block hidden p-4 w-full mb-6">
       <div className="flex items-center justify-between mb-3">
         <h3 className="text-gray-700 font-semibold">Recent Transactions</h3>
         <Button

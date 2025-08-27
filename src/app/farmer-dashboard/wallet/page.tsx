@@ -66,7 +66,7 @@ const Wallet = () => {
               <p className="text-sm font-poppinsSemiBold text-white mb-2">
                 Wallet Balance
               </p>
-              <div className="flex items-center gap-2 mb-4">
+              <div className="flex justify-between items-center gap-2 mb-4">
                 <h4 className="text-white text-[2rem] lg:text-xl leading-9 font-poppinsSemiBold">
                   {loading ? (
                     <LoadingSkeleton />
@@ -91,7 +91,7 @@ const Wallet = () => {
                     )}{" "}
                   </p>
 
-                  <div className="flex items-center gap-x-3">
+                  <div className="flex  items-center gap-x-3">
                     <p className="text-[white] text-xs font-poppinsRegular flex items-center gap-x-2">
                       Account Number :{" "}
                       {loadingBank ? (
@@ -107,7 +107,7 @@ const Wallet = () => {
                       className="bg-[#E9EAE6] cursor-pointer rounded-[8px] px-2 py-1 flex items-center gap-x-2"
                       onClick={() => handleCopy("1234567890")}
                     >
-                      <p className="text-[#282A03] font-poppinsRegular text-sm">
+                      <p className="text-[#282A03] block md:hidden font-poppinsRegular text-sm">
                         copy
                       </p>
                       <span>

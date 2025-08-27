@@ -19,9 +19,8 @@ import { getDashboardStore } from "@/stores/farmer-dashboard/dashboard";
 import { getFarmersEarnings } from "@/stores/farmer-dashboard/earnings";
 import { getFarmerBidsStore } from "@/stores/farmer-dashboard/bids";
 import { getFarmerNotification } from "@/stores/farmer-dashboard/notifications";
-import FarmingSummarySkeleton from "../components/dashboard/overview/skeletons/farmingSummarySkeleton";
-import RecentActivitySkeleton from "../components/dashboard/overview/skeletons/recentActivitySkeleton";
-import InvestmentOverviewSkeleton from "../components/dashboard/overview/skeletons/investmentOverviewSkeleton";
+import SkeletonLoader from "@/components/ui/skeleton-loader";
+
 
 interface data {
   text?: string;
@@ -36,11 +35,10 @@ const FarmerDashboard = () => {
   const { fetchUserKYC, data: kycData } = getKYCPercentageStore();
   const { fetchDashboardData,  loading: isDashboardLoading } = getDashboardStore();
   const { fetchFarmerEarnings, loading: isEarningsLoading } = getFarmersEarnings();
-  const { fetchFarmerBids, loading: isBidsLoading } = getFarmerBidsStore();
+  const { fetchFarmerBids , loading: isBidsLoading } = getFarmerBidsStore();
   const { fetchNotification } = getFarmerNotification();
   
-  // Combined loading state
-  const isLoading = isDashboardLoading || isEarningsLoading || isBidsLoading;
+  // const isLoading = isDashboardLoading || isEarningsLoading || isBidsLoading;
 
   useEffect(() => {
     fetchFarmerEarnings();
@@ -233,15 +231,35 @@ const FarmerDashboard = () => {
 
           <div className="grid grid-cols-2 gap-x-6 mt-6 xl:gap-x-3 md:grid-cols-1">
             <div>
-              {isLoading ? <InvestmentOverviewSkeleton /> : <InvestmentOverview />}
-              <EarningOverview />
-              <PendingPayment />
+              {isDashboardLoading ? (
+                <SkeletonLoader className="h-[300px] w-full mb-6" />
+              ) : (
+                <InvestmentOverview />
+              )}
+              {isEarningsLoading ? (
+                <SkeletonLoader className="h-[300px] w-full mb-6" />
+              ) : (
+                <EarningOverview />
+              )}
+              {isEarningsLoading ? (
+                <SkeletonLoader className="h-[200px] w-full mb-6" />
+              ) : (
+                <PendingPayment />
+              )}
             </div>
 
             <div>
-              {isLoading ? <FarmingSummarySkeleton /> : <FarmingSummary />}
-              {isLoading ? <RecentActivitySkeleton /> : <RecentActivity />}
-              <BidSummary />
+              {isDashboardLoading ? (
+                <SkeletonLoader className="h-[300px] w-full mb-6" />
+              ) : (
+                <FarmingSummary />
+              )}
+              {isDashboardLoading ? (
+                <SkeletonLoader className="h-[300px] w-full mb-6" />
+              ) : (
+                <RecentActivity />
+              )}
+              {isBidsLoading ? <SkeletonLoader className="h-[300px] w-full mb-6" /> : <BidSummary />}
             </div>
           </div>
         </main>

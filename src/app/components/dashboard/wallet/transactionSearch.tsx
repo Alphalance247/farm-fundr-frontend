@@ -26,7 +26,7 @@ export default function TransactionSearch({
   headingText = "All Transactions",
 }: TransactionSearchProps) {
   return (
-    <div className="w-full p-4 mb-6 overflow-x-auto">
+    <div className="w-full block lg:hidden p-4 mb-6 overflow-x-auto">
       <div className="flex items-center justify-between gap-4">
         {withHeading && (
           <h4 className="text-base font-semibold text-[#2F2F33] whitespace-nowrap">

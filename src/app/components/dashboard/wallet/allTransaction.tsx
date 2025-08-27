@@ -11,6 +11,7 @@ import { IoArrowDown } from "react-icons/io5";
 import { IoArrowUp } from "react-icons/io5";
 import { getWalletTransactionStore } from "@/stores/wallet/getWalletTransactions";
 import TransactionFilterMobile from "./mobileTransactionSearch";
+import TransactionCard from "./TransactionCard";
 
 interface Employee {
   id: number;
@@ -124,7 +125,7 @@ export default function TransactionSearchTable() {
 
   return (
     <section className="bg-white rounded-lg border border-[#E3E3E5]">
-      <div className="block lg:hidden">
+      <div>
         <TransactionSearch
           searchQuery={searchQuery}
           sortBy={sortBy}
@@ -135,7 +136,7 @@ export default function TransactionSearchTable() {
           withHeading={true}
         />
       </div>
-      <div className="hidden lg:block">
+      <div>
         <TransactionFilterMobile />
       </div>
 
@@ -146,89 +147,106 @@ export default function TransactionSearchTable() {
           </p>
         </div>
       ) : (
-        <div className="overflow-x-auto">
-          <table className="w-full min-w-[1000px] md:w-[800px]">
-            <thead className="bg-[#FAFEFF]">
-              <tr>
-                <th className="py-3 px-4 w-[10px] text-left">
-                  <input type="checkbox" className="rounded border-gray-300" />
-                </th>
-                <th className="py-3 px-4 text-sm text-[#0B222A] font-poppinsSemiBold w-[250px] text-left">
-                  Transaction Id
-                </th>
-                <th className="py-3 px-4 text-sm  text-[#0B222A] font-poppinsSemiBold text-left w-[150px]">
-                  Type
-                </th>
-                <th className="py-3 px-4 text-sm  text-[#0B222A] font-poppinsSemiBold text-left w-[200px]">
-                  Description
-                </th>
-                <th className="py-3 px-4 text-sm  text-[#0B222A] font-poppinsSemiBold text-left w-[100px]">
-                  Amount
-                </th>
-                <th className="py-3 px-4 text-sm  text-[#0B222A] font-poppinsSemiBold text-left w-[100px]">
-                  Date
-                </th>
-                <th className="py-3 px-4 text-sm  text-[#0B222A] font-poppinsSemiBold text-left w-[50px]">
-                  Status
-                </th>
-                <th className="py-3 px-4 text-sm  text-[#0B222A] font-poppinsSemiBold text-left w-[50px]">
-                  Action
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              {transactionData?.transactions?.map((emp) => (
-                <tr key={emp.id} className={`bg-[#EEFEF6]`}>
-                  <td className="py-3 px-4">
-                    <input type="checkbox" className="rounded" />
-                  </td>
-                  <td className="py-3 px-4">
-                    <span className="text-[#1B2229] text-sm font-poppinsRegular">
-                      {emp?.id}
-                    </span>
-                  </td>
-                  <td
-                    className={`py-3 px-4 text-sm font-poppinsRegular text-[#1B2229]`} //${emp?.nameColor}
-                  >
-                    <span className="flex items-center gap-2">
-                      {emp?.type}
-                      {/* {emp?.typeIcons} */}
-                    </span>
-                  </td>
-                  <td
-                    className={`py-3 px-4 text-sm font-poppinsRegular text-[#1B2229]`} //${emp?.nameColor}
-                  >
-                    {emp.description}
-                  </td>
-                  <td
-                    className={`py-3 px-4 font-poppinsSemiBold text-sm  text-[#DEA304]`} //${emp?.amountColor}
-                  >
-                    N {emp.amount}
-                  </td>
-                  <td className="py-3 px-4 text-[#34474E] text-sm font-poppinsRegular">
-                    {/* {emp?.date} */} 2012-12-09
-                  </td>
-                  <td className="py-3 px-4 text-sm text-[#2F2F33]">
-                    <span
-                      className={`py-2 px-5  ${
-                        emp?.status === "pending"
-                          ? "bg-[#DEA304]"
-                          : "bg-[#00C853]"
-                      } text-white rounded-xl font-poppinsRegular tracking-[-2%]`} //${emp?.statusColor}
-                    >
-                      {emp?.status}
-                    </span>
-                  </td>
-                  <td className="py-3 px-4">
-                    <div className="w-8 h-8 bg-white p-2 rounded-lg border-[#E4E7EC] border cursor-pointer">
-                      <PiDotsThreeVertical color="#001F3F" size={16} />
-                    </div>
-                  </td>
+        <>
+          <div className="space-y-4 hidden md:block">
+            {transactionData?.transactions?.map((emp) => (
+              <TransactionCard
+                key={emp.id}
+                id={emp.id}
+                type={emp.type}
+                amount={emp.amount}
+                status={emp.status}
+                viewDetailsLink={`/transaction/${emp.id}`}
+              />
+            ))}
+          </div>
+          <div className="overflow-x-auto block md:hidden">
+            <table className="w-full min-w-[1000px] md:w-[800px]">
+              <thead className="bg-[#FAFEFF]">
+                <tr>
+                  <th className="py-3 px-4 w-[10px] text-left">
+                    <input
+                      type="checkbox"
+                      className="rounded border-gray-300"
+                    />
+                  </th>
+                  <th className="py-3 px-4 text-sm text-[#0B222A] font-poppinsSemiBold w-[250px] text-left">
+                    Transaction Id
+                  </th>
+                  <th className="py-3 px-4 text-sm  text-[#0B222A] font-poppinsSemiBold text-left w-[150px]">
+                    Type
+                  </th>
+                  <th className="py-3 px-4 text-sm  text-[#0B222A] font-poppinsSemiBold text-left w-[200px]">
+                    Description
+                  </th>
+                  <th className="py-3 px-4 text-sm  text-[#0B222A] font-poppinsSemiBold text-left w-[100px]">
+                    Amount
+                  </th>
+                  <th className="py-3 px-4 text-sm  text-[#0B222A] font-poppinsSemiBold text-left w-[100px]">
+                    Date
+                  </th>
+                  <th className="py-3 px-4 text-sm  text-[#0B222A] font-poppinsSemiBold text-left w-[50px]">
+                    Status
+                  </th>
+                  <th className="py-3 px-4 text-sm  text-[#0B222A] font-poppinsSemiBold text-left w-[50px]">
+                    Action
+                  </th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+              </thead>
+              <tbody>
+                {transactionData?.transactions?.map((emp) => (
+                  <tr key={emp.id} className={`bg-[#EEFEF6]`}>
+                    <td className="py-3 px-4">
+                      <input type="checkbox" className="rounded" />
+                    </td>
+                    <td className="py-3 px-4">
+                      <span className="text-[#1B2229] text-sm font-poppinsRegular">
+                        {emp?.id}
+                      </span>
+                    </td>
+                    <td
+                      className={`py-3 px-4 text-sm font-poppinsRegular text-[#1B2229]`} //${emp?.nameColor}
+                    >
+                      <span className="flex items-center gap-2">
+                        {emp?.type}
+                        {/* {emp?.typeIcons} */}
+                      </span>
+                    </td>
+                    <td
+                      className={`py-3 px-4 text-sm font-poppinsRegular text-[#1B2229]`} //${emp?.nameColor}
+                    >
+                      {emp.description}
+                    </td>
+                    <td
+                      className={`py-3 px-4 font-poppinsSemiBold text-sm  text-[#DEA304]`} //${emp?.amountColor}
+                    >
+                      N {emp.amount}
+                    </td>
+                    <td className="py-3 px-4 text-[#34474E] text-sm font-poppinsRegular">
+                      {/* {emp?.date} */} 2012-12-09
+                    </td>
+                    <td className="py-3 px-4 text-sm text-[#2F2F33]">
+                      <span
+                        className={`py-2 px-5  ${
+                          emp?.status === "pending"
+                            ? "bg-[#DEA304]"
+                            : "bg-[#00C853]"
+                        } text-white rounded-xl font-poppinsRegular tracking-[-2%]`} //${emp?.statusColor}
+                      >
+                        {emp?.status}
+                      </span>
+                    </td>
+                    <td className="py-3 px-4">
+                      <div className="w-8 h-8 bg-white p-2 rounded-lg border-[#E4E7EC] border cursor-pointer">
+                        <PiDotsThreeVertical color="#001F3F" size={16} />
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </>
       )}
 
       {/* <div className="flex items-center justify-between px-6 py-4">
