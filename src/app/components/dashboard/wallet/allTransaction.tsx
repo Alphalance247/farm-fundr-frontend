@@ -10,6 +10,7 @@ import { IoMdTime } from "react-icons/io";
 import { IoArrowDown } from "react-icons/io5";
 import { IoArrowUp } from "react-icons/io5";
 import { getWalletTransactionStore } from "@/stores/wallet/getWalletTransactions";
+import TransactionFilterMobile from "./mobileTransactionSearch";
 
 interface Employee {
   id: number;
@@ -123,15 +124,21 @@ export default function TransactionSearchTable() {
 
   return (
     <section className="bg-white rounded-lg border border-[#E3E3E5]">
-      <TransactionSearch
-        withHeading={true}
-        searchQuery={searchQuery}
-        sortBy={sortBy}
-        filterBy={filterBy}
-        onSearchChange={setSearchQuery}
-        onSortChange={setSortBy}
-        onFilterChange={setFilterBy}
-      />
+      <div className="block lg:hidden">
+        <TransactionSearch
+          searchQuery={searchQuery}
+          sortBy={sortBy}
+          filterBy={filterBy}
+          onSearchChange={setSearchQuery}
+          onSortChange={setSortBy}
+          onFilterChange={setFilterBy}
+          withHeading={true}
+        />
+      </div>
+      <div className="hidden lg:block">
+        <TransactionFilterMobile />
+      </div>
+
       {transactionData?.transactions?.length === 0 ? (
         <div className="flex pt-10 items-center justify-center h-fit">
           <p className="text-center pb-8 text-gray-500">
