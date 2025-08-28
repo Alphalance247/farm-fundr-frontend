@@ -98,7 +98,7 @@ const FarmDetails = ({
 
   return (
     <div>
-      <div className="p-6 bg-white mt-6 rounded-lg flex flex-col gap-y-6">
+      <div className="p-6 md:p-4 bg-white mt-6 rounded-lg flex flex-col gap-y-6">
         <div>
           <Label className="">farm Name</Label>
           <Input
@@ -126,7 +126,7 @@ const FarmDetails = ({
           />
         </div>
 
-        <div className="grid grid-cols-2 gap-x-4">
+        <div className="grid grid-cols-2 md:grid-cols-1 md:gap-4 gap-x-4">
           <div>
             <Label> Country</Label>
             <select
