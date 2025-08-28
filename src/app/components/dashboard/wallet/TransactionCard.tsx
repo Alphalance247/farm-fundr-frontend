@@ -13,7 +13,6 @@ interface TransactionCardProps {
 }
 
 const TransactionCard: React.FC<TransactionCardProps> = ({
-  id,
   type,
   amount,
   status,
@@ -77,7 +76,7 @@ const TransactionCard: React.FC<TransactionCardProps> = ({
           href={viewDetailsLink}
           className="flex items-center gap-1 text-xs text-[#00C853]"
         >
-          View Details <FiChevronRight  />
+          View Details <FiChevronRight />
         </Link>
       </div>
 
