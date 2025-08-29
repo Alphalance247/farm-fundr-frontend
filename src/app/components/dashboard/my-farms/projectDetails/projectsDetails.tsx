@@ -71,7 +71,7 @@ const ProjectDetails = ({
 
   return (
     <DashboardLayout>
-      <main className="px-10 py-10 bg-gray-50 overflow-auto">
+      <main className="px-10 py-10 bg-gray-50 overflow-auto xl:px-4 xl:py-6">
         <FarmHeadingOverview
           farmName={projectData?.name || "N/A"}
           goBackLink={`/farmer-dashboard/my-farms/${farmDetailsId}/farm-branches/${branchDetailsId}`}
@@ -96,7 +96,7 @@ const ProjectDetails = ({
           </div>
         ) : (
           <>
-            <div className="grid grid-cols-2 gap-x-6 gap-y-6 mt-10">
+            <div className="grid grid-cols-2 gap-x-6 gap-y-6 mt-10 lg:grid-cols-1">
               <div className="flex flex-col gap-y-10">
                 <div className="bg-white shadow-md rounded-[12px] p-6">
                   <div className="flex gap-x-2 items-center justify-center pb-4 border-b border-[#F6F6F6]">
@@ -112,15 +112,12 @@ const ProjectDetails = ({
                   </div>
 
                   <div className="pt-6">
-                    <div className="grid grid-cols-3 gap-3">
+                    <div className="grid grid-cols-3 gap-3 xl:grid-cols-2 lg:grid-cols-1">
                       {projectData?.images?.map((images, i) => (
                         <Image
                           width={i === 0 ? 556 : 177}
                           height={i === 0 ? 158 : 95}
-                          src={
-                            `https://padycvgcoops.name.ng${images}` ||
-                            "/assets/my-farms/no-img.avif"
-                          }
+                          src={`${images}` || "/assets/my-farms/no-img.avif"}
                           alt={`Uploaded images`}
                           className={`object-cover w-full  rounded-[12px] border-dashed border border-[#51F4A6] ${
                             i === 0 ? "col-span-3 h-[158px]" : "h-[95px]"

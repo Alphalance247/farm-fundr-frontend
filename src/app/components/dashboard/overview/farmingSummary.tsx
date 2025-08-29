@@ -1,5 +1,5 @@
 import SubHead from "../common/sectionHeading";
-import { PiDotsThree } from "react-icons/pi";
+// import { PiDotsThree } from "react-icons/pi";
 import Image from "next/image";
 import { getDashboardStore } from "@/stores/farmer-dashboard/dashboard";
 
@@ -9,14 +9,14 @@ const FarmingSummary = () => {
     <div className="mt-6 px-[22px] py-8 border border-[#E4E7EC] bg-[white] rounded-xl">
       <div className="flex justify-between items-center mb-4">
         <SubHead text="Farm Summary" />
-        <div className="relative flex items-center gap-x-4">
+        {/* <div className="relative flex items-center gap-x-4">
           <div
             className=" p-2 bg-white border border-[#d9d9d9]  rounded-xl cursor-pointer w-fit"
             // onClick={handleOpen}
           >
             <PiDotsThree size={20} color="#7C7C7C" />
           </div>
-        </div>
+        </div> */}
       </div>
 
       <div className="bg-[#F6F6F6] px-6 py-4 flex gap-x-4 items-center rounded-xl lg:items-start">

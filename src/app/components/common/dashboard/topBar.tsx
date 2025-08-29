@@ -85,17 +85,13 @@ export function Topbar({
     return (
       <div>
         {userDetails?.user_details?.image ? (
-          // <Image
-          //   src={
-          //     `${environment?.imgBaserUrl}/${userDetails?.user_details?.image}/` ||
-          //     ""
-          //   }
-          //   height={40}
-          //   width={40}
-          //   alt="profileImage"
-          //   className="h-[40px] w-[40px]  rounded-full"
-          // />
-          ""
+          <Image
+            src={`${userDetails?.user_details?.image}` || ""}
+            height={40}
+            width={40}
+            alt="profileImage"
+            className="h-[40px] w-[40px]  rounded-full"
+          />
         ) : (
           <div className="h-[40px] w-[40px] rounded-full bg-[#EEFEF6] text-[#2D865B] flex items-center justify-center text-[1.3rem] tracking-[0.34px] font-medium">
             {user?.fullname

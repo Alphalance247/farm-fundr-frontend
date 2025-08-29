@@ -1,7 +1,5 @@
-import { PiDotsThreeVertical } from "react-icons/pi";
 import GoBackBtn from "../../common/goBack";
 import CreateNewFarmBtn from "./createNewFarmBtn";
-import Button from "../../common/Buttons";
 
 const FarmHeadingOverview = ({
   farmName,
@@ -25,13 +23,19 @@ const FarmHeadingOverview = ({
           <GoBackBtn href={goBackLink || "/farmer-dashboard/my-farms"} />
         </div>
 
-        <p className="w-8 h-8 bg-white p-2 rounded-lg border-[#E4E7EC] border cursor-pointer">
+        {/* <p className="w-8 h-8 bg-white p-2 rounded-lg border-[#E4E7EC] border cursor-pointer">
           <PiDotsThreeVertical color="#001F3F" size={16} />
-        </p>
+        </p> */}
+
+        <div className="hidden lg:block">
+          {!isProjectDetails && (
+            <CreateNewFarmBtn isBranch={isBranch} isProject={isProject} />
+          )}
+        </div>
       </div>
 
       <div className="flex justify-between items-center">
-        <div className="w-[70%] lg:w-[70%]">
+        <div className="w-[70%] lg:w-[70%] md:w-[80%]">
           <h2 className="text-xl font-poppinsSemiBold text-[#5F5F5F]">
             {farmName || "Green Valley farm"}
           </h2>
@@ -39,11 +43,12 @@ const FarmHeadingOverview = ({
             {overview}
           </p>
         </div>
-        {isProjectDetails ? (
-          <Button>Save Changes</Button>
-        ) : (
-          <CreateNewFarmBtn isBranch={isBranch} isProject={isProject} />
-        )}
+
+        <div className="block lg:hidden">
+          {!isProjectDetails && (
+            <CreateNewFarmBtn isBranch={isBranch} isProject={isProject} />
+          )}
+        </div>
       </div>
     </div>
   );

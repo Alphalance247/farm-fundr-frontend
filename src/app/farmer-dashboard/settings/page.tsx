@@ -13,7 +13,6 @@ import { useAuth } from "@/context/authContext";
 import { getKYCPercentageStore } from "@/stores/settings/getKycPercentage";
 import { getUserDetailsStore } from "@/stores/settings/getUserDetails";
 import Image from "next/image";
-import { environment } from "@/env/env.local";
 
 const Setting = () => {
   const [activeTab, setActiveTab] = useState<string>("Profile settings");
@@ -54,10 +53,7 @@ const Setting = () => {
           <div className="bg-[#226646] flex flex-row md:flex-col items-center md:px-4 gap-6 rounded-xl py-12 px-12">
             {userDetails?.user_details?.image ? (
               <Image
-                src={
-                  `${environment?.imgBaserUrl}/${userDetails?.user_details?.image}/` ||
-                  ""
-                }
+                src={`${userDetails?.user_details?.image}` || ""}
                 height={135}
                 width={135}
                 alt="profileImage"

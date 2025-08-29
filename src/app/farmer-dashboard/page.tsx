@@ -21,7 +21,6 @@ import { getFarmerBidsStore } from "@/stores/farmer-dashboard/bids";
 import { getFarmerNotification } from "@/stores/farmer-dashboard/notifications";
 import SkeletonLoader from "@/components/ui/skeleton-loader";
 
-
 interface data {
   text?: string;
   link?: string;
@@ -33,11 +32,13 @@ interface data {
 const FarmerDashboard = () => {
   const { user } = useAuth();
   const { fetchUserKYC, data: kycData } = getKYCPercentageStore();
-  const { fetchDashboardData,  loading: isDashboardLoading } = getDashboardStore();
-  const { fetchFarmerEarnings, loading: isEarningsLoading } = getFarmersEarnings();
-  const { fetchFarmerBids , loading: isBidsLoading } = getFarmerBidsStore();
+  const { fetchDashboardData, loading: isDashboardLoading } =
+    getDashboardStore();
+  const { fetchFarmerEarnings, loading: isEarningsLoading } =
+    getFarmersEarnings();
+  const { fetchFarmerBids, loading: isBidsLoading } = getFarmerBidsStore();
   const { fetchNotification } = getFarmerNotification();
-  
+
   // const isLoading = isDashboardLoading || isEarningsLoading || isBidsLoading;
 
   useEffect(() => {
@@ -123,7 +124,8 @@ const FarmerDashboard = () => {
                 {dat !== 100 ? (
                   <>
                     <h2 className="text-3xl font-aristoBold text-[#FCFCFC] mb-4 md:text-lg">
-                      Welcome {user?.fullname || "Farmer Nelson"} !
+                      Welcome {user?.fullname?.split(" ")[0] || "Farmer Nelson"}{" "}
+                      !
                     </h2>
 
                     <div>
@@ -178,7 +180,8 @@ const FarmerDashboard = () => {
                       </div>
                     </div>
                     <h2 className="text-3xl font-aristoBold text-[#FCFCFC] mb-3 md:text-lg">
-                      Good Day, {user?.fullname || "Farmer Nelson"}!
+                      Good Day,{" "}
+                      {user?.fullname.split(" ")[0] || "Farmer Nelson"}!
                     </h2>
                     <p className="text-sm font-poppinsRegular text-[#FCFCFC] mb-2 md:text-xs">
                       Have a Nice {greeting} !
@@ -259,7 +262,11 @@ const FarmerDashboard = () => {
               ) : (
                 <RecentActivity />
               )}
-              {isBidsLoading ? <SkeletonLoader className="h-[300px] w-full mb-6" /> : <BidSummary />}
+              {isBidsLoading ? (
+                <SkeletonLoader className="h-[300px] w-full mb-6" />
+              ) : (
+                <BidSummary />
+              )}
             </div>
           </div>
         </main>

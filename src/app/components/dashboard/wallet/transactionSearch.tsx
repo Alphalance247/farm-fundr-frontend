@@ -23,7 +23,7 @@ export default function TransactionSearch({
   onSortChange,
   onFilterChange,
   withHeading = true,
-  headingText = "All Transactions",
+  headingText = "All Farms",
 }: TransactionSearchProps) {
   return (
     <div className="w-full block lg:hidden p-4 mb-6 overflow-x-auto">

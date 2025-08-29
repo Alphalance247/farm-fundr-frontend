@@ -6,7 +6,7 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "padycvgcoops.name.ng",
+        hostname: "s3.us-east-005.backblazeb2.com",
         // pathname: "/**" // optional, allows all paths
       },
     ],

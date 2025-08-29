@@ -31,6 +31,8 @@ const TransactionCard: React.FC<TransactionCardProps> = ({
     return null;
   };
 
+  console.log(id);
+
   // ✅ Status + Amount shared color styles
   const getSharedColor = () => {
     switch (status.toLowerCase()) {
@@ -77,7 +79,7 @@ const TransactionCard: React.FC<TransactionCardProps> = ({
           href={viewDetailsLink}
           className="flex items-center gap-1 text-xs text-[#00C853]"
         >
-          View Details <FiChevronRight  />
+          View Details <FiChevronRight />
         </Link>
       </div>
 
