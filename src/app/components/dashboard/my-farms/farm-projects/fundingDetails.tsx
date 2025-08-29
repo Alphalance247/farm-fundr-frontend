@@ -4,7 +4,7 @@ import { projectFormData } from "@/utils/form";
 import Button from "@/app/components/common/Buttons";
 import { FaArrowLeftLong, FaArrowRightLong } from "react-icons/fa6";
 import { toast } from "react-hot-toast";
-
+// your code goes here
 const FundingDetails = ({
   form,
   setForm,
@@ -49,8 +49,8 @@ const FundingDetails = ({
   };
   return (
     <div>
-      <div className="p-6 bg-white mt-6 rounded-lg flex flex-col gap-y-6">
-        <div className="grid grid-cols-2 gap-x-6">
+      <div className="p-6 md:p-4 bg-white mt-6 rounded-lg flex flex-col gap-y-6">
+        <div className="grid grid-cols-2 md:grid-cols-1 gap-x-4 md:gap-4">
           <div>
             <Label className="">Total Funding</Label>
             <Input
@@ -110,7 +110,7 @@ const FundingDetails = ({
           </div>
         </div>
 
-        <div className="grid grid-cols-2 gap-x-6">
+        <div className="grid grid-cols-2 md:grid-cols-1 gap-x-4 md:gap-4">
           <div>
             <Label className="">Investment Start date</Label>
             <Input
@@ -157,7 +157,7 @@ const FundingDetails = ({
         </div>
       </div>
 
-      <div className="mt-8 flex items-center justify-between">
+      <div className="mt-8 flex flex-row md:flex-col md:gap-4 items-center justify-between">
         <Button
           className="w-fit flex items-center justify-center gap-x-4"
           onClick={(e) => {

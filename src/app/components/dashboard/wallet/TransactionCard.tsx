@@ -13,7 +13,6 @@ interface TransactionCardProps {
 }
 
 const TransactionCard: React.FC<TransactionCardProps> = ({
-  id,
   type,
   amount,
   status,

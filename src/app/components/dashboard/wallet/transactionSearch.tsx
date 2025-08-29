@@ -33,7 +33,7 @@ export default function TransactionSearch({
             {headingText}
           </h4>
         )}
-        <div className="flex items-center gap-3 flex-wrap">
+        <div className="flex items-center gap-3 ">
           <p className="text-sm font-semibold text-[#5F5F5F] whitespace-nowrap">
             Filter By
           </p>
@@ -64,26 +64,10 @@ export default function TransactionSearch({
             className="border border-[#E3E3E5] rounded-lg px-4 py-2 text-sm font-medium 
               text-[#2F2F33] focus:outline-none focus:ring-1 focus:ring-[#2D865B] focus:border-[#2D865B] min-w-[120px]"
           >
-            <option value="firstName">Date</option>
-            <option value="lastName">Amount</option>
-            <option value="team">Status</option>
-          </select>
-          <select
-            value={sortBy}
-            onChange={(e) => onSortChange(e.target.value as SortOption)}
-            className="border border-[#E3E3E5] rounded-lg px-4 py-2 text-sm font-medium 
-              text-[#2F2F33] focus:outline-none focus:ring-1 focus:ring-[#2D865B] focus:border-[#2D865B] min-w-[120px]"
-          >
             <option value="firstName">Modified</option>
             <option value="lastName">Amount</option>
             <option value="team">Status</option>
           </select>
-          <button
-            className="text-[#2D865B] font-semibold text-sm whitespace-nowrap px-4 py-2 
-              rounded-lg hover:bg-[#EEFEF6] border border-transparent hover:border-[#2D865B] transition"
-          >
-            View All
-          </button>
         </div>
       </div>
     </div>
