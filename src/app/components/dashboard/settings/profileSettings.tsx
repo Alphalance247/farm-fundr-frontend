@@ -10,7 +10,6 @@ import axiosInstance from "@/lib/axios";
 import toast from "react-hot-toast";
 import { AxiosError } from "axios";
 import { getUserDetailsStore } from "@/stores/settings/getUserDetails";
-import { environment } from "@/env/env.local";
 
 interface UserDetails {
   fullname: string;
@@ -28,7 +27,7 @@ const ProfileSettings = ({ UserDetails }: { UserDetails: UserDetails }) => {
   const getImageUrl = (imagePath: string | null | undefined): string | null => {
     if (!imagePath) return null;
     if (imagePath.startsWith("http")) return imagePath;
-    return `${environment.imgBaserUrl}${imagePath}/`;
+    return `${imagePath}`;
   };
   const { fetchUserDetails } = getUserDetailsStore();
   const [preview, setPreview] = useState<string | null>(
@@ -81,10 +80,6 @@ const ProfileSettings = ({ UserDetails }: { UserDetails: UserDetails }) => {
         formData.append("image", file);
       }
 
-      // else if (UserDetails?.image) {
-      //   // Send the existing image path to preserve it
-      //   formData.append("image", UserDetails.image);
-      // }
       const res = await axiosInstance.patch(
         `accounts/auth/update-profile`,
         formData,
@@ -123,7 +118,7 @@ const ProfileSettings = ({ UserDetails }: { UserDetails: UserDetails }) => {
         subHead="Update your profile and personal details here"
       />
 
-      <div className="mt-8 pb-10 border-b border-[#E4E7EC] grid grid-cols-[1fr_2fr]">
+      <div className="mt-8 pb-10 border-b lg:grid-cols-1 lg:gap-4 border-[#E4E7EC] grid grid-cols-[1fr_2fr]">
         <div>
           <h6 className=" font-poppinsSemiBold text-lg text-[#666666]">
             Your Profile Photo
@@ -134,14 +129,13 @@ const ProfileSettings = ({ UserDetails }: { UserDetails: UserDetails }) => {
 
           <div>
             {preview ? (
-              // <Image
-              //   src={preview || ""}
-              //   height={84}
-              //   width={84}
-              //   alt="profileImage"
-              //   className="ml-8 h-[84px] w-[84px] rounded-full"
-              // />
-              ""
+              <Image
+                src={preview || ""}
+                height={84}
+                width={84}
+                alt="profileImage"
+                className="ml-8 h-[84px] w-[84px] rounded-full"
+              />
             ) : (
               <Image
                 src="/assets/settings/profile.png"
@@ -152,7 +146,7 @@ const ProfileSettings = ({ UserDetails }: { UserDetails: UserDetails }) => {
               />
             )}
             <label
-              className="mt-4 px-6 py-3 bg-[#51F4A6] rounded-[5px] font-poppinsSemiBold text-sm text-[#282A03] block w-fit cursor-pointer"
+              className="mt-4 px-6 py-3 bg-[#51F4A6] rounded-[5px] font-poppinsSemiBold text-sm text-[#282A03] block w-fit lg:w-full lg:text-center cursor-pointer"
               id="image-upload"
             >
               <input
@@ -169,7 +163,7 @@ const ProfileSettings = ({ UserDetails }: { UserDetails: UserDetails }) => {
 
         <form action="post" onSubmit={handleProfileUpdate}>
           <div className="flex flex-col gap-y-8">
-            <div className="grid grid-cols-2 gap-6">
+            <div className="grid grid-cols-2 md:grid-cols-1  gap-6">
               <div>
                 <Label className="block mb-1">Full Name </Label>
                 <Input
@@ -202,7 +196,7 @@ const ProfileSettings = ({ UserDetails }: { UserDetails: UserDetails }) => {
               </div>
             </div>
 
-            <div className="grid grid-cols-2 gap-6">
+            <div className="grid grid-cols-2 md:grid-cols-1  gap-6">
               <div>
                 <Label className="block mb-1">Email Address</Label>
                 <Input
@@ -233,7 +227,7 @@ const ProfileSettings = ({ UserDetails }: { UserDetails: UserDetails }) => {
               </div>
             </div>
 
-            <div className="grid grid-cols-2 gap-6">
+            <div className="grid grid-cols-2 md:grid-cols-1  gap-6">
               <div>
                 <Label className="block mb-1">Street Address</Label>
                 <Input
@@ -263,7 +257,7 @@ const ProfileSettings = ({ UserDetails }: { UserDetails: UserDetails }) => {
               </div>
             </div>
 
-            <div className="grid grid-cols-2 gap-6">
+            <div className="grid grid-cols-2  md:grid-cols-1 gap-6">
               <div>
                 <Label className="block mb-1">State</Label>
                 <Input

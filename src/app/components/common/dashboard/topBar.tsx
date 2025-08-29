@@ -85,17 +85,13 @@ export function Topbar({
     return (
       <div>
         {userDetails?.user_details?.image ? (
-          // <Image
-          //   src={
-          //     `${environment?.imgBaserUrl}/${userDetails?.user_details?.image}/` ||
-          //     ""
-          //   }
-          //   height={40}
-          //   width={40}
-          //   alt="profileImage"
-          //   className="h-[40px] w-[40px]  rounded-full"
-          // />
-          ""
+          <Image
+            src={`${userDetails?.user_details?.image}` || ""}
+            height={40}
+            width={40}
+            alt="profileImage"
+            className="h-[40px] w-[40px]  rounded-full"
+          />
         ) : (
           <div className="h-[40px] w-[40px] rounded-full bg-[#EEFEF6] text-[#2D865B] flex items-center justify-center text-[1.3rem] tracking-[0.34px] font-medium">
             {user?.fullname
@@ -137,8 +133,8 @@ export function Topbar({
             </p>
           </div>
         </div> */}
-        <Heading overview={overview} className="lg:hidden" />
-        <div className="relative lg:hidden">
+        <Heading overview={overview} className="xl:hidden" />
+        <div className="relative xl:hidden">
           <BiSearch
             className="absolute top-4 left-2"
             size={20.28}
@@ -168,7 +164,7 @@ export function Topbar({
           alt="profile"
           className="hidden lg:block"
         />
-        <div className="rounded-full bg-[#F6F6F6] w-16 h-16 flex items-center justify-center relative cursor-pointer hover:bg-[#cac6c6] lg:w-10 lg:h-10 ">
+        <div className="rounded-full bg-[#F6F6F6] w-16 h-16 flex items-center justify-center relative cursor-pointer hover:bg-[#cac6c6] xl:w-10 xl:h-10 ">
           <IoNotificationsOutline
             className="text-[38px] lg:text-2xl"
             color="#4E4E4E"
@@ -177,7 +173,7 @@ export function Topbar({
             4
           </p>
         </div>{" "}
-        <div className="w-10 h-10 rounded-full bg-[#F6F6F6] items-center justify-center cursor-pointer hidden lg:flex">
+        <div className="w-10 h-10 rounded-full bg-[#F6F6F6] items-center justify-center cursor-pointer hidden xl:flex">
           <button
             className="transition-all duration-500 text-black text-4xl hover:p-2"
             onClick={() => setShowMobile(!showMobileMenu)}

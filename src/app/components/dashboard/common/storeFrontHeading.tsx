@@ -61,8 +61,8 @@ const StoreFrontHeading = ({
         className="absolute z-[1] top-0 right-0 lg:w-[200px] lg:h-[200px] md:w-[100px] md:h-[100px]"
       />
       <div className="max-w-[1300px]  mx-auto relative z-10">
-        <div className=" pt-10 pl-4 pb-8">
-          <div className="flex items-center gap-x-6">
+        <div className=" pt-10 pl-4 pb-8 md:pt-4">
+          <div className="flex items-center gap-x-6 md:flex-col md:items-start">
             {/*  */}
             {!withBorderRadius ? (
               <Image
@@ -185,27 +185,29 @@ const StoreFrontHeading = ({
               </div>
             </div>
           </div>
-          <div className="md:flex gap-x-3 mt-4 hidden">
-            <Link href={"/store-front"}>
-              <Button
-                className={`w-fit flex items-center justify-center gap-2 ${textColor}`}
-                variant="subtertiary"
-              >
-                <FaRegEnvelope size={16} />
-                Send a message
-              </Button>
-            </Link>
+          {!withBorderRadius && (
+            <div className="md:flex md:flex-col md:gap-y-3 md:pr-4 gap-x-3 mt-4 hidden">
+              <Link href={"/store-front"}>
+                <Button
+                  className={`w-fit flex items-center justify-center gap-2 ${textColor}`}
+                  variant="subtertiary"
+                >
+                  <FaRegEnvelope size={16} />
+                  Send a message
+                </Button>
+              </Link>
 
-            <Link href="/farm-page/farm-page-farm-details">
-              <Button
-                className="w-fit flex items-center justify-center gap-2"
-                variant="secondary"
-              >
-                <BsEyeFill size={16} />
-                View Farm
-              </Button>
-            </Link>
-          </div>
+              <Link href="/farm-page/farm-page-farm-details">
+                <Button
+                  className="w-fit flex items-center justify-center gap-2"
+                  variant="secondary"
+                >
+                  <BsEyeFill size={16} />
+                  View Farm
+                </Button>
+              </Link>
+            </div>
+          )}
         </div>
       </div>
     </div>

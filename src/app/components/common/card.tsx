@@ -145,17 +145,24 @@ const Card = ({
         </div>
       )}
 
-      <div className={`flex items-center gap-x-3  ${withRating ? "" : "pt-6"}`}>
-        <Button
-          variant="tertiary"
-          size="small"
-          className="w-fit"
-          onClick={onUpdateClick}
-        >
-          {btnText1 || " Bid Now"}
-        </Button>
-        <Link href={btnTextLink2 || "/"}>
-          <Button className="w-fit" variant="secondary" size="small">
+      <div
+        className={`flex items-center gap-x-3 md:gap-y-4 mt-3 md:flex-col  ${
+          withRating ? "" : "pt-6"
+        }`}
+      >
+        <div className="md:w-full">
+          <Button
+            variant="tertiary"
+            size="small"
+            className="w-full "
+            onClick={onUpdateClick}
+          >
+            {btnText1 || " Bid Now"}
+          </Button>
+        </div>
+
+        <Link href={btnTextLink2 || "/"} className="md:w-full">
+          <Button className="w-full " variant="secondary" size="small">
             {btnText2 || "View Details"}
           </Button>
         </Link>

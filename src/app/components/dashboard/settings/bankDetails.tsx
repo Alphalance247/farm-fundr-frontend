@@ -174,10 +174,10 @@ const BankDetails = () => {
   };
 
   // Check if user has bank details
-  const hasBankDetails =
-    data?.bank_details?.account_name &&
-    data?.bank_details?.account_number &&
-    data?.bank_details?.bank_name;
+  // const hasBankDetails =
+  //   data?.bank_details?.account_name &&
+  //   data?.bank_details?.account_number &&
+  //   data?.bank_details?.bank_name;
 
   return (
     <section className="mt-8 pb-8 border-b">
@@ -191,7 +191,7 @@ const BankDetails = () => {
           }}
         >
           <div className="bg-white w-full max-w-[600px] mx-auto rounded-[10px] shadow-lg z-50">
-            <div className="py-4 px-8 bg-[#EEFEF6] rounded-tr-[10px] rounded-tl-[10px] flex items-center justify-between">
+            <div className="py-4 px-8 bg-[#EEFEF6]  rounded-tr-[10px] rounded-tl-[10px] flex items-center justify-between">
               <div className="flex items-center gap-x-4">
                 <Image
                   src="/assets/DashBoard/wallet/deactivate.svg"
@@ -247,15 +247,16 @@ const BankDetails = () => {
         subHead="Update your bank details to receive payment"
       />
 
-      {hasBankDetails && !updateOverview ? (
-        <div className="w-[50%] mx-auto pt-8">
-          <div className="border border-[#E2E2E2] p-6 flex justify-between gap-x-8 items-center  rounded-xl">
-            <div className="flex gap-x-6 items-center">
+      {updateOverview ? (
+        <div className="w-[50%] xl:w-full mx-auto pt-8">
+          <div className="border border-[#E2E2E2] p-6 flex flex-row xl:flex-col lg:gap-4 justify-between xl:gap-8 gap-x-8 items-center xl:items-start  md:items-center rounded-xl">
+            <div className="flex gap-x-6 flex-row  xl:items-center md:flex-col lg:gap-y-6 items-center">
               <Image
                 width={102}
                 height={98}
                 src={"/assets/settings/image.png"}
                 alt="bank image"
+                // className="w-full"
               />
               <div>
                 <p className="text-sm text-[#5F5F5F] font-poppinsSemiBold">
@@ -270,12 +271,12 @@ const BankDetails = () => {
               </div>
             </div>
 
-            <div className="flex flex-col gap-y-3">
+            <div className="flex flex-col xl:flex-row xl:gap-3 xl:justify-between gap-y-3">
               <Button
                 variant="subprimary"
                 type="button"
                 onClick={() => {
-                  setUpdateOverview(true);
+                  setUpdateOverview(false);
                 }}
               >
                 Update Bank
@@ -300,7 +301,7 @@ const BankDetails = () => {
           </div>
         </div>
       ) : (
-        <div className="w-[60%] mx-auto pt-8 flex flex-col gap-y-5 ">
+        <div className="w-[60%] lg:w-full mx-auto pt-8 flex flex-col gap-y-5 ">
           <div>
             <Label id="bank-name" className="block mb-1">
               Bank Name
@@ -402,7 +403,7 @@ const BankDetails = () => {
                   ? "cursor-not-allowed opacity-60"
                   : ""
               }`}
-              onClick={() => setUpdateOverview(false)}
+              onClick={() => setUpdateOverview(true)}
               type="button"
             >
               Add bank

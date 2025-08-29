@@ -50,7 +50,7 @@ const Wallet = () => {
 
   return (
     <DashboardLayout>
-      <main className="px-10 py-10 overflow-auto h-full bg-gray-50">
+      <main className="px-10 lg:px-4 py-10 overflow-auto h-full bg-gray-50">
         <div className=" mb-8">
           <h2 className="text-xl font-poppinsSemiBold text-[#5F5F5F]">
             Wallet
@@ -60,14 +60,14 @@ const Wallet = () => {
           </p>
         </div>
 
-        <div className="grid grid-cols-2 gap-x-4 mb-8">
+        <div className="grid grid-cols-2 md:grid-cols-1 md:gap-y-4 gap-x-4 mb-8">
           <div className="bg-[url('/assets/DashBoard/wallet/bg-green.png')] bg-cover bg-center bg-no-repeat rounded-xl p-6 h-fit">
             <div className="mb-24">
               <p className="text-sm font-poppinsSemiBold text-white mb-2">
                 Wallet Balance
               </p>
-              <div className="flex items-center gap-2 mb-4">
-                <h4 className="text-white text-[2rem] leading-9 font-poppinsSemiBold">
+              <div className="flex justify-between items-center gap-2 mb-4">
+                <h4 className="text-white text-[2rem] lg:text-xl leading-9 font-poppinsSemiBold">
                   {loading ? (
                     <LoadingSkeleton />
                   ) : (
@@ -91,7 +91,7 @@ const Wallet = () => {
                     )}{" "}
                   </p>
 
-                  <div className="flex items-center gap-x-3">
+                  <div className="flex  items-center gap-x-3">
                     <p className="text-[white] text-xs font-poppinsRegular flex items-center gap-x-2">
                       Account Number :{" "}
                       {loadingBank ? (
@@ -107,7 +107,7 @@ const Wallet = () => {
                       className="bg-[#E9EAE6] cursor-pointer rounded-[8px] px-2 py-1 flex items-center gap-x-2"
                       onClick={() => handleCopy("1234567890")}
                     >
-                      <p className="text-[#282A03] font-poppinsRegular text-sm">
+                      <p className="text-[#282A03] block md:hidden font-poppinsRegular text-sm">
                         copy
                       </p>
                       <span>
@@ -118,15 +118,15 @@ const Wallet = () => {
                   </div>
                 </div>
               ) : (
-                <div className="mt-6">
-                  <p className="text-[#E9EAE6] text-sm font-poppinsRegular mb-6">
+                <div className="mt-3">
+                  <p className="text-[#E9EAE6] text-sm font-poppinsRegular mb-3">
                     No bank details found
                   </p>
                 </div>
               )}
             </div>
 
-            <div className="flex items-center gap-x-4">
+            <div className="flex flex-row lg:flex-col lg:gap-y-4 items-center gap-x-4">
               {/* <div>
                 <Button
                   className="flex items-center justify-center gap-x-2 w-full"
@@ -137,30 +137,30 @@ const Wallet = () => {
                 </Button>
               </div> */}
               {!data?.bank_details?.account_name && (
-                <Link href="/farmer-dashboard/settings">
-                  <Button className="text-[#E9EAE6] text-sm font-poppinsRegular flex items-center gap-x-2">
+                <Link className="lg:w-full" href="/farmer-dashboard/settings">
+                  <Button className="text-[#E9EAE6] text-sm lg:w-full  lg:justify-center  lg:!py-4 font-poppinsRegular flex items-center gap-x-2">
                     <FaPlus size={15} color="#E9EAE6" />
                     Add bank details
                   </Button>
                 </Link>
               )}
-
-              <div>
-                <Link href="/farmer-dashboard/wallet/withdrawfund">
-                  <Button
-                    variant="subprimary"
-                    disabled={!data?.bank_details?.account_name}
-                    className={`flex items-center justify-center gap-x-2 w-full ${
-                      !data?.bank_details?.account_name
-                        ? "opacity-50 cursor-not-allowed"
-                        : ""
-                    }`}
-                  >
-                    <FaArrowDown size={18} color="#2D865B" />
-                    Withdraw funds
-                  </Button>
-                </Link>
-              </div>
+              <Link
+                className="lg:w-full"
+                href="/farmer-dashboard/wallet/withdrawfund"
+              >
+                <Button
+                  variant="subprimary"
+                  disabled={!data?.bank_details?.account_name}
+                  className={`flex items-center lg:justify-center lg:w-full  lg:!py-3  gap-x-2  ${
+                    !data?.bank_details?.account_name
+                      ? "opacity-50 cursor-not-allowed"
+                      : ""
+                  }`}
+                >
+                  <FaArrowDown size={18} color="#2D865B" />
+                  Withdraw funds
+                </Button>
+              </Link>
             </div>
           </div>
 

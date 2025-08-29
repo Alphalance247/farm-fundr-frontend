@@ -10,7 +10,7 @@ const CustomizeStore = () => {
 
   return (
     <div>
-      <div className="flex justify-between border-b border-[#E4E7EC] pb-3 mb-8">
+      <div className="flex justify-between border-b border-[#E4E7EC] pb-3 mb-8 md:flex-col md:gap-y-6">
         <div className="flex flex-col">
           <h3 className="text-sm font-poppinsSemiBold text-[#5F5F5F] mb-3">
             StoreFront Settings

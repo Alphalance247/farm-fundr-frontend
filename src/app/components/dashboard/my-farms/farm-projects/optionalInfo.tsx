@@ -57,7 +57,7 @@ const OptionalInfo = ({
 
   return (
     <div>
-      <div className="p-6 bg-white mt-6 rounded-lg flex flex-col gap-y-6">
+      <div className="p-6 md:p-4 bg-white mt-6 rounded-lg flex flex-col gap-y-6">
         <div>
           <Label>How It Works</Label>
 
@@ -93,7 +93,7 @@ const OptionalInfo = ({
         </div>
 
         <div>
-          <div className="p-6 bg-white rounded-lg">
+          <div className="p-6 md:p-4 bg-white mt-6 rounded-lg flex flex-col gap-y-6">
             <p className="mb-2">
               Upload Project Images
               <span className=" font-poppinsRegular text-[#5F5F5F]">
@@ -279,7 +279,7 @@ const OptionalInfo = ({
         </div> */}
       </div>
 
-      <div className="mt-8 flex items-center justify-between">
+      <div className="mt-8 flex flex-row md:flex-col md:gap-4 items-center justify-between">
         <Button
           className="w-fit flex items-center justify-center gap-x-4"
           onClick={(e) => {

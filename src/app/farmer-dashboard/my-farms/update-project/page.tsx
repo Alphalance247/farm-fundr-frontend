@@ -291,7 +291,7 @@ const UpdateProject = () => {
           />
         )}
 
-        <main className="px-10 py-10 bg-gray-50 overflow-auto">
+        <main className="px-10 py-10 bg-gray-50 overflow-auto lg:px-6 md:px-4">
           <GoBackBtn href="/farmer-dashboard/my-farms" />
           <div className="mt-6 text-center">
             <h5 className="text-xl font-semibold text-[#5F5F5F]">
@@ -305,13 +305,13 @@ const UpdateProject = () => {
           {/* form section */}
           <form
             action=""
-            className="w-[70%] mx-auto"
+            className="w-[70%] mx-auto xl:w-[80%] lg:w-[90%] md:w-full"
             onSubmit={(e) => handleProjectSubmit(e)}
           >
-            <div className="p-6 bg-white rounded-lg shadow-lg">
+            <div className="p-6 bg-white rounded-lg shadow-lg md:px-3">
               {/* Upload Farm Images */}
               <div>
-                <div className="p-6 bg-white rounded-lg">
+                <div className=" bg-white rounded-lg">
                   <p className="mb-2">
                     Upload Farm Images
                     <span className=" font-poppinsRegular text-[#5F5F5F]">
@@ -376,7 +376,7 @@ const UpdateProject = () => {
                     </div>
 
                     {/* Second row - Multiple images */}
-                    <div className="grid grid-cols-3 gap-4">
+                    <div className="grid grid-cols-3 gap-4 lg:grid-cols-2 md:grid-cols-1">
                       {Object.entries(uploadedImages)
                         .filter(([key]) => key !== "image1")
                         .map(([key, { preview }]) => (
@@ -447,7 +447,7 @@ const UpdateProject = () => {
                   Farm Information
                 </p>
 
-                <div className="grid grid-cols-2 gap-6">
+                <div className="grid grid-cols-2 gap-6 md:grid-cols-1">
                   <div>
                     <Label>Select Farm</Label>
                     <select
@@ -563,7 +563,7 @@ const UpdateProject = () => {
                   Investment Details
                 </p>
 
-                <div className="grid grid-cols-2 gap-6">
+                <div className="grid grid-cols-2 gap-6 md:grid-cols-1">
                   <div>
                     <Label className="">Total Funding</Label>
                     <Input
@@ -629,7 +629,7 @@ const UpdateProject = () => {
                     </select>
                   </div>
 
-                  <div className="grid grid-cols-2 gap-2">
+                  <div className="grid grid-cols-2 gap-2 md:grid-cols-1 md:gap-6">
                     <div>
                       <Label className="">Investment Start date</Label>
                       <Input

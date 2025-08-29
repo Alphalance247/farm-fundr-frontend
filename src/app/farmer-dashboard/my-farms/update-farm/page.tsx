@@ -255,7 +255,7 @@ const UpdateFarm = () => {
           />
         )}
 
-        <main className="px-10 py-10 bg-gray-50 overflow-y-auto">
+        <main className="px-10 py-10 bg-gray-50 overflow-y-auto lg:px-6 md:px-4">
           <GoBackBtn href="/farmer-dashboard/my-farms" />
           <div className="mt-6 text-center">
             <h5 className="text-xl font-semibold text-[#5F5F5F]">Edit Farm</h5>
@@ -266,10 +266,10 @@ const UpdateFarm = () => {
           {/* form section */}
           <form
             action=""
-            className="w-[70%] mx-auto"
+            className="w-[70%] mx-auto xl:w-[80%] lg:w-[90%] md:w-full"
             onSubmit={(e) => handleFinalSubmit(e)}
           >
-            <div className="p-6 bg-white rounded-lg shadow-lg">
+            <div className="p-6 bg-white rounded-lg shadow-lg md:px-3">
               {/* Upload Farm Images */}
               <div className="">
                 <p className="mb-2 font-poppinsSemiBold text-[#121212] text-lg border-b border-[#F6F6F6] pb-3">
@@ -335,7 +335,7 @@ const UpdateFarm = () => {
                     </div>
                   </div>
 
-                  <div className="grid grid-cols-3 gap-4">
+                  <div className="grid grid-cols-3 gap-4 lg:grid-cols-1">
                     {Object.entries(uploadedImages)
                       .filter(([key]) => key !== "image1")
                       .map(([key, { preview }]) => (
@@ -402,7 +402,7 @@ const UpdateFarm = () => {
                   Farm Information
                 </p>
 
-                <div className="grid grid-cols-2 gap-6">
+                <div className="grid grid-cols-2 gap-6 md:grid-cols-1">
                   <div>
                     <Label className="">farm Name</Label>
                     <Input
