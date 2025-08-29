@@ -82,7 +82,7 @@ const Benefits = () => {
             iconImage="/assets/LandingPage/icons/vector2.svg"
             heading={"Benefits for you in our platform"}
             subhead={
-              "Explore the Benefits: Secure, Sustainable, and Profitable Farmland Investments with FarmFundr"
+              "Explore the Benefits: Secure, Sustainable, and Profitable Farmland Investments with FarmPady"
             }
           />
 
