@@ -12,6 +12,7 @@ import Button from "../../common/Buttons";
 import { FiEdit, FiTrash2 } from "react-icons/fi";
 import DeleteFarm from "./deleteFarm";
 import { useRouter } from "next/navigation";
+import TransactionFilterMobile from "../wallet/mobileTransactionSearch";
 
 interface Employee {
   id: number;
@@ -169,15 +170,20 @@ export default function FarmListTable() {
           selectedFarmName={selectedFarmName}
         />
       )}
-      <TransactionSearch
-        searchQuery={searchQuery}
-        sortBy={sortBy}
-        filterBy={filterBy}
-        onSearchChange={setSearchQuery}
-        onSortChange={setSortBy}
-        onFilterChange={setFilterBy}
-        withHeading={true}
-      />
+      <div>
+        <TransactionSearch
+          searchQuery={searchQuery}
+          sortBy={sortBy}
+          filterBy={filterBy}
+          onSearchChange={setSearchQuery}
+          onSortChange={setSortBy}
+          onFilterChange={setFilterBy}
+          withHeading={true}
+        />
+      </div>
+      <div>
+        <TransactionFilterMobile />
+      </div>
 
       {totalFarmsTable.length === 0 ? (
         <div className="flex pt-20 items-center h-fit justify-center">

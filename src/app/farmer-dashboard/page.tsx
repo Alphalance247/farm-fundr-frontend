@@ -19,6 +19,8 @@ import { getDashboardStore } from "@/stores/farmer-dashboard/dashboard";
 import { getFarmersEarnings } from "@/stores/farmer-dashboard/earnings";
 import { getFarmerBidsStore } from "@/stores/farmer-dashboard/bids";
 import { getFarmerNotification } from "@/stores/farmer-dashboard/notifications";
+import SkeletonLoader from "@/components/ui/skeleton-loader";
+
 
 interface data {
   text?: string;
@@ -31,10 +33,12 @@ interface data {
 const FarmerDashboard = () => {
   const { user } = useAuth();
   const { fetchUserKYC, data: kycData } = getKYCPercentageStore();
-  const { fetchDashboardData } = getDashboardStore();
-  const { fetchFarmerEarnings } = getFarmersEarnings();
-  const { fetchFarmerBids } = getFarmerBidsStore();
+  const { fetchDashboardData,  loading: isDashboardLoading } = getDashboardStore();
+  const { fetchFarmerEarnings, loading: isEarningsLoading } = getFarmersEarnings();
+  const { fetchFarmerBids , loading: isBidsLoading } = getFarmerBidsStore();
   const { fetchNotification } = getFarmerNotification();
+  
+  // const isLoading = isDashboardLoading || isEarningsLoading || isBidsLoading;
 
   useEffect(() => {
     fetchFarmerEarnings();
@@ -227,15 +231,35 @@ const FarmerDashboard = () => {
 
           <div className="grid grid-cols-2 gap-x-6 mt-6 xl:gap-x-3 md:grid-cols-1">
             <div>
-              <InvestmentOverview />
-              <EarningOverview />
-              <PendingPayment />
+              {isDashboardLoading ? (
+                <SkeletonLoader className="h-[300px] w-full mb-6" />
+              ) : (
+                <InvestmentOverview />
+              )}
+              {isEarningsLoading ? (
+                <SkeletonLoader className="h-[300px] w-full mb-6" />
+              ) : (
+                <EarningOverview />
+              )}
+              {isEarningsLoading ? (
+                <SkeletonLoader className="h-[200px] w-full mb-6" />
+              ) : (
+                <PendingPayment />
+              )}
             </div>
 
             <div>
-              <FarmingSummary />
-              <RecentActivity />
-              <BidSummary />
+              {isDashboardLoading ? (
+                <SkeletonLoader className="h-[300px] w-full mb-6" />
+              ) : (
+                <FarmingSummary />
+              )}
+              {isDashboardLoading ? (
+                <SkeletonLoader className="h-[300px] w-full mb-6" />
+              ) : (
+                <RecentActivity />
+              )}
+              {isBidsLoading ? <SkeletonLoader className="h-[300px] w-full mb-6" /> : <BidSummary />}
             </div>
           </div>
         </main>

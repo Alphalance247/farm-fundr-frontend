@@ -112,7 +112,7 @@ export default function WithdrawFundStep1() {
   return (
     <DashboardLayout>
       <main className="overflow-auto bg-gray-50">
-        <section className="bg-white grid grid-cols-[40%_auto] rounded-xl">
+        <section className="bg-white grid grid-cols-[40%_auto]  md:grid-cols-1 rounded-xl">
           <div className="bg-[#EEFEF6] justify-center flex items-center">
             <Image
               src="/assets/DashBoard/wallet/withdraw.png"
@@ -122,9 +122,9 @@ export default function WithdrawFundStep1() {
             />
           </div>
 
-          <div className="bg-white shadow p-8">
+          <div className="bg-white lg:p-4 shadow p-8">
             <div className="flex items-center justify-between mb-6">
-              <h2 className="mb-2 font-aristoBold text-3xl text-[#5F5F5F]">
+              <h2 className=" font-aristoBold text-3xl lg:text-2xl md:text-xl text-[#5F5F5F]">
                 Withdraw Funds From Wallet
               </h2>
 
@@ -231,7 +231,7 @@ export default function WithdrawFundStep1() {
                     </div>
                   </div>
 
-                  <div className="grid grid-cols-2 gap-6">
+                  <div className="grid grid-cols-2 md:grid-cols-1 gap-6">
                     <div>
                       <p className="block mb-2 font-poppinsSemiBold text-sm text-[#5F5F5F]">
                         Charges (0.15%)

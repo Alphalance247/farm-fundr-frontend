@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
+import { MdFolderShared } from "react-icons/md";  
 import DashboardLayout from "../../components/common/dashboardLayout";
 import GoBackBtn from "@/app/components/common/goBack";
 import { IoPerson } from "react-icons/io5";
@@ -14,6 +15,7 @@ import { getKYCPercentageStore } from "@/stores/settings/getKycPercentage";
 import { getUserDetailsStore } from "@/stores/settings/getUserDetails";
 import Image from "next/image";
 import { environment } from "@/env/env.local";
+import IdentitySettings from "@/app/components/dashboard/settings/identitySettings";
 
 const Setting = () => {
   const [activeTab, setActiveTab] = useState<string>("Profile settings");
@@ -33,6 +35,7 @@ const Setting = () => {
       icon: <MdOutlineCreditCard size={20} />,
     },
     { id: 2, name: "Award/Qualification", icon: <IoSchoolSharp size={20} /> },
+    { id: 3, name: "Identity", icon: <MdFolderShared size={20} /> },
     // {
     //   id: 3,
     //   name: "Account security",
@@ -47,11 +50,11 @@ const Setting = () => {
 
   return (
     <DashboardLayout>
-      <main className="px-10 py-8 bg-gray-50 h-full overflow-auto">
+      <main className="px-10 md:px-4 py-8 bg-gray-50 h-full overflow-auto">
         <GoBackBtn href="/farmer-dashboard" />
 
         <div className="mt-8">
-          <div className="bg-[#226646] flex items-center gap-6 rounded-xl py-12 px-12">
+          <div className="bg-[#226646] flex flex-row md:flex-col items-center md:px-4 gap-6 rounded-xl py-12 px-12">
             {userDetails?.user_details?.image ? (
               <Image
                 src={
@@ -95,14 +98,14 @@ const Setting = () => {
           </div>
 
           <div className="mt-8">
-            <div className="flex gap-x-5 items-center border-b border-[#E4E7EC]">
+            <div className="flex gap-x-5 items-center border-b md:overflow-x-auto overflow-x-visible scrollbar-hide border-[#E4E7EC]">
               {tabs.map((el, i) => (
                 <button
                   className={`${
                     activeTab === el.name
                       ? "text-[#2D865B] border-b-[3px] border-[#2D865B] bg-white text-sm"
                       : "text-[#7C7C7C] border-transparent "
-                  }   font-medium text-sm p-4 border-b-2 flex gap-x-2 items-center`}
+                  }   font-medium text-sm p-4 border-b-2 flex gap-x-2 items-center justify-center flex-1 whitespace-nowrap`}
                   onClick={() => setActiveTab(el.name)}
                   key={i}
                 >
@@ -120,6 +123,13 @@ const Setting = () => {
             )}
             {activeTab === "Bank Details" && <BankDetails />}
             {activeTab === "Award/Qualification" && <Certifications />}
+            {activeTab === "Identity" && (
+              <>
+                {userDetails && (
+                  <IdentitySettings UserDetails={userDetails.user_details} />
+                )}
+              </>
+            )}
           </div>
         </div>
       </main>

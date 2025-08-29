@@ -38,7 +38,9 @@ const SpinnerModal = ({
               d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2.93 6.93A8.003 8.003 0 014 12H0c0 5.523 4.477 10 10 10v-4a6.002 6.002 0 01-3.07-1.07z"
             ></path>
           </svg>
-          <p className="mt-2 text-white">{message || "Loading..."}</p>
+          <p className="mt-2 w-full md:w-[250px] text-center text-white">
+            {message || "Loading..."}
+          </p>
         </div>
       </div>
     </ModalOverlay>
