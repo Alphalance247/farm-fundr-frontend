@@ -73,7 +73,7 @@ const ProjectInformation = ({
 
   return (
     <div>
-      <div className="p-6 bg-white mt-6 rounded-lg flex flex-col gap-y-6">
+      <div className="p-6 md:p-4 bg-white mt-6 rounded-lg flex flex-col gap-y-6">
         <div>
           <Label>Select Farm</Label>
           <select

@@ -322,7 +322,7 @@ const AddFarm = () => {
             message="Uploading farm details, please wait this might take a while...."
           />
         )}
-
+{/* guide */}
         <main className="px-10 md:px-4 py-10 bg-gray-50 overflow-auto">
           <div
             className={`flex flex-row md:flex-col gap-x-6  ${
@@ -333,7 +333,7 @@ const AddFarm = () => {
               <div className="w-[30%] xl:w-[60%] lg:w-[50%] md:w-full">
                 <GoBackBtn href="/farmer-dashboard/my-farms" />
 
-                <div className="border lg:item-center border-[#FEF0B0] bg-[#FFFAE6] rounded-lg p-3 flex gap-x-5 items-start mt-6 ">
+                <div className="border lg:items-center border-[#FEF0B0] bg-[#FFFAE6] rounded-lg p-3 flex gap-x-5 items-start mt-6 ">
                   <Image
                     src="/assets/my-farms/danger.svg"
                     width={46}

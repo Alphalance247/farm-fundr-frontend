@@ -98,6 +98,7 @@ const FarmDetails = ({
 
   return (
     <div>
+      {/* Farm Details */}
       <div className="p-6 md:p-4 bg-white mt-6 rounded-lg flex flex-col gap-y-6">
         <div>
           <Label className="">farm Name</Label>
