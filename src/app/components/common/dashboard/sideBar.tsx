@@ -112,8 +112,8 @@ const Sidebar: React.FC<mobileMenuProps> = ({
     <aside
       className={`bg-white overflow-y-scroll  ${
         showMobileMenu
-          ? "lg:block lg:absolute lg:w-[80%] lg:z-20 lg:overflow-y-auto lg:h-auto"
-          : "lg:hidden"
+          ? "xl:block xl:absolute xl:w-[80%] xl:z-20 xl:overflow-y-auto xl:h-auto"
+          : "xl:hidden"
       } `}
       ref={dropdownRef}
     >

@@ -183,7 +183,7 @@ export default function FarmListTable() {
         />
       </div>
       <div>
-        <TransactionFilterMobile />
+        <TransactionFilterMobile tableHeading="All Farms" />
       </div>
 
       {totalFarmsTable.length === 0 ? (

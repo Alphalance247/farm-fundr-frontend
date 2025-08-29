@@ -30,8 +30,6 @@ const TransactionCard: React.FC<TransactionCardProps> = ({
     return null;
   };
 
-  console.log(id);
-
   // ✅ Status + Amount shared color styles
   const getSharedColor = () => {
     switch (status.toLowerCase()) {

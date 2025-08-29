@@ -100,7 +100,7 @@ const PendingPayment = ({
         )}
 
         {isTotalAvailable && (
-          <Link href={"/farmer-dashboard/wallet"} className="mx-auto">
+          <Link href={"/farmer-dashboard/wallet"} className="mx-auto md:w-full">
             <Button
               variant="secondary"
               size="small"
