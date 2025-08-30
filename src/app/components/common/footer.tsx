@@ -78,7 +78,7 @@ const Footer = () => {
 
             <p className="text-xs text-white">
               By submitting your email address, you agree to receive weekly news
-              from farmfundr.{" "}
+              from farmpady.{" "}
               <span className="text-[#51F4A6] underline-offset-2">
                 <a href="http://" target="_blank" rel="noopener noreferrer">
                   Click here

@@ -70,7 +70,7 @@ const StoreFrontHeading = ({
                 alt="customize-store"
                 width={208}
                 height={168}
-                className="md:w-[80px] md:h-[85px] cursor-pointer"
+                className="md:w-[80px] md:h-[85px]"
               />
             ) : (
               <div>

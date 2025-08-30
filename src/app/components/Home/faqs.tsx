@@ -19,33 +19,30 @@ const Faqs = () => {
   const faqs = [
     {
       question: " What is FarmPady?",
-      answer: `FarmPady is a platform where investors and farmers connect to
-          collaborate on Agricultural products, fostering partnerships that
-          drive agricultural innovation and mutual growth`,
+      answer: `FarmPady is a platform designed to connect investors with farmers, fostering collaboration and innovation in the agricultural sector. Our goal is to drive agricultural growth and sustainability while providing mutual benefits to both parties.`,
     },
     {
-      question: " What is FarmPady?",
-      answer: `FarmPady is a platform where investors and farmers connect to
-          collaborate on Agricultural products, fostering partnerships that
-          drive agricultural innovation and mutual growth`,
+      question: "How do I create an account on FarmPady?",
+      answer: `Visit our homepage and click on the "Get Started for Free" button. Follow the prompts to complete your registration.`,
     },
     {
-      question: " What is FarmPady?",
-      answer: `FarmPady is a platform where investors and farmers connect to
-          collaborate on Agricultural products, fostering partnerships that
-          drive agricultural innovation and mutual growth`,
+      question: "What support is available if I have questions or issues?",
+      answer: `FarmPady offers Live chat assistance, Email support, Comprehensive help center and Dedicated account managers for investors and farmers
+`,
     },
     {
-      question: " What is FarmPady?",
-      answer: `FarmPady is a platform where investors and farmers connect to
-          collaborate on Agricultural products, fostering partnerships that
-          drive agricultural innovation and mutual growth`,
+      question: "Who can use FarmPady?",
+      answer: `FarmPady is open to Individuals or entities looking to invest in sustainable agricultural projects and Agricultural producers seeking investment to fund and expand their operations.`,
     },
     {
-      question: " What is FarmPady?",
-      answer: `FarmPady is a platform where investors and farmers connect to
-          collaborate on Agricultural products, fostering partnerships that
-          drive agricultural innovation and mutual growth`,
+      question: "What types of projects can I invest in?",
+      answer: `FarmPady offers a variety of agricultural projects, including but not limited to Crop cultivation (e.g., organic apple farming), Livestock farming
+`,
+    },
+    {
+      question: "Is my personal and financial information safe on FarmPady?",
+      answer: `Absolutely. We employ industry-standard encryption and security protocols to protect your data. Our privacy policy outlines our commitment to safeguarding your information.
+`,
     },
   ];
 
