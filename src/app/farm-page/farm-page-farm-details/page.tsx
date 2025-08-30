@@ -26,8 +26,12 @@ const StoreFrontFarmDetails = () => {
 
     const farmPageData = data?.farm_data;
 
+
+
     useEffect(() => {
-      fetchFarmPageList(farmName);
+      if (farmName) {
+      fetchFarmPageList(farmName)
+      }
     }, [fetchFarmPageList, farmName]);
     return (
       <div>

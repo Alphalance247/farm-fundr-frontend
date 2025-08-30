@@ -41,10 +41,14 @@ const StoreFrontDetails = ({ id }: { id: string }) => {
     fetchProjectsDetails,
   } = getFarmPageProjectDetails();
 
+
+
   useEffect(() => {
-    fetchFarmPageProjectList(farmName);
-    fetchProjectsDetails(farmName, id);
-    fetchFarmPageList(farmName);
+    if (farmName) {
+      fetchFarmPageProjectList(farmName);
+      fetchProjectsDetails(farmName, id);
+      fetchFarmPageList(farmName);
+      }
   }, [
     fetchFarmPageProjectList,
     fetchProjectsDetails,
