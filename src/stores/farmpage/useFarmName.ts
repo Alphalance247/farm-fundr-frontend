@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 
 export const useFarmName = () => {
   const searchParams = useSearchParams();
-  const [farmName, setFarmName] = useState<string | null>(null);
+  const [farmName, setFarmName] = useState<string>('');
 
   useEffect(() => {
     // First try to get from search params
@@ -28,5 +28,5 @@ export const useFarmName = () => {
     }
   }, [searchParams]);
 
-  return farmName || "bandele-farm";
+  return farmName;
 };
