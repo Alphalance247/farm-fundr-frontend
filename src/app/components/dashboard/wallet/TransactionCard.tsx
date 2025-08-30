@@ -20,6 +20,7 @@ const TransactionCard: React.FC<TransactionCardProps> = ({
   viewDetailsLink = "#",
 }) => {
   // ✅ Determine icon based on transaction type
+  console.log(id)
   const getIcon = () => {
     if (type.toLowerCase().includes("payout request")) {
       return <IoMdCheckmarkCircleOutline size={20} color="#DEA304" />;
