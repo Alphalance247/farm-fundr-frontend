@@ -1,4 +1,3 @@
-import { environment } from "@/env/env.local";
 import { getFarmPageListStore } from "@/stores/farmpage/farmPageList";
 import Image from "next/image";
 import { RiGraduationCapFill } from "react-icons/ri";
@@ -13,7 +12,7 @@ const FarmersProfile = () => {
         <div className="bg-[#226646] border border-[#51F4A6] flex items-center gap-6 rounded-xl p-4 md:flex-col md:items-start">
           {!farmersDetails?.image ? (
             <Image
-              src={`${environment?.imgBaserUrl}${farmersDetails?.image}`}
+              src={`${farmersDetails?.image}`}
               width={225}
               height={178}
               alt="avatar"

@@ -181,7 +181,7 @@ const StoreFront = () => {
                       )}....`}
                       projectName={`${card?.name?.slice(0, 20)}...`}
                       projectROI={card?.ROI?.toString()}
-                      imageUrl={`https://padycvgcoops.name.ng/${card?.images[0]}`}
+                      imageUrl={`${card?.images[0]}`}
                       status={card?.status}
                       onViewProjects={() => {
                         /* handle click */

@@ -15,8 +15,6 @@ export function middleware(request: NextRequest) {
     pathname.startsWith("/investor-dashboard");
 
   if (isProtectedRoute && !token) {
-    console.log("🚫 Redirecting to login - no token found");
-
     // Create login URL with redirect parameter
     const loginUrl = new URL("/login", request.url);
     loginUrl.searchParams.set("redirect", pathname);
@@ -35,5 +33,9 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/farmer-dashboard/:path*", "/investor-dashboard/:path*"],
+  matcher: [
+    "/farmer-dashboard/:path*",
+    "/investor-dashboard/:path*",
+    "/farm-page/:path*",
+  ],
 };

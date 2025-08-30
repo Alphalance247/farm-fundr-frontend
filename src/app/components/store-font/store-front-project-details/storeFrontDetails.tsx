@@ -94,7 +94,7 @@ const StoreFrontDetails = ({ id }: { id: string }) => {
                     <div className="w-full">
                       <Image
                         src={
-                          `https://padycvgcoops.name.ng/${detailsData?.project_images[0]?.image}` ||
+                          `${detailsData?.project_images[0]?.image}` ||
                           "/assets/my-farms/no-img.avif"
                         }
                         alt={`store-front-details-image-${id}`}
@@ -107,7 +107,7 @@ const StoreFrontDetails = ({ id }: { id: string }) => {
                       <div className="grid grid-cols-2 gap-x-2">
                         <Image
                           src={
-                            `https://padycvgcoops.name.ng/${detailsData?.project_images[1]?.image}` ||
+                            `${detailsData?.project_images[1]?.image}` ||
                             "/assets/my-farms/no-img.avif"
                           }
                           alt={`store-front-details-image-2`}
@@ -117,7 +117,7 @@ const StoreFrontDetails = ({ id }: { id: string }) => {
                         />
                         <Image
                           src={
-                            `https://padycvgcoops.name.ng/${detailsData?.project_images[2]?.image}` ||
+                            `${detailsData?.project_images[2]?.image}` ||
                             "/assets/my-farms/no-img.avif"
                           }
                           alt="store-front-details-image-3"
@@ -129,7 +129,7 @@ const StoreFrontDetails = ({ id }: { id: string }) => {
 
                       <Image
                         src={
-                          `https://padycvgcoops.name.ng/${detailsData?.project_images[3]?.image}` ||
+                          `${detailsData?.project_images[3]?.image}` ||
                           "/assets/my-farms/no-img.avif"
                         }
                         alt="store-front-details-image-4"

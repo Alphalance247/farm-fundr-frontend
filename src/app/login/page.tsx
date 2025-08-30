@@ -109,16 +109,16 @@ const Login = () => {
         .post("/api/login", { ...form })
         .then((response) => {
           setLoading(false);
-          console.log("Login response:", response);
-          console.log("Status:", response.status);
+
           if (response.status >= 200 && response.status < 300) {
             // Store in localStorage
             const { fullname, user_type } = response?.data;
             toast.success(`Login Successful Welcome back ${fullname}`);
 
             login({
-              fullname, user_type,
-              profileImage: ""
+              fullname,
+              user_type,
+              profileImage: "",
             });
             const redirectPath = getRedirectPath(user_type, redirectTo);
             router.push(redirectPath);

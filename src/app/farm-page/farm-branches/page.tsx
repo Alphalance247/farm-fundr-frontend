@@ -79,7 +79,7 @@ const Farms = () => {
                       }`}
                       status={data?.status}
                       imageUrl={
-                        `https://padycvgcoops.name.ng/${data?.branch_images[0]?.image}` ||
+                        `${data?.branch_images[0]?.image}` ||
                         "/assets/my-farms/2.png"
                       }
                       onViewProjects={() => {
