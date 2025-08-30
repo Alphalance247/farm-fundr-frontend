@@ -26,6 +26,7 @@ export function middleware(request: NextRequest) {
   if (pathname.startsWith("/farm-page")) {
     const url = request.nextUrl.clone();
     url.searchParams.set("farm", subdomain);
+
     return NextResponse.rewrite(url);
   }
 
@@ -36,6 +37,7 @@ export const config = {
   matcher: [
     "/farmer-dashboard/:path*",
     "/investor-dashboard/:path*",
+    "/farm-page",
     "/farm-page/:path*",
   ],
 };

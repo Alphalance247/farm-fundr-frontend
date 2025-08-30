@@ -1,18 +1,32 @@
+"use client";
 import { useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
 
 export const useFarmName = () => {
   const searchParams = useSearchParams();
-  const farmName = searchParams.get("farm");
+  const [farmName, setFarmName] = useState<string | null>(null);
 
-  // // If no farm name is provided, try to extract from hostname
-  // if (!farmName && typeof window !== "undefined") {
-  //   const hostname = window.location.hostname;
-  //   const subdomain = hostname.split(".")[0];
-  //   // Only use subdomain if it's not the main domain
-  //   if (subdomain && !hostname.includes("padycvgcoops.name.ng")) {
-  //     return subdomain;
-  //   }
-  // }
+  useEffect(() => {
+    // First try to get from search params
+    const paramFarmName = searchParams.get("farm");
+
+    if (paramFarmName) {
+      setFarmName(paramFarmName);
+    } else if (typeof window !== "undefined") {
+      // Fallback to extracting from hostname
+      const hostname = window.location.hostname;
+      const subdomain = hostname.split(".")[0];
+
+      // Only use subdomain if it's not the main domain
+      if (
+        subdomain &&
+        subdomain !== "localhost" &&
+        !hostname.includes("padycvgcoops.name.ng")
+      ) {
+        setFarmName(subdomain);
+      }
+    }
+  }, [searchParams]);
 
   return farmName || "bandele-farm";
 };
