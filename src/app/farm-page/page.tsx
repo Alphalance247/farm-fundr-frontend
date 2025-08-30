@@ -161,7 +161,7 @@ const StoreFront = () => {
             <ErrorFetch
               message="Error Fetching branch List"
               onRefetch={() => {
-                fetchFarmPageProjectList("bandele-farm");
+                fetchFarmPageProjectList(farmName);
               }}
             />
           ) : (

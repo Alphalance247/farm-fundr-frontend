@@ -68,7 +68,7 @@ const StoreFrontFarmDetails = () => {
             <ErrorFetch
               message="Error fetching Farm details"
               onRefetch={() => {
-                fetchFarmPageList("bandele-farm");
+                fetchFarmPageList(farmName);
               }}
             />
           ) : (

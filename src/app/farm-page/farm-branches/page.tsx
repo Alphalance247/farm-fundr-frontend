@@ -55,7 +55,7 @@ const Farms = () => {
             <ErrorFetch
               message="Error Fetching branch List"
               onRefetch={() => {
-                fetchFarmPageBranchList("bandele-farm");
+                fetchFarmPageBranchList(farmerName);
               }}
             />
           ) : (

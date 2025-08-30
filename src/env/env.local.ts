@@ -11,5 +11,5 @@ export const environment = {
   addFarm: "farms/",
   UpdateFarm: "/farms/",
   ////azeez-farm.farmpady.com
-  farmPageBaseUrl: "padycvgcoops.name.ng/pady_api/farms",
+  farmPageBaseUrl: "https://padycvgcoops.name.ng/pady_api/farms",
 };

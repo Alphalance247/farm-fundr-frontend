@@ -82,7 +82,7 @@ const StoreFrontDetails = ({ id }: { id: string }) => {
                 <ErrorFetch
                   message="Error project details"
                   onRefetch={() => {
-                    fetchProjectsDetails("bandele-farm", id);
+                    fetchProjectsDetails(farmName, id);
                   }}
                 />
               ) : (
