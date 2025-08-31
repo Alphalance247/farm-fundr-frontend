@@ -43,6 +43,7 @@ const ProjectListing = () => {
                 projectDescrip={project.short_description}
                 projectLocation={project.project_location}
                 projectROI={String(project.ROI)}
+                btnText1="Bid Now"
                 btnText2="View Details"
                 btnTextLink2={`/farm/${project.id}`}
               />
