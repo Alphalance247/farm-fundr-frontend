@@ -4,47 +4,95 @@ import Image from "next/image";
 import Link from "next/link";
 import Button from "./Buttons";
 import { useState } from "react";
+import toast from "react-hot-toast";
+import axios, { AxiosError } from "axios";
+import { environment } from "@/env/env.local";
 
+// working
+const navs = [
+  {
+    id: 1,
+    name1: "Navigation",
+    name2: "Navigation",
+    name3: "Get Started",
+    link1: "/",
+    link2: "/",
+    link3: "/",
+  },
+  {
+    id: 3,
+    name1: "About Us",
+    name2: "Pricing",
+    name3: "Create free account",
+    link1: "/",
+    link2: "/",
+    link3: "/",
+  },
+  {
+    id: 4,
+    name1: "Project Listing",
+    name2: "Contact Us",
+    name3: "Login",
+    link1: "/",
+    link2: "/",
+    link3: "/",
+  },
+  {
+    id: 5,
+    name1: "How it works",
+    name2: "FAQs",
+    name3: "Home",
+    link1: "/",
+    link2: "/",
+    link3: "/",
+  },
+];
 const Footer = () => {
   const [activeMenu, setActiveMenu] = useState("Home");
-  const navs = [
-    {
-      id: 1,
-      name1: "Navigation",
-      name2: "Navigation",
-      name3: "Get Started",
-      link1: "/",
-      link2: "/",
-      link3: "/",
-    },
-    {
-      id: 3,
-      name1: "About Us",
-      name2: "Pricing",
-      name3: "Create free account",
-      link1: "/",
-      link2: "/",
-      link3: "/",
-    },
-    {
-      id: 4,
-      name1: "Project Listing",
-      name2: "Contact Us",
-      name3: "Login",
-      link1: "/",
-      link2: "/",
-      link3: "/",
-    },
-    {
-      id: 5,
-      name1: "How it works",
-      name2: "FAQs",
-      name3: "Home",
-      link1: "/",
-      link2: "/",
-      link3: "/",
-    },
-  ];
+  const [form, setForm] = useState({
+    email: "",
+  });
+  const [loading, setIsLoading] = useState(false);
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    const errors: string[] = [];
+    if (!form.email.trim()) errors.push("Email is required");
+
+    if (errors.length > 0) {
+      errors.forEach((err) => toast.error(err));
+      return;
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(form.email)) {
+      toast.error("Please enter a valid email address");
+      return;
+    }
+
+    try {
+      setIsLoading(true);
+      const res = await axios.post(
+        `${environment?.baseUrl}farms/email-subscribe`,
+        {
+          email: form.email,
+        }
+      );
+      if (res.status === 200) {
+        toast.success("Message sent successfully");
+        setForm({ email: "" });
+      }
+    } catch (err) {
+      const errorMessage =
+        err instanceof AxiosError
+          ? err.response?.data?.statusmessage ||
+            "Something went wrong, please try again."
+          : "Unexpected error occurred";
+      toast.error(errorMessage);
+    } finally {
+      setIsLoading(false);
+    }
+  };
   return (
     <footer className="bg-[#282A03]">
       <Container>
@@ -55,39 +103,45 @@ const Footer = () => {
           alt="footer logo"
           className="mx-auto"
         />
-        <div className="py-10 px-5 border-[#51F4A6]  border flex justify-between gap-20 rounded-[20px] mt-16 lg:gap-10 md:flex-col">
-          <div className="w-[45%] lg:w-[60%] md:w-full">
-            <p className="text-[white] text-4xl font-aristoBold mb-6">
-              Subscribe to our newsletter
-            </p>
-            <p className="text-lg font-poppinsRegular text-white">
-              Receive weekly newsletter to stay informed on the latest trends of
-              your investment
-            </p>
-          </div>
-
-          <div className="w-[37%] lg:w-[60%] md:w-full">
-            <div className="flex gap-x-2 mb-6 md:flex-col md:gap-y-6">
-              <input
-                type="text"
-                placeholder="Enter your email address"
-                className="px-4 py-3 text-[#EEFEF6] border border-[#51F4A6] rounded-md w-[100%]"
-              />
-              <Button variant="tertiary">Subscribe</Button>
+        <form onSubmit={handleSubmit}>
+          <div className="py-10 px-5 border-[#51F4A6]  border flex justify-between gap-20 rounded-[20px] mt-16 lg:gap-10 md:flex-col">
+            <div className="w-[45%] lg:w-[60%] md:w-full">
+              <p className="text-[white] text-4xl font-aristoBold mb-6">
+                Subscribe to our newsletter
+              </p>
+              <p className="text-lg font-poppinsRegular text-white">
+                Receive weekly newsletter to stay informed on the latest trends
+                of your investment
+              </p>
             </div>
 
-            <p className="text-xs text-white">
-              By submitting your email address, you agree to receive weekly news
-              from farmfundr.{" "}
-              <span className="text-[#51F4A6] underline-offset-2">
-                <a href="http://" target="_blank" rel="noopener noreferrer">
-                  Click here
-                </a>
-              </span>{" "}
-              to unsubscribe
-            </p>
+            <div className="w-[37%] lg:w-[60%] md:w-full">
+              <div className="flex gap-x-2 mb-6 md:flex-col md:gap-y-6">
+                <input
+                  type="email"
+                  placeholder="Enter your email address"
+                  className="px-4 py-3 text-[#EEFEF6] border border-[#51F4A6] rounded-md w-[100%]"
+                  onChange={(e) => setForm({ ...form, email: e.target.value })}
+                  value={form.email}
+                />
+                <Button type="submit" variant="tertiary">
+                  {loading ? "Loading..." : "Subscribe"}
+                </Button>
+              </div>
+
+              <p className="text-xs text-white">
+                By submitting your email address, you agree to receive weekly
+                news from farmfundr.{" "}
+                <span className="text-black underline-offset-2">
+                  <a href="http://" target="_blank" rel="noopener noreferrer">
+                    Click here
+                  </a>
+                </span>{" "}
+                to unsubscribe
+              </p>
+            </div>
           </div>
-        </div>
+        </form>
         <div className="grid grid-cols-[25%auto] gap-x-20 mt-24 lg:grid-cols-[30%auto] lg:gap-x-10 md:grid-cols-1 md:gap-y-8">
           <div>
             <Image
