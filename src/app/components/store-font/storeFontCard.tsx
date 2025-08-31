@@ -32,7 +32,7 @@ const StoreFontCard: React.FC<StoreFontCardProps> = ({
   return (
     <div className="bg-white rounded-xl w-full shadow-lg">
       <div className="relative">
-        <Image
+        <img
           src={imageUrl}
           alt="image"
           className="w-full h-36 object-cover rounded-tr-lg rounded-tl-lg"

@@ -96,7 +96,7 @@ const StoreFrontDetails = ({ id }: { id: string }) => {
                   </h3>
                   <div className="grid grid-cols-2 gap-x-10 lg:grid-cols-1 lg:gap-y-6">
                     <div className="w-full">
-                      <Image
+                      <img
                         src={
                           `${detailsData?.project_images[0]?.image}` ||
                           "/assets/my-farms/no-img.avif"
@@ -109,7 +109,7 @@ const StoreFrontDetails = ({ id }: { id: string }) => {
                     </div>
                     <div className="grid grid-cols-1 gap-y-2">
                       <div className="grid grid-cols-2 gap-x-2">
-                        <Image
+                        <img
                           src={
                             `${detailsData?.project_images[1]?.image}` ||
                             "/assets/my-farms/no-img.avif"
@@ -119,7 +119,7 @@ const StoreFrontDetails = ({ id }: { id: string }) => {
                           height={237}
                           className="w-[296px] h-[237px] rounded-lg lg:w-full lg:h-[137px]"
                         />
-                        <Image
+                        <img
                           src={
                             `${detailsData?.project_images[2]?.image}` ||
                             "/assets/my-farms/no-img.avif"
@@ -131,7 +131,7 @@ const StoreFrontDetails = ({ id }: { id: string }) => {
                         />
                       </div>
 
-                      <Image
+                      <img
                         src={
                           `${detailsData?.project_images[3]?.image}` ||
                           "/assets/my-farms/no-img.avif"
