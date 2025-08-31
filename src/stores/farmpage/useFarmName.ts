@@ -28,5 +28,13 @@ export const useFarmName = () => {
     }
   }, [searchParams]);
 
+  // Debug logging for local development
+  console.log("🔍 useFarmName Debug:", {
+    farmName,
+    allSearchParams: Object.fromEntries(searchParams.entries()),
+    hostname:
+      typeof window !== "undefined" ? window.location.hostname : "server",
+  });
+
   return farmName || "bandele-farm";
 };
