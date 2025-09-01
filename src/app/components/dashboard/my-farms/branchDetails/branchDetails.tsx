@@ -32,7 +32,7 @@ const BranchDetails = ({
 
   return (
     <DashboardLayout>
-      <main className="px-10 py-10 bg-gray-50 overflow-y-auto h-full">
+      <main className="px-10 py-10 bg-gray-50 overflow-y-auto h-full md:px-4">
         <FarmHeadingOverview
           farmName={projectsCard[0]?.farm_branch_name}
           overview={`Overview of ${projectsCard[0]?.farm_branch_name}(${
@@ -70,12 +70,12 @@ const BranchDetails = ({
             </Link>
           </div>
         ) : (
-          <div className="grid grid-cols-3 gap-x-4 gap-y-10 mt-10">
+          <div className="grid grid-cols-3 gap-x-4 gap-y-10 mt-10 xl:grid-cols-2 md:grid-cols-1">
             {projectsCard?.map((card) => {
               return (
                 <Card
                   key={card?.id}
-                  projectImage={`https://padycvgcoops.name.ng/${card?.images[0]}`}
+                  projectImage={`${card?.images[0]}`}
                   projectStatus={card?.status}
                   projectDescrip={`${card?.description?.slice(0, 40)}....`}
                   projectName={`${card?.name?.slice(0, 20)}...`}

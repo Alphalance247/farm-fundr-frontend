@@ -15,8 +15,6 @@ export function middleware(request: NextRequest) {
     pathname.startsWith("/investor-dashboard");
 
   if (isProtectedRoute && !token) {
-    console.log("🚫 Redirecting to login - no token found");
-
     // Create login URL with redirect parameter
     const loginUrl = new URL("/login", request.url);
     loginUrl.searchParams.set("redirect", pathname);
@@ -28,6 +26,7 @@ export function middleware(request: NextRequest) {
   if (pathname.startsWith("/farm-page")) {
     const url = request.nextUrl.clone();
     url.searchParams.set("farm", subdomain);
+
     return NextResponse.rewrite(url);
   }
 
@@ -35,5 +34,10 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/farmer-dashboard/:path*", "/investor-dashboard/:path*"],
+  matcher: [
+    "/farmer-dashboard/:path*",
+    "/investor-dashboard/:path*",
+    "/farm-page",
+    "/farm-page/:path*",
+  ],
 };

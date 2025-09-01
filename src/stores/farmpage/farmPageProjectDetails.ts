@@ -60,7 +60,7 @@ export const getFarmPageProjectDetails = create<projectsDetailsStore>(
       set({ loading: true, error: null });
       try {
         const res = await axios.get(
-          `https://${farmName}.${environment?.farmPageBaseUrl}/farmpage/branches/projects/${projectDetailsId}`
+          `${environment?.farmPageBaseUrl}/farmpage/branches/projects/${projectDetailsId}?farm-name=${farmName}`
         );
         set({ data: res.data, loading: false });
       } catch (err) {

@@ -78,9 +78,9 @@ const Overview = () => {
       <div className="grid grid-cols-2 gap-x-10 mt-8 lg:grid-cols-1 lg:gap-y-8">
         <div className="grid grid-cols-[2fr_1fr] gap-x-4 lg:grid-cols-1 lg:gap-y-6">
           <div>
-            <Image
+            <img
               src={
-                `https://padycvgcoops.name.ng/${farmPageData?.farm_images[0]?.image}` ||
+                `${farmPageData?.farm_images[0]?.image}` ||
                 "/assets/my-farms/no-img.avif"
               }
               alt="store-front-details"
@@ -90,9 +90,9 @@ const Overview = () => {
             />
           </div>
           <div className="flex flex-col gap-y-2 lg:grid lg:grid-cols-3 lg:gap-x-6">
-            <Image
+            <img
               src={
-                `https://padycvgcoops.name.ng/${farmPageData?.farm_images[1]?.image}` ||
+                `${farmPageData?.farm_images[1]?.image}` ||
                 "/assets/my-farms/no-img.avif"
               }
               alt="store-front-details"
@@ -100,9 +100,9 @@ const Overview = () => {
               height={87}
               className="w-[200px] h-[100px] rounded-lg object-cover"
             />
-            <Image
+            <img
               src={
-                `https://padycvgcoops.name.ng/${farmPageData?.farm_images[2]?.image}` ||
+                `${farmPageData?.farm_images[2]?.image}` ||
                 "/assets/my-farms/no-img.avif"
               }
               alt="store-front-details"
@@ -110,9 +110,9 @@ const Overview = () => {
               height={87}
               className="w-[200px] h-[100px] rounded-lg object-cover"
             />
-            <Image
+            <img
               src={
-                `https://padycvgcoops.name.ng/${farmPageData?.farm_images[3]?.image}` ||
+                `${farmPageData?.farm_images[3]?.image}` ||
                 "/assets/my-farms/no-img.avif"
               }
               alt="store-front-details"

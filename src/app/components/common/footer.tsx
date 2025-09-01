@@ -22,7 +22,7 @@ const Footer = () => {
       name1: "About Us",
       name2: "Pricing",
       name3: "Create free account",
-      link1: "/",
+      link1: "/about-us",
       link2: "/",
       link3: "/",
     },
@@ -31,18 +31,18 @@ const Footer = () => {
       name1: "Project Listing",
       name2: "Contact Us",
       name3: "Login",
-      link1: "/",
-      link2: "/",
-      link3: "/",
+      link1: "/farm-marketplace",
+      link2: "/contact-us",
+      link3: "/signup",
     },
     {
       id: 5,
       name1: "How it works",
       name2: "FAQs",
-      name3: "Home",
-      link1: "/",
+      name3: "",
+      link1: "/how-it-works",
       link2: "/",
-      link3: "/",
+      link3: "",
     },
   ];
   return (
@@ -78,7 +78,7 @@ const Footer = () => {
 
             <p className="text-xs text-white">
               By submitting your email address, you agree to receive weekly news
-              from farmfundr.{" "}
+              from farmpady.{" "}
               <span className="text-[#51F4A6] underline-offset-2">
                 <a href="http://" target="_blank" rel="noopener noreferrer">
                   Click here

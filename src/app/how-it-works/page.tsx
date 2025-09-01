@@ -1,7 +1,7 @@
 import AboutUsCommon from "../components/common/AboutUsCommon";
 import HeroCommon from "../components/common/heroCommon";
 import LayOuts from "../components/common/Layouts";
-import Contact from "../components/How It Works/contact";
+// import Contact from "../components/How It Works/contact";
 import Process from "../components/How It Works/process";
 
 const HowItWorks = () => {
@@ -9,16 +9,16 @@ const HowItWorks = () => {
     <LayOuts>
       <HeroCommon
         text="How it works"
-        img="bg-cover bg-[url('/assets/HowItWorks/howitworks.jpeg')]"
+        img="bg-cover bg-[url('/assets/HowItWorks/howitworks.png')]"
       />
       <Process />
-      <Contact
+      {/* <Contact
         bg="bg-[#EEFEF6]"
         text="Got any questions?"
         btnText="Meet team"
         url="/meet-team"
         textColor="text-[#5F5F5F]"
-      />
+      /> */}
       <AboutUsCommon
         btnAvailable={true}
         alignment="items-center"

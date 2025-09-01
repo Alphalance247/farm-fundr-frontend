@@ -91,7 +91,7 @@ const Subscription = () => {
           </p>
         </div>
 
-        <div className="grid grid-cols-2 lg:max-w-full md:grid-cols-1 md:gap-y-6 gap-x-10 max-w-[80%] mx-auto">
+        <div className="grid grid-cols-2 max-w-[80%] lg:max-w-full md:grid-cols-1 md:gap-y-6 gap-x-10  mx-auto">
           {subscriceCardData.map((items) => (
             <SubscribeCard
               key={items?.id}

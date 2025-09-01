@@ -10,6 +10,11 @@ export interface dashboardListDataStore {
       published: number;
       draft: string;
     };
+    audit_logs: {
+      content: string;
+      created: string;
+      title: string;
+    }[];
     farms: string[];
     total_farms: string;
   };

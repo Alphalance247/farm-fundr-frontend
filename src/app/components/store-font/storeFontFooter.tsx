@@ -49,7 +49,7 @@ const StoreFontFooter = () => {
             Powered By
           </p>
           <Image
-            src="/assets/my-farms/newlogo.svg"
+            src="/assets/LandingPage/icons/fundrlogo.svg"
             width={256}
             height={61}
             alt="logo"

@@ -8,46 +8,47 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
-const chartData = [
-  {
-    browser: "Organic farm",
-    visitors: 275,
-    fill: "#51F4A6",
-    bg: "bg-[#51F4A6]",
-  },
-  {
-    browser: "Wheat Land farm",
-    visitors: 200,
-    fill: "#31DBFF",
-    bg: "bg-[#31DBFF]",
-  },
-  {
-    browser: "Corn Master farm",
-    visitors: 187,
-    fill: "#4379FF",
-    bg: "bg-[#4379FF]",
-  },
-];
-
-const chartConfig = {
-  //   visitors: {
-  //     label: "Visitors",
-  //   },
-  "Organic farm": {
-    label: "275",
-    color: "hsl(var(--chart-1))",
-  },
-  "Wheat Land farm": {
-    label: "200",
-    color: "hsl(var(--chart-2))",
-  },
-  "Corn Master farm": {
-    label: "187",
-    color: "hsl(var(--chart-3))",
-  },
-} satisfies ChartConfig;
 
 export function FarmDistribution() {
+  const chartData = [
+    {
+      browser: "Organic farm",
+      visitors: 275,
+      fill: "#51F4A6",
+      bg: "bg-[#51F4A6]",
+    },
+    {
+      browser: "Wheat Land farm",
+      visitors: 200,
+      fill: "#31DBFF",
+      bg: "bg-[#31DBFF]",
+    },
+    {
+      browser: "Corn Master farm",
+      visitors: 187,
+      fill: "#4379FF",
+      bg: "bg-[#4379FF]",
+    },
+  ];
+
+  const chartConfig = {
+    //   visitors: {
+    //     label: "Visitors",
+    //   },
+    "Organic farm": {
+      label: "275",
+      color: "hsl(var(--chart-1))",
+    },
+    "Wheat Land farm": {
+      label: "200",
+      color: "hsl(var(--chart-2))",
+    },
+    "Corn Master farm": {
+      label: "187",
+      color: "hsl(var(--chart-3))",
+    },
+  } satisfies ChartConfig;
+
   return (
     <div className="grid grid-cols-2 gap-x-10 items-center lg:grid-cols-1 lg:gap-y-8">
       <CardContent className=" pb-0">

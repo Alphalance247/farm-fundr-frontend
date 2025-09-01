@@ -56,7 +56,11 @@ const CustomDropdown = ({ value, onChange, options }: DropdownProps) => {
   );
 };
 
-const TransactionFilterMobile = () => {
+const TransactionFilterMobile = ({
+  tableHeading,
+}: {
+  tableHeading?: string;
+}) => {
   const [search, setSearch] = useState("");
   const [open, setOpen] = useState(false);
   const [filters, setFilters] = useState<FilterState>({
@@ -72,7 +76,7 @@ const TransactionFilterMobile = () => {
   return (
     <div className="lg:block hidden p-4 w-full mb-6">
       <div className="flex items-center justify-between mb-3">
-        <h3 className="text-gray-700 font-semibold">Recent Transactions</h3>
+        <h3 className="text-gray-700 font-semibold">{tableHeading}</h3>
         <Button
           variant="switch"
           className="rounded-md border border-[#2D865B] text-base text-[#2D865B] px-3 py-2 bg-[#EEFEF6] hover:bg-[#C9FCE3] hover:transition-all hover:duration-500"

@@ -137,7 +137,7 @@ export default function TransactionSearchTable() {
         />
       </div>
       <div>
-        <TransactionFilterMobile />
+        <TransactionFilterMobile tableHeading="Recent Transactions" />
       </div>
 
       {transactionData?.transactions?.length === 0 ? (
