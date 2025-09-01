@@ -129,19 +129,18 @@ const Footer = () => {
                 </Button>
               </div>
 
-              <p className="text-xs text-white">
-                By submitting your email address, you agree to receive weekly
-                news from farmfundr.{" "}
-                <span className="text-black underline-offset-2">
-                  <a href="http://" target="_blank" rel="noopener noreferrer">
-                    Click here
-                  </a>
-                </span>{" "}
-                to unsubscribe
-              </p>
-            </div>
+            <p className="text-xs text-white">
+              By submitting your email address, you agree to receive weekly news
+              from farmpady.{" "}
+              <span className="text-[#51F4A6] underline-offset-2">
+                <a href="http://" target="_blank" rel="noopener noreferrer">
+                  Click here
+                </a>
+              </span>{" "}
+              to unsubscribe
+            </p>
           </div>
-        </form>
+        </div>
         <div className="grid grid-cols-[25%auto] gap-x-20 mt-24 lg:grid-cols-[30%auto] lg:gap-x-10 md:grid-cols-1 md:gap-y-8">
           <div>
             <Image

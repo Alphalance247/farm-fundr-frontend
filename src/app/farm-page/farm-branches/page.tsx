@@ -16,7 +16,7 @@ import { WithSuspense } from "@/app/components/dashboard/common/suspense";
 const Farms = () => {
   const BranchDetailsContent = () => {
     const { activeTab } = useTab();
-    const farmerName = useFarmName();
+    const farmName = useFarmName();
     const { data: farmData, fetchFarmPageList } = getFarmPageListStore();
     const {
       data: farmBranch,
@@ -28,10 +28,14 @@ const Farms = () => {
     const farmPageData = farmData?.farm_data;
     const data = farmBranch?.branches;
 
+
+
     useEffect(() => {
-      fetchFarmPageList(farmerName);
-      fetchFarmPageBranchList(farmerName);
-    }, [fetchFarmPageList, fetchFarmPageBranchList, farmerName]);
+      if (farmName) {
+        fetchFarmPageList(farmName);
+        fetchFarmPageBranchList(farmName);
+        }
+    }, [fetchFarmPageList, fetchFarmPageBranchList, farmName]);
     return (
       <>
         <StoreFrontHeading
@@ -55,7 +59,7 @@ const Farms = () => {
             <ErrorFetch
               message="Error Fetching branch List"
               onRefetch={() => {
-                fetchFarmPageBranchList("bandele-farm");
+                fetchFarmPageBranchList(farmName);
               }}
             />
           ) : (
@@ -79,7 +83,7 @@ const Farms = () => {
                       }`}
                       status={data?.status}
                       imageUrl={
-                        `https://padycvgcoops.name.ng/${data?.branch_images[0]?.image}` ||
+                        `${data?.branch_images[0]?.image}` ||
                         "/assets/my-farms/2.png"
                       }
                       onViewProjects={() => {

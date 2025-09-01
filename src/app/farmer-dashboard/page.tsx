@@ -21,7 +21,6 @@ import { getFarmerBidsStore } from "@/stores/farmer-dashboard/bids";
 import { getFarmerNotification } from "@/stores/farmer-dashboard/notifications";
 import SkeletonLoader from "@/components/ui/skeleton-loader";
 
-
 interface data {
   text?: string;
   link?: string;
@@ -33,11 +32,13 @@ interface data {
 const FarmerDashboard = () => {
   const { user } = useAuth();
   const { fetchUserKYC, data: kycData } = getKYCPercentageStore();
-  const { fetchDashboardData,  loading: isDashboardLoading } = getDashboardStore();
-  const { fetchFarmerEarnings, loading: isEarningsLoading } = getFarmersEarnings();
-  const { fetchFarmerBids , loading: isBidsLoading } = getFarmerBidsStore();
+  const { fetchDashboardData, loading: isDashboardLoading } =
+    getDashboardStore();
+  const { fetchFarmerEarnings, loading: isEarningsLoading } =
+    getFarmersEarnings();
+  const { fetchFarmerBids, loading: isBidsLoading } = getFarmerBidsStore();
   const { fetchNotification } = getFarmerNotification();
-  
+
   // const isLoading = isDashboardLoading || isEarningsLoading || isBidsLoading;
 
   useEffect(() => {
@@ -118,12 +119,13 @@ const FarmerDashboard = () => {
         <main className="px-10 py-8 bg-gray-50 overflow-auto xl:px-4 xl:py-6 lg:mb-4">
           <Heading overview="Overview" />
           <div className="grid grid-cols-[60%auto] gap-6 xl:gap-4 lg:grid-cols-1 lg:mt-6">
-            <div className="bg-[url('/assets/DashBoard/overview/avatarbg.png')] h-fit bg-cover bg-no-repeat bg-center rounded-2xl flex gap-x-14 xl:gap-x-6 lg:justify-between md:flex-col md:gap-y-3">
+            <div className="bg-[url('/assets/DashBoard/overview/avatarbg.png')] h-fit bg-cover bg-no-repeat bg-center items-center rounded-2xl flex gap-x-14 xl:gap-x-6 lg:justify-between md:flex-col md:gap-y-3 md:items-start">
               <div className="pl-8 py-11 xl:py-6 xl:pl-4 md:pl-4 md:py-3 md:pr-4">
                 {dat !== 100 ? (
                   <>
                     <h2 className="text-3xl font-aristoBold text-[#FCFCFC] mb-4 md:text-lg">
-                      Welcome {user?.fullname || "Farmer Nelson"} !
+                      Welcome {user?.fullname?.split(" ")[0] || "Farmer Nelson"}{" "}
+                      !
                     </h2>
 
                     <div>
@@ -161,7 +163,7 @@ const FarmerDashboard = () => {
                         {dateTime}
                       </p>
                     </div>
-                    <div className="flex gap-3 items-center bg-[#F5F5F533] py-2 px-4 rounded-2xl mt-7 mb-7 w-fit">
+                    {/* <div className="flex gap-3 items-center bg-[#F5F5F533] py-2 px-4 rounded-2xl mt-7 mb-7 w-fit">
                       <Image
                         src="/assets/DashBoard/sunny.svg"
                         width={32}
@@ -176,9 +178,10 @@ const FarmerDashboard = () => {
                           50% Sunny
                         </p>
                       </div>
-                    </div>
+                    </div> */}
                     <h2 className="text-3xl font-aristoBold text-[#FCFCFC] mb-3 md:text-lg">
-                      Good Day, {user?.fullname || "Farmer Nelson"}!
+                      Good Day,{" "}
+                      {user?.fullname.split(" ")[0] || "Farmer Nelson"}!
                     </h2>
                     <p className="text-sm font-poppinsRegular text-[#FCFCFC] mb-2 md:text-xs">
                       Have a Nice {greeting} !
@@ -259,7 +262,11 @@ const FarmerDashboard = () => {
               ) : (
                 <RecentActivity />
               )}
-              {isBidsLoading ? <SkeletonLoader className="h-[300px] w-full mb-6" /> : <BidSummary />}
+              {isBidsLoading ? (
+                <SkeletonLoader className="h-[300px] w-full mb-6" />
+              ) : (
+                <BidSummary />
+              )}
             </div>
           </div>
         </main>

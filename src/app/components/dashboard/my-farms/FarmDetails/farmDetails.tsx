@@ -2,7 +2,6 @@
 import DashboardLayout from "@/app/components/common/dashboardLayout";
 import { MdVerifiedUser } from "react-icons/md";
 import FarmerInfo from "@/app/components/dashboard/my-farms/farmerInfo";
-import Image from "next/image";
 import Copy from "@/app/components/common/copy";
 import { useState, useEffect } from "react";
 import FarmBranches from "@/app/components/dashboard/my-farms/farmBranches";
@@ -30,7 +29,7 @@ const FarmDetails = ({ farmDetailsId }: { farmDetailsId: string }) => {
 
   const tabs: { id: number; name: string }[] = [
     { id: 1, name: `Branches (${farmBranchData?.length})` },
-    { id: 3, name: "StoreFront Settings" },
+    { id: 3, name: " Farm Page" },
   ];
 
   useEffect(() => {
@@ -49,7 +48,7 @@ const FarmDetails = ({ farmDetailsId }: { farmDetailsId: string }) => {
             farmName={farmData?.name}
             overview={`  ${
               description?.length > 100
-                ? description.slice(0, 5) + ".........."
+                ? description.slice(0, 200) + ".........."
                 : description
             }`}
             isProject={false}
@@ -73,14 +72,14 @@ const FarmDetails = ({ farmDetailsId }: { farmDetailsId: string }) => {
             </div>
           ) : (
             <>
-              <div className="px-6 py-4 bg-white rounded-lg border border-[#F6F6F6] mt-4">
+              <div className="px-6 py-4 bg-white rounded-lg border border-[#F6F6F6] mt-4 md:px-3">
                 <div className="pb-3 border-b border-[#F6F6F6] flex justify-between items-center">
                   <h5 className="text-sm font-poppinsSemiBold text-[#5F5F5F]">
                     {farmData?.name || "N/A"}
                   </h5>
 
                   <p
-                    className={`text-sm  w-fit font-poppinsRegular  px-3 py-1 border  rounded-xl bg-[#E7F6EC] ${
+                    className={`text-sm  w-fit font-poppinsRegular px-3 py-1 border  rounded-xl bg-[#E7F6EC] ${
                       farmData?.status !== "published"
                         ? " bg-[#FDEDED] text-red-600 border-red-200"
                         : "bg-[#E7F6EC] text-[#006E2E] border-[#B0EECA]"
@@ -90,11 +89,11 @@ const FarmDetails = ({ farmDetailsId }: { farmDetailsId: string }) => {
                   </p>
                 </div>
 
-                <div className="mt-3 flex justify-between items-center gap-x-10 flex-wrap lg:flex-nowrap lg:flex-col lg:gap-4 lg:items-start">
-                  <div className="flex gap-x-8">
-                    <div className="border-r border-[#E4E7EC] pl-8 pr-12 flex flex-col gap-3 justify-center items-center">
-                      <Image
-                        src="/assets/my-farms/farmlogo.svg"
+                <div className="mt-3 grid grid-cols-2 items-center gap-x-20 lg:grid-cols-1 lg:gap-y-12 md:mt-10">
+                  <div className="flex gap-x-8 lg:justify-between lg:pr-20 md:pr-0">
+                    <div className="border-r border-[#E4E7EC] pl-8 pr-12 flex flex-col gap-3 justify-center items-center md:border-none md:px-0">
+                      <img
+                        src={farmData?.logo || "/assets/my-farms/farmlogo.svg"}
                         alt="farmer"
                         width={64}
                         height={64}
@@ -126,7 +125,7 @@ const FarmDetails = ({ farmDetailsId }: { farmDetailsId: string }) => {
                     </div>
                   </div>
 
-                  <div className="flex ">
+                  <div className="flex justify-between lg:items-start pr-10 lg:pl-10 lg:pr-20 md:pl-0 md:pr-0">
                     <div className="flex flex-col gap-y-5">
                       <FarmerInfo
                         title="Location"
@@ -134,7 +133,10 @@ const FarmDetails = ({ farmDetailsId }: { farmDetailsId: string }) => {
                           farmData?.country || "N/A"
                         }`}
                       />
-                      <FarmerInfo title="Branches" name="6" />
+                      <FarmerInfo
+                        title="Branches"
+                        name={farmData?.farm_branches_count.toString() || "0"}
+                      />
                     </div>
                     <div className="flex flex-col gap-y-5">
                       <FarmerInfo
@@ -149,9 +151,9 @@ const FarmDetails = ({ farmDetailsId }: { farmDetailsId: string }) => {
                   </div>
                 </div>
 
-                <div className="mt-4 flex items-center gap-x-3 bg-[#EEFEF6] w-fit px-3 py-2 rounded-lg border border-[#C9FCE3]">
+                <div className="mt-4 flex items-center gap-x-3 bg-[#EEFEF6] w-fit px-3 py-2 rounded-lg border border-[#C9FCE3] md:flex-col md:w-full md:items-start md:gap-y-4">
                   <p className="text-sm font-poppinsRegular text-[#5F5F5F]">
-                    Storefront Link:
+                    Farm Page Link:
                   </p>
 
                   <p className="text-sm font-poppinsRegular text-[#7C7C7C]">
@@ -162,7 +164,7 @@ const FarmDetails = ({ farmDetailsId }: { farmDetailsId: string }) => {
                 </div>
               </div>
 
-              <div className="px-6 py-4 bg-white rounded-lg border border-[#F6F6F6] mt-8">
+              <div className="px-6 py-4 bg-white rounded-lg border border-[#F6F6F6] mt-8 md:px-3">
                 <div className="flex gap-x-5 items-center border-b border-[#E4E7EC]">
                   {tabs.map((el, i) => (
                     <button
@@ -184,7 +186,7 @@ const FarmDetails = ({ farmDetailsId }: { farmDetailsId: string }) => {
                     <FarmBranches />
                   )}
 
-                  {activeTab === "StoreFront Settings" && <CustomizeStore />}
+                  {activeTab === " Farm Page" && <CustomizeStore />}
                 </div>
               </div>
             </>

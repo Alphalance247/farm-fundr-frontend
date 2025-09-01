@@ -1,12 +1,12 @@
 import LayOuts from "./components/common/Layouts";
 import About from "./components/Home/about";
 import Benefits from "./components/Home/Benefits";
-import CustomersFeedbacks from "./components/Home/CustomersFeedback";
+// import CustomersFeedbacks from "./components/Home/CustomersFeedback";
 import Faqs from "./components/Home/faqs";
 import FeaturedProject from "./components/Home/FeaturedProjects";
 import Hero from "./components/Home/hero";
 import HowItWorks from "./components/Home/HowItWorks";
-import MeetTeam from "./components/Home/MeetTeam";
+// import MeetTeam from "./components/Home/MeetTeam";
 
 export default function Home() {
   return (
@@ -16,8 +16,8 @@ export default function Home() {
       <Benefits />
       <HowItWorks />
       <FeaturedProject />
-      <MeetTeam />
-      <CustomersFeedbacks />
+      {/* <MeetTeam /> */}
+      {/* <CustomersFeedbacks /> */}
       <Faqs />
       {/* <Footer /> */}
       {/* <Button variant="secondary">Login</Button>

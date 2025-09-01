@@ -22,7 +22,7 @@ const FarmBranches = () => {
 
   return (
     <DashboardLayout>
-      <main className="px-10 py-10 bg-gray-50 overflow-auto h-full">
+      <main className="px-10 py-10 bg-gray-50 overflow-auto h-full xl:px-4 xl:py-6">
         <FarmHeadingOverview
           farmName={farmData?.name}
           overview={farmData?.description}
@@ -43,7 +43,7 @@ const FarmBranches = () => {
             </Link>
           </div>
         ) : (
-          <div className="grid grid-cols-3 gap-x-10 gap-y-10 mt-10">
+          <div className="grid grid-cols-3 gap-x-10 gap-y-10 mt-10 xl:grid-cols-2 md:grid-cols-1">
             {farmBranchData?.map((data) => (
               <BranchFarmCard
                 branchName={data?.name || "N/A"}
@@ -55,8 +55,7 @@ const FarmBranches = () => {
                 }`}
                 status={data?.status}
                 imageUrl={
-                  `https://padycvgcoops.name.ng/${data?.branch_images[0]?.image}` ||
-                  "/assets/my-farms/2.png"
+                  `${data?.branch_images[0]?.image}` || "/assets/my-farms/2.png"
                 }
                 onViewProjects={() => {
                   /* handle click */

@@ -12,29 +12,16 @@ import { getUserDetailsStore } from "@/stores/settings/getUserDetails";
 import { FiDownload } from "react-icons/fi";
 import { MdDelete } from "react-icons/md";
 
-interface UserDetails {
-  fullname: string;
-  email: string;
-  city: string;
-  username: string;
-  state: string;
-  country: string;
-  phone: string;
-  street_address: string;
-  image: string;
-  id_doc?: string;
-  id_type?: string;
-  id_digits?: string;
-}
-
-const IdentitySettings = ({ UserDetails }: { UserDetails: UserDetails }) => {
-  const { fetchUserDetails } = getUserDetailsStore();
+const IdentitySettings = () => {
+  const { fetchUserDetails, data } = getUserDetailsStore();
   const [file, setFile] = useState<File | null>(null);
-  const [preview, setPreview] = useState<string | null>(null);
+  const [preview, setPreview] = useState<string | undefined | null>(
+    data?.user_details?.id_doc
+  );
 
   const [form, setForm] = useState({
-    documentType: UserDetails?.id_type || "",
-    identityNumber: UserDetails?.id_digits || "",
+    documentType: data?.user_details?.id_type || "",
+    identityNumber: data?.user_details?.id_digits || "",
   });
 
   const [loading, setIsLoading] = useState(false);
@@ -63,11 +50,11 @@ const IdentitySettings = ({ UserDetails }: { UserDetails: UserDetails }) => {
     try {
       setIsLoading(true);
       const formData = new FormData();
-      formData.append("documentType", form.documentType);
-      formData.append("identityNumber", form.identityNumber);
+      formData.append("id_type", form.documentType);
+      formData.append("id_digits", form.identityNumber);
 
       if (file) {
-        formData.append("document", file);
+        formData.append("id_doc", file);
       }
 
       const res = await axiosInstance.patch(
@@ -102,7 +89,7 @@ const IdentitySettings = ({ UserDetails }: { UserDetails: UserDetails }) => {
         subHead="Update your identity with the options provided"
       />
 
-      <div className="mt-8 pb-10 border-b border-[#E4E7EC]">
+      <div className="mt-8 pb-10 border-b border-[#E4E7EC] w-[60%] mx-auto  md:w-full lg:w-[80%]">
         <form onSubmit={handleProfileUpdate}>
           <div className="flex flex-col gap-y-8">
             {/* Document Type */}

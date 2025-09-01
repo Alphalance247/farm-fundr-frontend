@@ -26,8 +26,12 @@ const StoreFrontFarmDetails = () => {
 
     const farmPageData = data?.farm_data;
 
+
+
     useEffect(() => {
-      fetchFarmPageList(farmName);
+      if (farmName) {
+      fetchFarmPageList(farmName)
+      }
     }, [fetchFarmPageList, farmName]);
     return (
       <div>
@@ -68,7 +72,7 @@ const StoreFrontFarmDetails = () => {
             <ErrorFetch
               message="Error fetching Farm details"
               onRefetch={() => {
-                fetchFarmPageList("bandele-farm");
+                fetchFarmPageList(farmName);
               }}
             />
           ) : (

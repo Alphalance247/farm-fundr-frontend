@@ -1,6 +1,6 @@
 import SubHead from "../common/sectionHeading";
-import { PiDotsThree } from "react-icons/pi";
-import { FaCaretDown } from "react-icons/fa";
+// import { PiDotsThree } from "react-icons/pi";
+// import { FaCaretDown } from "react-icons/fa";
 import Image from "next/image";
 import Button from "../../common/Buttons";
 import { getWalletTransactionStore } from "@/stores/wallet/getWalletTransactions";
@@ -23,7 +23,7 @@ const PendingPayment = ({
     >
       <div className="flex flex-row md:flex-col justify-between md:items-start md:gap-2 items-center mb-4">
         <SubHead text="Pending Payment" />
-        <div className="relative flex items-center gap-x-4">
+        {/* <div className="relative flex items-center gap-x-4">
           <div
             className="flex items-center  gap-x-2 p-2 bg-white border border-[#d9d9d9] rounded-xl cursor-pointer w-fit"
             // onClick={handleOpen}
@@ -45,7 +45,7 @@ const PendingPayment = ({
           >
             <PiDotsThree size={20} color="#7C7C7C" />
           </div>
-        </div>
+        </div> */}
       </div>
 
       {isTotalAvailable && (
@@ -100,7 +100,7 @@ const PendingPayment = ({
         )}
 
         {isTotalAvailable && (
-          <Link href={"/farmer-dashboard/wallet"} className="mx-auto">
+          <Link href={"/farmer-dashboard/wallet"} className="mx-auto md:w-full">
             <Button
               variant="secondary"
               size="small"

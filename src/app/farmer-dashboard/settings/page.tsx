@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import { MdFolderShared } from "react-icons/md";  
+import { MdFolderShared } from "react-icons/md";
 import DashboardLayout from "../../components/common/dashboardLayout";
 import GoBackBtn from "@/app/components/common/goBack";
 import { IoPerson } from "react-icons/io5";
@@ -14,7 +14,6 @@ import { useAuth } from "@/context/authContext";
 import { getKYCPercentageStore } from "@/stores/settings/getKycPercentage";
 import { getUserDetailsStore } from "@/stores/settings/getUserDetails";
 import Image from "next/image";
-import { environment } from "@/env/env.local";
 import IdentitySettings from "@/app/components/dashboard/settings/identitySettings";
 
 const Setting = () => {
@@ -54,17 +53,14 @@ const Setting = () => {
         <GoBackBtn href="/farmer-dashboard" />
 
         <div className="mt-8">
-          <div className="bg-[#226646] flex flex-row md:flex-col items-center md:px-4 gap-6 rounded-xl py-12 px-12">
+          <div className="bg-[#226646] flex flex-row md:flex-col items-center md:items-start md:px-4 gap-6 rounded-xl py-12 px-12">
             {userDetails?.user_details?.image ? (
-              <Image
-                src={
-                  `${environment?.imgBaserUrl}/${userDetails?.user_details?.image}/` ||
-                  ""
-                }
+              <img
+                src={`${userDetails?.user_details?.image}` || ""}
                 height={135}
                 width={135}
                 alt="profileImage"
-                className="ml-8 h-[135px] w-[135px]  rounded-full"
+                className="ml-8 h-[135px] w-[135px]  rounded-full md:ml-0"
               />
             ) : (
               <div className="h-[135px] w-[135px] rounded-full bg-[#EEFEF6] text-[#2D865B] flex items-center justify-center text-[54px] tracking-[0.34px] font-medium">
@@ -124,11 +120,7 @@ const Setting = () => {
             {activeTab === "Bank Details" && <BankDetails />}
             {activeTab === "Award/Qualification" && <Certifications />}
             {activeTab === "Identity" && (
-              <>
-                {userDetails && (
-                  <IdentitySettings UserDetails={userDetails.user_details} />
-                )}
-              </>
+              <>{userDetails && <IdentitySettings />}</>
             )}
           </div>
         </div>
