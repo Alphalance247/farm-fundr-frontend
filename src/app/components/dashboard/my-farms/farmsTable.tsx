@@ -5,7 +5,6 @@ import TransactionSearch, {
   type FilterOption,
 } from "../../dashboard/wallet/transactionSearch";
 import { PiDotsThreeVertical } from "react-icons/pi";
-import Image from "next/image";
 import { getFarmListStore } from "@/stores/farms/getFarmList";
 import Link from "next/link";
 import Button from "../../common/Buttons";
@@ -255,8 +254,8 @@ export default function FarmListTable() {
                       <Link href={"/farmer-dashboard/my-farms/" + emp?.id}>
                         <div>
                           <span className="text-[#1B2229] text-sm font-poppinsRegular flex items-center gap-2 hover:underline underline-offset-2">
-                            <Image
-                              src={"/assets/my-farms/farmpic.svg"}
+                            <img
+                              src={emp?.logo || "/assets/my-farms/farmpic.svg"}
                               alt={emp.name}
                               width={40}
                               height={40}

@@ -73,6 +73,8 @@ const UpdateFarm = () => {
   const [countries, setCountries] = useState<ICountry[]>([]);
   const [states, setStates] = useState<IState[]>([]);
 
+  console.log(uploadedImages);
+
   useEffect(() => {
     if (farmData) {
       setForm((prev) => ({
@@ -95,7 +97,7 @@ const UpdateFarm = () => {
 
       setFile(farmData?.cac_reg_doc);
 
-      // Prefill images with backend data
+      // // Prefill images with backend data
       if (farmData?.farm_images && farmData?.farm_images.length > 0) {
         const imageKeys = ["image1", "image2", "image3", "image4"];
         const newUploadedImages: {
@@ -204,12 +206,30 @@ const UpdateFarm = () => {
         formData.append("cac_reg_doc", file);
       }
 
-      // Add images
-      Object.entries(uploadedImages).forEach(([, imageData]) => {
-        if (imageData.file) {
-          formData.append("images", imageData.file);
-        }
-      });
+      const img1 = uploadedImages.image1?.file;
+      const img2 = uploadedImages.image2?.file;
+      const img3 = uploadedImages.image3?.file;
+      const img4 = uploadedImages.image4?.file;
+
+      if (img1) {
+        formData.append("images", img1);
+      }
+      if (img2) {
+        formData.append("images", img2);
+      }
+      if (img3) {
+        formData.append("images", img3);
+      }
+      if (img4) {
+        formData.append("images", img4);
+      }
+
+      // // Add images
+      // Object.entries(uploadedImages).forEach(([, imageData]) => {
+      //   if (imageData.file) {
+      //     formData.append("images", imageData.file);
+      //   }
+      // });
 
       const res = await axiosInstance.put(
         `${environment.addFarm}${selectedEditFarmId}`,
@@ -225,7 +245,70 @@ const UpdateFarm = () => {
         toast.success(
           res.data?.statusmessage || "Farm details successfully updated"
         );
-        router.push("/farmer-dashboard/my-farms");
+        // router.push("/farmer-dashboard/my-farms");
+      }
+
+      setLoading(false);
+    } catch (err) {
+      // Extract the error message from the response
+      let errorMessage =
+        "Please make sure all fields are filled correctly. and try again.";
+
+      if (err instanceof AxiosError) {
+        // Check if err is an instance of AxiosError
+        errorMessage = err.response?.data?.statusmessage || errorMessage;
+      }
+
+      toast.error(errorMessage);
+
+      setLoading(false);
+    }
+  };
+
+  const handleImageUpload = async () => {
+    try {
+      setLoading(true);
+
+      // Create FormData for file upload
+      const formData = new FormData();
+
+      const img1 = uploadedImages.image1?.file;
+      const img2 = uploadedImages.image2?.file;
+      const img3 = uploadedImages.image3?.file;
+      const img4 = uploadedImages.image4?.file;
+
+      if (img1 && farmData) {
+        formData.append("images", img1);
+        formData.append("old_image_links", farmData?.images[0]);
+      }
+      if (img2 && farmData) {
+        formData.append("images", img2);
+        formData.append("old_image_links", farmData?.images[1]);
+      }
+      if (img3 && farmData) {
+        formData.append("images", img3);
+        formData.append("old_image_links", farmData?.images[2]);
+      }
+      if (img4 && farmData) {
+        formData.append("images", img4);
+        formData.append("old_image_links", farmData?.images[3]);
+      }
+
+      const res = await axiosInstance.post(
+        `/farms/${selectedEditFarmId}/update-farm-image`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+
+      if (res.status === 200) {
+        toast.success(
+          res.data?.statusmessage || "Farm Images updated successfully"
+        );
+        // router.push("/farmer-dashboard/my-farms");
       }
 
       setLoading(false);
@@ -260,15 +343,12 @@ const UpdateFarm = () => {
           <div className="mt-6 text-center">
             <h5 className="text-xl font-semibold text-[#5F5F5F]">Edit Farm</h5>
             <p className=" font-poppinsRegular text-sm text-[#7C7C7C] mt-3 mb-4">
-              Green Valley Farm
+              {farmData?.name}
             </p>
           </div>
           {/* form section */}
-          <form
-            action=""
-            className="w-[70%] mx-auto xl:w-[80%] lg:w-[90%] md:w-full"
-            onSubmit={(e) => handleFinalSubmit(e)}
-          >
+
+          <div className="w-[70%] mx-auto xl:w-[80%] lg:w-[90%] md:w-full">
             <div className="p-6 bg-white rounded-lg shadow-lg md:px-3">
               {/* Upload Farm Images */}
               <div className="">
@@ -298,10 +378,10 @@ const UpdateFarm = () => {
                             <div className="border border-[#51F4A6] border-dashed w-full rounded-xl relative">
                               <div className="relative">
                                 <div className="relative">
-                                  <Image
+                                  <img
                                     width={556}
                                     height={158}
-                                    src={`${environment?.imgBaserUrl}${uploadedImages.image1.preview}`}
+                                    src={`${uploadedImages.image1.preview}`}
                                     alt="Uploaded image1"
                                     className="object-cover w-[759px] h-[308px]"
                                   />
@@ -357,10 +437,10 @@ const UpdateFarm = () => {
                                   className={`border border-[#51F4A6] border-dashed w-full rounded-xl relative`}
                                 >
                                   <div className="relative">
-                                    <Image
+                                    <img
                                       width={177}
                                       height={95}
-                                      src={`${environment?.imgBaserUrl}${preview}`}
+                                      src={`${preview}`}
                                       alt={`Uploaded ${key}`}
                                       className="object-cover w-[257px] h-[125px]"
                                     />
@@ -394,7 +474,25 @@ const UpdateFarm = () => {
                   </div>
                 </div>
               </div>
+            </div>
 
+            <div className="mt-8 flex gap-x-4 items-end justify-end">
+              <Button
+                className="w-fit flex items justify-center gap-x-4 text-right"
+                type="submit"
+                onClick={handleImageUpload}
+              >
+                Update Farm Image
+              </Button>
+            </div>
+          </div>
+
+          <form
+            action=""
+            className="w-[70%] mx-auto xl:w-[80%] lg:w-[90%] md:w-full mt-10"
+            onSubmit={(e) => handleFinalSubmit(e)}
+          >
+            <div className="p-6 bg-white rounded-lg shadow-lg md:px-3">
               {/*  Farm Information*/}
 
               <div className="mt-6 flex flex-col gap-y-6">

@@ -55,7 +55,7 @@ const Setting = () => {
         <div className="mt-8">
           <div className="bg-[#226646] flex flex-row md:flex-col items-center md:items-start md:px-4 gap-6 rounded-xl py-12 px-12">
             {userDetails?.user_details?.image ? (
-              <Image
+              <img
                 src={`${userDetails?.user_details?.image}` || ""}
                 height={135}
                 width={135}

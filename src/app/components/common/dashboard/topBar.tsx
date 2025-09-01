@@ -85,7 +85,7 @@ export function Topbar({
     return (
       <div>
         {userDetails?.user_details?.image ? (
-          <Image
+          <img
             src={`${userDetails?.user_details?.image}` || ""}
             height={40}
             width={40}
@@ -107,7 +107,7 @@ export function Topbar({
   return (
     <header className="flex items-center justify-between gap-x-6 h-[93px] px-10 py-5 bg-white shadow-sm sticky top-0 z-10 lg:px-2">
       <div className="">
-        <Link href={"/"}>
+        <Link href={"/farmer-dashboard/"}>
           <Image
             src="/assets/LandingPage/icons/fundrlogo.svg"
             width={169}

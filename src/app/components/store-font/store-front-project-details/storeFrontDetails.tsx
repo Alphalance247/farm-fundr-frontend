@@ -41,14 +41,12 @@ const StoreFrontDetails = ({ id }: { id: string }) => {
     fetchProjectsDetails,
   } = getFarmPageProjectDetails();
 
-
-
   useEffect(() => {
     if (farmName) {
       fetchFarmPageProjectList(farmName);
       fetchProjectsDetails(farmName, id);
       fetchFarmPageList(farmName);
-      }
+    }
   }, [
     fetchFarmPageProjectList,
     fetchProjectsDetails,
@@ -294,7 +292,7 @@ const StoreFrontDetails = ({ id }: { id: string }) => {
                           )}....`}
                           projectName={`${card?.name?.slice(0, 20)}...`}
                           projectROI={card?.ROI?.toString()}
-                          imageUrl={`https://padycvgcoops.name.ng/${card?.images[0]}`}
+                          imageUrl={`${card?.images[2]}`}
                           status={card?.status}
                           onViewProjects={() => {
                             /* handle click */

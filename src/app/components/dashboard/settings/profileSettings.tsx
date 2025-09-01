@@ -129,7 +129,7 @@ const ProfileSettings = ({ UserDetails }: { UserDetails: UserDetails }) => {
 
           <div>
             {preview ? (
-              <Image
+              <img
                 src={preview || ""}
                 height={84}
                 width={84}
