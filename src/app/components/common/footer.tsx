@@ -120,7 +120,7 @@ const Footer = () => {
                 <input
                   type="email"
                   placeholder="Enter your email address"
-                  className="px-4 py-3 text-[#EEFEF6] border border-[#51F4A6] rounded-md w-[100%]"
+                  className="px-4 py-3 text-black border border-[#51F4A6] rounded-md w-[100%]"
                   onChange={(e) => setForm({ ...form, email: e.target.value })}
                   value={form.email}
                 />
