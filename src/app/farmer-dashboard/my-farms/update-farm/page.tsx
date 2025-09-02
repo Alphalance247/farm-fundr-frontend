@@ -18,6 +18,7 @@ import GoBackBtn from "@/app/components/common/goBack";
 import Button from "@/app/components/common/Buttons";
 import { getFarmDetails } from "@/stores/farms/getFarmDetails";
 import { useRouter } from "next/navigation";
+import ConfirmationModal from "@/app/components/common/dashboard/confirmationModal";
 
 const UpdateFarm = () => {
   const { data, fetchFarmDetails } = getFarmDetails();
@@ -70,6 +71,7 @@ const UpdateFarm = () => {
   });
   const [preview, setPreview] = useState<string | null>(null);
   const [file, setFile] = useState<File | null>(null);
+  const [successModal, setSuccessModal] = useState(false);
   const [countries, setCountries] = useState<ICountry[]>([]);
   const [states, setStates] = useState<IState[]>([]);
   const [loadingUploadImage, setUploadingImages] = useState(false);
@@ -244,7 +246,8 @@ const UpdateFarm = () => {
         toast.success(
           res.data?.statusmessage || "Farm details successfully updated"
         );
-        // router.push("/farmer-dashboard/my-farms");
+        // setSuccessModal(true);
+        router.push("/farmer-dashboard/my-farms");
       }
 
       setLoading(false);
@@ -304,9 +307,10 @@ const UpdateFarm = () => {
       );
 
       if (res.status === 200) {
-        toast.success(
-          res.data?.statusmessage || "Farm Images updated successfully"
-        );
+        setSuccessModal(true);
+        // toast.success(
+        //   res.data?.statusmessage || "Farm Images updated successfully"
+        // );
         // router.push("/farmer-dashboard/my-farms");
       }
 
@@ -421,7 +425,7 @@ const UpdateFarm = () => {
                     </div>
                   </div>
 
-                  <div className="grid grid-cols-3 gap-4 lg:grid-cols-1">
+                  <div className="grid gap-4 grid-cols-1">
                     {Object.entries(uploadedImages)
                       .filter(([key]) => key !== "image1")
                       .map(([key, { preview }]) => (
@@ -448,9 +452,9 @@ const UpdateFarm = () => {
                                       height={95}
                                       src={`${preview}`}
                                       alt={`Uploaded ${key}`}
-                                      className="object-cover w-[257px] h-[125px]"
+                                      className="object-cover w-[759px] h-[308px]"
                                     />
-                                    <div className="flex items-center justify-center absolute gap-x-1 bg-[#FFFFFFE5] px-2 py-1 cursor-pointer rounded-lg bottom-[4rem] right-[3rem]">
+                                    <div className="flex items-center justify-center absolute gap-x-1 bg-[#FFFFFFE5] px-2 py-1 cursor-pointer rounded-lg bottom-[8rem] left-[20rem]">
                                       <p className="text-xs font-poppinsRegular text-[#616161]">
                                         Change Cover
                                       </p>
@@ -824,6 +828,16 @@ const UpdateFarm = () => {
               </Button>
             </div>
           </form>
+          <ConfirmationModal
+            isOpen={successModal}
+            onClose={() => setSuccessModal(false)}
+            title="Farm Images Updated"
+            description="Your farm images have been successfully updated. Would you like to go home or continue updating your farm information?"
+            confirmText="Proceed to Farm Info"
+            cancelText="Go Home"
+            onConfirm={() => setSuccessModal(false)}
+            onCancel={() => router.push("/farmer-dashboard/my-farms")}
+          />
         </main>
       </DashboardLayout>
     </ProtectedRoute>

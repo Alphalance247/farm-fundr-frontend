@@ -16,10 +16,12 @@ import { getFarmListStore } from "@/stores/farms/getFarmList";
 import { getBranchListStore } from "@/stores/farms/getBranchList";
 import { getProjectDetails } from "@/stores/farms/getProjectDetails";
 import { useRouter } from "next/navigation";
+import ConfirmationModal from "@/app/components/common/dashboard/confirmationModal";
 
 const UpdateProject = () => {
   const [loadingProject, setLoading] = useState(false);
   const [loadingProjectImage, setIsProjectLoading] = useState(false);
+  const [successModal, setSuccessModal] = useState(false);
   const [selectedFarmId, setSelectedFarmId] = useState("");
   const [selectedBranchId, setSelectedBranchId] = useState("");
   const [selectedProjectId, setSelectedProjectId] = useState("");
@@ -210,6 +212,7 @@ const UpdateProject = () => {
           toast.success(
             response.data.message || "Project created successfully!"
           );
+          router.push("/farmer-dashboard/my-farms");
           // router.push(
           //   `/farmer-dashboard/my-farms/${selectedFarmId}/farm-branches/${selectedBranchId}/${selectedProjectId}`
           // );
@@ -292,9 +295,7 @@ const UpdateProject = () => {
       );
 
       if (res.status === 201 || res.status === 200) {
-        toast.success(
-          res.data?.statusmessage || "Project Images updated successfully"
-        );
+        setSuccessModal(true);
         // router.push("/farmer-dashboard/my-farms");
       }
 
@@ -809,6 +810,16 @@ const UpdateProject = () => {
               </Button>
             </div>
           </form>
+          <ConfirmationModal
+            isOpen={successModal}
+            onClose={() => setSuccessModal(false)}
+            title="Farm Images Updated"
+            description="Your farm images have been successfully updated. Would you like to go home or continue updating your farm information?"
+            confirmText="Proceed to Farm Info"
+            cancelText="Go Home"
+            onConfirm={() => setSuccessModal(false)}
+            onCancel={() => router.push("/farmer-dashboard/my-farms")}
+          />
         </main>
       </DashboardLayout>
     </ProtectedRoute>
