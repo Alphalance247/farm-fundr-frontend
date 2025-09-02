@@ -85,13 +85,13 @@ const BranchFarmCard: React.FC<BranchFarmCardProps> = ({
                   <FiEdit size={14} />
                   Edit
                 </button>
-                <button
+                {/* <button
                   // onClick={() => handleDeleteFarm(emp?.id, emp?.name)}
                   className="w-full px-2 py-2 text-sm text-red-600 hover:bg-gray-100 flex items-center gap-2"
                 >
                   <FiTrash2 size={14} />
                   Delete
-                </button>
+                </button> */}
               </div>
             </div>
           )}

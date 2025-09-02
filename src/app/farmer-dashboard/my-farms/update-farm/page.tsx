@@ -223,13 +223,6 @@ const UpdateFarm = () => {
         formData.append("images", img4);
       }
 
-      // // Add images
-      // Object.entries(uploadedImages).forEach(([, imageData]) => {
-      //   if (imageData.file) {
-      //     formData.append("images", imageData.file);
-      //   }
-      // });
-
       const res = await axiosInstance.put(
         `${environment.addFarm}${selectedEditFarmId}`,
         formData,

@@ -33,13 +33,16 @@ const UpdateProject = () => {
 
   // Get the farm ID from localStorage on component mount
   useEffect(() => {
-    const storedProjectId = localStorage.getItem("selectedEditFarmId");
-    if (storedProjectId) {
+    const storedProjectId = localStorage.getItem("slectedEditProjectId");
+    const storedFarmId = localStorage.getItem("selectedEditFarmId");
+    const storedBranchId = localStorage.getItem("slectedEditBranchId");
+
+    if (storedProjectId && storedBranchId && storedFarmId) {
       fetchProjectsDetails(storedProjectId);
       setSelectedProjectId(storedProjectId);
     } else {
       // If no farm ID is stored, redirect back to farms list
-      window.location.href = `/farmer-dashboard/my-farms/${selectedFarmId}/farm-branches/${selectedBranchId}/${storedProjectId}`;
+      window.location.href = `/farmer-dashboard/my-farms/${storedFarmId}/farm-branches/${storedBranchId}/${storedProjectId}`;
     }
   }, [fetchProjectsDetails, selectedBranchId, selectedFarmId]);
 
