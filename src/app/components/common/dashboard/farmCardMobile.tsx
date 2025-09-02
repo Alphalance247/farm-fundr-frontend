@@ -7,8 +7,10 @@ const FarmCardMobile = ({
   cac_no,
   status,
   farmName,
+  farmerLogo,
 }: {
   viewDetailsLink: string;
+  farmerLogo: string; 
   cac_no: string;
   status: string;
   farmName: string;
@@ -19,7 +21,7 @@ const FarmCardMobile = ({
       <div className="flex justify-between items-center p-4">
         <div className="flex items-center gap-2">
           <Image
-            src={"/assets/my-farms/farmpic.svg"}
+            src={farmerLogo}
             alt={"farmlogo"}
             width={40}
             height={40}

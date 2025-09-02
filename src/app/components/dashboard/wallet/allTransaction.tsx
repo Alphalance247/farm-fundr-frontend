@@ -127,6 +127,7 @@ export default function TransactionSearchTable() {
     <section className="bg-white rounded-lg border border-[#E3E3E5]">
       <div>
         <TransactionSearch
+          headingText="All Transactions"
           searchQuery={searchQuery}
           sortBy={sortBy}
           filterBy={filterBy}
@@ -160,7 +161,7 @@ export default function TransactionSearchTable() {
               />
             ))}
           </div>
-          <div className="overflow-x-auto block md:hidden">
+          <div className="overflow-x-auto  block md:hidden">
             <table className="w-full min-w-[1000px] md:w-[800px]">
               <thead className="bg-[#FAFEFF]">
                 <tr>

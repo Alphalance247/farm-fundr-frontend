@@ -146,26 +146,32 @@ const Card = ({
       )}
 
       <div
-        className={`flex items-center gap-x-3 md:gap-y-4 mt-3 md:flex-col  ${
-          withRating ? "" : "pt-6"
+        className={`flex items-center gap-x-3 ${withRating ? "" : "pt-6"} ${
+          btnText1 && btnText2 ? "justify-start" : "w-full"
         }`}
       >
-        <div className="md:w-full">
+        {btnText1 && (
           <Button
             variant="tertiary"
             size="small"
-            className="w-full "
+            className={btnText2 ? "w-fit" : "w-full"}
             onClick={onUpdateClick}
           >
-            {btnText1 || " Bid Now"}
+            {btnText1}
           </Button>
-        </div>
+        )}
 
-        <Link href={btnTextLink2 || "/"} className="md:w-full">
-          <Button className="w-full " variant="secondary" size="small">
-            {btnText2 || "View Details"}
-          </Button>
-        </Link>
+        {btnText2 && (
+          <Link href={btnTextLink2 || "/"} className={btnText1 ? "" : "w-full"}>
+            <Button
+              className={btnText1 ? "w-fit" : "w-full"}
+              variant="secondary"
+              size="small"
+            >
+              {btnText2}
+            </Button>
+          </Link>
+        )}
       </div>
     </div>
   );
