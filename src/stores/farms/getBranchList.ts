@@ -7,6 +7,19 @@ export interface branchListDataStore {
     data: {
       id: string;
       name: string;
+      farm_name: string;
+      branch_images: {
+        image: string;
+      }[];
+      street: string;
+      close_time: string;
+      open_time: string;
+      plots: string;
+      projects: [];
+      status: boolean;
+      state: string;
+      city: string;
+      description: string;
     }[];
   };
 }

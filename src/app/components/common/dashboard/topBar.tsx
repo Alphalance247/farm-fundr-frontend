@@ -157,13 +157,17 @@ export function Topbar({
             // withWidth={false}
           />
         </div>
-        <Image
-          src="/assets/DashBoard/overview/profile.svg"
-          width={32}
-          height={32}
-          alt="profile"
-          className="hidden lg:block"
-        />
+        <div className="relative" ref={dropdownRef}>
+          {/* Profile image trigger */}
+          <Image
+            src={userDetails?.user_details?.image || "/assets/Profile.svg"}
+            width={32}
+            height={32}
+            alt="profile"
+            className="hidden lg:block cursor-pointer h-[35px] w-[35px]  rounded-full"
+            onClick={() => setIsDropdown(!isDropdownOpen)}
+          />
+        </div>
         <div className="rounded-full bg-[#F6F6F6] w-16 h-16 flex items-center justify-center relative cursor-pointer hover:bg-[#cac6c6] xl:w-10 xl:h-10 ">
           <IoNotificationsOutline
             className="text-[38px] lg:text-2xl"
