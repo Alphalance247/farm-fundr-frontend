@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Image from "next/image";
 import Button from "../../common/Buttons";
 import Link from "next/link";
-import { FiEdit, FiTrash2 } from "react-icons/fi";
+import { FiEdit } from "react-icons/fi";
 import { useRouter } from "next/navigation";
 
 interface BranchFarmCardProps {

@@ -210,15 +210,13 @@ const UpdateProject = () => {
           }
         );
 
-        if (response.status === 201) {
+        if (response.status === 201 || response?.status === 200) {
           // Reset form and uploaded images after successful submission
           toast.success(
             response.data.message || "Project created successfully!"
           );
-          router.push("/farmer-dashboard/my-farms");
-          // router.push(
-          //   `/farmer-dashboard/my-farms/${selectedFarmId}/farm-branches/${selectedBranchId}/${selectedProjectId}`
-          // );
+
+          setSuccessModal(true);
 
           setForm({
             selectFarm: "",
@@ -299,7 +297,6 @@ const UpdateProject = () => {
 
       if (res.status === 201 || res.status === 200) {
         setSuccessModal(true);
-        // router.push("/farmer-dashboard/my-farms");
       }
 
       setIsProjectLoading(false);
@@ -818,10 +815,14 @@ const UpdateProject = () => {
             onClose={() => setSuccessModal(false)}
             title="Farm Images Updated"
             description="Your farm images have been successfully updated. Would you like to go home or continue updating your farm information?"
-            confirmText="Proceed to Farm Info"
-            cancelText="Go Home"
+            confirmText="Keep Updating"
+            cancelText="Go To Project Details"
             onConfirm={() => setSuccessModal(false)}
-            onCancel={() => router.push("/farmer-dashboard/my-farms")}
+            onCancel={() =>
+              router.push(
+                `/farmer-dashboard/my-farms/${selectedFarmId}/farm-branches/${selectedBranchId}/${selectedProjectId}`
+              )
+            }
           />
         </main>
       </DashboardLayout>

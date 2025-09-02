@@ -239,8 +239,7 @@ const UpdateFarm = () => {
         toast.success(
           res.data?.statusmessage || "Farm details successfully updated"
         );
-        // setSuccessModal(true);
-        router.push("/farmer-dashboard/my-farms");
+        setSuccessModal(true);
       }
 
       setLoading(false);
@@ -301,10 +300,6 @@ const UpdateFarm = () => {
 
       if (res.status === 200) {
         setSuccessModal(true);
-        // toast.success(
-        //   res.data?.statusmessage || "Farm Images updated successfully"
-        // );
-        // router.push("/farmer-dashboard/my-farms");
       }
 
       setUploadingImages(false);
@@ -824,10 +819,10 @@ const UpdateFarm = () => {
           <ConfirmationModal
             isOpen={successModal}
             onClose={() => setSuccessModal(false)}
-            title="Farm Images Updated"
-            description="Your farm images have been successfully updated. Would you like to go home or continue updating your farm information?"
-            confirmText="Proceed to Farm Info"
-            cancelText="Go Home"
+            title="Farm details Updated"
+            description="Your farm details have been successfully updated. Would you like to go home or continue updating your farm information?"
+            confirmText="Keep Updating"
+            cancelText="Go To Farms"
             onConfirm={() => setSuccessModal(false)}
             onCancel={() => router.push("/farmer-dashboard/my-farms")}
           />
