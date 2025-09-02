@@ -58,8 +58,10 @@ const CustomDropdown = ({ value, onChange, options }: DropdownProps) => {
 
 const TransactionFilterMobile = ({
   tableHeading,
+  showViewAll = true,
 }: {
   tableHeading?: string;
+  showViewAll?: boolean;
 }) => {
   const [search, setSearch] = useState("");
   const [open, setOpen] = useState(false);
@@ -75,14 +77,17 @@ const TransactionFilterMobile = ({
 
   return (
     <div className="lg:block hidden p-4 w-full mb-6">
-      <div className="flex items-center justify-between mb-3">
+      <div className="flex items-center justify-between mb-2">
         <h3 className="text-gray-700 font-semibold">{tableHeading}</h3>
-        <Button
-          variant="switch"
-          className="rounded-md border border-[#2D865B] text-base text-[#2D865B] px-3 py-2 bg-[#EEFEF6] hover:bg-[#C9FCE3] hover:transition-all hover:duration-500"
-        >
-          View All
-        </Button>
+
+        {showViewAll && (
+          <Button
+            variant="switch"
+            className="rounded-md border border-[#2D865B] text-base text-[#2D865B] px-3 py-2 bg-[#EEFEF6] hover:bg-[#C9FCE3] hover:transition-all hover:duration-500"
+          >
+            View All
+          </Button>
+        )}
       </div>
       <div className="flex items-center gap-2">
         <div className="relative flex-1">

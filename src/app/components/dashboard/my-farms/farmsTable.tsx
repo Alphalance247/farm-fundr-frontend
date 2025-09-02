@@ -182,7 +182,7 @@ export default function FarmListTable() {
         />
       </div>
       <div>
-        <TransactionFilterMobile tableHeading="All Farms" />
+        <TransactionFilterMobile tableHeading="My Farms" showViewAll={false} />
       </div>
 
       {totalFarmsTable.length === 0 ? (
@@ -207,6 +207,7 @@ export default function FarmListTable() {
                 cac_no={emp?.cac_reg_no}
                 farmName={emp?.name}
                 status={emp.status}
+                farmerLogo={emp?.logo || "/assets/my-farms/farmpic.svg"}
                 viewDetailsLink={"/farmer-dashboard/my-farms/" + emp?.id}
               />
             ))}

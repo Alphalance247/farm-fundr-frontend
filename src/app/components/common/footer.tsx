@@ -7,8 +7,9 @@ import { useState } from "react";
 import toast from "react-hot-toast";
 import axios, { AxiosError } from "axios";
 import { environment } from "@/env/env.local";
+import { useAuth } from "@/context/authContext";
+import { useRouter } from "next/navigation";
 
-// working
 const navs = [
   {
     id: 1,
@@ -22,11 +23,9 @@ const navs = [
   {
     id: 3,
     name1: "About Us",
-    name2: "Pricing",
-    name3: "Create free account",
+    name2: "Create free account",
     link1: "/",
     link2: "/",
-    link3: "/",
   },
   {
     id: 4,
@@ -47,12 +46,16 @@ const navs = [
     link3: "/",
   },
 ];
+
 const Footer = () => {
   const [activeMenu, setActiveMenu] = useState("Home");
+  const { isAuthenticated, logout } = useAuth();
   const [form, setForm] = useState({
     email: "",
   });
+  const router = useRouter();
   const [loading, setIsLoading] = useState(false);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -93,6 +96,10 @@ const Footer = () => {
       setIsLoading(false);
     }
   };
+  const handleLogout = async () => {
+    await logout();
+    router.push("/login");
+  };
   return (
     <footer className="bg-[#282A03]">
       <Container>
@@ -129,18 +136,19 @@ const Footer = () => {
                 </Button>
               </div>
 
-            <p className="text-xs text-white">
-              By submitting your email address, you agree to receive weekly news
-              from farmpady.{" "}
-              <span className="text-[#51F4A6] underline-offset-2">
-                <a href="http://" target="_blank" rel="noopener noreferrer">
-                  Click here
-                </a>
-              </span>{" "}
-              to unsubscribe
-            </p>
+              <p className="text-xs text-white">
+                By submitting your email address, you agree to receive weekly
+                news from farmfundr.{" "}
+                <span className="text-[#51F4A6] underline-offset-2">
+                  <a href="http://" target="_blank" rel="noopener noreferrer">
+                    Click here
+                  </a>
+                </span>{" "}
+                to unsubscribe
+              </p>
+            </div>
           </div>
-        </div>
+        </form>
         <div className="grid grid-cols-[25%auto] gap-x-20 mt-24 lg:grid-cols-[30%auto] lg:gap-x-10 md:grid-cols-1 md:gap-y-8">
           <div>
             <Image
@@ -154,18 +162,31 @@ const Footer = () => {
             </p>
 
             <div className="flex gap-x-8 mt-6">
-              <Image
-                src="/assets/LandingPage/icons/x.svg"
-                width={24}
-                height={24}
-                alt="logo"
-              />
-              <Image
-                src="/assets/LandingPage/icons/instagram.svg"
-                width={24}
-                height={24}
-                alt="logo"
-              />
+              <a
+                href="https://www.instagram.com/farmpady?igsh=MWxzMWs0ZDh3cnJldQ=="
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <Image
+                  src="/assets/LandingPage/icons/x.svg"
+                  width={24}
+                  height={24}
+                  alt="Twitter"
+                />
+              </a>
+
+              <a
+                href="https://x.com/farmpady?t=EaSInmdoSp7MMoKvnacbUg&s=09"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <Image
+                  src="/assets/LandingPage/icons/instagram.svg"
+                  width={24}
+                  height={24}
+                  alt="Instagram"
+                />
+              </a>
             </div>
           </div>
 
@@ -196,16 +217,31 @@ const Footer = () => {
                       <Link href={items?.link2}>{items?.name2}</Link>
                     </li>
 
-                    <li
-                      className={`${
-                        activeMenu === items?.name3
-                          ? " border-b-[3px] text-[white] border-[#51F4A6] pb-2 md:pb-0"
-                          : "text-[white]"
-                      }  cursor-pointer mb-3 w-fit text-base font-poppinsRegular max-xl:text-xs md:mb-2`}
-                      onClick={() => setActiveMenu(items?.name3)}
-                    >
-                      <Link href={items?.link3}>{items?.name3}</Link>
-                    </li>
+                    {items?.name3 && (
+                      <li
+                        className={`${
+                          activeMenu === items?.name3
+                            ? "border-b-[3px] text-white border-[#51F4A6] pb-2 md:pb-0"
+                            : "text-white"
+                        } cursor-pointer mb-3 w-fit text-base font-poppinsRegular max-xl:text-xs md:mb-2`}
+                        onClick={() => setActiveMenu(items.name3!)}
+                      >
+                        {isAuthenticated && items?.name3 === "Login" ? (
+                          <Link href="/dashboard">Dashboard</Link>
+                        ) : isAuthenticated &&
+                          items?.name3 === "Get Started" ? (
+                          <button
+                            onClick={handleLogout}
+                            disabled={loading}
+                            className="text-white"
+                          >
+                            Logout
+                          </button>
+                        ) : (
+                          <Link href={items?.link3 ?? "#"}>{items?.name3}</Link>
+                        )}
+                      </li>
+                    )}
                   </ul>
                 </div>
               );

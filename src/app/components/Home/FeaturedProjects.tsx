@@ -9,15 +9,29 @@ import SlideInSection from "../common/slideInSection";
 import Link from "next/link";
 import { getFarmMarketPlaceListStore } from "@/stores/farm-marketplace/farmMarketPlace";
 import { useEffect } from "react";
+import Spinner from "../common/modals/spinner";
 
 const FeaturedProject = () => {
-  const { data, fetchFarmMarketPlaceList } = getFarmMarketPlaceListStore();
+  const { data, error, loading, fetchFarmMarketPlaceList } =
+    getFarmMarketPlaceListStore();
 
   useEffect(() => {
     fetchFarmMarketPlaceList();
   }, [fetchFarmMarketPlaceList]);
+
   const projects = data?.results?.data ?? [];
 
+  if (loading) {
+    return <Spinner />;
+  }
+
+  if (error) {
+    return (
+      <div className="text-center py-10 text-red-600 font-medium">
+        Failed to load projects. Please try again later.
+      </div>
+    );
+  }
   return (
     <SlideInSection>
       <section className="relative bg-[#fcfcfc]">

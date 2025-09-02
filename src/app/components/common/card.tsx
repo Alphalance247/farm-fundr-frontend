@@ -40,7 +40,6 @@ const Card = ({
     <div className="border border-[#E2E2E2] shadow-sm bg-white py-5 px-6 rounded-[20px]">
       <div className="mb-6 relative">
         <img
-        <img
           src={projectImage || `/assets/LandingPage/card/1.png`}
           width={336}
           height={185}

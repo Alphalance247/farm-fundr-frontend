@@ -6,14 +6,27 @@ import { GoArrowRight } from "react-icons/go";
 import Image from "next/image";
 import { getFarmMarketPlaceListStore } from "@/stores/farm-marketplace/farmMarketPlace";
 import { useEffect } from "react";
+import Spinner from "../common/modals/spinner";
 
 const ProjectListing = () => {
-  const { data, fetchFarmMarketPlaceList } = getFarmMarketPlaceListStore();
+  const { data, error, loading, fetchFarmMarketPlaceList } =
+    getFarmMarketPlaceListStore();
 
   useEffect(() => {
     fetchFarmMarketPlaceList();
   }, [fetchFarmMarketPlaceList]);
   const projects = data?.results?.data ?? [];
+  if (loading) {
+    return <Spinner />;
+  }
+
+  if (error) {
+    return (
+      <div className="text-center py-10 text-red-600 font-medium">
+        Failed to load projects. Please try again later.
+      </div>
+    );
+  }
   return (
     <section className="bg-[#FCFCFC] relative">
       <div className="absolute bottom-0 z-[1]">
@@ -26,7 +39,7 @@ const ProjectListing = () => {
       </div>
       <Container>
         <h5 className="text-lg font-poppinsSemiBold text-[#5F5F5F] mb-16">
-          120 Project Listings
+          {projects.length} Project Listings
         </h5>
 
         <div>
