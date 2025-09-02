@@ -72,8 +72,7 @@ const UpdateFarm = () => {
   const [file, setFile] = useState<File | null>(null);
   const [countries, setCountries] = useState<ICountry[]>([]);
   const [states, setStates] = useState<IState[]>([]);
-
-  console.log(uploadedImages);
+  const [loadingUploadImage, setUploadingImages] = useState(false);
 
   useEffect(() => {
     if (farmData) {
@@ -241,7 +240,7 @@ const UpdateFarm = () => {
         }
       );
 
-      if (res.status === 200) {
+      if (res.status === 201 || res.status === 200) {
         toast.success(
           res.data?.statusmessage || "Farm details successfully updated"
         );
@@ -267,7 +266,7 @@ const UpdateFarm = () => {
 
   const handleImageUpload = async () => {
     try {
-      setLoading(true);
+      setUploadingImages(true);
 
       // Create FormData for file upload
       const formData = new FormData();
@@ -311,7 +310,7 @@ const UpdateFarm = () => {
         // router.push("/farmer-dashboard/my-farms");
       }
 
-      setLoading(false);
+      setUploadingImages(false);
     } catch (err) {
       // Extract the error message from the response
       let errorMessage =
@@ -324,13 +323,20 @@ const UpdateFarm = () => {
 
       toast.error(errorMessage);
 
-      setLoading(false);
+      setUploadingImages(false);
     }
   };
 
   return (
     <ProtectedRoute requiredUserType="farmer">
       <DashboardLayout>
+        {loadingUploadImage && (
+          <SpinnerModal
+            onClose={() => {}}
+            message="Updating farm images, please wait this might take a while...."
+          />
+        )}
+
         {loading && (
           <SpinnerModal
             onClose={() => {}}
