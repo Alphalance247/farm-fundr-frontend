@@ -19,6 +19,7 @@ import { useRouter } from "next/navigation";
 
 const UpdateProject = () => {
   const [loadingProject, setLoading] = useState(false);
+  const [loadingProjectImage, setIsProjectLoading] = useState(false);
   const [selectedFarmId, setSelectedFarmId] = useState("");
   const [selectedBranchId, setSelectedBranchId] = useState("");
   const [selectedProjectId, setSelectedProjectId] = useState("");
@@ -189,20 +190,13 @@ const UpdateProject = () => {
         formData.append("how_it_works", form.howItWorks);
         formData.append("budget", form.fundingDetails);
         formData.append("progress_over_time", form.progressOvertime);
-        formData.append("plots", form.branchSize);
+        formData.append("plots", form.plots);
         formData.append("ROI", form.expectedReturn);
         formData.append("published", "true");
 
-        // Add images
-        Object.entries(uploadedImages).forEach(([, imageData]) => {
-          if (imageData.file) {
-            formData.append("images", imageData.file);
-          }
-        });
-
         // Make API call to create project
         const response = await axiosInstance.patch(
-          `/farms/${selectedFarmId}/branches/${selectedBranchId}/projects/`,
+          `/farms/projects/${selectedProjectId}`,
           formData,
           {
             headers: {
@@ -260,7 +254,7 @@ const UpdateProject = () => {
 
   const handleImageUpload = async () => {
     try {
-      setLoading(true);
+      setIsProjectLoading(true);
 
       // Create FormData for file upload
       const formData = new FormData();
@@ -287,8 +281,7 @@ const UpdateProject = () => {
         formData.append("old_image_links", projectData?.images[3]);
       }
 
-      const res = await axiosInstance.put(
-        // farms/projects/<int:project_id>/update-images
+      const res = await axiosInstance.post(
         `/farms/projects/${selectedProjectId}/update-images`,
         formData,
         {
@@ -298,14 +291,14 @@ const UpdateProject = () => {
         }
       );
 
-      if (res.status === 200) {
+      if (res.status === 201 || res.status === 200) {
         toast.success(
           res.data?.statusmessage || "Project Images updated successfully"
         );
         // router.push("/farmer-dashboard/my-farms");
       }
 
-      setLoading(false);
+      setIsProjectLoading(false);
     } catch (err) {
       // Extract the error message from the response
       let errorMessage =
@@ -318,7 +311,7 @@ const UpdateProject = () => {
 
       toast.error(errorMessage);
 
-      setLoading(false);
+      setIsProjectLoading(false);
     }
   };
 
@@ -345,6 +338,13 @@ const UpdateProject = () => {
   return (
     <ProtectedRoute requiredUserType="farmer">
       <DashboardLayout>
+        {loadingProjectImage && (
+          <SpinnerModal
+            onClose={() => {}}
+            message="Uploading project images, please wait this might take a while...."
+          />
+        )}
+
         {loadingProject && (
           <SpinnerModal
             onClose={() => {}}
@@ -370,7 +370,7 @@ const UpdateProject = () => {
               {/* Upload Farm Images */}
               <div className=" bg-white rounded-lg">
                 <p className="mb-2">
-                  Upload Farm Images
+                  Upload Project Images
                   <span className=" font-poppinsRegular text-[#5F5F5F]">
                     (5mb size, jpg, png format only)
                   </span>
@@ -400,7 +400,7 @@ const UpdateProject = () => {
                                     height={158}
                                     src={`${uploadedImages.image1.preview}`}
                                     alt="Uploaded image1"
-                                    className="object-cover w-full h-[300px] rounded-lg"
+                                    className="object-cover w-full h-[458px] rounded-lg"
                                   />
                                 </div>
 
@@ -433,7 +433,7 @@ const UpdateProject = () => {
                   </div>
 
                   {/* Second row - Multiple images */}
-                  <div className="grid grid-cols-3 gap-4 lg:grid-cols-2 md:grid-cols-1">
+                  <div className="grid grid-cols-1 gap-4 lg:grid-cols-1 md:grid-cols-1">
                     {Object.entries(uploadedImages)
                       .filter(([key]) => key !== "image1")
                       .map(([key, { preview }]) => (
@@ -460,7 +460,7 @@ const UpdateProject = () => {
                                       height={95}
                                       src={`${preview}`}
                                       alt={`Uploaded ${key}`}
-                                      className="object-cover w-full h-[95px] rounded-lg"
+                                      className="object-cover w-full h-[458px] rounded-lg"
                                     />
                                     <div className="flex items-center justify-center absolute gap-x-1 bg-[#FFFFFFE5] px-2 py-1 cursor-pointer rounded-lg bottom-[4rem] right-[3rem]">
                                       <p className="text-xs font-poppinsRegular text-[#616161]">
@@ -494,7 +494,7 @@ const UpdateProject = () => {
               </div>
             </div>
 
-            <div className="mt-8 flex gap-x-4 items-end justify-end">
+            <div className="my-10 flex gap-x-4 items-end justify-end">
               <Button
                 className="w-fit flex items justify-center gap-x-4 text-right"
                 type="submit"
@@ -611,21 +611,39 @@ const UpdateProject = () => {
                     </select>
                   </div>
                 </div>
-                <div>
-                  <Label>Description</Label>
 
-                  <textarea
-                    name="description"
-                    id=""
-                    value={form?.description || ""}
-                    cols={20}
-                    rows={5}
-                    className="bg-[#F6F6F6] border-[#E2E2E2] border w-full text-[#7C7C7C] rounded-lg text-sm p-4 focus:ring-[#51F4A6]"
-                    placeholder="Enter description here"
-                    onChange={(e) => {
-                      setForm({ ...form, description: e.target.value });
-                    }}
-                  ></textarea>
+                <div className="grid grid-cols-2 gap-6 md:grid-cols-1">
+                  <div>
+                    <Label>Description</Label>
+
+                    <textarea
+                      name="description"
+                      id=""
+                      value={form?.description || ""}
+                      cols={20}
+                      rows={5}
+                      className="bg-[#F6F6F6] border-[#E2E2E2] border w-full text-[#7C7C7C] rounded-lg text-sm p-4 focus:ring-[#51F4A6]"
+                      placeholder="Enter description here"
+                      onChange={(e) => {
+                        setForm({ ...form, description: e.target.value });
+                      }}
+                    ></textarea>
+                  </div>
+
+                  <div>
+                    <Label className="">Plots</Label>
+                    <Input
+                      name="plots"
+                      className=""
+                      type="number"
+                      value={form?.plots}
+                      placeholder="Enter number of plots"
+                      variant="tertiary"
+                      onChange={(e) =>
+                        setForm({ ...form, plots: e.target.value })
+                      }
+                    />
+                  </div>
                 </div>
               </div>
 

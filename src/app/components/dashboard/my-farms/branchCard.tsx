@@ -3,6 +3,7 @@ import Image from "next/image";
 import Button from "../../common/Buttons";
 import Link from "next/link";
 import { FiEdit, FiTrash2 } from "react-icons/fi";
+import { useRouter } from "next/navigation";
 
 interface BranchFarmCardProps {
   branchName: string;
@@ -29,9 +30,15 @@ const BranchFarmCard: React.FC<BranchFarmCardProps> = ({
   id,
 }) => {
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
+  const router = useRouter();
   const handleDropdownToggle = (farmId: string) => {
     setOpenDropdown(openDropdown === farmId ? null : farmId);
   };
+  const handleEditBranch = (branchId: string) => {
+    localStorage.setItem("slectedEditBranchId", branchId);
+    router?.push("/farmer-dashboard/my-farms/update-branch");
+  };
+
   return (
     <div className="bg-white rounded-xl w-full shadow-lg">
       <div className="relative">
@@ -72,7 +79,7 @@ const BranchFarmCard: React.FC<BranchFarmCardProps> = ({
             <div className="absolute right-0 bottom-0 mt-2 w-28 bg-white rounded-lg shadow-lg border border-gray-200 z-50">
               <div className="py-1">
                 <button
-                  // onClick={() => handleEditFarm(emp.id)}
+                  onClick={() => handleEditBranch(id)}
                   className="w-full px-2 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center gap-2"
                 >
                   <FiEdit size={14} />
