@@ -44,7 +44,7 @@ const Card = ({
           width={336}
           height={185}
           alt="land"
-          className="w-[308px] h-[169px] rounded-md"
+          className="w-[full] h-[169px] rounded-md lg:w-full"
         />
         <p className="border-[#B0EECA] border px-4 py-1 absolute bottom-[-1rem] right-[1rem] flex items-center bg-white text-[#00C853] rounded-lg">
           <span className="mr-1">
@@ -146,15 +146,15 @@ const Card = ({
       )}
 
       <div
-        className={`flex items-center gap-x-3 ${withRating ? "" : "pt-6"} ${
-          btnText1 && btnText2 ? "justify-start" : "w-full"
-        }`}
+        className={`flex items-center gap-3 lg:flex-col ${
+          withRating ? "" : "pt-6"
+        } ${btnText1 && btnText2 ? "justify-start" : "w-full"}`}
       >
         {btnText1 && (
           <Button
             variant="tertiary"
             size="small"
-            className={btnText2 ? "w-fit" : "w-full"}
+            className={`${btnText2 ? "w-fit lg:w-full" : "w-full"} `}
             onClick={onUpdateClick}
           >
             {btnText1}
@@ -162,9 +162,12 @@ const Card = ({
         )}
 
         {btnText2 && (
-          <Link href={btnTextLink2 || "/"} className={btnText1 ? "" : "w-full"}>
+          <Link
+            href={btnTextLink2 || "/"}
+            className={btnText1 ? "lg:w-full" : "w-full"}
+          >
             <Button
-              className={btnText1 ? "w-fit" : "w-full"}
+              className={btnText1 ? "w-fit lg:w-full" : "w-full"}
               variant="secondary"
               size="small"
             >

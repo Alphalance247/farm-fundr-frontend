@@ -1,8 +1,9 @@
+"use client";
 import React, { useState } from "react";
 import Image from "next/image";
 import Button from "../../common/Buttons";
 import Link from "next/link";
-import { FiEdit, FiTrash2 } from "react-icons/fi";
+import { FiEdit } from "react-icons/fi";
 import { useRouter } from "next/navigation";
 
 interface BranchFarmCardProps {
@@ -85,13 +86,13 @@ const BranchFarmCard: React.FC<BranchFarmCardProps> = ({
                   <FiEdit size={14} />
                   Edit
                 </button>
-                <button
+                {/* <button
                   // onClick={() => handleDeleteFarm(emp?.id, emp?.name)}
                   className="w-full px-2 py-2 text-sm text-red-600 hover:bg-gray-100 flex items-center gap-2"
                 >
                   <FiTrash2 size={14} />
                   Delete
-                </button>
+                </button> */}
               </div>
             </div>
           )}
@@ -138,7 +139,10 @@ const BranchFarmCard: React.FC<BranchFarmCardProps> = ({
           </span>
           {openingHours}
         </div>
-        <Link href={`${href}`}>
+        <Link
+          href={`${href}`}
+          onClick={() => localStorage.setItem("slectedEditBranchId", id)}
+        >
           <Button className="mt-6 w-full"> View All Projects</Button>
         </Link>
       </div>

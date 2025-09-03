@@ -24,7 +24,7 @@ const BranchDetails = ({
   }, [fetchProjectsList, branchId, farmId]);
 
   const handleUpdate = (projectId: string) => {
-    localStorage.setItem("selectedEditFarmId", projectId);
+    localStorage.setItem("slectedEditProjectId", projectId);
     router.push("/farmer-dashboard/my-farms/update-project");
   };
 

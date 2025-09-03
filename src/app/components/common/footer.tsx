@@ -83,8 +83,10 @@ const Footer = () => {
           email: form.email,
         }
       );
-      if (res.status === 200) {
-        toast.success("Message sent successfully");
+      if (res.status === 200 || res?.status === 201) {
+        toast.success(
+          res.data?.statusmessage || "Email subscribed successfully"
+        );
         setForm({ email: "" });
       }
     } catch (err) {
