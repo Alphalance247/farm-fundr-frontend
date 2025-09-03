@@ -1,3 +1,4 @@
+"use client";
 import React, { useState } from "react";
 import Image from "next/image";
 import Button from "../../common/Buttons";
@@ -138,7 +139,10 @@ const BranchFarmCard: React.FC<BranchFarmCardProps> = ({
           </span>
           {openingHours}
         </div>
-        <Link href={`${href}`}>
+        <Link
+          href={`${href}`}
+          onClick={() => localStorage.setItem("slectedEditBranchId", id)}
+        >
           <Button className="mt-6 w-full"> View All Projects</Button>
         </Link>
       </div>

@@ -97,6 +97,7 @@ const FarmDetails = ({ farmDetailsId }: { farmDetailsId: string }) => {
                         alt="farmer"
                         width={64}
                         height={64}
+                        className=" rounded-full h-[64px] w-[64px]"
                       />
                       <p className="text-xs font-poppinsRegular text-[#475367]">
                         {farmData?.cac_reg_no || "N/A"}

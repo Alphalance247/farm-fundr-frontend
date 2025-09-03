@@ -76,7 +76,7 @@ const StoreFrontHeading = ({
                 alt="customize-store"
                 width={208}
                 height={168}
-                className="md:w-[80px] md:h-[85px]"
+                className="md:w-[80px] md:h-[85px] rounded-full"
               />
             ) : (
               <div>
@@ -171,21 +171,45 @@ const StoreFrontHeading = ({
               )}
 
               <div className="flex gap-x-3 mt-4 md:hidden">
-                <a href={`http://${farm?.farm?.farm_link}`} target="_blank">
-                  <Button
-                    className="w-fit flex items-center justify-center gap-2"
-                    variant="secondary"
-                  >
-                    <BsEyeFill size={16} />
-                    View Farm
-                  </Button>
-                </a>
+                {!withBorderRadius && (
+                  <Link href={"/"}>
+                    <Button
+                      className={`w-fit flex items-center justify-center gap-2 ${textColor}`}
+                      variant="subtertiary"
+                    >
+                      <FaRegEnvelope size={16} />
+                      Send a message
+                    </Button>
+                  </Link>
+                )}
+                {!withBorderRadius ? (
+                  <Link href={"/farm-page/farm-page-farm-details"}>
+                    <Button
+                      className="w-fit flex items-center justify-center gap-2"
+                      variant="secondary"
+                    >
+                      <BsEyeFill size={16} />
+                      View Farm
+                    </Button>
+                  </Link>
+                ) : (
+                  <a href={`http://${farm?.farm?.farm_link}`} target="_blank">
+                    <Button
+                      className="w-fit flex items-center justify-center gap-2"
+                      variant="secondary"
+                    >
+                      <BsEyeFill size={16} />
+                      View Farm
+                    </Button>
+                  </a>
+                )}
               </div>
             </div>
           </div>
+
           {!withBorderRadius && (
             <div className="md:flex md:flex-col md:gap-y-3 md:pr-4 gap-x-3 mt-4 hidden">
-              <Link href={"/store-front"}>
+              <Link href={"/farm-page"}>
                 <Button
                   className={`w-fit flex items-center justify-center gap-2 ${textColor}`}
                   variant="subtertiary"
