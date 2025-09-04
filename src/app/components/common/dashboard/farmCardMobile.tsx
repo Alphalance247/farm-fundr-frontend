@@ -1,4 +1,3 @@
-import Image from "next/image";
 import Link from "next/link";
 import { FiChevronRight } from "react-icons/fi";
 
@@ -8,28 +7,32 @@ const FarmCardMobile = ({
   status,
   farmName,
   farmerLogo,
+  onClickDetails,
 }: {
   viewDetailsLink: string;
-  farmerLogo: string; 
+  farmerLogo: string;
   cac_no: string;
   status: string;
   farmName: string;
+  onClickDetails?: () => void;
 }) => {
   return (
     <div className="border rounded-2xl bg-white shadow-sm overflow-hidden">
       {/* Header */}
       <div className="flex justify-between items-center p-4">
         <div className="flex items-center gap-2">
-          <Image
+          <img
             src={farmerLogo}
             alt={"farmlogo"}
             width={40}
             height={40}
+            className="h-[40px] w-[40px] rounded-full"
           />
           <h3 className="text-[#0B222A] font-medium text-sm">{farmName}</h3>
         </div>
         <Link
           href={viewDetailsLink || "/"}
+          onClick={onClickDetails}
           className="flex items-center gap-1 text-xs text-[#00C853]"
         >
           View Details <FiChevronRight />

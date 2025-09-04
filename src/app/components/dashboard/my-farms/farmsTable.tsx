@@ -209,6 +209,9 @@ export default function FarmListTable() {
                 status={emp.status}
                 farmerLogo={emp?.logo || "/assets/my-farms/farmpic.svg"}
                 viewDetailsLink={"/farmer-dashboard/my-farms/" + emp?.id}
+                onClickDetails={() =>
+                  localStorage.setItem("selectedEditFarmId", emp?.id)
+                }
               />
             ))}
           </div>

@@ -159,7 +159,7 @@ export function Topbar({
         </div>
         <div className="relative" ref={dropdownRef}>
           {/* Profile image trigger */}
-          <Image
+          <img
             src={userDetails?.user_details?.image || "/assets/Profile.svg"}
             width={32}
             height={32}

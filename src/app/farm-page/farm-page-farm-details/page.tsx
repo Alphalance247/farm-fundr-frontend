@@ -43,7 +43,7 @@ const StoreFrontFarmDetails = () => {
           farmName={farmPageData?.name}
           farmerName={farmPageData?.owner_name}
           cacRegNo={farmPageData?.cac_reg_no || "N/A"}
-          verifiedText={farmPageData?.cac_reg_no ? "Verified" : "Unverified"}
+          verifiedText={farmPageData?.verified ? "Verified" : "Unverified"}
           farmpageLogo={farmPageData?.logo}
         />
 
