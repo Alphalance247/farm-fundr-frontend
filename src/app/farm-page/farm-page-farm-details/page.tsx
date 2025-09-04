@@ -27,7 +27,9 @@ const StoreFrontFarmDetails = () => {
     const farmPageData = data?.farm_data;
 
     useEffect(() => {
-      fetchFarmPageList(farmName);
+      if (farmName) {
+        fetchFarmPageList(farmName);
+      }
     }, [fetchFarmPageList, farmName]);
     return (
       <div>
@@ -42,6 +44,7 @@ const StoreFrontFarmDetails = () => {
           farmerName={farmPageData?.owner_name}
           cacRegNo={farmPageData?.cac_reg_no || "N/A"}
           verifiedText={farmPageData?.cac_reg_no ? "Verified" : "Unverified"}
+          farmpageLogo={farmPageData?.logo}
         />
 
         <section className="max-w-[1300px] mx-auto px-4 py-10 md:px-4 md:py-12 mt-8">
@@ -68,7 +71,7 @@ const StoreFrontFarmDetails = () => {
             <ErrorFetch
               message="Error fetching Farm details"
               onRefetch={() => {
-                fetchFarmPageList("bandele-farm");
+                fetchFarmPageList(farmName);
               }}
             />
           ) : (

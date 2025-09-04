@@ -5,7 +5,6 @@ import TransactionSearch, {
   type FilterOption,
 } from "../../dashboard/wallet/transactionSearch";
 import { PiDotsThreeVertical } from "react-icons/pi";
-import Image from "next/image";
 import { getFarmListStore } from "@/stores/farms/getFarmList";
 import Link from "next/link";
 import Button from "../../common/Buttons";
@@ -183,7 +182,7 @@ export default function FarmListTable() {
         />
       </div>
       <div>
-        <TransactionFilterMobile tableHeading="All Farms" />
+        <TransactionFilterMobile tableHeading="My Farms" showViewAll={false} />
       </div>
 
       {totalFarmsTable.length === 0 ? (
@@ -208,6 +207,7 @@ export default function FarmListTable() {
                 cac_no={emp?.cac_reg_no}
                 farmName={emp?.name}
                 status={emp.status}
+                farmerLogo={emp?.logo || "/assets/my-farms/farmpic.svg"}
                 viewDetailsLink={"/farmer-dashboard/my-farms/" + emp?.id}
               />
             ))}
@@ -252,19 +252,24 @@ export default function FarmListTable() {
                       <input type="checkbox" className="rounded" />
                     </td>
                     <td className="py-3 px-4">
-                      <Link href={"/farmer-dashboard/my-farms/" + emp?.id}>
-                        <div>
-                          <span className="text-[#1B2229] text-sm font-poppinsRegular flex items-center gap-2 hover:underline underline-offset-2">
-                            <Image
-                              src={"/assets/my-farms/farmpic.svg"}
-                              alt={emp.name}
-                              width={40}
-                              height={40}
-                            />
-                            <span> {emp?.name}</span>
-                          </span>
-                        </div>
-                      </Link>
+                      <div
+                        onClick={() => {
+                          router?.push("/farmer-dashboard/my-farms/" + emp?.id);
+                          localStorage.setItem("selectedEditFarmId", emp?.id);
+                        }}
+                        className=" cursor-pointer"
+                      >
+                        <span className="text-[#1B2229] text-sm font-poppinsRegular flex items-center gap-2 hover:underline underline-offset-2">
+                          <img
+                            src={emp?.logo || "/assets/my-farms/farmpic.svg"}
+                            alt={emp.name}
+                            width={40}
+                            height={40}
+                            className="rounded-full"
+                          />
+                          <span> {emp?.name}</span>
+                        </span>
+                      </div>
                     </td>
                     <td className="py-3 px-4 text-sm text-[#2F2F33] hidden md:block">
                       <span

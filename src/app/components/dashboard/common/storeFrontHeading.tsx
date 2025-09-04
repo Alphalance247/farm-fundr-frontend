@@ -18,6 +18,8 @@ const StoreFrontHeading = ({
   farmerName,
   cacRegNo,
   farmName,
+  setFile,
+  farmpageLogo,
 }: {
   color: string;
   textColor: string;
@@ -29,18 +31,22 @@ const StoreFrontHeading = ({
   farmerName?: string;
   cacRegNo?: string;
   farmName?: string;
+  farmpageLogo?: string;
+  setFile?: (file: File) => void;
 }) => {
   const { data: farmDetails } = getFarmDetails();
   const farm = farmDetails?.data;
 
-  const [preview, setPreview] = useState<string | null>("");
-  const [file, setFile] = useState<File | null>(null);
-  console.log(file);
+  const [preview, setPreview] = useState<string | null | undefined>(
+    farmDetails?.data?.farm?.logo
+  );
 
   const handlePictureUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFile = e.target.files?.[0];
     if (selectedFile && selectedFile.size <= 5 * 1024 * 1024) {
-      setFile(selectedFile);
+      if (setFile) {
+        setFile(selectedFile);
+      }
       setPreview(URL.createObjectURL(selectedFile));
     } else {
       alert("File must be less than 5MB");
@@ -53,7 +59,7 @@ const StoreFrontHeading = ({
         withBorderRadius ? "rounded-xl" : ""
       }  flex-1 ${color} shadow-xl`}
     >
-      <Image
+      <img
         src="/assets/my-farms/lines.png"
         alt="customize-store"
         width={420}
@@ -65,12 +71,12 @@ const StoreFrontHeading = ({
           <div className="flex items-center gap-x-6 md:flex-col md:items-start">
             {/*  */}
             {!withBorderRadius ? (
-              <Image
-                src={"/assets/my-farms/uneditfarmpic.png"}
+              <img
+                src={farmpageLogo || "/assets/my-farms/uneditfarmpic.png"}
                 alt="customize-store"
                 width={208}
                 height={168}
-                className="md:w-[80px] md:h-[85px] cursor-pointer"
+                className="md:w-[80px] md:h-[85px] rounded-full"
               />
             ) : (
               <div>
@@ -84,7 +90,7 @@ const StoreFrontHeading = ({
                   />
 
                   {preview ? (
-                    <Image
+                    <img
                       src={preview || ""}
                       alt="profileImage"
                       width={208}
@@ -165,29 +171,45 @@ const StoreFrontHeading = ({
               )}
 
               <div className="flex gap-x-3 mt-4 md:hidden">
-                <Button
-                  className={`w-fit flex items-center justify-center gap-2 ${textColor}`}
-                  variant="subtertiary"
-                >
-                  <FaRegEnvelope size={16} />
-                  Send a message
-                </Button>
-
-                <Link href="/farm-page/farm-page-farm-details">
-                  <Button
-                    className="w-fit flex items-center justify-center gap-2"
-                    variant="secondary"
-                  >
-                    <BsEyeFill size={16} />
-                    View Farm
-                  </Button>
-                </Link>
+                {!withBorderRadius && (
+                  <Link href={"/"}>
+                    <Button
+                      className={`w-fit flex items-center justify-center gap-2 ${textColor}`}
+                      variant="subtertiary"
+                    >
+                      <FaRegEnvelope size={16} />
+                      Send a message
+                    </Button>
+                  </Link>
+                )}
+                {!withBorderRadius ? (
+                  <Link href={"/farm-page/farm-page-farm-details"}>
+                    <Button
+                      className="w-fit flex items-center justify-center gap-2"
+                      variant="secondary"
+                    >
+                      <BsEyeFill size={16} />
+                      View Farm
+                    </Button>
+                  </Link>
+                ) : (
+                  <a href={`http://${farm?.farm?.farm_link}`} target="_blank">
+                    <Button
+                      className="w-fit flex items-center justify-center gap-2"
+                      variant="secondary"
+                    >
+                      <BsEyeFill size={16} />
+                      View Farm
+                    </Button>
+                  </a>
+                )}
               </div>
             </div>
           </div>
+
           {!withBorderRadius && (
             <div className="md:flex md:flex-col md:gap-y-3 md:pr-4 gap-x-3 mt-4 hidden">
-              <Link href={"/store-front"}>
+              <Link href={"/farm-page"}>
                 <Button
                   className={`w-fit flex items-center justify-center gap-2 ${textColor}`}
                   variant="subtertiary"

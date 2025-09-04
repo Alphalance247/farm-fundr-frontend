@@ -41,7 +41,7 @@ export const getFarmPageProjectListStore = create<farmPageProjectListStore>(
       set({ loading: true, error: null });
       try {
         const res = await axios.get(
-          `https://${farmName}.${environment?.farmPageBaseUrl}/farmpage/branches/projects`
+          `${environment?.farmPageBaseUrl}/farmpage/branches/projects?farm-name=${farmName}`
         );
         set({ data: res.data, loading: false });
       } catch (err) {

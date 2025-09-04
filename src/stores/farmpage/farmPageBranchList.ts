@@ -42,7 +42,7 @@ export const getFarmPageBranchesListStore = create<farmPageBranchListStore>(
       set({ loading: true, error: null });
       try {
         const res = await axios.get(
-          `https://${farmName}.${environment?.farmPageBaseUrl}/farmpage/branches`
+          `${environment?.farmPageBaseUrl}/farmpage/branches?farm-name=${farmName}`
         );
         set({ data: res.data, loading: false });
       } catch (err) {

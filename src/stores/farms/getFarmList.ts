@@ -11,6 +11,7 @@ export interface farmListDataSore {
       country: string;
       cac_reg_no: string;
       farm_branches_count: number;
+      logo: string;
       status: string;
       color: string;
       farm_slug: string;

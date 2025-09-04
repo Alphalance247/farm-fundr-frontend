@@ -10,7 +10,6 @@ import { getProjectDetails } from "@/stores/farms/getProjectDetails";
 import Spinner from "@/app/components/common/modals/spinner";
 import { IoMdArrowBack } from "react-icons/io";
 import Link from "next/link";
-import Image from "next/image";
 import { useRouter } from "next/navigation";
 
 const ProjectDetails = ({
@@ -50,24 +49,29 @@ const ProjectDetails = ({
     },
   ];
 
-  const branchSetup = [
-    {
-      name: "Branch Size",
-      details: projectData?.plots || "N/A",
-    },
-    {
-      name: "Opening Hour",
-      details: "Lagos branch",
-    },
-    {
-      name: "Closing Hour",
-      details: "1, bodija, Ibadan, Nigeria.",
-    },
-    {
-      name: "Working Days",
-      details: "1, bodija, Ibadan, Nigeria.",
-    },
-  ];
+  const handleEditProject = () => {
+    localStorage.setItem("slectedEditProjectId", projectData?.id || "");
+    router?.push("/farmer-dashboard/my-farms/update-project");
+  };
+
+  // const branchSetup = [
+  //   {
+  //     name: "Branch Size",
+  //     details: projectData?.plots || "N/A",
+  //   },
+  //   {
+  //     name: "Opening Hour",
+  //     details: "Lagos branch",
+  //   },
+  //   {
+  //     name: "Closing Hour",
+  //     details: "1, bodija, Ibadan, Nigeria.",
+  //   },
+  //   {
+  //     name: "Working Days",
+  //     details: "1, bodija, Ibadan, Nigeria.",
+  //   },
+  // ];
 
   return (
     <DashboardLayout>
@@ -107,6 +111,7 @@ const ProjectDetails = ({
                         router.push(
                           "/farmer-dashboard/my-farms/update-project"
                         );
+                        handleEditProject();
                       }}
                     />
                   </div>
@@ -114,7 +119,7 @@ const ProjectDetails = ({
                   <div className="pt-6">
                     <div className="grid grid-cols-3 gap-3 xl:grid-cols-2 lg:grid-cols-1">
                       {projectData?.images?.map((images, i) => (
-                        <Image
+                        <img
                           width={i === 0 ? 556 : 177}
                           height={i === 0 ? 158 : 95}
                           src={`${images}` || "/assets/my-farms/no-img.avif"}
@@ -132,12 +137,13 @@ const ProjectDetails = ({
                 <div className="bg-white shadow-md rounded-[12px] p-6">
                   <div className="flex gap-x-2 items-center justify-center pt-6 border-t border-[#F6F6F6] mb-4">
                     {" "}
-                    <FarmHeading text="Branch Information" />
+                    <FarmHeading text="Project Branch Information" />
                     <EditBtn
                       onButtonEdit={() => {
                         router.push(
                           "/farmer-dashboard/my-farms/update-project"
                         );
+                        handleEditProject();
                       }}
                     />
                   </div>
@@ -166,7 +172,7 @@ const ProjectDetails = ({
               </div>
               {/* Branch setup and optional info */}
               <div className="flex flex-col gap-y-6">
-                <div className="bg-white shadow-md rounded-[12px] p-6 h-fit">
+                {/* <div className="bg-white shadow-md rounded-[12px] p-6 h-fit">
                   <div className="flex gap-x-2 items-center justify-center pt-6 border-t border-[#F6F6F6] mb-4">
                     {" "}
                     <FarmHeading text="Branch Set Up" />
@@ -190,7 +196,7 @@ const ProjectDetails = ({
                       </div>
                     ))}
                   </div>
-                </div>
+                </div> */}
 
                 <div className="bg-white shadow-md rounded-[12px] p-6 h-fit">
                   <div className="border-t border-[#F6F6F6] pt-3 pb-3">
@@ -228,9 +234,12 @@ const ProjectDetails = ({
                   <IoMdArrowBack size={16} color="#2D865B" /> Go back
                 </Button>
               </Link>
-              <Link
-                href={`/farmer-dashboard/my-farms/${farmDetailsId}/farm-branches/${branchDetailsId}`}
+              <div
                 className="w-full"
+                onClick={() => {
+                  handleEditProject();
+                  router.push("/farmer-dashboard/my-farms/update-project");
+                }}
               >
                 <Button
                   variant="secondary"
@@ -238,7 +247,7 @@ const ProjectDetails = ({
                 >
                   <HiPencil size={16} color="#2D865B" /> Edit Project Details
                 </Button>
-              </Link>
+              </div>
             </div>
           </>
         )}

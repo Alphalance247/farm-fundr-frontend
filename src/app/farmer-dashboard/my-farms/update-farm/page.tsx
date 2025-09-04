@@ -18,6 +18,7 @@ import GoBackBtn from "@/app/components/common/goBack";
 import Button from "@/app/components/common/Buttons";
 import { getFarmDetails } from "@/stores/farms/getFarmDetails";
 import { useRouter } from "next/navigation";
+import ConfirmationModal from "@/app/components/common/dashboard/confirmationModal";
 
 const UpdateFarm = () => {
   const { data, fetchFarmDetails } = getFarmDetails();
@@ -70,8 +71,10 @@ const UpdateFarm = () => {
   });
   const [preview, setPreview] = useState<string | null>(null);
   const [file, setFile] = useState<File | null>(null);
+  const [successModal, setSuccessModal] = useState(false);
   const [countries, setCountries] = useState<ICountry[]>([]);
   const [states, setStates] = useState<IState[]>([]);
+  const [loadingUploadImage, setUploadingImages] = useState(false);
 
   useEffect(() => {
     if (farmData) {
@@ -95,7 +98,7 @@ const UpdateFarm = () => {
 
       setFile(farmData?.cac_reg_doc);
 
-      // Prefill images with backend data
+      // // Prefill images with backend data
       if (farmData?.farm_images && farmData?.farm_images.length > 0) {
         const imageKeys = ["image1", "image2", "image3", "image4"];
         const newUploadedImages: {
@@ -204,12 +207,23 @@ const UpdateFarm = () => {
         formData.append("cac_reg_doc", file);
       }
 
-      // Add images
-      Object.entries(uploadedImages).forEach(([, imageData]) => {
-        if (imageData.file) {
-          formData.append("images", imageData.file);
-        }
-      });
+      const img1 = uploadedImages.image1?.file;
+      const img2 = uploadedImages.image2?.file;
+      const img3 = uploadedImages.image3?.file;
+      const img4 = uploadedImages.image4?.file;
+
+      if (img1) {
+        formData.append("images", img1);
+      }
+      if (img2) {
+        formData.append("images", img2);
+      }
+      if (img3) {
+        formData.append("images", img3);
+      }
+      if (img4) {
+        formData.append("images", img4);
+      }
 
       const res = await axiosInstance.put(
         `${environment.addFarm}${selectedEditFarmId}`,
@@ -221,11 +235,11 @@ const UpdateFarm = () => {
         }
       );
 
-      if (res.status === 200) {
+      if (res.status === 201 || res.status === 200) {
         toast.success(
           res.data?.statusmessage || "Farm details successfully updated"
         );
-        router.push("/farmer-dashboard/my-farms");
+        setSuccessModal(true);
       }
 
       setLoading(false);
@@ -245,9 +259,76 @@ const UpdateFarm = () => {
     }
   };
 
+  const handleImageUpload = async () => {
+    try {
+      setUploadingImages(true);
+
+      // Create FormData for file upload
+      const formData = new FormData();
+
+      const img1 = uploadedImages.image1?.file;
+      const img2 = uploadedImages.image2?.file;
+      const img3 = uploadedImages.image3?.file;
+      const img4 = uploadedImages.image4?.file;
+
+      if (img1 && farmData) {
+        formData.append("images", img1);
+        formData.append("old_image_links", farmData?.images[0]);
+      }
+      if (img2 && farmData) {
+        formData.append("images", img2);
+        formData.append("old_image_links", farmData?.images[1]);
+      }
+      if (img3 && farmData) {
+        formData.append("images", img3);
+        formData.append("old_image_links", farmData?.images[2]);
+      }
+      if (img4 && farmData) {
+        formData.append("images", img4);
+        formData.append("old_image_links", farmData?.images[3]);
+      }
+
+      const res = await axiosInstance.post(
+        `/farms/${selectedEditFarmId}/update-farm-image`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+
+      if (res.status === 200) {
+        setSuccessModal(true);
+      }
+
+      setUploadingImages(false);
+    } catch (err) {
+      // Extract the error message from the response
+      let errorMessage =
+        "Please make sure all fields are filled correctly. and try again.";
+
+      if (err instanceof AxiosError) {
+        // Check if err is an instance of AxiosError
+        errorMessage = err.response?.data?.statusmessage || errorMessage;
+      }
+
+      toast.error(errorMessage);
+
+      setUploadingImages(false);
+    }
+  };
+
   return (
     <ProtectedRoute requiredUserType="farmer">
       <DashboardLayout>
+        {loadingUploadImage && (
+          <SpinnerModal
+            onClose={() => {}}
+            message="Updating farm images, please wait this might take a while...."
+          />
+        )}
+
         {loading && (
           <SpinnerModal
             onClose={() => {}}
@@ -260,15 +341,12 @@ const UpdateFarm = () => {
           <div className="mt-6 text-center">
             <h5 className="text-xl font-semibold text-[#5F5F5F]">Edit Farm</h5>
             <p className=" font-poppinsRegular text-sm text-[#7C7C7C] mt-3 mb-4">
-              Green Valley Farm
+              {farmData?.name}
             </p>
           </div>
           {/* form section */}
-          <form
-            action=""
-            className="w-[70%] mx-auto xl:w-[80%] lg:w-[90%] md:w-full"
-            onSubmit={(e) => handleFinalSubmit(e)}
-          >
+
+          <div className="w-[70%] mx-auto xl:w-[80%] lg:w-[90%] md:w-full">
             <div className="p-6 bg-white rounded-lg shadow-lg md:px-3">
               {/* Upload Farm Images */}
               <div className="">
@@ -298,10 +376,10 @@ const UpdateFarm = () => {
                             <div className="border border-[#51F4A6] border-dashed w-full rounded-xl relative">
                               <div className="relative">
                                 <div className="relative">
-                                  <Image
+                                  <img
                                     width={556}
                                     height={158}
-                                    src={`${environment?.imgBaserUrl}${uploadedImages.image1.preview}`}
+                                    src={`${uploadedImages.image1.preview}`}
                                     alt="Uploaded image1"
                                     className="object-cover w-[759px] h-[308px]"
                                   />
@@ -335,7 +413,7 @@ const UpdateFarm = () => {
                     </div>
                   </div>
 
-                  <div className="grid grid-cols-3 gap-4 lg:grid-cols-1">
+                  <div className="grid gap-4 grid-cols-1">
                     {Object.entries(uploadedImages)
                       .filter(([key]) => key !== "image1")
                       .map(([key, { preview }]) => (
@@ -357,14 +435,14 @@ const UpdateFarm = () => {
                                   className={`border border-[#51F4A6] border-dashed w-full rounded-xl relative`}
                                 >
                                   <div className="relative">
-                                    <Image
+                                    <img
                                       width={177}
                                       height={95}
-                                      src={`${environment?.imgBaserUrl}${preview}`}
+                                      src={`${preview}`}
                                       alt={`Uploaded ${key}`}
-                                      className="object-cover w-[257px] h-[125px]"
+                                      className="object-cover w-[759px] h-[308px]"
                                     />
-                                    <div className="flex items-center justify-center absolute gap-x-1 bg-[#FFFFFFE5] px-2 py-1 cursor-pointer rounded-lg bottom-[4rem] right-[3rem]">
+                                    <div className="flex items-center justify-center absolute gap-x-1 bg-[#FFFFFFE5] px-2 py-1 cursor-pointer rounded-lg bottom-[8rem] left-[20rem]">
                                       <p className="text-xs font-poppinsRegular text-[#616161]">
                                         Change Cover
                                       </p>
@@ -394,7 +472,25 @@ const UpdateFarm = () => {
                   </div>
                 </div>
               </div>
+            </div>
 
+            <div className="mt-8 flex gap-x-4 items-end justify-end">
+              <Button
+                className="w-fit flex items justify-center gap-x-4 text-right"
+                type="submit"
+                onClick={handleImageUpload}
+              >
+                Update Farm Image
+              </Button>
+            </div>
+          </div>
+
+          <form
+            action=""
+            className="w-[70%] mx-auto xl:w-[80%] lg:w-[90%] md:w-full mt-10"
+            onSubmit={(e) => handleFinalSubmit(e)}
+          >
+            <div className="p-6 bg-white rounded-lg shadow-lg md:px-3">
               {/*  Farm Information*/}
 
               <div className="mt-6 flex flex-col gap-y-6">
@@ -720,6 +816,16 @@ const UpdateFarm = () => {
               </Button>
             </div>
           </form>
+          <ConfirmationModal
+            isOpen={successModal}
+            onClose={() => setSuccessModal(false)}
+            title="Farm details Updated"
+            description="Your farm details have been successfully updated. Would you like to go home or continue updating your farm information?"
+            confirmText="Keep Updating"
+            cancelText="Go To Farms"
+            onConfirm={() => setSuccessModal(false)}
+            onCancel={() => router.push("/farmer-dashboard/my-farms")}
+          />
         </main>
       </DashboardLayout>
     </ProtectedRoute>

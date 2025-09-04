@@ -13,6 +13,7 @@ export interface farmDetailsDataStore {
       farm_branches_count: number;
       status: string;
       color: string;
+      logo: string;
       active_farm_branches: string;
       created: string;
       farm_link: string;

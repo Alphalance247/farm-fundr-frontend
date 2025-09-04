@@ -1,22 +1,25 @@
+"use client";
 import Container from "../common/container";
 import HeadingTextWithSubHead from "../common/headingTextWithSubHead";
 import Image from "next/image";
 import Button from "../common/Buttons";
 import { GoArrowRight } from "react-icons/go";
 import SlideInSection from "../common/slideInSection";
+import { useAuth } from "@/context/authContext";
 
 const WhatWeOffer = () => {
+  const { isAuthenticated } = useAuth();
   const data = [
     {
       title: "Certified Farming Network",
       description:
-        "Only certified farmers, vetted by FarmFundr, can offer investment plans, ensuring expertise and reliability.",
+        "Only certified farmers, vetted by FarmPady, can offer investment plans, ensuring expertise and reliability.",
       image: "/assets/about/2.png",
     },
     {
       title: "Ongoing Support",
       description:
-        "FarmFundr provides regular project updates and recommendations for investors and hands-on assistance for farmers.",
+        "FarmPady provides regular project updates and recommendations for investors and hands-on assistance for farmers.",
       image: "/assets/about/3.png",
     },
     {
@@ -35,7 +38,7 @@ const WhatWeOffer = () => {
             iconImage="/icons/vector1.svg"
             width={506}
             height={50}
-            heading={"FarmFundr Provides"}
+            heading={"FarmPady Provides"}
             withSubHead={false}
             className="text-center mb-16 lg:mb-8"
           />
@@ -73,16 +76,17 @@ const WhatWeOffer = () => {
               </div>
             ))}
           </div>
-
-          <Button
-            size="medium"
-            className="flex items-center gap-x-4 justify-center mt-20 text-center w-[535px] mx-auto relative z-10"
-          >
-            <span>Get Started</span>
-            <span>
-              <GoArrowRight size={24} className="text-white" />
-            </span>
-          </Button>
+          {!isAuthenticated && (
+            <Button
+              size="medium"
+              className="flex items-center gap-x-4 justify-center mt-20 text-center w-[535px] mx-auto relative z-10"
+            >
+              <span>Get Started</span>
+              <span>
+                <GoArrowRight size={24} className="text-white" />
+              </span>
+            </Button>
+          )}
         </Container>
       </section>
     </SlideInSection>

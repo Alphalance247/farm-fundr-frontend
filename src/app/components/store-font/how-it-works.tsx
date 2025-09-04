@@ -45,18 +45,6 @@ const HowItWorks = () => {
         <p className="text-sm text-[#7C7C7C] font-poppinsRegular">
           {projectDetailsData?.data?.project?.how_it_works}
         </p>
-        {/* <p className="text-sm text-[#7C7C7C] font-poppinsRegular">
-          The investment covers essential costs like organic fertilizers,
-          irrigation, pest control (via natural methods), labor, and packaging.
-          Once harvested, the apples are sold through established channels,
-          including wholesale markets, organic food stores, and
-          direct-to-consumer delivery.
-        </p>
-        <p className="text-sm text-[#7C7C7C] font-poppinsRegular">
-          Profits are distributed to investors based on their share of the
-          project, with FarmPady handling the logistics, sales, and marketing to
-          maximize returns.
-        </p> */}
       </div>
 
       <div className="mt-10 flex flex-col gap-y-12">

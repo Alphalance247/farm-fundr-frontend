@@ -119,22 +119,6 @@ const MyFarms = () => {
               </div>
 
               <div className="mt-8">
-                {/* <div className="flex gap-x-5 items-center border-b border-[#E4E7EC]">
-                  {tabs.map((el, i) => (
-                    <button
-                      className={`${
-                        activeTab === el.name
-                          ? "text-[#2D865B] border-b-[3px] border-[#2D865B] bg-white text-sm"
-                          : "text-[#7C7C7C] border-transparent "
-                      }   font-medium text-sm p-4 border-b-2`}
-                      onClick={() => setActiveTab(el.name)}
-                      key={i}
-                    >
-                      {el.name}
-                    </button>
-                  ))}
-                </div> */}
-
                 <div className="mt-4">
                   <FarmListTable />
                 </div>
