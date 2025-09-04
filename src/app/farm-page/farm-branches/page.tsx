@@ -28,13 +28,11 @@ const Farms = () => {
     const farmPageData = farmData?.farm_data;
     const data = farmBranch?.branches;
 
-
-
     useEffect(() => {
       if (farmName) {
         fetchFarmPageList(farmName);
         fetchFarmPageBranchList(farmName);
-        }
+      }
     }, [fetchFarmPageList, fetchFarmPageBranchList, farmName]);
     return (
       <>
@@ -49,6 +47,7 @@ const Farms = () => {
           farmerName={farmPageData?.owner_name}
           cacRegNo={farmPageData?.cac_reg_no || "N/A"}
           verifiedText={farmPageData?.cac_reg_no ? "Verified" : "Unverified"}
+          farmpageLogo={farmPageData?.logo}
         />
 
         <section className="max-w-[1300px] mx-auto px-4 py-10 md:px-4 md:py-12 mt-8">

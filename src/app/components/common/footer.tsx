@@ -8,14 +8,14 @@ import toast from "react-hot-toast";
 import axios, { AxiosError } from "axios";
 import { environment } from "@/env/env.local";
 import { useAuth } from "@/context/authContext";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
 const navs = [
   {
     id: 1,
     name1: "Navigation",
     name2: "Navigation",
-    name3: "Get Started",
+    name3: "Navigation",
     link1: "/",
     link2: "/",
     link3: "/",
@@ -24,24 +24,26 @@ const navs = [
     id: 3,
     name1: "About Us",
     name2: "Create free account",
-    link1: "/",
-    link2: "/",
+    name3: "Get Started",
+    link1: "/about-us",
+    link2: "/signup",
+    link3: "/user-select",
   },
   {
     id: 4,
     name1: "Project Listing",
     name2: "Contact Us",
     name3: "Login",
-    link1: "/",
-    link2: "/",
-    link3: "/",
+    link1: "/farm-marketplace",
+    link2: "/contact-us",
+    link3: "/login",
   },
   {
     id: 5,
     name1: "How it works",
     name2: "FAQs",
     name3: "Home",
-    link1: "/",
+    link1: "/how-it-works",
     link2: "/",
     link3: "/",
   },
@@ -54,8 +56,22 @@ const Footer = () => {
     email: "",
   });
   const router = useRouter();
+  const pathname = usePathname();
   const [loading, setIsLoading] = useState(false);
-
+  const handleNavClick = (name: string, link: string) => {
+    if (name === "FAQs") {
+      if (pathname === "/") {
+        // already on homepage → smooth scroll
+        const faqSection = document.getElementById("faq");
+        faqSection?.scrollIntoView({ behavior: "smooth" });
+      } else {
+        // go to homepage with #faq
+        router.push("/#faq");
+      }
+    } else {
+      router.push(link);
+    }
+  };
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -81,8 +97,10 @@ const Footer = () => {
           email: form.email,
         }
       );
-      if (res.status === 200) {
-        toast.success("Message sent successfully");
+      if (res.status === 200 || res?.status === 201) {
+        toast.success(
+          res.data?.statusmessage || "Email subscribed successfully"
+        );
         setForm({ email: "" });
       }
     } catch (err) {
@@ -211,10 +229,22 @@ const Footer = () => {
                         activeMenu === items?.name2
                           ? " border-b-[3px] text-[white] border-[#51F4A6] pb-2 md:pb-0"
                           : "text-[white]"
-                      }  cursor-pointer mb-3 w-fit text-base font-poppinsRegular max-xl:text-xs md:mb-2`}
+                      } cursor-pointer mb-3 w-fit text-base font-poppinsRegular max-xl:text-xs md:mb-2`}
                       onClick={() => setActiveMenu(items?.name2)}
                     >
-                      <Link href={items?.link2}>{items?.name2}</Link>
+                      {items?.name2 === "FAQs" ? (
+                        <button
+                          type="button"
+                          onClick={() =>
+                            handleNavClick(items?.name2, items?.link2)
+                          }
+                          className="bg-transparent text-white"
+                        >
+                          {items?.name2}
+                        </button>
+                      ) : (
+                        <Link href={items?.link2}>{items?.name2}</Link>
+                      )}
                     </li>
 
                     {items?.name3 && (

@@ -87,7 +87,7 @@ const BranchSizeDetails = ({
 
         <div className="w-full">
           <p className="mb-2 flex flex-row md:flex-col">
-            Upload Farm Images
+            Upload Branch Image
             <span className=" font-poppinsRegular text-[#5F5F5F]">
               (5mb size, jpg, png format only)
             </span>

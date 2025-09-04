@@ -43,8 +43,10 @@ const Form = () => {
       setIsLoading(true);
       const res = await axiosInstance.post(`farms/contact-us`, form);
 
-      if (res.status === 200) {
-        toast.success("Message sent successfully");
+      if (res.status === 200 || res?.status === 201) {
+        toast.success(
+          res.data?.statusmessage || "Email subscribed successfully"
+        );
         setForm({ name: "", email: "", message: "" });
       }
     } catch (err) {

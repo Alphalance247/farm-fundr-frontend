@@ -193,7 +193,7 @@ const Sidebar: React.FC<mobileMenuProps> = ({
 
       <Subsribe />
 
-      <div className="flex justify-between items-center py-4 pl-2 pr-2 pb-10 mt-3">
+      {/* <div className="flex justify-between items-center py-4 pl-2 pr-2 pb-10 mt-3">
         <div className="flex items-center gap-x-3">
           <Image
             src="/assets/DashBoard/overview/avatar.svg"
@@ -213,7 +213,7 @@ const Sidebar: React.FC<mobileMenuProps> = ({
         <span>
           <GoSignOut color="#282A03" size={20} />
         </span>
-      </div>
+      </div> */}
     </aside>
   );
 };

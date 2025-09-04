@@ -10,7 +10,6 @@ import Input from "@/app/components/common/input";
 import Image from "next/image";
 import { toast } from "react-hot-toast";
 import { FiDownload } from "react-icons/fi";
-import { getFarmListStore } from "@/stores/farms/getFarmList";
 import { useRouter } from "next/navigation";
 import { getBranchDetails } from "@/stores/farms/getBranchDetails";
 import { AxiosError } from "axios";
@@ -21,11 +20,9 @@ const UpdateBranch = () => {
   const [loadingProject, setLoading] = useState(false);
   const [selectedFarmId, setSelectedFarmId] = useState("");
   const [selectedBranchId, setSelectedBranchId] = useState("");
-  const { data: farmList, fetchFarmList } = getFarmListStore();
   const { fetchBranchDetails, data: branchList } = getBranchDetails();
   const router = useRouter();
 
-  const farmListData = farmList?.results?.farms;
   const farmBranchData = branchList?.data;
 
   useEffect(() => {
@@ -48,7 +45,6 @@ const UpdateBranch = () => {
   useEffect(() => {
     const storedFarmId = localStorage.getItem("selectedEditFarmId");
     if (storedFarmId) {
-      fetchFarmList();
       setSelectedFarmId(storedFarmId);
     } else {
       // If no farm ID is stored, redirect back to farms list
@@ -56,7 +52,7 @@ const UpdateBranch = () => {
         `/farmer-dashboard/my-farms/${selectedFarmId}/farm-branches/`
       );
     }
-  }, [fetchFarmList, selectedFarmId, router]);
+  }, [selectedFarmId, router]);
 
   // Get the farm ID from localStorage on component mount
   useEffect(() => {
@@ -71,12 +67,6 @@ const UpdateBranch = () => {
       );
     }
   }, [fetchBranchDetails, selectedBranchId, selectedFarmId, router]);
-
-  //   const projectData = data?.data;
-
-  useEffect(() => {
-    fetchFarmList();
-  }, [fetchFarmList]);
 
   const [form, setForm] = useState({
     selectFarm: "",
@@ -152,9 +142,9 @@ const UpdateBranch = () => {
           toast.success(
             response.data.message || "Branch updated successfully!"
           );
-          // router.push(
-          //   `/farmer-dashboard/my-farms/${selectedFarmId}/farm-branches/${selectedBranchId}/${selectedProjectId}`
-          // );
+          router.push(
+            `/farmer-dashboard/my-farms/${selectedFarmId}/farm-branches/`
+          );
 
           setForm({
             selectFarm: "",
@@ -182,53 +172,6 @@ const UpdateBranch = () => {
       }
     }
   };
-
-  //   useEffect(() => {
-  //     if (projectData) {
-  //       setForm((prev) => ({
-  //         ...prev,
-  //         selectFarm: projectData?.farm_name || "",
-  //         selectBranch: projectData?.farm_branch_name || "",
-  //         projectName: projectData?.name || "",
-  //         projectType: projectData?.project_type || "",
-  //         description: projectData?.description || "",
-  //         investmentStart: projectData?.start_date || "",
-  //         investmentEnd: projectData?.end_date || "",
-  //         paymentType: projectData?.payment_structure || "",
-  //         howItWorks: projectData?.how_it_works || "",
-  //         fundingDetails: projectData?.budget || "",
-  //         progressOvertime: projectData?.progress_over_time || "",
-  //         branchSize: "",
-  //         expectedReturn: projectData?.ROI || "",
-  //         plots: projectData?.plots || "",
-  //       }));
-  //     }
-  //     // Prefill images with backend data
-  //     if (projectData?.images && projectData.images.length > 0) {
-  //       const imageKeys = ["image1", "image2", "image3", "image4"];
-  //       const newUploadedImages: {
-  //         [key: string]: { file: File | null; preview: string | null };
-  //       } = {
-  //         image1: { file: null, preview: null },
-  //         image2: { file: null, preview: null },
-  //         image3: { file: null, preview: null },
-  //         image4: { file: null, preview: null },
-  //       };
-
-  //       // Map backend images to the image slots
-  //       projectData.images.forEach((projectImage, index) => {
-  //         if (index < imageKeys.length) {
-  //           const imageKey = imageKeys[index];
-  //           newUploadedImages[imageKey] = {
-  //             file: null, // Keep as null since we're displaying existing images
-  //             preview: projectImage, // Use the image URL from backend
-  //           };
-  //         }
-  //       });
-
-  //       setUploadedImages(newUploadedImages);
-  //     }
-  //   }, [projectData]);
 
   return (
     <ProtectedRoute requiredUserType="farmer">
@@ -345,10 +288,10 @@ const UpdateBranch = () => {
                 </div>
               </div>
 
-              <div className="flex flex-col gap-y-6">
-                <p className="mb-4 font-poppinsSemiBold text-[#121212] text-lg border-y border-[#F6F6F6] py-3">
-                  Branch Information
-                </p>
+              <div className="flex flex-col gap-y-6 mt-8">
+                {/* <p className="mb-4 font-poppinsSemiBold text-[#121212] text-lg border-y border-[#F6F6F6] py-3">
+                  Branch Size 
+                </p> */}
 
                 <div>
                   <Label className="">
@@ -402,7 +345,7 @@ const UpdateBranch = () => {
 
                 <div className="w-full">
                   <p className="mb-2 flex flex-row md:flex-col">
-                    Upload Farm Images
+                    Update Branch Card Image
                     <span className=" font-poppinsRegular text-[#5F5F5F]">
                       (5mb size, jpg, png format only)
                     </span>

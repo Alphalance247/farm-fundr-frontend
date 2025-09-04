@@ -49,6 +49,11 @@ const ProjectDetails = ({
     },
   ];
 
+  const handleEditProject = () => {
+    localStorage.setItem("slectedEditProjectId", projectData?.id || "");
+    router?.push("/farmer-dashboard/my-farms/update-project");
+  };
+
   // const branchSetup = [
   //   {
   //     name: "Branch Size",
@@ -106,6 +111,7 @@ const ProjectDetails = ({
                         router.push(
                           "/farmer-dashboard/my-farms/update-project"
                         );
+                        handleEditProject();
                       }}
                     />
                   </div>
@@ -119,7 +125,7 @@ const ProjectDetails = ({
                           src={`${images}` || "/assets/my-farms/no-img.avif"}
                           alt={`Uploaded images`}
                           className={`object-cover w-full  rounded-[12px] border-dashed border border-[#51F4A6] ${
-                            i === 0 ? "col-span-3 h-[158px]" : "h-[95px]"
+                            i === 0 ? "col-span-3 h-[158px] md:col-span-1" : "h-[95px]"
                           }`}
                           key={i}
                         />
@@ -132,13 +138,14 @@ const ProjectDetails = ({
                   <div className="flex gap-x-2 items-center justify-center pt-6 border-t border-[#F6F6F6] mb-4">
                     {" "}
                     <FarmHeading text="Project Branch Information" />
-                    <EditBtn
+                    {/* <EditBtn
                       onButtonEdit={() => {
                         router.push(
                           "/farmer-dashboard/my-farms/update-project"
                         );
+                        handleEditProject();
                       }}
-                    />
+                    /> */}
                   </div>
 
                   <div>
@@ -227,9 +234,12 @@ const ProjectDetails = ({
                   <IoMdArrowBack size={16} color="#2D865B" /> Go back
                 </Button>
               </Link>
-              <Link
-                href={`/farmer-dashboard/my-farms/${farmDetailsId}/farm-branches/${branchDetailsId}`}
+              <div
                 className="w-full"
+                onClick={() => {
+                  handleEditProject();
+                  router.push("/farmer-dashboard/my-farms/update-project");
+                }}
               >
                 <Button
                   variant="secondary"
@@ -237,7 +247,7 @@ const ProjectDetails = ({
                 >
                   <HiPencil size={16} color="#2D865B" /> Edit Project Details
                 </Button>
-              </Link>
+              </div>
             </div>
           </>
         )}
