@@ -212,6 +212,8 @@ export default function FarmListTable() {
                 onClickDetails={() =>
                   localStorage.setItem("selectedEditFarmId", emp?.id)
                 }
+                onEdit={() => handleEditFarm(emp.id)} 
+                onDelete={() => handleDeleteFarm(emp.id, emp.name)} 
               />
             ))}
           </div>

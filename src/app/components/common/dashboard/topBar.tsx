@@ -158,7 +158,7 @@ export function Topbar({
           />
         </div>
         <div className="relative" ref={dropdownRef}>
-          <Image
+          <img
             src={userDetails?.user_details?.image || "/assets/Profile.svg"}
             width={32}
             height={32}
