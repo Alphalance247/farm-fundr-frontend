@@ -158,7 +158,6 @@ export function Topbar({
           />
         </div>
         <div className="relative" ref={dropdownRef}>
-          {/* Profile image trigger */}
           <Image
             src={userDetails?.user_details?.image || "/assets/Profile.svg"}
             width={32}
@@ -220,10 +219,8 @@ export function Topbar({
                 <FaChevronDown color="#7C7C7C" size={20} />
               </span>
             </div>
-
-            {/* Dropdown Menu */}
             {isDropdownOpen && (
-              <div className="absolute right-0 mt-2 py-3 bg-white rounded-lg shadow-lg z-20 w-[267px]">
+              <div className="absolute right-0 top-3 mt-2 py-3 bg-white rounded-lg shadow-lg z-20 w-[267px]">
                 <div className="px-4 flex gap-x-2 items-center pb-3 border-b-[2px] border-[#D0D0D0]">
                   <ProfileImageHolder />
 
@@ -282,50 +279,52 @@ export function Topbar({
             setLogoutModal(false);
           }}
         >
-          <div className="bg-white w-full max-w-[600px] mx-auto rounded-[10px] shadow-lg z-50">
-            <div className="py-4 px-8 bg-[#EEFEF6] rounded-tr-[10px] rounded-tl-[10px] flex items-center justify-between">
-              <div className="flex items-center gap-x-4">
-                <Image
-                  src="/assets/DashBoard/wallet/deactivate.svg"
-                  width={40}
-                  height={40}
-                  alt="deactivate"
-                />
+          <div className="md:px-2 z-50">
+            <div className="bg-white  w-full max-w-[600px] mx-auto rounded-[10px] shadow-lg">
+              <div className="py-4 px-8 bg-[#EEFEF6] rounded-tr-[10px] rounded-tl-[10px] flex items-center justify-between">
+                <div className="flex items-center gap-x-4">
+                  <Image
+                    src="/assets/DashBoard/wallet/deactivate.svg"
+                    width={40}
+                    height={40}
+                    alt="deactivate"
+                  />
 
-                <h4 className="text-lg font-poppinsSemiBold text-[#0B222A]">
-                  Logout?
-                </h4>
-              </div>
-
-              <BackIcon onCloseLink={() => setLogoutModal(false)} />
-            </div>
-
-            <div className="px-8 py-6 bg-white rounded-br-[10px] rounded-bl-[10px]">
-              <p className="text-sm font-poppinsRegular text-[#5C6C71] mb-10 text-center">
-                Are you sure you want to log out from the platform? You are
-                about to sign out.
-              </p>
-
-              <div className="flex items-center gap-x-4">
-                <div className="w-full">
-                  <Button
-                    variant="secondary"
-                    className="w-full"
-                    onClick={() => setLogoutModal(false)}
-                  >
-                    No, Thank you
-                  </Button>
+                  <h4 className="text-lg font-poppinsSemiBold text-[#0B222A]">
+                    Logout?
+                  </h4>
                 </div>
 
-                <Button
-                  className="w-full"
-                  onClick={() => {
-                    logout();
-                    router?.push("/login");
-                  }}
-                >
-                  {isLoggingOut ? "Loging Out" : "Yes, Logout"}
-                </Button>
+                <BackIcon onCloseLink={() => setLogoutModal(false)} />
+              </div>
+
+              <div className="px-8 py-6 bg-white rounded-br-[10px] rounded-bl-[10px]">
+                <p className="text-sm font-poppinsRegular text-[#5C6C71] mb-10 text-center">
+                  Are you sure you want to log out from the platform? You are
+                  about to sign out.
+                </p>
+
+                <div className="flex items-center gap-x-4">
+                  <div className="w-full">
+                    <Button
+                      variant="secondary"
+                      className="w-full"
+                      onClick={() => setLogoutModal(false)}
+                    >
+                      No, Thank you
+                    </Button>
+                  </div>
+
+                  <Button
+                    className="w-full"
+                    onClick={() => {
+                      logout();
+                      router?.push("/login");
+                    }}
+                  >
+                    {isLoggingOut ? "Loging Out" : "Yes, Logout"}
+                  </Button>
+                </div>
               </div>
             </div>
           </div>

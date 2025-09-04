@@ -48,7 +48,7 @@ const Faqs = () => {
 
   return (
     <SlideInSection>
-      <section className="relative bg-[#fcfcfc]">
+      <section id="faq" className="relative bg-[#fcfcfc]">
         <div className="absolute bottom-0">
           <Image
             src="/assets/LandingPage/icons/position2.svg"

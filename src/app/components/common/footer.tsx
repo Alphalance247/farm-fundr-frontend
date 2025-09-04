@@ -8,7 +8,7 @@ import toast from "react-hot-toast";
 import axios, { AxiosError } from "axios";
 import { environment } from "@/env/env.local";
 import { useAuth } from "@/context/authContext";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
 const navs = [
   {
@@ -56,8 +56,22 @@ const Footer = () => {
     email: "",
   });
   const router = useRouter();
+  const pathname = usePathname();
   const [loading, setIsLoading] = useState(false);
-
+  const handleNavClick = (name: string, link: string) => {
+    if (name === "FAQs") {
+      if (pathname === "/") {
+        // already on homepage → smooth scroll
+        const faqSection = document.getElementById("faq");
+        faqSection?.scrollIntoView({ behavior: "smooth" });
+      } else {
+        // go to homepage with #faq
+        router.push("/#faq");
+      }
+    } else {
+      router.push(link);
+    }
+  };
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -215,10 +229,22 @@ const Footer = () => {
                         activeMenu === items?.name2
                           ? " border-b-[3px] text-[white] border-[#51F4A6] pb-2 md:pb-0"
                           : "text-[white]"
-                      }  cursor-pointer mb-3 w-fit text-base font-poppinsRegular max-xl:text-xs md:mb-2`}
+                      } cursor-pointer mb-3 w-fit text-base font-poppinsRegular max-xl:text-xs md:mb-2`}
                       onClick={() => setActiveMenu(items?.name2)}
                     >
-                      <Link href={items?.link2}>{items?.name2}</Link>
+                      {items?.name2 === "FAQs" ? (
+                        <button
+                          type="button"
+                          onClick={() =>
+                            handleNavClick(items?.name2, items?.link2)
+                          }
+                          className="bg-transparent text-white"
+                        >
+                          {items?.name2}
+                        </button>
+                      ) : (
+                        <Link href={items?.link2}>{items?.name2}</Link>
+                      )}
                     </li>
 
                     {items?.name3 && (
