@@ -13,7 +13,6 @@ import Certifications from "@/app/components/dashboard/settings/Cetifications";
 import { useAuth } from "@/context/authContext";
 import { getKYCPercentageStore } from "@/stores/settings/getKycPercentage";
 import { getUserDetailsStore } from "@/stores/settings/getUserDetails";
-import Image from "next/image";
 import IdentitySettings from "@/app/components/dashboard/settings/identitySettings";
 
 const Setting = () => {
