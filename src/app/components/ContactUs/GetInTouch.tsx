@@ -48,17 +48,19 @@ const GetInTouch = () => {
                 </p>
               </div>
 
-              <div className="flex gap-x-3 mb-5 items-center">
-                <Image
-                  width={40}
-                  height={40}
-                  src="/assets/ContactUs/2.svg"
-                  alt="number-contact-svg"
-                />
-                <p className="text-lg font-poppinsRegular text-white">
-                  090123456789
-                </p>
-              </div>
+              <a href="tel:+2349022291012">
+                <div className="flex gap-x-3 mb-5 items-center">
+                  <Image
+                    width={40}
+                    height={40}
+                    src="/assets/ContactUs/2.svg"
+                    alt="number-contact-svg"
+                  />
+                  <p className="text-lg font-poppinsRegular text-white">
+                    09022291012
+                  </p>
+                </div>
+              </a>
             </div>
           </div>
 

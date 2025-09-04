@@ -35,7 +35,7 @@ const FarmHeadingOverview = ({
       </div>
 
       <div className="flex justify-between items-center">
-        <div className="w-[70%] lg:w-[70%] md:w-[80%]">
+        <div className="w-[70%] lg:w-[70%] md:w-[100%]">
           <h2 className="text-xl font-poppinsSemiBold text-[#5F5F5F]">
             {farmName || "Green Valley farm"}
           </h2>

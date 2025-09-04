@@ -1,7 +1,7 @@
 import SubHead from "../common/sectionHeading";
 import Image from "next/image";
 // import { FaCaretDown } from "react-icons/fa";
-import Button from "../../common/Buttons";
+// import Button from "../../common/Buttons";
 import { getDashboardStore } from "@/stores/farmer-dashboard/dashboard";
 
 const RecentActivity = () => {
@@ -84,13 +84,13 @@ const RecentActivity = () => {
             </div>
           );
         })}
-        <Button
+        {/* <Button
           variant="secondary"
           size="small"
           className="w-[180px] mt-6 mx-auto"
         >
           View All
-        </Button>
+        </Button> */}
       </div>
     </div>
   );

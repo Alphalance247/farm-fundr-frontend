@@ -74,6 +74,7 @@ const StoreFrontDetails = ({ id }: { id: string }) => {
             cacRegNo={farmPageData?.cac_reg_no || "N/A"}
             verifiedText={farmPageData?.cac_reg_no ? "Verified" : "Unverified"}
             farmpageLogo={farmPageData?.logo}
+            farmWhatsAppNumber={`https://wa.me/${farmPageData?.farm_whatsapp_number}`}
           />
 
           <section className="max-w-[1300px] mx-auto px-4 py-10 md:px-4 md:py-12">
