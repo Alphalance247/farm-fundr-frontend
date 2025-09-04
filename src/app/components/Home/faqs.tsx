@@ -58,52 +58,6 @@ const Faqs = () => {
           />
         </div>
         <Container>
-          {/* <div className="flex flex-col gap-y-3">
-        {Offerings.map((item, i) => {
-          return (
-            <div
-              key={i}
-              className={`bg-[#f5f5f5] cursor-pointer  rounded-lg hover:transition-all hover:duration-700 hover:scale-[1.01] hover:bg-white ${
-                isOpen === i ? "border-none" : "border-[#d9d9d9] border"
-              }`}
-            >
-              {isOpen === i && (
-                <hr className="w-[284px] h-[6px] bg-[#6BD051] rounded-tl-lg" />
-              )}
-              <div className="px-6 py-5">
-                <div
-                  className="flex justify-between"
-                  onClick={() => handleToggle(i)}
-                >
-                  <p className="text-[#141414] text-lg font-semibold font-geist">
-                    {item?.offer}
-                  </p>
-                  <button className="text-2xl">
-                    {isOpen === i ? <HiOutlineMinus /> : <GoPlus />}
-                  </button>
-                </div>
-                {isOpen === i && (
-                  <div className="mt-6">
-                    {item?.benefits.map((el, i) => {
-                      return (
-                        <p
-                          className="text-[#262626] text-base text-wrap mb-1 font-geist"
-                          key={i}
-                        >
-                          <span className="font-semibold">{el?.heading}</span>
-                          <span className="font-normal">{el?.subhead}</span>
-                        </p>
-                      );
-                    })}
-                  </div>
-                )}
-              </div>
-            </div>
-          );
-        })}
-
-        <FaqContainer />
-      </div> */}
           <div className="grid grid-cols-[40%auto] lg:gap-x-6 md:grid-cols-1 md:gap-y-6">
             <div className="">
               <h3 className="text-5xl font-aristoBold font-bold text-[#5F5F5F] mb-10 md:text-[1.6rem] md:capitalize md:text-center">
