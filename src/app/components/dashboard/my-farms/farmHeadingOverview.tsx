@@ -39,7 +39,7 @@ const FarmHeadingOverview = ({
           <h2 className="text-xl font-poppinsSemiBold text-[#5F5F5F]">
             {farmName || "Green Valley farm"}
           </h2>
-          <p className="text-sm font-poppinsRegular text-[#7C7C7C] mt-3 w-[60%] break-all">
+          <p className="text-sm font-poppinsRegular text-[#7C7C7C] mt-3 w-[60%] break-all lg:w-full">
             {overview}
           </p>
         </div>

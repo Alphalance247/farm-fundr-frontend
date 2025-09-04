@@ -14,6 +14,9 @@ export interface farmPageDataStore {
     street: string;
     city: string;
     state: string;
+    instagram_link: string;
+    x_link: string;
+    linkedln_link: string;
     country: string;
     farm_whatsapp_number: string;
     farm_email: string;

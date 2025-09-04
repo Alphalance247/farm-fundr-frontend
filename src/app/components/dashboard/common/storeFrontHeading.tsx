@@ -55,7 +55,7 @@ const StoreFrontHeading = ({
 
   return (
     <div
-      className={` relative ${
+      className={`relative ${
         withBorderRadius ? "rounded-xl" : ""
       }  flex-1 ${color} shadow-xl`}
     >
@@ -172,7 +172,12 @@ const StoreFrontHeading = ({
 
               <div className="flex gap-x-3 mt-4 md:hidden">
                 {!withBorderRadius && (
-                  <Link href={"/"}>
+                  <a
+                    href={`https://wa.me/${
+                      farm?.farm?.farm_whatsapp_number || "08140686688"
+                    }`}
+                    target="_blank"
+                  >
                     <Button
                       className={`w-fit flex items-center justify-center gap-2 ${textColor}`}
                       variant="subtertiary"
@@ -180,7 +185,7 @@ const StoreFrontHeading = ({
                       <FaRegEnvelope size={16} />
                       Send a message
                     </Button>
-                  </Link>
+                  </a>
                 )}
                 {!withBorderRadius ? (
                   <Link href={"/farm-page/farm-page-farm-details"}>
@@ -209,7 +214,12 @@ const StoreFrontHeading = ({
 
           {!withBorderRadius && (
             <div className="md:flex md:flex-col md:gap-y-3 md:pr-4 gap-x-3 mt-4 hidden">
-              <Link href={"/farm-page"}>
+              <a
+                href={`https://wa.me/${
+                  farm?.farm?.farm_whatsapp_number || "08140686688"
+                }`}
+                target="_blank"
+              >
                 <Button
                   className={`w-fit flex items-center justify-center gap-2 ${textColor}`}
                   variant="subtertiary"
@@ -217,7 +227,7 @@ const StoreFrontHeading = ({
                   <FaRegEnvelope size={16} />
                   Send a message
                 </Button>
-              </Link>
+              </a>
 
               <Link href="/farm-page/farm-page-farm-details">
                 <Button

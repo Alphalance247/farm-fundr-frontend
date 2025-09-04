@@ -35,7 +35,7 @@ const Overview = () => {
     {
       id: 3,
       name: "Other farms",
-      href: "/farm-page/farms",
+      href: "#",
       icon: "/assets/store-front/farmicon.svg",
       numberOfBranches: farmData?.other_farms || 0,
       viewBtn: "View",
@@ -147,40 +147,49 @@ const Overview = () => {
               Social Media Links
             </h4>
 
-            <div className="flex gap-x-20 md:gap-x-8 md:flex-col md:gap-y-6">
-              <div className="flex items-center gap-x-[10px]">
-                <Image
-                  src="/assets/ContactUs/instgram.svg"
-                  width={40}
-                  height={40}
-                  alt=""
-                />
+            <div className="flex gap-x-20 md:gap-x-8 md:flex-wrap  md:gap-y-6">
+              <Link href={farmPageData?.instagram_link || ""} passHref>
+                <div className="flex items-center gap-x-[10px]">
+                  <Image
+                    src="/assets/ContactUs/instgram.svg"
+                    width={40}
+                    height={40}
+                    alt=""
+                  />
 
-                <p className="text-lg text-[#7C7C7C] font-poppinsRegular">
-                  Instagram
-                </p>
-              </div>
+                  <p className="text-lg text-[#7C7C7C] font-poppinsRegular">
+                    Instagram
+                  </p>
+                </div>
+              </Link>
 
-              <div className="flex items-center gap-x-[10px]">
-                <Image
-                  src="/assets/ContactUs/linkdIn.svg"
-                  width={40}
-                  height={40}
-                  alt="linkedIn"
-                />
-                <p className="text-lg text-[#7C7C7C] font-poppinsRegular">
-                  Linkedin
-                </p>
-              </div>
-              <div className="flex items-center gap-x-[10px]">
-                <Image
-                  src="/assets/ContactUs/x.svg"
-                  width={40}
-                  height={40}
-                  alt="X"
-                />
-                <p className="text-lg text-[#7C7C7C] font-poppinsRegular">X</p>
-              </div>
+              <Link href={farmPageData?.linkedln_link || ""} passHref>
+                <div className="flex items-center gap-x-[10px]">
+                  <Image
+                    src="/assets/ContactUs/linkdIn.svg"
+                    width={40}
+                    height={40}
+                    alt="linkedIn"
+                  />
+                  <p className="text-lg text-[#7C7C7C] font-poppinsRegular">
+                    Linkedin
+                  </p>
+                </div>
+              </Link>
+
+              <Link href={farmPageData?.x_link || ""} passHref>
+                <div className="flex items-center gap-x-[10px]">
+                  <Image
+                    src="/assets/ContactUs/x.svg"
+                    width={40}
+                    height={40}
+                    alt="X"
+                  />
+                  <p className="text-lg text-[#7C7C7C] font-poppinsRegular">
+                    X
+                  </p>
+                </div>
+              </Link>
             </div>
           </div>
         </div>
@@ -188,7 +197,7 @@ const Overview = () => {
 
       <div className="bg-white border border-[#F6F6F6] rounded-xl p-4 shadow-lg mt-12">
         <h4 className="text-[#5F5F5F] text-base font-poppinsSemiBold mb-4 pb-3 border-b border-[#F6F6F6]">
-          About FarmPady
+          About {farmPageData?.name}
         </h4>
 
         <div className="flex flex-col gap-y-4">
@@ -198,15 +207,15 @@ const Overview = () => {
               <p className="text-[#7C7C7C] text-sm font-poppinsSemiBold">
                 farmer’s Name
               </p>
-              <p className="text-[#5F5F5F] text-base font-poppinsSemiBold">
+              <p className="text-[#5F5F5F] text-base text-right font-poppinsSemiBold">
                 {farmPageData?.owner_name || "N/A"}
               </p>
             </div>
-            <div className="flex items-center justify-between py-4">
-              <p className="text-[#7C7C7C] text-sm font-poppinsSemiBold">
+            <div className="flex items-center  justify-between py-4">
+              <p className="text-[#7C7C7C] text-sm text-left font-poppinsSemiBold">
                 Farm Address
               </p>
-              <p className="text-[#5F5F5F] text-base font-poppinsSemiBold">
+              <p className="text-[#5F5F5F] text-base text-right font-poppinsSemiBold">
                 {`${farmPageData?.street}` || "N/A"}
               </p>
             </div>
@@ -215,10 +224,10 @@ const Overview = () => {
           {/* second row */}
           <div className="grid grid-cols-2 gap-x-8 border-b border-[#F6F6F6] md:grid-cols-1">
             <div className="flex items-center justify-between py-4">
-              <p className="text-[#7C7C7C] text-sm font-poppinsSemiBold">
+              <p className="text-[#7C7C7C] text-sm  font-poppinsSemiBold">
                 Email
               </p>
-              <p className="text-[#5F5F5F] text-base font-poppinsSemiBold">
+              <p className="text-[#5F5F5F] text-right text-base font-poppinsSemiBold">
                 {farmPageData?.farm_email || "N/A"}
               </p>
             </div>
@@ -226,7 +235,7 @@ const Overview = () => {
               <p className="text-[#7C7C7C] text-sm font-poppinsSemiBold">
                 Contact
               </p>
-              <p className="text-[#5F5F5F] text-base font-poppinsSemiBold">
+              <p className="text-[#5F5F5F] text-base text-right font-poppinsSemiBold">
                 {farmPageData?.farm_phone_number || "N/A"}
               </p>
             </div>
@@ -240,7 +249,7 @@ const Overview = () => {
               </p>
               <p className="text-[#2D865B] text-xs font-poppinsSemiBold flex items-center gap-x-2">
                 {farmPageData?.verified ? (
-                  <span>
+                  <span className="flex items-center gap-x-1">
                     {" "}
                     <MdOutlineVerifiedUser
                       color="white"
@@ -258,7 +267,7 @@ const Overview = () => {
               <p className="text-[#7C7C7C] text-sm font-poppinsSemiBold">
                 Branches
               </p>
-              <p className="text-[#5F5F5F] text-base font-poppinsSemiBold">
+              <p className="text-[#5F5F5F] text-base text-right font-poppinsSemiBold">
                 {farmPageData?.farm_branches_count || 0}
               </p>
             </div>
