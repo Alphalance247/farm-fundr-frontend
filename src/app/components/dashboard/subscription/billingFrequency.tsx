@@ -61,12 +61,12 @@ const BillingFrequency: React.FC<billingCadenceProps> = ({
         </p>
       </div>
       <div>
-        <div className="grid grid-cols-3 md:grid-cols-1   gap-4 items-center">
+        <div className="flex md:grid md:grid-cols-1 gap-4 items-center">
           {subscriptionTier.map((item, i) => (
             <div
-              className={`rounded-xl border border-[#E2E2E2] p-2 w-[200px] md:w-full cursor-pointer  ${
+              className={`rounded-xl border border-[#E2E2E2] p-2 w-[200px]  cursor-pointer  ${
                 subType === item?.planType ? "bg-[#EEFEF6]" : "bg-transparent"
-              }`}
+              } md:w-full`}
               onClick={() => {
                 setSubType(item?.planType);
                 setSelectedPrice(item?.prices);
@@ -110,7 +110,7 @@ const BillingFrequency: React.FC<billingCadenceProps> = ({
             Payment Method
           </p>
 
-          <div className="grid grid-cols-2 md:grid-cols-1 md:gap-4 items-center gap-x-10">
+          <div className="flex md:grid md:grid-cols-1 md:gap-4 items-center gap-x-10">
             <div
               className="flex items-center gap-x-3 cursor-pointer"
               onClick={() => setPaymentMethod("paystack")}
@@ -135,7 +135,7 @@ const BillingFrequency: React.FC<billingCadenceProps> = ({
               </div>
             </div>
 
-            <div
+            {/* <div
               className="flex items-center gap-x-3 cursor-pointer"
               onClick={() => setPaymentMethod("transfer")}
             >
@@ -151,7 +151,7 @@ const BillingFrequency: React.FC<billingCadenceProps> = ({
                   Generate Virtual Account Number
                 </p>
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
 

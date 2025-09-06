@@ -259,6 +259,8 @@ const StoreFrontDetails = ({ id }: { id: string }) => {
                       </div>
 
                       <div className="flex items-center gap-x-3">
+                      <a href={`https://wa.me/${farmPageData?.farm_whatsapp_number}`} target="_blank" className="w-full">
+               
                         <Button
                           variant="primary"
                           size="small"
@@ -267,6 +269,7 @@ const StoreFrontDetails = ({ id }: { id: string }) => {
                           <MdCardTravel color="white" size={24} />
                           Bid Now
                         </Button>
+              </a>
                       </div>
                     </div>
                   </div>

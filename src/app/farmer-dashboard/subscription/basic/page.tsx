@@ -42,20 +42,20 @@ const BasicPlan = () => {
       subTier: [
         {
           planType: "monthly",
-          prices: "4,500",
+          prices: "3,999",
           offer: "Monthly",
           tier: "Pay monthly",
         },
         {
           planType: "quarterly",
-          prices: "10,530",
+          prices: "9,357",
           offer: "Save 22%",
           tier: "Pay quarterly",
         },
 
         {
           planType: "yearly",
-          prices: "36,180",
+          prices: "23,999",
           offer: "Save 50%",
           tier: "Pay yearly",
         },

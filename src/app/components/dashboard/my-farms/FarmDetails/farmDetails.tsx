@@ -29,7 +29,7 @@ const FarmDetails = ({ farmDetailsId }: { farmDetailsId: string }) => {
 
   const tabs: { id: number; name: string }[] = [
     { id: 1, name: `Branches (${farmBranchData?.length})` },
-    { id: 3, name: " Farm Page" },
+    { id: 3, name: "Farm Page Settings" },
   ];
 
   useEffect(() => {
@@ -187,7 +187,7 @@ const FarmDetails = ({ farmDetailsId }: { farmDetailsId: string }) => {
                     <FarmBranches />
                   )}
 
-                  {activeTab === " Farm Page" && <CustomizeStore />}
+                  {activeTab === "Farm Page Settings" && <CustomizeStore />}
                 </div>
               </div>
             </>
