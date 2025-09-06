@@ -1,4 +1,4 @@
-"use client";
+// import { usePathname, useSearchParams } from "next/navigation";
 import LayOuts from "./components/common/Layouts";
 import About from "./components/Home/about";
 import Benefits from "./components/Home/Benefits";

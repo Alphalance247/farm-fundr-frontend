@@ -35,16 +35,9 @@ export async function POST(request: NextRequest) {
       city: formData.get("city") as string,
     };
 
-    console.log("📋 Farm data:", farmData);
-
     // Handle file uploads
     const cacDocument = formData.get("cac_reg_doc") as File;
     const images = formData.getAll("images") as File[];
-
-    console.log("📁 Files:", {
-      cacDocument: !!cacDocument,
-      imagesCount: images.length,
-    });
 
     // Create FormData for the external API
     const externalFormData = new FormData();
