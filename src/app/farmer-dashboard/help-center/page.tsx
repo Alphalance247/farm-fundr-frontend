@@ -8,7 +8,7 @@ import {
 } from "react-icons/md";
 import React, { useState } from "react";
 import { IoPersonSharp } from "react-icons/io5";
-import { IoMdBusiness, IoMdMail } from "react-icons/io";
+import {  IoMdMail } from "react-icons/io";
 import { PiHeadsetLight } from "react-icons/pi";
 import Image from "next/image";
 
