@@ -1,6 +1,6 @@
 import React from "react";
 import Image from "next/image";
-import { MdCardTravel } from "react-icons/md";
+// import { MdCardTravel } from "react-icons/md";
 import Button from "../common/Buttons";
 import Link from "next/link";
 
@@ -21,7 +21,7 @@ const StoreFontCard: React.FC<StoreFontCardProps> = ({
   status,
   imageUrl,
   onViewProjects,
-  onViewBid,
+  // onViewBid,
   projectName,
   farmName,
   projectDescription,
