@@ -7,22 +7,14 @@ import Faqs from "./components/Home/faqs";
 import FeaturedProject from "./components/Home/FeaturedProjects";
 import Hero from "./components/Home/hero";
 import HowItWorks from "./components/Home/HowItWorks";
-// import { useEffect } from "react";
-// import MeetTeam from "./components/Home/MeetTeam";
 
 export default function Home() {
-  // const pathname = usePathname();
-  // const searchParams = useSearchParams();
-
-  // useEffect(() => {
-  //   if (typeof window !== "undefined" && window.location.hash === "#faq") {
-  //     const faqSection = document.getElementById("faq");
-  //     faqSection?.scrollIntoView({ behavior: "smooth" });
-  //   }
-  // }, [pathname, searchParams]);
-
   return (
-    <LayOuts>
+    <LayOuts
+      title="FarmPady — Africa’s agriculture investment hub"
+      description="FarmPady — Support farm projects, connect with farmers, and unlock agribusiness opportunities across Africa."
+      keywords="FarmPady, Agriculture investment Nigeria, Invest in farming Africa, Farm crowdfunding platform, Support farmers Nigeria, Agriculture marketplace Africa, Farm projects funding, Farm to investor connection, Sustainable agriculture investment, Farming opportunities Nigeria, AgriTech Nigeria, Agriculture startup Africa, Farm investment platform, Nigerian farmers funding, Agribusiness investment"
+    >
       <Hero />
       <About />
       <Benefits />
