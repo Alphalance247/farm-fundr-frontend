@@ -8,6 +8,7 @@ import { AxiosError } from "axios";
 import toast from "react-hot-toast";
 import axiosInstance from "@/lib/axios";
 import { getFarmDetails } from "@/stores/farms/getFarmDetails";
+import SocialLinksForm from "../common/socialMediaForm";
 
 const CustomizeStore = () => {
   const { activeTab, setActiveTab } = useTab();
@@ -107,6 +108,7 @@ const CustomizeStore = () => {
           ))}
         </div> */}
       </div>
+      <SocialLinksForm />
     </div>
   );
 };

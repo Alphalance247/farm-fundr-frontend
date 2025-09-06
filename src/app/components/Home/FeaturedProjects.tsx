@@ -66,7 +66,7 @@ const FeaturedProject = () => {
                 projectLocation={project.project_location}
                 projectROI={String(project.ROI)}
                 btnText2="View Details"
-                btnTextLink2={`/farm/${project.id}`}
+                btnTextLink2={`${project?.farm_page_link}`}
               />
             ))}
           </div>

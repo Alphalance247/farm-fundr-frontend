@@ -28,6 +28,7 @@ export interface Project {
   end_date: string;
   farm_branch_name: string;
   risk_assurance: string;
+  farm_page_link: string;
   involve_farm_fundr: boolean;
   project_images: ProjectImage[];
   payment_structure: string;

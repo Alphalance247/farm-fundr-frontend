@@ -801,13 +801,13 @@ const UpdateFarm = () => {
             </div>
 
             <div className="mt-8 flex gap-x-4 items-center justify-between">
-              <Button
+              {/* <Button
                 className="w-full flex items-center justify-center gap-x-4"
                 variant="secondary"
                 type="button"
               >
                 Cancel
-              </Button>
+              </Button> */}
               <Button
                 className="w-full flex items-center justify-center gap-x-4"
                 type="submit"

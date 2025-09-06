@@ -11,7 +11,6 @@ import { TbReportAnalytics } from "react-icons/tb";
 import { CiSettings } from "react-icons/ci";
 import { PiHeadsetLight } from "react-icons/pi";
 import Subsribe from "../../dashboard/subscribe";
-import { GoSignOut } from "react-icons/go";
 import { useEffect, useRef } from "react";
 import { getFarmListStore } from "@/stores/farms/getFarmList";
 

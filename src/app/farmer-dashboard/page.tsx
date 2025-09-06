@@ -106,7 +106,7 @@ const FarmerDashboard = () => {
     },
     {
       text: "Update Bank Details",
-      link: "/farmer-dashboard",
+      link: "/farmer-dashboard/settings",
       img: "/assets/DashBoard/overview/withdraw.svg",
       bgColor: "bg-[#FFFAE6]",
     },

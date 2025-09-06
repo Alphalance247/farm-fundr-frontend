@@ -19,6 +19,7 @@ const StoreFrontHeading = ({
   cacRegNo,
   farmName,
   setFile,
+  farmWhatsAppNumber,
   farmpageLogo,
 }: {
   color: string;
@@ -32,6 +33,7 @@ const StoreFrontHeading = ({
   cacRegNo?: string;
   farmName?: string;
   farmpageLogo?: string;
+  farmWhatsAppNumber?: string;
   setFile?: (file: File) => void;
 }) => {
   const { data: farmDetails } = getFarmDetails();
@@ -170,14 +172,13 @@ const StoreFrontHeading = ({
                 </p>
               )}
 
+              {/* href={`https://wa.me/${
+                      farm?.farm?.farm_whatsapp_number || "08140686688"
+                    }` */}
+
               <div className="flex gap-x-3 mt-4 md:hidden">
                 {!withBorderRadius && (
-                  <a
-                    href={`https://wa.me/${
-                      farm?.farm?.farm_whatsapp_number || "08140686688"
-                    }`}
-                    target="_blank"
-                  >
+                  <a href={farmWhatsAppNumber} target="_blank">
                     <Button
                       className={`w-fit flex items-center justify-center gap-2 ${textColor}`}
                       variant="subtertiary"
@@ -214,12 +215,7 @@ const StoreFrontHeading = ({
 
           {!withBorderRadius && (
             <div className="md:flex md:flex-col md:gap-y-3 md:pr-4 gap-x-3 mt-4 hidden">
-              <a
-                href={`https://wa.me/${
-                  farm?.farm?.farm_whatsapp_number || "08140686688"
-                }`}
-                target="_blank"
-              >
+              <a href={farmWhatsAppNumber} target="_blank">
                 <Button
                   className={`w-fit flex items-center justify-center gap-2 ${textColor}`}
                   variant="subtertiary"

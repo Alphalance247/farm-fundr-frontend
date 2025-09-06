@@ -1,8 +1,8 @@
 "use client";
 import Container from "../common/container";
 import Card from "../common/card";
-import Button from "../common/Buttons";
-import { GoArrowRight } from "react-icons/go";
+// import Button from "../common/Buttons";
+// import { GoArrowRight } from "react-icons/go";
 import Image from "next/image";
 import { getFarmMarketPlaceListStore } from "@/stores/farm-marketplace/farmMarketPlace";
 import { useEffect } from "react";
@@ -56,15 +56,14 @@ const ProjectListing = () => {
                 projectDescrip={project.short_description}
                 projectLocation={project.project_location}
                 projectROI={String(project.ROI)}
-                btnText1="Bid Now"
                 btnText2="View Details"
-                btnTextLink2={`/farm/${project.id}`}
+                btnTextLink2={`${project?.farm_page_link}`}
               />
             ))}
           </div>
         </div>
 
-        <Button
+        {/* <Button
           size="medium"
           className="flex items-center gap-x-4 justify-center mt-20 text-center w-[535px] mx-auto relative z-10"
         >
@@ -72,7 +71,7 @@ const ProjectListing = () => {
           <span>
             <GoArrowRight size={24} className="text-white" />
           </span>
-        </Button>
+        </Button> */}
       </Container>
     </section>
   );

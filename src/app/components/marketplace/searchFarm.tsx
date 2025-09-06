@@ -1,33 +1,33 @@
 import Container from "../common/container";
-import Image from "next/image";
-import { IoIosArrowDown } from "react-icons/io";
-import { IoFilterOutline } from "react-icons/io5";
-import Button from "../common/Buttons";
-import { IoIosSearch } from "react-icons/io";
+// import Image from "next/image";
+// import { IoIosArrowDown } from "react-icons/io";
+// import { IoFilterOutline } from "react-icons/io5";
+// import Button from "../common/Buttons";
+// import { IoIosSearch } from "react-icons/io";
 
 const SearchFarm = () => {
-  const searchData = [
-    {
-      icon: "/assets/marketplace/3.svg",
-      name: "Farm Name",
-      select: "Select farm",
-    },
-    {
-      icon: "/assets/marketplace/2.svg",
-      name: "Preferred State?",
-      select: "Select state",
-    },
-    {
-      icon: "/assets/marketplace/1.svg",
-      name: "Preferred City? ",
-      select: "Select City",
-    },
-    {
-      icon: "/assets/marketplace/1.svg",
-      name: "Mode",
-      select: "Select mode",
-    },
-  ];
+  // const searchData = [
+  //   {
+  //     icon: "/assets/marketplace/3.svg",
+  //     name: "Farm Name",
+  //     select: "Select farm",
+  //   },
+  //   {
+  //     icon: "/assets/marketplace/2.svg",
+  //     name: "Preferred State?",
+  //     select: "Select state",
+  //   },
+  //   {
+  //     icon: "/assets/marketplace/1.svg",
+  //     name: "Preferred City? ",
+  //     select: "Select City",
+  //   },
+  //   {
+  //     icon: "/assets/marketplace/1.svg",
+  //     name: "Mode",
+  //     select: "Select mode",
+  //   },
+  // ];
   return (
     <section className="bg-[#F6F6F6]">
       <Container>
@@ -41,7 +41,7 @@ const SearchFarm = () => {
           />
         </div>
 
-        <div className="grid grid-cols-4 gap-6 mt-5 lg:grid-cols-2 md:grid-cols-1">
+        {/* <div className="grid grid-cols-4 gap-6 mt-5 lg:grid-cols-2 md:grid-cols-1">
           {searchData.map((items, i) => (
             <div
               className="p-4 rounded-xl border-[0.2px] border-[#E2E2E2] flex gap-x-3 bg-white"
@@ -59,9 +59,9 @@ const SearchFarm = () => {
               </div>
             </div>
           ))}
-        </div>
+        </div> */}
 
-        <div className="flex items-center justify-center gap-x-3 mt-8">
+        {/* <div className="flex items-center justify-center gap-x-3 mt-8">
           <Button
             variant="secondary"
             size="small"
@@ -82,7 +82,7 @@ const SearchFarm = () => {
             </span>{" "}
             <span>Search</span>
           </Button>
-        </div>
+        </div> */}
       </Container>
     </section>
   );

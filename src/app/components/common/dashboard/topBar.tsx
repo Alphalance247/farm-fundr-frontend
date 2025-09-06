@@ -107,7 +107,7 @@ export function Topbar({
   return (
     <header className="flex items-center justify-between gap-x-6 h-[93px] px-10 py-5 bg-white shadow-sm sticky top-0 z-10 lg:px-2">
       <div className="">
-        <Link href={"/farmer-dashboard/"}>
+        <Link href={"/"}>
           <Image
             src="/assets/LandingPage/icons/fundrlogo.svg"
             width={169}

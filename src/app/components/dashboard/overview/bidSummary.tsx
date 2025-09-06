@@ -3,7 +3,7 @@ import SubHead from "../common/sectionHeading";
 // import { FaCaretDown } from "react-icons/fa";
 import { MdCardTravel } from "react-icons/md";
 import React from "react";
-import Button from "../../common/Buttons";
+// import Button from "../../common/Buttons";
 import { getFarmerBidsStore } from "@/stores/farmer-dashboard/bids";
 
 interface data {
@@ -74,11 +74,11 @@ const BidSummary = () => {
           </div>
         ))}
       </div>
-      <div className="text-center">
+      {/* <div className="text-center">
         <Button variant="secondary" size="small" className="w-[180px] mt-6">
           View All
         </Button>
-      </div>
+      </div> */}
     </div>
   );
 };
