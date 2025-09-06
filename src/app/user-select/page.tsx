@@ -77,7 +77,7 @@ const UserSelectPage: React.FC = () => {
               <div
                 key={i}
                 className={`px-10 py-5  rounded-[20px] border-[#E2E2E2] border w-[400px] ${
-                  el?.usertype === "Investor"
+                  el?.usertype === "investor"
                     ? "cursor-not-allowed opacity-60"
                     : "cursor-pointer"
                 } ${
