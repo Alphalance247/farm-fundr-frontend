@@ -158,14 +158,25 @@ export function Topbar({
           />
         </div>
         <div className="relative" ref={dropdownRef}>
-          <img
-            src={userDetails?.user_details?.image || "/assets/Profile.svg"}
-            width={32}
-            height={32}
-            alt="profile"
-            className="hidden lg:block cursor-pointer h-[35px] w-[35px]  rounded-full"
-            onClick={() => setIsDropdown(!isDropdownOpen)}
-          />
+          {
+            userDetails?.user_details?.image ?
+            <img
+              src={userDetails?.user_details?.image || "/assets/Profile.svg"}
+              width={32}
+              height={32}
+              alt="profile"
+              className="hidden lg:block cursor-pointer h-[35px] w-[35px]  rounded-full"
+              onClick={() => setIsDropdown(!isDropdownOpen)}
+            />
+            : 
+            <div className="hidden lg:block h-[40px] w-[40px] rounded-full bg-[#EEFEF6] text-[#2D865B] flex items-center justify-center text-[1.3rem] tracking-[0.34px] font-medium"   onClick={() => setIsDropdown(!isDropdownOpen)}>
+            {user?.fullname
+              .split(" ")
+              .map((n) => n[0])
+              .join("")
+              .toUpperCase()}
+          </div>
+          }
         </div>
         <div className="rounded-full bg-[#F6F6F6] w-16 h-16 flex items-center justify-center relative cursor-pointer hover:bg-[#cac6c6] xl:w-10 xl:h-10 ">
           <IoNotificationsOutline
