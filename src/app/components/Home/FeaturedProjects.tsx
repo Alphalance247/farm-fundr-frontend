@@ -34,6 +34,7 @@ const FeaturedProject = () => {
   }
   return (
     <SlideInSection>
+   
       <section className="relative bg-[#fcfcfc]">
         <div className="absolute bottom-0 z-[1]">
           <Image
@@ -52,6 +53,11 @@ const FeaturedProject = () => {
             withSubHead={false}
             className="text-center mb-16 lg:mb-12"
           />
+   {
+        data?.results?.data?.length === 0 ? <p className="text-2xl text-center font-aristoBold font-bold text-[#5F5F5F] mb-10 md:capitalize md:text-center">Our Farmers are being onboarded, Projects will be available very soon!!!</p>:
+
+          <>
+          
           <div className="grid grid-cols-3 gap-x-6 lg:grid-cols-2 lg:gap-x-4 lg:gap-y-10 md:grid-cols-1 md:gap-y-8">
             {projects.slice(0, 3).map((project) => (
               <Card
@@ -82,6 +88,8 @@ const FeaturedProject = () => {
               </span>
             </Button>
           </Link>
+          </>
+      }
         </Container>
       </section>
     </SlideInSection>
