@@ -11,7 +11,7 @@ import { HiCheckCircle } from "react-icons/hi";
 import { FiCircle } from "react-icons/fi";
 
 const UserSelectPage: React.FC = () => {
-  const [select, setSelect] = useState<string>("Farmer");
+  const [select, setSelect] = useState<string>("farmer");
 
   const handleUserSelect = (userType: string) => {
     setSelect(userType);
@@ -24,12 +24,12 @@ const UserSelectPage: React.FC = () => {
   const data = [
     {
       svg: "/assets/UserOnboarding/2.svg",
-      usertype: "Farmer",
+      usertype: "farmer",
       desc: "List your farm and secure funding from investors.",
     },
     {
       svg: "/assets/UserOnboarding/1.svg",
-      usertype: "Investor",
+      usertype: "investor",
       desc: "Invest in farms and grow your wealth. (Coming Soon)",
     },
 
@@ -84,7 +84,7 @@ const UserSelectPage: React.FC = () => {
                   select === el?.usertype ? "bg-[#EEFEF6]" : "bg-[#FFFFFF]"
                 } md:w-full`}
                 onClick={() =>{
-                  if (el?.usertype !== "Investor") 
+                  if (el?.usertype !== "investor") 
                   handleUserSelect(el?.usertype)
                 } }
                 
