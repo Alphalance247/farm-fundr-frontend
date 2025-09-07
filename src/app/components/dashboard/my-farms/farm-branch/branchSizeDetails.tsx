@@ -48,7 +48,7 @@ const BranchSizeDetails = ({
           <Input
             name="branchSize"
             className=""
-            type="text"
+            type="number"
             value={form?.branchSize}
             placeholder="Enter farm size"
             variant="tertiary"
