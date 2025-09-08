@@ -111,6 +111,8 @@ export default function TransactionSearchTable() {
           onSortChange={setSortBy}
           onFilterChange={setFilterBy}
           withHeading={true}
+          buttonText="View All"
+          buttonLink="/all-investments"
         />
       </div>
       <div>

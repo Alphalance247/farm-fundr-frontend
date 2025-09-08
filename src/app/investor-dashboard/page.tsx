@@ -83,7 +83,6 @@ const InvestorDashboardPage = () => {
   ];
   const dat = kycData?.kyc_percentage || 0;
   return (
-    // <ProtectedRoute requiredUserType="investor">
     <InvestorLayout>
       <main className="px-10 py-8 bg-gray-50 overflow-auto xl:px-4 xl:py-6 lg:mb-4">
         <div className="grid grid-cols-[60%auto] gap-6 xl:gap-4 lg:grid-cols-1 lg:mt-6">

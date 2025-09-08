@@ -1,5 +1,7 @@
 "use client";
 import { Search } from "lucide-react";
+import Button from "../../common/Buttons";
+import Link from "next/link";
 
 type SortOption = "firstName" | "lastName" | "team";
 type FilterOption = "all" | "active" | "inactive";
@@ -13,6 +15,8 @@ interface TransactionSearchProps {
   onFilterChange: (value: FilterOption) => void;
   withHeading?: boolean;
   headingText?: string;
+  buttonText?: string; // new
+  buttonLink?: string; // new
 }
 
 export default function TransactionSearch({
@@ -24,6 +28,8 @@ export default function TransactionSearch({
   onFilterChange,
   withHeading = true,
   headingText = "All Farms",
+  buttonText,
+  buttonLink,
 }: TransactionSearchProps) {
   return (
     <div className="w-full block lg:hidden p-4 mb-6 overflow-x-auto">
@@ -68,6 +74,14 @@ export default function TransactionSearch({
             <option value="lastName">Amount</option>
             <option value="team">Status</option>
           </select>
+          {buttonText &&
+            (buttonLink ? (
+              <Link href={buttonLink}>
+                <Button variant="switch">{buttonText}</Button>
+              </Link>
+            ) : (
+              <Button variant="switch">{buttonText}</Button>
+            ))}
         </div>
       </div>
     </div>

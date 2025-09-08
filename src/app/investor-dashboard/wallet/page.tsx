@@ -16,8 +16,8 @@ const Wallet = () => {
           </p>
         </div>
         <div>
-          <WalletCard/>
-</div>
+          <WalletCard />
+        </div>
         <div>
           <TransactionSearchTable />
         </div>
