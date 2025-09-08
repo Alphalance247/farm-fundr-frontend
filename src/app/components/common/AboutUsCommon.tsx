@@ -6,6 +6,7 @@ import Button from "./Buttons";
 import { GoArrowRight } from "react-icons/go";
 import SlideInSection from "./slideInSection";
 import { useAuth } from "@/context/authContext";
+import Link from "next/link";
 
 interface aboutUsProp {
   withAboutUsHeading?: boolean;
@@ -77,15 +78,17 @@ const AboutUsCommon: React.FC<aboutUsProp> = ({
               {!isAuthenticated && (
                 <>
                   {btnAvailable && (
-                    <Button
-                      size="medium"
-                      className="flex items-center gap-x-4 justify-center mt-10 lg:mt-4 md:mt-8"
-                    >
-                      <span>{btnText || "Learn More"}</span>
-                      <span>
-                        <GoArrowRight size={24} className="text-white" />
-                      </span>
-                    </Button>
+                    <Link href={"/about-us"}>
+                      <Button
+                        size="medium"
+                        className="flex items-center gap-x-4 justify-center mt-10 lg:mt-4 md:mt-8"
+                      >
+                        <span>{btnText || "Learn More"}</span>
+                        <span>
+                          <GoArrowRight size={24} className="text-white" />
+                        </span>
+                      </Button>
+                    </Link>
                   )}
                 </>
               )}
