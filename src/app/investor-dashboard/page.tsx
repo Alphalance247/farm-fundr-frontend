@@ -2,17 +2,17 @@
 // import Heading from "../components/common/dashboard/heading";
 import Image from "next/image";
 import Link from "next/link";
-import InvestorLayout from "../../components/common/investor/investorsLayout";
+import InvestorLayout from "../components/common/investor/investorsLayout";
 import { useEffect, useState } from "react";
 import { useAuth } from "@/context/authContext";
 import { getKYCPercentageStore } from "@/stores/settings/getKycPercentage";
-import Button from "../../components/common/Buttons";
+import Button from "../components/common/Buttons";
 import { MdOutlineDateRange } from "react-icons/md";
-import InvestorAnalyticsTab from "../../components/dashboard/overview/investorAnalyticsTab";
-import InvestorRecentActivity from "../../components/dashboard/overview/investorRecentActivity";
-import InvestorMilestoneRequest from "../../components/dashboard/overview/investorMilestoneRequest";
-import ProjectList from "../../components/dashboard/overview/investments";
-import WalletCard from "../../components/dashboard/overview/walletCard";
+import InvestorAnalyticsTab from "../components/dashboard/overview/investorAnalyticsTab";
+import InvestorRecentActivity from "../components/dashboard/overview/investorRecentActivity";
+import InvestorMilestoneRequest from "../components/dashboard/overview/investorMilestoneRequest";
+import ProjectList from "../components/dashboard/overview/investments";
+import WalletCard from "../components/dashboard/overview/walletCard";
 
 interface data {
   text?: string;
