@@ -13,6 +13,7 @@ export interface userDetailsDataStore {
     phone: string;
     state: string;
     street_address: string;
+    years_of_exp:string;
     university: string;
     username: string;
     whatsapp_number: string;

@@ -21,6 +21,11 @@ export interface farmDetailsDataStore {
       inactive_projects: string;
       cac_reg_status: string;
       description: string;
+      facebook_link: string;
+      verified:boolean;
+      instagram_link: string;
+      linkedln_link: string;
+      x_link: string;
       owner_name: string;
       state: string;
       images: string[];

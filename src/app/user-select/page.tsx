@@ -11,7 +11,7 @@ import { HiCheckCircle } from "react-icons/hi";
 import { FiCircle } from "react-icons/fi";
 
 const UserSelectPage: React.FC = () => {
-  const [select, setSelect] = useState<string>("investor");
+  const [select, setSelect] = useState<string>("farmer");
 
   const handleUserSelect = (userType: string) => {
     setSelect(userType);
@@ -23,16 +23,17 @@ const UserSelectPage: React.FC = () => {
 
   const data = [
     {
-      svg: "/assets/UserOnboarding/1.svg",
-      usertype: "investor",
-      desc: "Invest in farms and grow your wealth.",
-    },
-
-    {
       svg: "/assets/UserOnboarding/2.svg",
       usertype: "farmer",
       desc: "List your farm and secure funding from investors.",
     },
+    {
+      svg: "/assets/UserOnboarding/1.svg",
+      usertype: "investor",
+      desc: "Invest in farms and grow your wealth. (Coming Soon)",
+    },
+
+ 
   ];
 
   return (
@@ -75,10 +76,18 @@ const UserSelectPage: React.FC = () => {
             {data.map((el, i) => (
               <div
                 key={i}
-                className={`px-10 py-5  rounded-[20px] border-[#E2E2E2] border w-[400px] cursor-pointer  ${
+                className={`px-10 py-5  rounded-[20px] border-[#E2E2E2] border w-[400px] ${
+                  el?.usertype === "investor"
+                    ? "cursor-not-allowed opacity-60"
+                    : "cursor-pointer"
+                } ${
                   select === el?.usertype ? "bg-[#EEFEF6]" : "bg-[#FFFFFF]"
                 } md:w-full`}
-                onClick={() => handleUserSelect(el?.usertype)}
+                onClick={() =>{
+                  if (el?.usertype !== "investor") 
+                  handleUserSelect(el?.usertype)
+                } }
+                
               >
                 <div className="flex justify-end mb-4">
                   {select === el?.usertype ? (

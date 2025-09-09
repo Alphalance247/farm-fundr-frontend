@@ -29,7 +29,7 @@ const MyFarms = () => {
     },
     {
       id: 2,
-      name: "Active Farms",
+      name: "Published ",
       image: "/assets/my-farms/2.svg",
       color: "#00C853",
       totalFarms: farmList?.results?.extra_data?.published_farms || 0,

@@ -12,55 +12,63 @@ import SocialLinksForm from "../common/socialMediaForm";
 
 const CustomizeStore = () => {
   const { activeTab, setActiveTab } = useTab();
-  const { data: farmDetails } = getFarmDetails();
+  const { data: farmDetails, fetchFarmDetails } = getFarmDetails();
   const farm = farmDetails?.data;
   console.log(setActiveTab);
 
   const [loading, setIsLoading] = useState(false);
   const [file, setFile] = useState<File | null>(null);
 
+  const [form, setForm] = useState({
+    instagram: farm?.farm?.instagram_link || "",
+    linkedin: farm?.farm?.linkedln_link || "",
+    facebook: farm?.farm?.facebook_link || "",
+    x: farm?.farm?.x_link || "",
+  });
+
   const handleProfileUpdate = async () => {
-    if (!file) {
-      toast?.error("Please upload you farm logo");
-    } else {
-      try {
-        setIsLoading(true);
-        // Create FormData to handle file upload
-        const formData = new FormData();
+    try {
+      setIsLoading(true);
+      // Create FormData to handle file upload
+      const formData = new FormData();
 
-        if (file) {
-          formData.append("logo", file);
-        }
-
-        const res = await axiosInstance.patch(
-          `farms/${farm?.farm?.id}`,
-          formData,
-          {
-            headers: {
-              "Content-Type": "multipart/form-data",
-            },
-          }
-        );
-
-        if (res.status === 200) {
-          toast.success("Farm logo updated successfully");
-          // Refresh user details after successful update
-        }
-
-        setIsLoading(false);
-      } catch (err) {
-        // Extract the error message from the response
-        let errorMessage =
-          "An error occurred please try again or contact Admin";
-        if (err instanceof AxiosError) {
-          // Check if err is an instance of AxiosError
-          errorMessage = err.response?.data?.statusmessage || errorMessage;
-        }
-
-        toast.error(errorMessage);
-      } finally {
-        setIsLoading(false);
+      if (file) {
+        formData.append("logo", file);
       }
+
+      formData.append("facebook_link", form?.facebook);
+      formData.append("instagram_link", form?.instagram);
+      formData.append("linkedln_link", form?.linkedin);
+      formData.append("x_link", form?.x);
+
+      const res = await axiosInstance.patch(
+        `farms/${farm?.farm?.id}`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+
+      if (res.status === 200) {
+        toast.success("Farm logo updated successfully");
+        // Refresh user details after successful update
+        fetchFarmDetails(farm?.farm?.id || "");
+      }
+
+      setIsLoading(false);
+    } catch (err) {
+      // Extract the error message from the response
+      let errorMessage = "An error occurred please try again or contact Admin";
+      if (err instanceof AxiosError) {
+        // Check if err is an instance of AxiosError
+        errorMessage = err.response?.data?.statusmessage || errorMessage;
+      }
+
+      toast.error(errorMessage);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -108,7 +116,7 @@ const CustomizeStore = () => {
           ))}
         </div> */}
       </div>
-      <SocialLinksForm />
+      <SocialLinksForm form={form} setForm={setForm} />
     </div>
   );
 };

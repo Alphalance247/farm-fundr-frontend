@@ -11,15 +11,7 @@ import { useAuth } from "@/context/authContext";
 import { usePathname, useRouter } from "next/navigation";
 
 const navs = [
-  {
-    id: 1,
-    name1: "Navigation",
-    name2: "Navigation",
-    name3: "Navigation",
-    link1: "/",
-    link2: "/",
-    link3: "/",
-  },
+
   {
     id: 3,
     name1: "About Us",

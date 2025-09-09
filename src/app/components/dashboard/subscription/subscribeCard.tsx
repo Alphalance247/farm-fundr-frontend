@@ -56,7 +56,6 @@ const SubscribeCard: React.FC<subscribeProps> = ({
     localStorage.setItem("selectedPlanId", select);
   }, [select]);
 
-  console.log(select);
 
   return (
     <div className={`${bgColor} p-6 md:p-4 border border-[#E4E7EC] rounded-xl`}>

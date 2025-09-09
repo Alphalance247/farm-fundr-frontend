@@ -82,7 +82,7 @@ const AddPoject = () => {
         formData.append("how_it_works", form.howItWorks);
         formData.append("budget", form.fundingDetails);
         formData.append("progress_over_time", form.progressOvertime);
-        formData.append("plots", form.branchSize);
+        formData.append("plots", form?.plots);
         formData.append("ROI", form.expectedReturn);
         formData.append("published", "true");
 

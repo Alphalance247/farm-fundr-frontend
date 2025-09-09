@@ -62,10 +62,7 @@ const StoreFront = () => {
       setShowBidModal((prev) => !prev);
     };
 
-    const handleRetry = () => {
-      fetchFarmPageList(farmName);
-      fetchFarmPageProjectList(farmName);
-    };
+ 
 
     // Show loading state while fetching farm data
     if (farmLoading || (!hasAttemptedFetch && !farmError && !farmPageData)) {
@@ -82,8 +79,14 @@ const StoreFront = () => {
 
     // Show farm not found UI
     if (isFarmNotFound) {
-      return <FarmNotFound farmName={farmName} onRetry={handleRetry} />;
+      return <FarmNotFound farmName={farmName} />;
     }
+
+    if(!farmPageData || farmPageData?.active_farm === false){
+    return <FarmNotFound notFoundText="Farm not Active" farmNotExistText="Farm is not available for public view. Please contact the farm owner." farmName={farmName} />;
+    }
+
+
 
     return (
       <TabProvider>

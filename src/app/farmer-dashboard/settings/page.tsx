@@ -46,6 +46,8 @@ const Setting = () => {
     // },
   ];
 
+  const kycPercentage = data?.kyc_percentage || 0;
+
   return (
     <DashboardLayout>
       <main className="px-10 md:px-4 py-8 bg-gray-50 h-full overflow-auto">
@@ -76,7 +78,7 @@ const Setting = () => {
                 {user?.fullname}
               </h5>
               <div className="flex justify-between text-sm font-poppinsRegular text-[#FCFCFC] mb-4 md:text-[10px]">
-                <p>Few steps to complete</p>
+            {kycPercentage !== 100 &&   <p>Few steps to complete</p>}  
                 <p>{data?.kyc_percentage || 0}% Complete</p>
               </div>
               <div className="w-full bg-[#F0F2F5] rounded-[20px] h-3 mb-2">
@@ -85,10 +87,10 @@ const Setting = () => {
                   className={`bg-[#51F4A6] h-3 rounded-[20px]`}
                 ></div>
               </div>
-
-              <p className=" font-poppinsRegular mb-4 text-[white]">
+              {kycPercentage !== 100 &&  <p className=" font-poppinsRegular mb-4 text-[white]">
                 Complete your KYC and get verified on the platform.
-              </p>
+              </p>}  
+             
             </div>
           </div>
 
