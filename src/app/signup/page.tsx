@@ -84,7 +84,7 @@ const SignUp = () => {
         setError((prev) => ({
           ...prev,
           [name]:
-            "Password must contain at least 8 characters and must must be alphanumeric.",
+            "Your password must be at least 8 characters long and include a letter, a number, and a special character.",
         }));
       }
       // Check password match for both fields
@@ -189,10 +189,10 @@ const SignUp = () => {
               Let’s get started
             </h1>
             <p className="text-lg font-poppinsRegular text-[#7C7C7C] mt-2 text-center mb-8 md:text-base md:mb-4">
-              Create your account on Farmfundr
+              Create your account on FarmPady
             </p>
 
-            <Button
+            {/* <Button
               className="w-full flex items-center gap-x-4 justify-center text-center mb-3"
               variant="googleBtn"
               size="small"
@@ -215,7 +215,7 @@ const SignUp = () => {
                 Or
               </p>{" "}
               <hr className="h-1 w-full md:w-44" />
-            </div>
+            </div> */}
 
             <form action="" onSubmit={handleSubmit}>
               <div className="grid grid-cols-2 gap-4 mb-4 md:grid-cols-1">
