@@ -103,8 +103,8 @@ export default function ProjectTable() {
         onFilterChange={setFilterBy}
         withHeading={true}
       />
-      <div className="overflow-x-auto">
-        <table className="min-w-full border-collapse rounded-lg overflow-hidden">
+      <div className="overflow-x-auto  block md:hidden">
+        <table className="w-full min-w-[1000px] md:w-[800px]">
           <thead className="bg-[#FAFEFF]">
             <tr>
               <th className="py-3 px-4 text-sm text-[#0B222A] text-left">
