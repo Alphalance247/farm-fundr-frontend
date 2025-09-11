@@ -46,56 +46,56 @@ export default function WalletCard() {
             </div>
           </label>
         </div>
-        <div className="flex gap-8">
-        <div className="bg-gradient-to-r w-full from-[#2D865B] to-[#12482F] border-[#C9FCE3] border text-white rounded-xl p-4 ">
-          <div className="space-y-2">
-            <div className="flex items-center justify-between gap-8">
-              <Image
-                src="/assets/DashBoard/overview/wallet.svg"
-                alt="roi"
-                width={45}
-                height={45}
-              />
-              <Button
-                onClick={handleFundWallet}
-                variant="subprimary"
-                className="!w-fit flex items-center !py-2 !px-4 !text-center  gap-2 font-poppinsSemiBold font-semibold text-xs"
-              >
-                <IoArrowDownOutline className="" /> Fund Wallet
-              </Button>
+        <div className="flex flex-row md:flex-col gap-8">
+          <div className="bg-gradient-to-r w-full from-[#2D865B] to-[#12482F] border-[#C9FCE3] border text-white rounded-xl p-4 ">
+            <div className="space-y-2">
+              <div className="flex items-center justify-between gap-8">
+                <Image
+                  src="/assets/DashBoard/overview/wallet.svg"
+                  alt="roi"
+                  width={45}
+                  height={45}
+                />
+                <Button
+                  onClick={handleFundWallet}
+                  variant="subprimary"
+                  className="!w-fit flex items-center !py-2 !px-4 !text-center  gap-2 font-poppinsSemiBold font-semibold text-xs"
+                >
+                  <IoArrowDownOutline className="" /> Fund Wallet
+                </Button>
+              </div>
+              <p className="text-sm text-[#FFFFFF]">Wallet Balance</p>
+              <p className="text-2xl font-bold">
+                {hideBalance ? "*** ***" : `₦${walletBalance.toLocaleString()}`}
+              </p>
             </div>
-            <p className="text-sm text-[#FFFFFF]">Wallet Balance</p>
-            <p className="text-2xl font-bold">
-              {hideBalance ? "*** ***" : `₦${walletBalance.toLocaleString()}`}
-            </p>
           </div>
-        </div>
-        <div className="bg-gradient-to-r w-full from-[#C9FCE3] to-[#8BBEA5] border border-[#51F4A6] text-[#34474E] rounded-xl p-4">
-          <div className="space-y-2">
-            <div className="flex items-center justify-between gap-4">
-              <Image
-                src="/assets/DashBoard/overview/wallet.svg"
-                alt="roi"
-                width={45}
-                height={45}
-              />
-              <Button
-                onClick={handleWithdrawReturns}
-                variant="subprimary"
-                className="!w-fit flex items-center !py-2 !px-4 !text-center font-poppinsSemiBold font-semibold gap-2 text-xs"
-              >
-                <IoMdArrowUp />
-                Withdraw Returns
-              </Button>
+          <div className="bg-gradient-to-r w-full from-[#C9FCE3] to-[#8BBEA5] border border-[#51F4A6] text-[#34474E] rounded-xl p-4">
+            <div className="space-y-2">
+              <div className="flex items-center justify-between gap-4">
+                <Image
+                  src="/assets/DashBoard/overview/wallet.svg"
+                  alt="roi"
+                  width={45}
+                  height={45}
+                />
+                <Button
+                  onClick={handleWithdrawReturns}
+                  variant="subprimary"
+                  className="!w-fit flex items-center !py-2 !px-4 !text-center font-poppinsSemiBold font-semibold gap-2 text-xs"
+                >
+                  <IoMdArrowUp />
+                  Withdraw Returns
+                </Button>
+              </div>
+              <p className="text-sm text-[#34474E]">
+                Total Return of Interest (ROI)
+              </p>
+              <p className="text-2xl text-[#5F5F5F] font-bold">
+                {hideBalance ? "*** ***" : `₦${roiBalance.toLocaleString()}`}
+              </p>
             </div>
-            <p className="text-sm text-[#34474E]">
-              Total Return of Interest (ROI)
-            </p>
-            <p className="text-2xl text-[#5F5F5F] font-bold">
-              {hideBalance ? "*** ***" : `₦${roiBalance.toLocaleString()}`}
-            </p>
           </div>
-        </div>
         </div>
       </section>
       {showPayoutModal && (
