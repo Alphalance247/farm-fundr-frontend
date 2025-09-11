@@ -22,7 +22,7 @@ export default function FarmProjectCard() {
 
   return (
     <InvestorLayout>
-      <main className="px-10 py-10 bg-gray-50 overflow-y-auto h-full md:px-4">
+      <main className="px-10  py-10 bg-gray-50 overflow-y-auto h-full md:px-2">
         <div className="mt-3 flex flex-col gap-y-2">
           <Link href={"/signup"}>
             <button className="text-[#7C7C7C] px-2 py-1 rounded-xl bg-gray-100 flex items-center gap-x-3 text-lg font-poppinsRegular hover:text-[#51F4A6]">
@@ -36,8 +36,8 @@ export default function FarmProjectCard() {
             Project Details
           </p>
         </div>
-        <div className="grid mt-4 grid-cols-2 md:grid-cols-1 gap-6">
-          <div className="border border-[#F6F6F6] rounded-2xl bg-white p-5">
+        <div className="grid mt-4 grid-cols-2 xl:grid-cols-1 gap-6">
+          <div className="border border-[#F6F6F6] rounded-2xl bg-white md:p-2 p-5">
             <div className="flex border-b border-[#F6F6F6] pb-3 items-center justify-between">
               <h2 className="text-xl text-[#5F5F5F] font-poppinsSemiBold">
                 Apple Orchard
@@ -73,10 +73,10 @@ export default function FarmProjectCard() {
             <div className="mt-4 space-y-4">
               {projectDetails.map((item, idx) => (
                 <div key={idx} className="flex justify-between gap-6">
-                  <p className="text-[#7C7C7C] font-poppinsRegular">
+                  <p className="text-[#7C7C7C] text-base md:text-sm font-poppinsRegular">
                     {item.label}
                   </p>
-                  <p className="text-[#5F5F5F] font-poppinsSemiBold">
+                  <p className="text-[#5F5F5F] text-base md:text-sm  font-poppinsSemiBold">
                     {item.value}
                   </p>
                 </div>
