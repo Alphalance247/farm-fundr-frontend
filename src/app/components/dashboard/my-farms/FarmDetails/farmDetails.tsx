@@ -80,7 +80,7 @@ const FarmDetails = ({ farmDetailsId }: { farmDetailsId: string }) => {
 
                   <p
                     className={`text-sm  w-fit font-poppinsRegular px-3 py-1 border  rounded-xl bg-[#E7F6EC] ${
-                      !farmData?.verified 
+                      !farmData?.verified
                         ? " bg-[#FDEDED] text-red-600 border-red-200"
                         : "bg-[#E7F6EC] text-[#006E2E] border-[#B0EECA]"
                     }`}
@@ -103,7 +103,7 @@ const FarmDetails = ({ farmDetailsId }: { farmDetailsId: string }) => {
                         {farmData?.cac_reg_no || "N/A"}
                       </p>
 
-                      {farmData?.cac_reg_status === "Unregistered" ? (
+                      {!farmData?.verified ? (
                         <p className="text-sm font-poppinsRegular text-red-600 border-red-200 bg-[#FDEDED] px-3 py-1 rounded-lg flex items-center justify-center gap-2 border">
                           Unverified
                         </p>

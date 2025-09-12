@@ -10,7 +10,7 @@ const FarmersProfile = () => {
     <section className="">
       <div className="grid grid-cols-[2fr_1fr] gap-x-8 xl:grid-cols-1 gap-y-6">
         <div className="bg-[#226646] border border-[#51F4A6] flex items-center gap-6 rounded-xl p-4 md:flex-col md:items-start">
-          {!farmersDetails?.image ? (
+          {farmersDetails?.image ? (
             <img
               src={`${farmersDetails?.image}`}
               width={225}

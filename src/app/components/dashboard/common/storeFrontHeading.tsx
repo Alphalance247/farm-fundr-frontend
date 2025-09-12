@@ -189,13 +189,13 @@ const StoreFrontHeading = ({
                   </a>
                 )}
                 {!withBorderRadius ? (
-                  <Link href={"/farm-page/farm-page-farm-details"}>
+                  <Link href={"/farm-page/projects"}>
                     <Button
                       className="w-fit flex items-center justify-center gap-2"
                       variant="secondary"
                     >
                       <BsEyeFill size={16} />
-                      View Farm
+                      View Projects
                     </Button>
                   </Link>
                 ) : (
@@ -225,13 +225,13 @@ const StoreFrontHeading = ({
                 </Button>
               </a>
 
-              <Link href="/farm-page/farm-page-farm-details">
+              <Link href="/farm-page/projects">
                 <Button
                   className="w-fit flex items-center justify-center gap-2"
                   variant="secondary"
                 >
                   <BsEyeFill size={16} />
-                  View Farm
+                  View Projects
                 </Button>
               </Link>
             </div>
