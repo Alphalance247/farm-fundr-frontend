@@ -1,5 +1,4 @@
 "use client";
-import DashboardLayout from "../../components/common/dashboardLayout";
 import { FaShapes } from "react-icons/fa";
 import {
   MdOutlinePayment,
@@ -11,13 +10,14 @@ import { IoPersonSharp } from "react-icons/io5";
 import { IoMdMail } from "react-icons/io";
 import { PiHeadsetLight } from "react-icons/pi";
 import Image from "next/image";
+import InvestorLayout from "@/app/components/common/investor/investorsLayout";
 
 interface tabsBtn {
   text: string;
   icons: React.ReactNode;
 }
 
-const HelpCenter = () => {
+const InvestorHelpCenter = () => {
   const [tab, setTab] = useState<string>("General");
   const [isOpen, setIsOpen] = useState<number>(0);
 
@@ -109,7 +109,7 @@ const HelpCenter = () => {
     },
   ];
   return (
-    <DashboardLayout>
+    <InvestorLayout>
       <main className=" overflow-auto pb-12">
         <div className="text-center px-8 pt-16 pb-32 bg-[linear-gradient(90deg,#2D865B_0%,#12482F_100%)]">
           <h1 className="text-2xl font-aristoBold text-white mb-2">
@@ -246,8 +246,8 @@ const HelpCenter = () => {
           </div>
         </div>
       </main>
-    </DashboardLayout>
+    </InvestorLayout>
   );
 };
 
-export default HelpCenter;
+export default InvestorHelpCenter;
