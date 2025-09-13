@@ -161,14 +161,12 @@ const StoreFrontHeading = ({
                 <p
                   className={`text-sm font-poppinsRegular mt-2 w-fit ${textColor} px-3 py-[6px] rounded-[79px] flex items-center justify-center gap-2 bg-[#FFFFFF33]`}
                 >
-                  {farm?.farm?.cac_reg_status !== "Unregistered" ? (
+                  {farm?.farm?.verified ? (
                     <MdVerifiedUser className={`${badgeColor}`} size={16} />
                   ) : (
                     <VscUnverified className={`${badgeColor}`} size={16} />
                   )}
-                  {farm?.farm?.cac_reg_status !== "Unregistered"
-                    ? "Verified"
-                    : "Unverified"}
+                  {farm?.farm?.verified ? "Verified" : "Unverified"}
                 </p>
               )}
 
