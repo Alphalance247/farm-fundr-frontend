@@ -15,7 +15,6 @@ interface aboutUsProp {
   paragraphHeading?: boolean;
   btnAvailable?: boolean;
   btnText?: string;
-  imgUrl?: string;
   alignment?: string;
 }
 
@@ -26,7 +25,6 @@ const AboutUsCommon: React.FC<aboutUsProp> = ({
   paragraphHeading,
   btnAvailable,
   btnText,
-  imgUrl,
   alignment,
 }) => {
   const { isAuthenticated } = useAuth();
@@ -94,12 +92,26 @@ const AboutUsCommon: React.FC<aboutUsProp> = ({
               )}
             </div>
 
-            <Image
+            <div>
+              <video
+                width="577"
+                height="573"
+                className=" shadow-xl rounded-lg"
+                controls
+              >
+                <source
+                  src="/assets/about/farmpadyVideo.mp4"
+                  type="video/mp4"
+                />
+              </video>
+            </div>
+
+            {/* <Image
               width={577}
               height={573}
               src={imgUrl || "/assets/LandingPage/images/5.png"}
               alt="frame1"
-            />
+            /> */}
           </div>
         </Container>
       </section>

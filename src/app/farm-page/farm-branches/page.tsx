@@ -89,7 +89,7 @@ const Farms = () => {
                       onViewProjects={() => {
                         /* handle click */
                       }}
-                      href={`/farm-page/`}
+                      href={`/farm-page/projects`}
                       key={data?.id}
                       id={data?.id}
                     />

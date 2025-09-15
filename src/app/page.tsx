@@ -10,9 +10,7 @@ import HowItWorks from "./components/Home/HowItWorks";
 
 export default function Home() {
   return (
-    <LayOuts
-   
-    >
+    <LayOuts>
       <Hero />
       <About />
       <Benefits />
