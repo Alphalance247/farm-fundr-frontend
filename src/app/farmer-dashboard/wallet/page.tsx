@@ -12,9 +12,11 @@ import RequestPayoutUser from "@/app/components/dashboard/wallet/requestPayoutUs
 import { getFarmerBalanceStore } from "@/stores/wallet/getFarmerBalance";
 import { getUserBankStore } from "@/stores/settings/getBankDetails";
 import { getWalletTransactionStore } from "@/stores/wallet/getWalletTransactions";
+import WithdrawFundModal from "@/app/components/common/modals/withdrawFundModal";
 
 const Wallet = () => {
   const [showRequestPayoutModal, setShowRequestPayoutModal] = useState(false);
+  const [showWithdrawModal, setShowWithdrawModal] = useState(false);
   // const handleRequestPayoutModal = () => {
   //   setShowRequestPayoutModal(true);
   // };
@@ -34,6 +36,10 @@ const Wallet = () => {
 
   const handleCloseRequestPayoutModal = () => {
     setShowRequestPayoutModal(false);
+  };
+
+  const handleCloseWithdrawModal = () => {
+    setShowWithdrawModal(false);
   };
 
   const handleCopy = (text: string) => {
@@ -144,23 +150,19 @@ const Wallet = () => {
                   </Button>
                 </Link>
               )}
-              <Link
-                className="lg:w-full"
-                href="/farmer-dashboard/wallet/withdrawfund"
+              <Button
+                variant="subprimary"
+                disabled={!data?.bank_details?.account_name}
+                className={`flex items-center lg:justify-center lg:w-full  lg:!py-3  gap-x-2  ${
+                  !data?.bank_details?.account_name
+                    ? "opacity-50 cursor-not-allowed"
+                    : ""
+                }`}
+                onClick={() => setShowWithdrawModal(true)}
               >
-                <Button
-                  variant="subprimary"
-                  disabled={!data?.bank_details?.account_name}
-                  className={`flex items-center lg:justify-center lg:w-full  lg:!py-3  gap-x-2  ${
-                    !data?.bank_details?.account_name
-                      ? "opacity-50 cursor-not-allowed"
-                      : ""
-                  }`}
-                >
-                  <FaArrowDown size={18} color="#2D865B" />
-                  Withdraw funds
-                </Button>
-              </Link>
+                <FaArrowDown size={18} color="#2D865B" />
+                Withdraw funds
+              </Button>
             </div>
           </div>
 
@@ -175,6 +177,12 @@ const Wallet = () => {
             handleRequestPayoutModal={handleCloseRequestPayoutModal}
           />
         )}
+
+        <WithdrawFundModal
+          isOpen={showWithdrawModal}
+          onClose={handleCloseWithdrawModal}
+          userType="farmer"
+        />
       </main>
     </DashboardLayout>
   );

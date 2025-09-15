@@ -67,6 +67,7 @@ const Setting = () => {
               <div className="h-[135px] w-[135px] rounded-full bg-[#EEFEF6] text-[#2D865B] flex items-center justify-center text-[54px] tracking-[0.34px] font-medium">
                 {user?.fullname
                   .split(" ")
+                  .slice(0, 2)
                   .map((n) => n[0])
                   .join("")
                   .toUpperCase()}
@@ -78,7 +79,7 @@ const Setting = () => {
                 {user?.fullname}
               </h5>
               <div className="flex justify-between text-sm font-poppinsRegular text-[#FCFCFC] mb-4 md:text-[10px]">
-            {kycPercentage !== 100 &&   <p>Few steps to complete</p>}  
+                {kycPercentage !== 100 && <p>Few steps to complete</p>}
                 <p>{data?.kyc_percentage || 0}% Complete</p>
               </div>
               <div className="w-full bg-[#F0F2F5] rounded-[20px] h-3 mb-2">
@@ -87,10 +88,11 @@ const Setting = () => {
                   className={`bg-[#51F4A6] h-3 rounded-[20px]`}
                 ></div>
               </div>
-              {kycPercentage !== 100 &&  <p className=" font-poppinsRegular mb-4 text-[white]">
-                Complete your KYC and get verified on the platform.
-              </p>}  
-             
+              {kycPercentage !== 100 && (
+                <p className=" font-poppinsRegular mb-4 text-[white]">
+                  Complete your KYC and get verified on the platform.
+                </p>
+              )}
             </div>
           </div>
 

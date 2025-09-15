@@ -5,25 +5,32 @@ import Button from "../../common/Buttons";
 import { IoArrowDownOutline } from "react-icons/io5";
 import { IoMdArrowUp } from "react-icons/io";
 import RequestPayoutUser from "../wallet/requestPayoutUser";
+import WithdrawFundModal from "../../common/modals/withdrawFundModal";
+// import { getInvestorBalanceStore } from "@/stores/wallet/getInvestorBalance";
 
 export default function WalletCard() {
   const [hideBalance, setHideBalance] = useState(false);
   const [showPayoutModal, setShowPayoutModal] = useState(false);
-  const walletBalance = 7035700;
-  const roiBalance = 2035700;
+  const [showWithdrawModal, setShowWithdrawModal] = useState(false);
+  // Using dummy data for now since investor stores don't exist yet
+  const walletBalance = 1500000; // 1.5M dummy balance
+  const roiBalance = 450000; // 450K dummy ROI balance
 
   const handleFundWallet = () => {
     setShowPayoutModal(true);
   };
 
   const handleWithdrawReturns = () => {
-    setShowPayoutModal(true);
+    setShowWithdrawModal(true);
   };
 
   const handleCloseModal = () => {
     setShowPayoutModal(false);
   };
 
+  const handleCloseWithdrawModal = () => {
+    setShowWithdrawModal(false);
+  };
 
   return (
     <>
@@ -101,6 +108,12 @@ export default function WalletCard() {
       {showPayoutModal && (
         <RequestPayoutUser handleRequestPayoutModal={handleCloseModal} />
       )}
+
+      <WithdrawFundModal
+        isOpen={showWithdrawModal}
+        onClose={handleCloseWithdrawModal}
+        userType="investor"
+      />
     </>
   );
 }
