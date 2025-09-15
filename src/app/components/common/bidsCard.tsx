@@ -29,82 +29,154 @@ export default function BidCard({
   };
 
   return (
-    <div className="bg-white rounded-xl shadow-md p-4 flex flex-col gap-4">
-
-      <div className="flex justify-between items-start">
-        <div className="flex items-center gap-3">
-          <Image
-            src={image}
-            alt={name}
-            width={50}
-            height={50}
-            className="rounded-lg"
-          />
-          <div className="">
-            <h3 className="text-base  font-semibold">{name}</h3>
-            <div className="flex items-center mt-1 gap-2">
-              <div className=" bg-[#F2F2F2] text-[#2D865B] rounded-full p-2">
-                <FaLocationDot />
+    <div>
+      <div className="bg-white md:hidden rounded-xl shadow-md p-4 flex flex-col gap-4">
+        <div className="flex justify-between items-start">
+          <div className="flex items-center gap-3">
+            <Image
+              src={image}
+              alt={name}
+              width={50}
+              height={50}
+              className="rounded-lg"
+            />
+            <div className="">
+              <h3 className="text-base  font-semibold">{name}</h3>
+              <div className="flex items-center mt-1 gap-2">
+                <div className=" bg-[#F2F2F2] text-[#2D865B] rounded-full p-2">
+                  <FaLocationDot />
+                </div>
+                <p className="text-sm text-gray-500">{location}</p>
               </div>
-              <p className="text-sm text-gray-500">{location}</p>
             </div>
           </div>
+          <span
+            className={`px-3 py-1 text-sm rounded-full ${statusColors[status]}`}
+          >
+            {status}
+          </span>
         </div>
-        <span
-          className={`px-3 py-1 text-sm rounded-full ${statusColors[status]}`}
-        >
-          {status}
-        </span>
+
+        <div className="flex gap-2 mt-2 items-center">
+          <p className="text-[#7C7C7C] lg:text-xs text-sm">
+            Bid Amount:{" "}
+            <span className="font-poppinsSemiBold text-[#5F5F5F] lg:text-xs text-sm">
+              {amount}
+            </span>
+          </p>
+          <GoDotFill className="text-[#5F5F5F]" />
+          <p className="text-[#7C7C7C] text-sm">
+            Date:{" "}
+            <span className="font-poppinsSemiBold text-[#5F5F5F] text-sm">
+              {date}
+            </span>
+          </p>
+        </div>
+
+        <div className="flex xl:flex-col flex-row gap-3">
+          {status === "Accepted" && (
+            <>
+              <Button variant="primary" size="small" className="flex-1">
+                Release Funds
+              </Button>
+              <Button variant="secondary" size="small" className="flex-1">
+                View Details
+              </Button>
+            </>
+          )}
+
+          {status === "Declined" && (
+            <>
+              <Button variant="secondary" size="small" className="flex-1">
+                View Details
+              </Button>
+            </>
+          )}
+
+          {status === "Pending" && (
+            <>
+              <Button variant="primary" size="small" className="flex-1">
+                View Details
+              </Button>
+              <Button className="flex-1" size="small" variant="secondary">
+                Cancel Bid
+              </Button>
+            </>
+          )}
+        </div>
       </div>
+      <div className="bg-white hidden rounded-xl shadow-md p-4 md:flex gap-2 flex-col">
+        <div className="flex justify-between items-start">
+          <div className="">
+            <Image
+              src={image}
+              alt={name}
+              width={50}
+              height={50}
+              className="rounded-lg"
+            />
+          </div>
+          <div
+            className={`px-3 py-1 text-sm rounded-full ${statusColors[status]}`}
+          >
+            {status}
+          </div>
+        </div>
+        <div className="">
+          <h3 className="text-base  font-semibold">{name}</h3>
+          <div className="flex items-center mt-1 gap-2">
+            <div className=" bg-[#F2F2F2] text-[#2D865B] rounded-full p-2">
+              <FaLocationDot />
+            </div>
+            <p className="text-sm text-gray-500">{location}</p>
+          </div>
+        </div>
+        <div className="flex flex-col gap-2 mt-2 items-start">
+          <p className="text-[#7C7C7C] text-sm">
+            Bid Amount:{" "}
+            <span className="font-poppinsSemiBold text-[#5F5F5F] text-sm">
+              {amount}
+            </span>
+          </p>
+          <p className="text-[#7C7C7C] text-sm">
+            Date:{" "}
+            <span className="font-poppinsSemiBold text-[#5F5F5F] text-sm">
+              {date}
+            </span>
+          </p>
+        </div>
 
+        <div className="flex xl:flex-col flex-row gap-3">
+          {status === "Accepted" && (
+            <>
+              <Button variant="primary" size="small" className="flex-1">
+                Release Funds
+              </Button>
+              <Button variant="secondary" size="small" className="flex-1">
+                View Details
+              </Button>
+            </>
+          )}
 
-      <div className="flex gap-2 mt-2 items-center">
-        <p className="text-[#7C7C7C] text-sm">
-          Bid Amount:{" "}
-          <span className="font-poppinsSemiBold text-[#5F5F5F] text-sm">
-            {amount}
-          </span>
-        </p>
-        <GoDotFill className="text-[#5F5F5F]" />
-        <p className="text-[#7C7C7C] text-sm">
-          Date:{" "}
-          <span className="font-poppinsSemiBold text-[#5F5F5F] text-sm">
-            {date}
-          </span>
-        </p>
-      </div>
+          {status === "Declined" && (
+            <>
+              <Button variant="secondary" size="small" className="flex-1">
+                View Details
+              </Button>
+            </>
+          )}
 
-
-      <div className="flex gap-3">
-        {status === "Accepted" && (
-          <>
-            <Button variant="primary" size="small" className="flex-1">
-              Release Funds
-            </Button>
-            <Button variant="secondary" size="small" className="flex-1">
-              View Details
-            </Button>
-          </>
-        )}
-
-        {status === "Declined" && (
-          <>
-            <Button variant="secondary" size="small" className="flex-1">
-              View Details
-            </Button>
-          </>
-        )}
-
-        {status === "Pending" && (
-          <>
-            <Button variant="primary" size="small" className="flex-1">
-              View Details
-            </Button>
-            <Button className="flex-1" size="small" variant="secondary">
-              Cancel Bid
-            </Button>
-          </>
-        )}
+          {status === "Pending" && (
+            <>
+              <Button variant="primary" size="small" className="flex-1">
+                View Details
+              </Button>
+              <Button className="flex-1" size="small" variant="secondary">
+                Cancel Bid
+              </Button>
+            </>
+          )}
+        </div>
       </div>
     </div>
   );

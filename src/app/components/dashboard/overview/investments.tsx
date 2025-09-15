@@ -4,6 +4,22 @@ import { PiDotsThree } from "react-icons/pi";
 import SubHead from "../common/sectionHeading";
 import { IoIosArrowDown } from "react-icons/io";
 import Button from "../../common/Buttons";
+import ProjectCard, { ProjectCardProps } from "../wallet/projectCard";
+
+const projectsList: ProjectCardProps[] = [
+  {
+    projectName: "Green Valley Farm",
+    investedAmount: 120000,
+    status: "Ongoing",
+    image: "/assets/my-farms/2.png",
+  },
+  {
+    projectName: "Apple Green House",
+    investedAmount: 120000,
+    status: "Active",
+    image: "/assets/my-farms/2.png",
+  },
+];
 
 const projects = [
   {
@@ -46,16 +62,16 @@ const projects = [
 
 export default function ProjectList() {
   return (
-    <section className="mt-6 px-8 w-[60%] lg:w-full py-8 border border-[#E4E7EC] bg-[white] rounded-xl">
+    <section className="mt-6 px-8 md:px-4 w-[60%] xl:w-full py-8 border border-[#E4E7EC] bg-[white] rounded-xl">
       <div className="flex border-b pb-3 border-[#E4E7EC] justify-between items-center mb-5">
         <SubHead text="My Investments" />
         <div className="relative flex items-center gap-x-4 ">
-          <div className="flex items-center gap-x-2 p-2 bg-white border border-[#d9d9d9] rounded-xl cursor-pointer w-fit">
+          <div className="flex md:hidden items-center gap-x-2 p-2 bg-white border border-[#d9d9d9] rounded-xl cursor-pointer w-fit">
             <p>
               <span className="text-sm font-poppinsRegular text-[#7C7C7C]">
                 Today
               </span>
-              <span className="font-medium text-[15px] leading-5 text-[#262626]"></span>
+              <span className="font-medium  text-[15px] leading-5 text-[#262626]"></span>
             </p>
             <IoIosArrowDown size={20} color="#7C7C7C" />
           </div>
@@ -64,7 +80,12 @@ export default function ProjectList() {
           </div>
         </div>
       </div>
-      <div className="overflow-x-auto border border-[#E4E7EC]">
+      <div className="space-y-4 hidden md:block">
+        {projectsList.map((p, i) => (
+          <ProjectCard key={i} {...p} />
+        ))}
+      </div>
+      <div className="overflow-x-auto block md:hidden border border-[#E4E7EC]">
         <table className="w-full border-collapse hide-scrollbar rounded-lg overflow-hidden">
           <thead className="bg-[#EEFEF6]">
             <tr>

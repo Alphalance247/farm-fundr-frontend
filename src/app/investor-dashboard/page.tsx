@@ -81,6 +81,29 @@ const InvestorDashboardPage = () => {
       bgColor: "bg-[#FEF0B0]/30",
     },
   ];
+  const mobileData: data[] = [
+    {
+      text: "Fund Wallet",
+      link: "/farmer-dashboard/my-farms/add-farm",
+      img: "/assets/DashBoard/overview/investorWithdraw.svg",
+      bgColor: "bg-[#ECF2FF4D]/30",
+      borderColor: "border-[#C5D5FF] border",
+    },
+    {
+      text: "Withdraw",
+      link: "/farmer-dashboard/wallet",
+      img: "/assets/DashBoard/overview/investorFund.svg",
+      bgColor: "bg-[#EEFEF64D]/30",
+      borderColor: "border-[#AFFAD6] border",
+    },
+    {
+      text: "Add Bank",
+      link: "/farmer-dashboard",
+      img: "/assets/DashBoard/overview/investorwalletIcon.svg",
+      borderColor: "border-[#FEF0B0] border",
+      bgColor: "bg-[#FFFAE64D]/30",
+    },
+  ];
   const dat = kycData?.kyc_percentage || 0;
   return (
     <InvestorLayout>
@@ -170,12 +193,12 @@ const InvestorDashboardPage = () => {
             <h2 className="text-[#5F5F5F] text-2xl font-aristoBold mb-4">
               Quick Actions
             </h2>
-            <div className="grid grid-cols-2 gap-2">
+            <div className="grid grid-cols-2 lg:grid-cols-3 md:hidden gap-2">
               {data.map((item, i) => (
                 <Link
                   href={item?.link || "/"}
                   key={i}
-                  className="block first:col-span-2"
+                  className="block first:col-span-2 lg:first:col-span-1"
                 >
                   <div
                     className={`flex flex-col ${item?.borderColor} justify-center items-center cursor-pointer ${item?.bgColor} rounded-md py-4 w-full`}
@@ -193,12 +216,29 @@ const InvestorDashboardPage = () => {
                 </Link>
               ))}
             </div>
+            <div className="hidden md:grid md:grid-cols-3 gap-2 ">
+              {mobileData.map((item, i) => (
+                <Link href={item?.link || "/"} key={i}>
+                  <div
+                    className={`flex flex-col ${item?.borderColor} justify-center items-center cursor-pointer ${item?.bgColor} rounded-2xl py-4 w-full`}
+                  >
+                    <Image
+                      src={item?.img || ""}
+                      width={60}
+                      height={60}
+                      alt="asset icons"
+                    />
+                    <p className="text-[#5F5F5F] text-xs mt-[6px]">
+                      {item?.text}
+                    </p>
+                  </div>
+                </Link>
+              ))}
+            </div>
           </div>
         </div>
-        <div>
-          <InvestorAnalyticsTab />
-        </div>
-        <div className="flex flex-row lg:flex-col justify-between gap-6">
+        <InvestorAnalyticsTab />
+        <div className="flex flex-row xl:flex-col justify-between gap-6">
           <ProjectList />
           <WalletCard />
         </div>
