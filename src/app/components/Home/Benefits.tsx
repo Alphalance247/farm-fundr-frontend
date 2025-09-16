@@ -13,7 +13,7 @@ import Link from "next/link";
 
 const Benefits = () => {
   const { isAuthenticated } = useAuth();
-  const [activeTab, setActiveTab] = useState<string>("investors");
+  const [activeTab, setActiveTab] = useState<string>("farmers");
   const data = [
     {
       border: "#4379FF",
@@ -61,7 +61,7 @@ const Benefits = () => {
     },
   ];
 
-  const tab = activeTab === "investors" ? data : data2;
+  const tab = activeTab === "farmers" ? data2 : data;
 
   return (
     <SlideInSection>
