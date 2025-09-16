@@ -2,8 +2,15 @@
 import InvestorLayout from "@/app/components/common/investor/investorsLayout";
 import TransactionSearchTable from "@/app/components/investor-wallet/investorTransactionTable";
 import WalletCard from "../../components/dashboard/my-investments/investmentWallet";
+import { getInvestorTransaction } from "@/stores/investor-dashboard/overview/transaction";
+import { useEffect } from "react";
 
 const Wallet = () => {
+  const { fetchInvestorsTransaction } = getInvestorTransaction();
+  useEffect(() => {
+    fetchInvestorsTransaction();
+  }, [fetchInvestorsTransaction]);
+
   return (
     <InvestorLayout>
       <main className="px-10 lg:px-4 py-10 overflow-auto h-full bg-gray-50">

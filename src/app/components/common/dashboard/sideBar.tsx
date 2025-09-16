@@ -109,7 +109,7 @@ const Sidebar: React.FC<mobileMenuProps> = ({
 
   return (
     <aside
-      className={`bg-white overflow-y-scroll  ${
+      className={`bg-white overflow-y-auto  ${
         showMobileMenu
           ? "xl:block xl:absolute xl:w-[80%] xl:z-20 xl:overflow-y-auto xl:h-auto"
           : "xl:hidden"

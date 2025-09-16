@@ -1,20 +1,24 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import Button from "../../common/Buttons";
 import { IoArrowDownOutline } from "react-icons/io5";
 import { IoMdArrowUp } from "react-icons/io";
 import RequestPayoutUser from "../wallet/requestPayoutUser";
-import WithdrawFundModal from "../../common/modals/withdrawFundModal";
-// import { getInvestorBalanceStore } from "@/stores/wallet/getInvestorBalance";
+import { getInvestorDashboardStore } from "@/stores/investor-dashboard/overview/dashboard";
 
 export default function WalletCard() {
   const [hideBalance, setHideBalance] = useState(false);
   const [showPayoutModal, setShowPayoutModal] = useState(false);
-  const [showWithdrawModal, setShowWithdrawModal] = useState(false);
-  // Using dummy data for now since investor stores don't exist yet
-  const walletBalance = 1500000; // 1.5M dummy balance
-  const roiBalance = 450000; // 450K dummy ROI balance
+
+  const { data: overviewData, fetchInvestorDashboardData } =
+    getInvestorDashboardStore();
+  const walletBalance = overviewData?.wallet_balance || 0;
+  const roiBalance = overviewData?.roi_total || 0;
+
+  useEffect(() => {
+    fetchInvestorDashboardData();
+  }, [fetchInvestorDashboardData]);
 
   const handleFundWallet = () => {
     setShowPayoutModal(true);
@@ -26,10 +30,6 @@ export default function WalletCard() {
 
   const handleCloseModal = () => {
     setShowPayoutModal(false);
-  };
-
-  const handleCloseWithdrawModal = () => {
-    setShowWithdrawModal(false);
   };
 
   return (
@@ -73,7 +73,9 @@ export default function WalletCard() {
               </div>
               <p className="text-sm text-[#FFFFFF]">Wallet Balance</p>
               <p className="text-2xl font-bold">
-                {hideBalance ? "*** ***" : `₦${walletBalance.toLocaleString()}`}
+                {hideBalance
+                  ? "*** ***"
+                  : `₦ ${walletBalance.toLocaleString()}`}
               </p>
             </div>
           </div>
@@ -99,7 +101,7 @@ export default function WalletCard() {
                 Total Return of Interest (ROI)
               </p>
               <p className="text-2xl text-[#5F5F5F] font-bold">
-                {hideBalance ? "*** ***" : `₦${roiBalance.toLocaleString()}`}
+                {hideBalance ? "*** ***" : `₦ ${roiBalance.toLocaleString()}`}
               </p>
             </div>
           </div>

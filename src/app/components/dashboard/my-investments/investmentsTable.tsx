@@ -1,11 +1,15 @@
 "use client";
 import Image from "next/image";
 import { useState } from "react";
-import TransactionSearch, { FilterOption, SortOption } from "../wallet/transactionSearch";
+import TransactionSearch, {
+  FilterOption,
+  SortOption,
+} from "../wallet/transactionSearch";
 import Button from "../../common/Buttons";
 import Pagination from "@/components/ui/pagination";
 import ProjectCard, { ProjectCardProps } from "../wallet/projectCard";
 import TransactionFilterMobile from "../wallet/mobileTransactionSearch";
+import { getInvestorInvestment } from "@/stores/investor-dashboard/overview/investment";
 
 interface Project {
   id: number;
@@ -106,6 +110,8 @@ export default function ProjectTable() {
   const [sortBy, setSortBy] = useState<SortOption>("firstName");
   const [filterBy, setFilterBy] = useState<FilterOption>("all");
 
+  const { data } = getInvestorInvestment();
+
   return (
     <section className="p-4 md:p-0">
       <div className="block md:hidden">
@@ -146,53 +152,68 @@ export default function ProjectTable() {
                 </th>
               </tr>
             </thead>
-            <tbody>
-              {projects.map((project) => (
-                <tr
-                  key={project.id}
-                  className="even:bg-[#EEFEF6] odd:bg-[#FFFFFF] text-sm"
-                >
-                  <td className="py-3 px-4 flex items-center gap-2">
-                    <Image
-                      src={project.image}
-                      alt={project.name}
-                      width={40}
-                      height={40}
-                      className="rounded-md"
-                    />
-                    <span className="text-sm text-[#5F5F5F]">
-                      {project.name}
-                    </span>
-                  </td>
-                  <td className="py-3 text-sm text-[#5F5F5F] px-4">
-                    {project.investedAmount}
-                  </td>
-                  <td className="py-3 px-4">
-                    <span
-                      className={`px-3 py-1 rounded-2xl text-white text-sm ${
-                        statusColors[project.status]
-                      }`}
-                    >
-                      {project.status}
-                    </span>
-                  </td>
-                  <td className="py-3 text-sm text-[#5F5F5F] px-4">
-                    {project.roi}
-                  </td>
-                  <td className="py-3 text-sm text-[#5F5F5F] px-4">
-                    {project.duration}
-                  </td>
-                  <td className="py-3 text-sm text-[#5F5F5F] px-4">
-                    {project.date}
-                  </td>
-                  <td className="py-3 px-4">
-                    <Button variant="primary" className="text-xs  !px-4 !py-2">
-                      View Details
-                    </Button>
+            {data?.results?.length === 0 ? (
+              <tbody className="">
+                <tr>
+                  <td colSpan={6} className="text-center py-8">
+                    No Investment found yet
                   </td>
                 </tr>
-              ))}
-            </tbody>
+              </tbody>
+            ) : (
+              <tbody>
+                {data?.results.map((project, i) => (
+                  <tr
+                    key={i}
+                    className="even:bg-[#EEFEF6] odd:bg-[#FFFFFF] text-sm"
+                  >
+                    <td className="py-3 px-4 flex items-center gap-2">
+                      <Image
+                        src={project?.project_image || "/assets/my-farms/2.png"}
+                        alt={project?.project_name}
+                        width={40}
+                        height={40}
+                        className="rounded-md"
+                      />
+                      <span className="text-sm text-[#5F5F5F]">
+                        {project?.project_name}
+                      </span>
+                    </td>
+                    <td className="py-3 text-sm text-[#5F5F5F] px-4">
+                      {project?.budget}
+                    </td>
+                    <td className="py-3 px-4">
+                      <span
+                        className={`py-2 px-5  ${
+                          project?.status === "pending"
+                            ? "bg-[#DEA304]"
+                            : "bg-[#00C853]"
+                        } text-white rounded-xl font-poppinsRegular tracking-[-2%]`}
+                      >
+                        {project.status}
+                      </span>
+                    </td>
+                    <td className="py-3 text-sm text-[#5F5F5F] px-4">
+                      {project?.ROI}
+                    </td>
+                    <td className="py-3 text-sm text-[#5F5F5F] px-4">
+                      {project.duration}
+                    </td>
+                    <td className="py-3 text-sm text-[#5F5F5F] px-4">
+                      {project?.start_date}
+                    </td>
+                    <td className="py-3 px-4">
+                      <Button
+                        variant="primary"
+                        className="text-xs  !px-4 !py-2"
+                      >
+                        View Details
+                      </Button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            )}
           </table>
           <Pagination
             currentPage={1}

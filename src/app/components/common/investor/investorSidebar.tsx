@@ -11,7 +11,7 @@ import {
 import { TbReportAnalytics } from "react-icons/tb";
 import { CiSettings } from "react-icons/ci";
 import { PiHeadsetLight } from "react-icons/pi";
-import { GoSignOut } from "react-icons/go";
+import { useEffect, useRef } from "react";
 
 interface sideBarData {
   heading?: string;
@@ -23,7 +23,15 @@ interface sideBarData {
   textColor?: string;
 }
 
-const InvestorSidebar: React.FC = () => {
+interface mobileMenuProps {
+  showMobileMenu: boolean;
+  setShowMobile: (showMobileMenu: boolean) => void;
+}
+
+const InvestorSidebar: React.FC<mobileMenuProps> = ({
+  showMobileMenu,
+  setShowMobile,
+}) => {
   const pathname = usePathname();
 
   const sideBarData: sideBarData[] = [
@@ -61,18 +69,42 @@ const InvestorSidebar: React.FC = () => {
 
     {
       text: "Settings",
-      link: "/farmer-dashboard/settings",
+      link: "/investor-dashboard/settings",
       icons: <CiSettings size={20} />,
     },
     {
       text: "Help Center",
-      link: "/farmer-dashboard/help-center",
+      link: "/investor-dashboard/help-center",
       icons: <PiHeadsetLight size={20} />,
     },
   ];
 
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node)
+      ) {
+        setShowMobile(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [showMobileMenu, setShowMobile]);
+
   return (
-    <aside className="bg-white overflow-y-auto lg:hidden">
+    <aside
+      className={`bg-white overflow-y-auto  ${
+        showMobileMenu
+          ? "xl:block xl:absolute xl:w-[80%] xl:z-20 xl:overflow-y-auto xl:h-auto"
+          : "xl:hidden"
+      } `}
+      ref={dropdownRef}
+    >
       {/* Logo / Brand Name */}
       <div className="flex flex-col justify-between ">
         <div className="font-bold">
@@ -142,28 +174,6 @@ const InvestorSidebar: React.FC = () => {
             </ul>
           </nav>
         </div>
-      </div>
-
-      <div className="flex justify-between items-center py-4 pl-2 pr-2 pb-10 mt-3">
-        <div className="flex items-center gap-x-3">
-          <Image
-            src="/assets/DashBoard/overview/avatar.svg"
-            width={40}
-            height={40}
-            alt="avatar"
-          />
-          <div>
-            <p className="text-[#282A03] text-sm font-poppinsSemiBold mb-1">
-              Nelson Ade
-            </p>
-            <p className="text-[#7C7C7C] text-xs font-poppinsRegular">
-              Nelson@gmail.com
-            </p>
-          </div>
-        </div>
-        <span>
-          <GoSignOut color="#282A03" size={20} />
-        </span>
       </div>
     </aside>
   );

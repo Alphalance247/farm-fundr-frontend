@@ -172,12 +172,11 @@ export function Topbar({
             />
           ) : (
             <div
-              className="hidden lg:block h-[40px] w-[40px] rounded-full bg-[#EEFEF6] text-[#2D865B] flex items-center justify-center text-[1.3rem] tracking-[0.34px] font-medium"
+              className="hidden xl:block h-[40px] w-[40px] rounded-full bg-[#EEFEF6] text-[#2D865B] items-center justify-center text-[1.3rem] tracking-[0.34px] font-medium"
               onClick={() => setIsDropdown(!isDropdownOpen)}
             >
               {user?.fullname
                 .split(" ")
-                .slice(0, 2)
                 .map((n) => n[0])
                 .join("")
                 .toUpperCase()}

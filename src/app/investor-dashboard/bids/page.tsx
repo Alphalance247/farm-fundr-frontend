@@ -3,38 +3,40 @@ import Image from "next/image";
 import Button from "@/app/components/common/Buttons";
 import InvestorLayout from "@/app/components/common/investor/investorsLayout";
 import BidsTable from "@/app/components/dashboard/my-investments/bidsTable";
+import { getInvestorBids } from "@/stores/investor-dashboard/overview/bids";
 
 interface data {
   id: number;
   name: string;
   image: string;
-  totalFarms: number;
+  totalFarms: string | number;
 }
 const MyInvestments = () => {
+  const { fetchInvestorBids, data: bidsData, loading } = getInvestorBids();
   const data: data[] = [
     {
       id: 1,
       name: "All Bids",
       image: "/assets/my-farms/1.svg",
-      totalFarms: 6,
+      totalFarms: bidsData?.total_bids || 0,
     },
     {
       id: 2,
       name: "Accepted",
       image: "/assets/my-farms/2.svg",
-      totalFarms: 2,
+      totalFarms: bidsData?.accepted_bids_count || 0,
     },
     {
       id: 3,
       name: "Pending",
       image: "/assets/my-farms/3.svg",
-      totalFarms: 4,
+      totalFarms: bidsData?.pending_bids_count || 0,
     },
     {
       id: 4,
       name: "Declined",
       image: "/assets/my-farms/4.svg",
-      totalFarms: 10,
+      totalFarms: bidsData?.rejected_bids_count || 0,
     },
   ];
 

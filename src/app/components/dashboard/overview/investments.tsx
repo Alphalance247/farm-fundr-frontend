@@ -1,10 +1,10 @@
 "use client";
-
 import { PiDotsThree } from "react-icons/pi";
 import SubHead from "../common/sectionHeading";
 import { IoIosArrowDown } from "react-icons/io";
 import Button from "../../common/Buttons";
 import ProjectCard, { ProjectCardProps } from "../wallet/projectCard";
+import { getInvestorBids } from "@/stores/investor-dashboard/overview/bids";
 
 const projectsList: ProjectCardProps[] = [
   {
@@ -21,46 +21,47 @@ const projectsList: ProjectCardProps[] = [
   },
 ];
 
-const projects = [
-  {
-    projectName: "Apple Garden Farm",
-    progress: 30,
-    status: "Ongoing",
-    milestones: {
-      current: 3,
-      total: 12,
-    },
-  },
-  {
-    projectName: "Apple Garden Farm",
-    progress: 60,
-    status: "Ongoing",
-    milestones: {
-      current: 3,
-      total: 12,
-    },
-  },
-  {
-    projectName: "Apple Garden Farm",
-    progress: 100,
-    status: "Completed",
-    milestones: {
-      current: 3,
-      total: 12,
-    },
-  },
-  {
-    projectName: "Apple Garden Farm",
-    progress: 100,
-    status: "Completed",
-    milestones: {
-      current: 3,
-      total: 12,
-    },
-  },
-];
+// const projects = [
+//   {
+//     projectName: "Apple Garden Farm",
+//     progress: 30,
+//     status: "Ongoing",
+//     milestones: {
+//       current: 3,
+//       total: 12,
+//     },
+//   },
+//   {
+//     projectName: "Apple Garden Farm",
+//     progress: 60,
+//     status: "Ongoing",
+//     milestones: {
+//       current: 3,
+//       total: 12,
+//     },
+//   },
+//   {
+//     projectName: "Apple Garden Farm",
+//     progress: 100,
+//     status: "Completed",
+//     milestones: {
+//       current: 3,
+//       total: 12,
+//     },
+//   },
+//   {
+//     projectName: "Apple Garden Farm",
+//     progress: 100,
+//     status: "Completed",
+//     milestones: {
+//       current: 3,
+//       total: 12,
+//     },
+//   },
+// ];
 
 export default function ProjectList() {
+  const { data } = getInvestorBids();
   return (
     <section className="mt-6 px-8 md:px-4 w-[60%] xl:w-full py-8 border border-[#E4E7EC] bg-[white] rounded-xl">
       <div className="flex border-b pb-3 border-[#E4E7EC] justify-between items-center mb-5">
@@ -103,18 +104,30 @@ export default function ProjectList() {
               </th>
             </tr>
           </thead>
-          <tbody className="bg-white divide-y divide-gray-200">
-            {projects.map((project, index) => {
-              const isComplete = project.progress === 100;
-              const barColor = isComplete ? "bg-[#00C853]" : "bg-[#DEA304]";
-              const statusColor = isComplete ? "bg-[#00C853]" : "bg-[#DEA304]";
+          {data?.bids?.length === 0 ? (
+            <tbody>
+              <tr>
+                <td colSpan={6} className="text-center py-8">
+                  No Investment list found
+                </td>
+              </tr>
+            </tbody>
+          ) : (
+            <tbody className="bg-white divide-y divide-gray-200">
+              {data?.bids.map((project, index) => {
+                // const isComplete = project.progress === 100;
+                // const barColor = isComplete ? "bg-[#00C853]" : "bg-[#DEA304]";
+                const statusColor =
+                  project?.status === "pending"
+                    ? "bg-[#00C853]"
+                    : "bg-[#DEA304]";
 
-              return (
-                <tr key={index}>
-                  <td className="px-4 py-4 whitespace-nowrap text-sm text-[#1B2229]">
-                    {project.projectName}
-                  </td>
-                  <td className="px-4 py-4 whitespace-nowrap text-sm flex items-center gap-2">
+                return (
+                  <tr key={index}>
+                    <td className="px-4 py-4 whitespace-nowrap text-sm text-[#1B2229]">
+                      {project.project?.name}
+                    </td>
+                    {/* <td className="px-4 py-4 whitespace-nowrap text-sm flex items-center gap-2">
                     <div className="w-32 bg-[#FFFAE6] rounded-full h-3">
                       <div
                         className={`${barColor} h-3 rounded-full`}
@@ -122,24 +135,28 @@ export default function ProjectList() {
                       />
                     </div>
                     <span>{project.progress}%</span>
-                  </td>
-                  <td className="px-4 py-4 whitespace-nowrap">
-                    <span
-                      className={`px-4 py-2 rounded-full text-sm  text-white ${statusColor}`}
-                    >
-                      {project.status}
-                    </span>
-                  </td>
-                  <td className="px-4 py-4 whitespace-nowrap text-sm text-[#1B2229]">
-                    <span className="font-poppins font-semibold">
+                  </td> */}
+                    <td className="px-4 py-4 whitespace-nowrap">
+                      <span
+                        className={`px-4 py-2 rounded-full text-sm  text-white ${statusColor}`}
+                      >
+                        {project.status}
+                      </span>
+                    </td>
+                    <td className="px-4 py-4 whitespace-nowrap text-sm text-[#1B2229]">
+                      {/* <span className="font-poppins font-semibold">
                       Phase {project.milestones.current}
                     </span>
-                    / Phase {project.milestones.total}
-                  </td>
-                </tr>
-              );
-            })}
-          </tbody>
+                    / Phase {project.milestones.total} */}
+                      <span className="font-poppins font-semibold">
+                        {project?.status}
+                      </span>
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          )}
         </table>
       </div>
       <div className="mt-4 flex justify-center">
