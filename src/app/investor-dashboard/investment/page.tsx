@@ -3,7 +3,9 @@ import Image from "next/image";
 import ProjectTable from "@/app/components/dashboard/my-investments/investmentsTable";
 import Button from "@/app/components/common/Buttons";
 import InvestorLayout from "@/app/components/common/investor/investorsLayout";
-
+import { getInvestorDashboardStore } from "@/stores/investor-dashboard/overview/dashboard";
+import { useEffect } from "react";
+import { getInvestorInvestment } from "@/stores/investor-dashboard/overview/investment";
 
 interface data {
   id: number;
@@ -12,6 +14,20 @@ interface data {
   totalFarms: number;
 }
 const MyInvestments = () => {
+  const {
+    fetchInvestorDashboardData,
+    // loading,
+    // error,
+    // data: overviewData,
+  } = getInvestorDashboardStore();
+
+  const { fetchInvestorsInvestment } = getInvestorInvestment();
+
+  useEffect(() => {
+    fetchInvestorDashboardData();
+    fetchInvestorsInvestment();
+  }, [fetchInvestorDashboardData, fetchInvestorsInvestment]);
+
   const data: data[] = [
     {
       id: 1,

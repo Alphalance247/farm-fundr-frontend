@@ -9,6 +9,7 @@ import TransactionSearch, {
 } from "../dashboard/wallet/transactionSearch";
 import TransactionFilterMobile from "../dashboard/wallet/mobileTransactionSearch";
 import TransactionCard from "../dashboard/wallet/TransactionCard";
+import { getInvestorTransaction } from "@/stores/investor-dashboard/overview/transaction";
 
 interface Employee {
   id: string;
@@ -29,7 +30,7 @@ interface Employee {
 }
 
 const DUMMY_EMPLOYEES: Employee[] = Array.from({ length: 5 }).map((_, idx) => ({
-  id: (idx + 1) .toString(), // number
+  id: (idx + 1).toString(), // number
   transactionId: "TRD-20240226",
   name: [
     "Payout Request",
@@ -89,7 +90,6 @@ const DUMMY_EMPLOYEES: Employee[] = Array.from({ length: 5 }).map((_, idx) => ({
     "text-[#4379FF]",
   ][idx],
 }));
-  
 
 export default function TransactionSearchTable() {
   // use dummy data only
@@ -98,6 +98,8 @@ export default function TransactionSearchTable() {
   const [searchQuery, setSearchQuery] = useState("");
   const [sortBy, setSortBy] = useState<SortOption>("firstName");
   const [filterBy, setFilterBy] = useState<FilterOption>("all");
+
+  const { data } = getInvestorTransaction();
 
   return (
     <section className="bg-white rounded-lg border border-[#E3E3E5]">
@@ -172,40 +174,54 @@ export default function TransactionSearchTable() {
                   </th>
                 </tr>
               </thead>
-              <tbody>
-                {transactionData.transactions.map((emp) => (
-                  <tr key={emp.id} className={`${emp.bg}`}>
-                    <td className="py-3 px-4">
-                      <input type="checkbox" className="rounded" />
-                    </td>
-                    <td className="py-3 px-4 text-sm text-[#1B2229]">
-                      {emp.transactionId}
-                    </td>
-                    <td className="py-3 px-4 text-sm text-[#1B2229] flex items-center gap-2">
-                      {emp.typeIcons}
-                      {emp.name}
-                    </td>
-                    <td className="py-3 px-4 text-sm font-semibold text-[#DEA304]">
-                      {emp.amount}
-                    </td>
-                    <td className="py-3 px-4 text-sm text-[#34474E]">
-                      {emp.date}
-                    </td>
-                    <td className="py-3 px-4">
-                      <span
-                        className={`py-2 px-5 ${emp.statusColor} text-white rounded-xl text-sm`}
-                      >
-                        {emp.status}
-                      </span>
-                    </td>
-                    <td className="py-3 px-4">
-                      <div className="w-8 h-8 bg-white p-2 rounded-lg border border-[#E4E7EC] cursor-pointer">
-                        <PiDotsThreeVertical color="#001F3F" size={16} />
-                      </div>
+              {data?.results?.length === 0 ? (
+                <tbody className="">
+                  <tr>
+                    <td colSpan={6} className="text-center py-8">
+                      No Transactions found yet
                     </td>
                   </tr>
-                ))}
-              </tbody>
+                </tbody>
+              ) : (
+                <tbody>
+                  {data?.results.map((emp) => (
+                    <tr key={emp?.transaction_id}>
+                      <td className="py-3 px-4">
+                        <input type="checkbox" className="rounded" />
+                      </td>
+                      <td className="py-3 px-4 text-sm text-[#1B2229]">
+                        {emp.transaction_id}
+                      </td>
+                      <td className="py-3 px-4 text-sm text-[#1B2229] flex items-center gap-2">
+                        {/* {emp.typeIcons} */}
+                        {emp?.type}
+                      </td>
+                      <td className="py-3 px-4 text-sm font-semibold text-[#DEA304]">
+                        {emp.amount}
+                      </td>
+                      <td className="py-3 px-4 text-sm text-[#34474E]">
+                        {emp.date}
+                      </td>
+                      <td className="py-3 px-4">
+                        <span
+                          className={`py-2 px-5  ${
+                            emp?.status === "successful"
+                              ? "bg-[#DEA304]"
+                              : "bg-[#00C853]"
+                          } text-white rounded-xl font-poppinsRegular tracking-[-2%]`}
+                        >
+                          {emp.status}
+                        </span>
+                      </td>
+                      <td className="py-3 px-4">
+                        <div className="w-8 h-8 bg-white p-2 rounded-lg border border-[#E4E7EC] cursor-pointer">
+                          <PiDotsThreeVertical color="#001F3F" size={16} />
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              )}
             </table>
           </div>
         </>

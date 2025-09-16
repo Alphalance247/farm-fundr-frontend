@@ -13,6 +13,8 @@ import InvestorRecentActivity from "../components/dashboard/overview/investorRec
 import InvestorMilestoneRequest from "../components/dashboard/overview/investorMilestoneRequest";
 import ProjectList from "../components/dashboard/overview/investments";
 import WalletCard from "../components/dashboard/overview/walletCard";
+import { getInvestorDashboardStore } from "@/stores/investor-dashboard/overview/dashboard";
+import { getInvestorBids } from "@/stores/investor-dashboard/overview/bids";
 
 interface data {
   text?: string;
@@ -105,6 +107,16 @@ const InvestorDashboardPage = () => {
     },
   ];
   const dat = kycData?.kyc_percentage || 0;
+
+  const { fetchInvestorDashboardData, loading, error } =
+    getInvestorDashboardStore();
+  const { fetchInvestorBids } = getInvestorBids();
+
+  useEffect(() => {
+    fetchInvestorDashboardData();
+    fetchInvestorBids();
+  }, [fetchInvestorDashboardData, fetchInvestorBids]);
+
   return (
     <InvestorLayout>
       <main className="px-10 py-8 bg-gray-50 overflow-y-scroll h-full xl:px-4 xl:py-6 lg:mb-4">

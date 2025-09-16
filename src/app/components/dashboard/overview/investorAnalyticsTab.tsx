@@ -1,32 +1,36 @@
 import React from "react";
 import Image from "next/image";
+import { getInvestorDashboardStore } from "@/stores/investor-dashboard/overview/dashboard";
 
 interface data {
   totalInvestmentType?: string;
-  totalInvestmentAmount?: string;
+  totalInvestmentAmount?: number | string;
   totalInvestmentIcon?: string;
 }
 
 const InvestorAnalyticsTab: React.FC = ({}) => {
+  const { data: overviewData } = getInvestorDashboardStore();
   const data: data[] = [
     {
       totalInvestmentType: "Total Funds Invested",
-      totalInvestmentAmount: "N7,000,000",
+      totalInvestmentAmount:
+        "N " + overviewData?.total_funds_invested.toLocaleString(),
       totalInvestmentIcon: "/assets/DashBoard/overview/funds.svg",
     },
     {
       totalInvestmentType: "Total Earning",
-      totalInvestmentAmount: "N1,000,000",
+      totalInvestmentAmount:
+        "N " + overviewData?.total_earning.toLocaleString(),
       totalInvestmentIcon: "/assets/DashBoard/overview/earning.svg",
     },
     {
       totalInvestmentType: "Ongoing Investments",
-      totalInvestmentAmount: "2",
+      totalInvestmentAmount: overviewData?.ongoing_investments,
       totalInvestmentIcon: "/assets/DashBoard/overview/bid.svg",
     },
     {
       totalInvestmentType: "Total Bid Sent",
-      totalInvestmentAmount: "4",
+      totalInvestmentAmount: overviewData?.total_bid_sent,
       totalInvestmentIcon: "/assets/DashBoard/overview/ongoing.svg",
     },
   ];
@@ -50,7 +54,7 @@ const InvestorAnalyticsTab: React.FC = ({}) => {
               </p>
 
               <p className="text-2xl border-b pb-3 border-[#F2F2F3] text-[#5F5F5F] font-poppinsSemiBold">
-                {item.totalInvestmentAmount}
+                {item.totalInvestmentAmount || 0}
               </p>
             </div>
           );
