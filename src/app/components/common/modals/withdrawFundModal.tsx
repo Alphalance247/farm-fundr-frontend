@@ -171,7 +171,7 @@ export default function WithdrawFundModal({
   return (
     <>
       <ModalOverlay onClose={handleClose}>
-        <div className="md:px-2 z-50 max-w-4xl mx-auto max-h-[90vh] overflow-y-auto">
+        <div className="md:px-2 z-50 w-[800px] lg:w-[700px] md:w-[500px]  mx-auto  max-h-[90vh] overflow-y-auto">
           <div className="bg-white rounded-xl shadow-lg overflow-hidden max-h-[85vh]">
             <div className="bg-[#226646] px-6 py-4 flex items-center justify-between">
               <h2 className="text-white text-xl font-aristoBold">
@@ -193,7 +193,8 @@ export default function WithdrawFundModal({
               <div className="bg-white p-6 md:p-4 overflow-y-auto">
                 <div className="mb-6">
                   <p className="text-center text-sm mb-4 font-poppinsSemiBold text-[#303030]">
-                    Step {showTransactionDetails === "enterAmount" ? "1" : "2"} / 2
+                    Step {showTransactionDetails === "enterAmount" ? "1" : "2"}{" "}
+                    / 2
                   </p>
 
                   <div className="flex items-center gap-2">
@@ -273,7 +274,7 @@ export default function WithdrawFundModal({
                             </p>
                           ) : null}
                         </div>
-                        
+
                         <div className="flex items-center mt-2">
                           <input
                             type="checkbox"
@@ -318,14 +319,23 @@ export default function WithdrawFundModal({
                           }`}
                           onClick={handleGotNextStep}
                           disabled={amount > WALLET_BALANCE}
-                          variant={amount > WALLET_BALANCE ? "googleBtn" : "primary"}
+                          variant={
+                            amount > WALLET_BALANCE ? "googleBtn" : "primary"
+                          }
                         >
                           Proceed{" "}
                           <span>
-                            <FaArrowRightLong color="#FCFCFC" className="ml-2" />
+                            <FaArrowRightLong
+                              color="#FCFCFC"
+                              className="ml-2"
+                            />
                           </span>
                         </Button>
-                        <Button variant="secondary" className="w-full" onClick={handleClose}>
+                        <Button
+                          variant="secondary"
+                          className="w-full"
+                          onClick={handleClose}
+                        >
                           Cancel
                         </Button>
                       </div>
@@ -346,7 +356,7 @@ export default function WithdrawFundModal({
                           <span>{bankAccounts[0]?.name}</span>
                         </p>
                       </div>
-                      
+
                       <div className="flex justify-between items-center pb-3 border-b border-b-[#F6F6F6]">
                         <p className="text-sm font-poppinsRegular text-[#7C7C7C]">
                           Account Name
@@ -355,7 +365,7 @@ export default function WithdrawFundModal({
                           {bankAccounts[0]?.holder}
                         </p>
                       </div>
-                      
+
                       <div className="flex justify-between items-center pb-3 border-b border-b-[#F6F6F6]">
                         <p className="text-sm font-poppinsRegular text-[#7C7C7C]">
                           Account Number
@@ -364,7 +374,7 @@ export default function WithdrawFundModal({
                           {bankAccounts[0]?.number}
                         </p>
                       </div>
-                      
+
                       <div className="flex justify-between items-center pb-3 border-b border-b-[#F6F6F6]">
                         <p className="text-sm font-poppinsRegular text-[#7C7C7C]">
                           Amount
@@ -373,7 +383,7 @@ export default function WithdrawFundModal({
                           ₦{amount.toLocaleString()}
                         </p>
                       </div>
-                      
+
                       <div className="flex justify-between items-center pb-3 border-b border-b-[#F6F6F6]">
                         <p className="text-sm font-poppinsRegular text-[#7C7C7C]">
                           Charges
@@ -391,7 +401,10 @@ export default function WithdrawFundModal({
                         >
                           Edit Withdrawal Details
                           <span>
-                            <IoPencilSharp color="#2D865B" className="text-sm" />
+                            <IoPencilSharp
+                              color="#2D865B"
+                              className="text-sm"
+                            />
                           </span>
                         </Button>
                       </div>
@@ -404,7 +417,10 @@ export default function WithdrawFundModal({
                         >
                           {loading ? "Withdrawing...." : "Proceed"}{" "}
                           <span>
-                            <FaArrowRightLong color="#FCFCFC" className="ml-2" />
+                            <FaArrowRightLong
+                              color="#FCFCFC"
+                              className="ml-2"
+                            />
                           </span>
                         </Button>
                         <Button
