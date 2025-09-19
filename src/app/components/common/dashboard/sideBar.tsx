@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation";
 import {
   MdOutlineAccountBalanceWallet,
   MdOutlinePayment,
+  MdOutlinePermContactCalendar,
 } from "react-icons/md";
 import { TbReportAnalytics } from "react-icons/tb";
 import { CiSettings } from "react-icons/ci";
@@ -63,11 +64,11 @@ const Sidebar: React.FC<mobileMenuProps> = ({
     //   bgColor: "bg-[#2D865B]",
     //   textColor: "text-white",
     // },
-    // {
-    //   text: "Analytics",
-    //   link: "/farmer-dashboard/analytics",
-    //   icons: <MdOutlineAnalytics size={20} />,
-    // },
+    {
+      text: "Business Registration",
+      link: "/farmer-dashboard/business-registration",
+      icons: <MdOutlinePermContactCalendar size={20} />,
+    },
     {
       text: "Wallet",
       link: "/farmer-dashboard/wallet",
