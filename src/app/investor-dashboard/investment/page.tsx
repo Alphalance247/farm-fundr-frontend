@@ -24,8 +24,6 @@ const MyInvestments = () => {
   const { fetchInvestorsInvestment, data: investorData } =
     getInvestorInvestment();
 
-  console.log(investorData?.overview?.total_investment);
-
   useEffect(() => {
     fetchInvestorDashboardData();
     fetchInvestorsInvestment();

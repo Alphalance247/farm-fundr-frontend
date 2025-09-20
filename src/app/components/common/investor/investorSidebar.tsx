@@ -12,13 +12,15 @@ import { TbReportAnalytics } from "react-icons/tb";
 import { CiSettings } from "react-icons/ci";
 import { PiHeadsetLight } from "react-icons/pi";
 import { useEffect, useRef } from "react";
+import { getInvestorInvestment } from "@/stores/investor-dashboard/overview/investment";
+import { getInvestorBids } from "@/stores/investor-dashboard/overview/bids";
 
 interface sideBarData {
   heading?: string;
   text?: string;
   link?: string;
   icons?: React.ReactNode;
-  notification?: string;
+  notification?: number | string | null;
   bgColor?: string;
   textColor?: string;
 }
@@ -32,7 +34,17 @@ const InvestorSidebar: React.FC<mobileMenuProps> = ({
   showMobileMenu,
   setShowMobile,
 }) => {
+  const { fetchInvestorsInvestment, data: investorData } =
+    getInvestorInvestment();
+  const { fetchInvestorBids, data: bidsData } = getInvestorBids();
+
+  useEffect(() => {
+    fetchInvestorsInvestment();
+    fetchInvestorBids();
+  }, [fetchInvestorsInvestment, fetchInvestorBids]);
   const pathname = usePathname();
+
+  const investmentNotification = investorData?.overview?.total_investment || 0;
 
   const sideBarData: sideBarData[] = [
     {
@@ -44,15 +56,15 @@ const InvestorSidebar: React.FC<mobileMenuProps> = ({
       text: "My Investments",
       link: "/investor-dashboard/investment",
       icons: <TbReportAnalytics size={20} />,
-      notification: "10",
-      bgColor: "bg-[#F2F2F2]",
-      textColor: "text-[#2D865B]",
+      notification: investmentNotification || 0,
+      bgColor: "bg-[#2D865B]",
+      textColor: "text-white",
     },
     {
       text: "Bids",
       link: "/investor-dashboard/bids",
       icons: <MdOutlineMessage size={20} />,
-      notification: "10",
+      notification: bidsData?.total_bids || 0,
       bgColor: "bg-[#2D865B]",
       textColor: "text-white",
     },
