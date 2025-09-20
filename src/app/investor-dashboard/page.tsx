@@ -10,7 +10,6 @@ import Button from "../components/common/Buttons";
 import { MdOutlineDateRange } from "react-icons/md";
 import InvestorAnalyticsTab from "../components/dashboard/overview/investorAnalyticsTab";
 import InvestorRecentActivity from "../components/dashboard/overview/investorRecentActivity";
-import InvestorMilestoneRequest from "../components/dashboard/overview/investorMilestoneRequest";
 import ProjectList from "../components/dashboard/overview/investments";
 import WalletCard from "../components/dashboard/overview/walletCard";
 import { getInvestorDashboardStore } from "@/stores/investor-dashboard/overview/dashboard";
@@ -256,7 +255,7 @@ const InvestorDashboardPage = () => {
         </div>
         <div className="flex flex-row lg:flex-col justify-between gap-6">
           <InvestorRecentActivity />
-          <InvestorMilestoneRequest />
+          {/* <InvestorMilestoneRequest /> */}
         </div>
       </main>
     </InvestorLayout>
