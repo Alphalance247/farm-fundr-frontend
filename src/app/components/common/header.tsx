@@ -182,7 +182,7 @@ const Header = () => {
                     <Button
                       variant="secondary"
                       size="small"
-                      className="w-[180px]"
+                      className="w-[180px] "
                     >
                       Dashboard
                     </Button>
@@ -271,7 +271,7 @@ const Header = () => {
                       <Button
                         variant="secondary"
                         size="small"
-                        className="w-[180px]"
+                        className="w-[180px] md:mb-4"
                       >
                         Dashboard
                       </Button>

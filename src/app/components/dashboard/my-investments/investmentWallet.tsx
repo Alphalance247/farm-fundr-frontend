@@ -6,11 +6,12 @@ import { IoArrowDownOutline } from "react-icons/io5";
 import { IoMdArrowUp } from "react-icons/io";
 import RequestPayoutUser from "../wallet/requestPayoutUser";
 import { getInvestorDashboardStore } from "@/stores/investor-dashboard/overview/dashboard";
+import WithdrawFundModal from "../../common/modals/withdrawFundModal";
 
 export default function WalletCard() {
   const [hideBalance, setHideBalance] = useState(false);
   const [showPayoutModal, setShowPayoutModal] = useState(false);
-
+  const [showWithdrawModal, setShowWithdrawModal] = useState(false);
   const { data: overviewData, fetchInvestorDashboardData } =
     getInvestorDashboardStore();
   const walletBalance = overviewData?.wallet_balance || 0;
@@ -25,11 +26,15 @@ export default function WalletCard() {
   };
 
   const handleWithdrawReturns = () => {
-    setShowPayoutModal(true);
+    setShowWithdrawModal(true);
   };
 
   const handleCloseModal = () => {
     setShowPayoutModal(false);
+  };
+
+  const handleCloseWithdrawModal = () => {
+    setShowWithdrawModal(false);
   };
 
   return (
@@ -110,6 +115,12 @@ export default function WalletCard() {
       {showPayoutModal && (
         <RequestPayoutUser handleRequestPayoutModal={handleCloseModal} />
       )}
+
+      <WithdrawFundModal
+        isOpen={showWithdrawModal}
+        onClose={handleCloseWithdrawModal}
+        userType="investor"
+      />
     </>
   );
 }

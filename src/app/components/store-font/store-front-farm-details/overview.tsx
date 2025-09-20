@@ -27,7 +27,7 @@ const Overview = () => {
     {
       id: 2,
       name: "Projects",
-      href: "/farm-page",
+      href: "/farm-page/projects",
       icon: "/assets/store-front/farmicon.svg",
       numberOfBranches: farmPageData?.projects_count || 0,
       viewBtn: "View",

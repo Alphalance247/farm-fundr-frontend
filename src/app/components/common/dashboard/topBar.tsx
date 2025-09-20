@@ -96,6 +96,7 @@ export function Topbar({
           <div className="h-[40px] w-[40px] rounded-full bg-[#EEFEF6] text-[#2D865B] flex items-center justify-center text-[1.3rem] tracking-[0.34px] font-medium">
             {user?.fullname
               .split(" ")
+              .slice(0, 2)
               .map((n) => n[0])
               .join("")
               .toUpperCase()}
@@ -152,7 +153,9 @@ export function Topbar({
             placeholder="Search"
             onChange={handleChange}
             value=""
-            className="pl-8 w-[329px] py-[14px] bg-[#F6F6F6] rounded-[40px] lg:w-full"
+            className="pl-8 w-[329px] py-[14px] bg-[#F6F6F6] rounded-[40px] lg:w-full cursor-not-allowed opacity-50"
+            disabled
+            readOnly
             // variant="primary"
             // withWidth={false}
           />
@@ -180,7 +183,7 @@ export function Topbar({
             </div>
           )}
         </div>
-        <div className="rounded-full bg-[#F6F6F6] w-16 h-16 flex items-center justify-center relative cursor-pointer hover:bg-[#cac6c6] xl:w-10 xl:h-10 ">
+        <div className="rounded-full bg-[#F6F6F6] w-16 h-16 flex items-center justify-center relative cursor-not-allowed opacity-50 xl:w-10 xl:h-10 ">
           <IoNotificationsOutline
             className="text-[38px] lg:text-2xl"
             color="#4E4E4E"
