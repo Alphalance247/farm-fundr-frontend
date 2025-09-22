@@ -45,7 +45,7 @@ const BusinessRegistration = () => {
 
   return (
     <DashboardLayout>
-      <main className="px-10 py-8 bg-gray-50 overflow-auto">
+      <main className="px-10 py-8 bg-gray-50 overflow-auto pb-12">
         <div className="mb-6">
           <GoBackBtn href="/farmer-dashboard" />
         </div>
@@ -108,20 +108,19 @@ const BusinessRegistration = () => {
                   />
                 </div>
               </div>
-
             </div>
           </div>
-              <div className="flex w-full justify-center mt-8">
-                <Button
-                  variant="primary"
-                  size="medium"
-                  onClick={handleSaveAndContinue}
-                  className="flex items-center justify-center gap-2 w-full"
-                >
-                  Save And Continue
-                  <FaArrowRightLong size={16} />
-                </Button>
-              </div>
+          <div className="flex w-full justify-center mt-8">
+            <Button
+              variant="primary"
+              size="medium"
+              onClick={handleSaveAndContinue}
+              className="flex items-center justify-center gap-2 w-full"
+            >
+              Save And Continue
+              <FaArrowRightLong size={16} />
+            </Button>
+          </div>
         </div>
       </main>
     </DashboardLayout>
