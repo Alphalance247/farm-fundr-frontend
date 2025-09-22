@@ -11,7 +11,7 @@ interface data {
   id: number;
   name: string;
   image: string;
-  totalFarms: number;
+  totalFarms: number | undefined;
 }
 const MyInvestments = () => {
   const {
@@ -21,7 +21,8 @@ const MyInvestments = () => {
     // data: overviewData,
   } = getInvestorDashboardStore();
 
-  const { fetchInvestorsInvestment } = getInvestorInvestment();
+  const { fetchInvestorsInvestment, data: investorData } =
+    getInvestorInvestment();
 
   useEffect(() => {
     fetchInvestorDashboardData();
@@ -33,25 +34,25 @@ const MyInvestments = () => {
       id: 1,
       name: "Total Investments",
       image: "/assets/my-farms/1.svg",
-      totalFarms: 6,
+      totalFarms: investorData?.overview?.total_investment,
     },
     {
       id: 2,
       name: "Ongoing",
       image: "/assets/my-farms/2.svg",
-      totalFarms: 2,
+      totalFarms: investorData?.overview?.ongoing,
     },
     {
       id: 3,
       name: "Completed",
       image: "/assets/my-farms/3.svg",
-      totalFarms: 4,
+      totalFarms: investorData?.overview?.completed,
     },
     {
       id: 4,
       name: "Draft",
       image: "/assets/my-farms/4.svg",
-      totalFarms: 10,
+      totalFarms: investorData?.overview?.cancelled,
     },
   ];
 

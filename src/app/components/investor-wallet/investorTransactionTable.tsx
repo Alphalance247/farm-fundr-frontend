@@ -145,7 +145,7 @@ export default function TransactionSearchTable() {
 
           {/* Mobile view */}
           <div className="overflow-x-auto block md:hidden">
-            <table className="w-full min-w-[1000px] md:w-[800px]">
+            <table className="w-full min-w-[700px] md:w-[800px]">
               <thead className="bg-[#FAFEFF]">
                 <tr>
                   <th className="py-3 px-4 w-[10px] text-left">
@@ -154,16 +154,16 @@ export default function TransactionSearchTable() {
                       className="rounded border-gray-300"
                     />
                   </th>
-                  <th className="py-3 px-4 text-sm text-[#0B222A] font-poppinsSemiBold w-[250px] text-left">
+                  <th className="py-3 px-4 text-sm text-[#0B222A] font-poppinsSemiBold w-[150px] text-left">
                     Transaction Id
                   </th>
-                  <th className="py-3 px-4 text-sm text-[#0B222A] font-poppinsSemiBold text-left w-[150px]">
+                  <th className="py-3 px-4 text-sm text-[#0B222A] font-poppinsSemiBold text-left w-[100px]">
                     Type
                   </th>
                   <th className="py-3 px-4 text-sm text-[#0B222A] font-poppinsSemiBold text-left w-[100px]">
                     Amount
                   </th>
-                  <th className="py-3 px-4 text-sm text-[#0B222A] font-poppinsSemiBold text-left w-[100px]">
+                  <th className="py-3 px-4 text-sm text-[#0B222A] font-poppinsSemiBold text-left w-[150px]">
                     Date
                   </th>
                   <th className="py-3 px-4 text-sm text-[#0B222A] font-poppinsSemiBold text-left w-[50px]">

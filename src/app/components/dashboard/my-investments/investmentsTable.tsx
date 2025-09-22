@@ -98,11 +98,11 @@ const projectsList: ProjectCardProps[] = [
     image: "/assets/my-farms/2.png",
   },
 ];
-const statusColors: Record<Project["status"], string> = {
-  Ongoing: "bg-[#DEA304]",
-  Completed: "bg-[#34C759]",
-  Canceled: "bg-[#DE4204]",
-};
+// const statusColors: Record<Project["status"], string> = {
+//   Ongoing: "bg-[#DEA304]",
+//   Completed: "bg-[#34C759]",
+//   Canceled: "bg-[#DE4204]",
+// };
 
 export default function ProjectTable() {
   const [projects] = useState<Project[]>(DUMMY_PROJECTS);
@@ -152,7 +152,7 @@ export default function ProjectTable() {
                 </th>
               </tr>
             </thead>
-            {data?.results?.length === 0 ? (
+            {data?.data?.length === 0 ? (
               <tbody className="">
                 <tr>
                   <td colSpan={6} className="text-center py-8">
@@ -162,7 +162,7 @@ export default function ProjectTable() {
               </tbody>
             ) : (
               <tbody>
-                {data?.results.map((project, i) => (
+                {data?.data.map((project, i) => (
                   <tr
                     key={i}
                     className="even:bg-[#EEFEF6] odd:bg-[#FFFFFF] text-sm"
@@ -180,24 +180,24 @@ export default function ProjectTable() {
                       </span>
                     </td>
                     <td className="py-3 text-sm text-[#5F5F5F] px-4">
-                      {project?.budget}
+                      {project?.project?.budget}
                     </td>
                     <td className="py-3 px-4">
                       <span
                         className={`py-2 px-5  ${
-                          project?.status === "pending"
+                          project?.project?.status === "Ongoing"
                             ? "bg-[#DEA304]"
                             : "bg-[#00C853]"
                         } text-white rounded-xl font-poppinsRegular tracking-[-2%]`}
                       >
-                        {project.status}
+                        {project?.project?.status}
                       </span>
                     </td>
                     <td className="py-3 text-sm text-[#5F5F5F] px-4">
-                      {project?.ROI}
+                      {project?.roi_earned}
                     </td>
                     <td className="py-3 text-sm text-[#5F5F5F] px-4">
-                      {project.duration}
+                      {project?.start_date}
                     </td>
                     <td className="py-3 text-sm text-[#5F5F5F] px-4">
                       {project?.start_date}

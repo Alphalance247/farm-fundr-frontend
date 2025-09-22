@@ -3,15 +3,23 @@ import { create } from "zustand";
 import axiosInstance from "@/lib/axios";
 
 export interface investorInvestmentDataStore {
-  results: {
+  overview: {
+    total_investment: number;
+    ongoing: number;
+    completed: number;
+    cancelled: number;
+  };
+  data: {
     project_name: string;
     project_image: string;
-    budget: string;
-    status: string;
     milestone: string;
     roi_earned: string;
-    ROI: string;
     start_date: string;
+    project: {
+      id: string;
+      status: string;
+      budget: string;
+    };
   }[];
 }
 
@@ -30,7 +38,7 @@ export const getInvestorInvestment = create<investorInvestmentStore>((set) => ({
   fetchInvestorsInvestment: async () => {
     set({ loading: true, error: null });
     try {
-      const res = await axiosInstance.get(`investment/transactions`);
+      const res = await axiosInstance.get(`investment/investor-investments`);
       set({ data: res.data, loading: false });
     } catch (err) {
       if (err instanceof AxiosError) {

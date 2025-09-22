@@ -12,7 +12,7 @@ interface data {
   totalFarms: string | number;
 }
 const MyInvestments = () => {
-  const { fetchInvestorBids, data: bidsData, loading } = getInvestorBids();
+  const { data: bidsData, loading } = getInvestorBids();
   const data: data[] = [
     {
       id: 1,

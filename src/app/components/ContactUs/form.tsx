@@ -3,9 +3,8 @@ import Input from "../common/input";
 import Button from "../common/Buttons";
 import { GoArrowRight } from "react-icons/go";
 import { useState } from "react";
-import axiosInstance from "@/lib/axios";
 import toast from "react-hot-toast";
-import { AxiosError } from "axios";
+import axios, { AxiosError } from "axios";
 
 const UserDetails = {
   name: "",
@@ -41,7 +40,7 @@ const Form = () => {
 
     try {
       setIsLoading(true);
-      const res = await axiosInstance.post(`farms/contact-us`, form);
+      const res = await axios.post(`farms/contact-us`, form);
 
       if (res.status === 200 || res?.status === 201) {
         toast.success(
