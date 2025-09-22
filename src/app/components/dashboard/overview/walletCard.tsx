@@ -6,6 +6,7 @@ import { IoArrowDownOutline } from "react-icons/io5";
 import { IoMdArrowUp } from "react-icons/io";
 import RequestPayoutUser from "../wallet/requestPayoutUser";
 import { getInvestorDashboardStore } from "@/stores/investor-dashboard/overview/dashboard";
+import Link from "next/link";
 
 export default function WalletCard() {
   const [hideBalance, setHideBalance] = useState(false);
@@ -26,13 +27,9 @@ export default function WalletCard() {
     setShowPayoutModal(false);
   };
 
-  const handleViewTransactions = () => {
-    console.log("Navigating to Transactions page...");
-  };
-
   return (
     <>
-      <section className="mt-6 px-6 md:px-4 w-[40%] xl:w-full py-8 border border-gray-200 bg-white rounded-2xl space-y-6">
+      <section className="mt-6 px-6 md:px-4 w-full  h-fit py-8 border border-gray-200 bg-white rounded-2xl space-y-6">
         <div className="flex   justify-center bg-[#EEFEF6] border-[0.75px] text-[#2D865B] rounded-[2.5rem] border-[#2D865B] hover:opacity-[0.8] hover:transition-all hover:duration-500 py-2 px-4 w-fit mx-auto ">
           <label className="flex items-center cursor-pointer">
             <span className="mr-2 text-[#34474E] text-xs">Hide Balance</span>
@@ -106,13 +103,11 @@ export default function WalletCard() {
           </div>
         </div>
         <div className="text-center w-full">
-          <Button
-            onClick={handleViewTransactions}
-            variant="secondary"
-            className="!w-full"
-          >
-            View Transactions
-          </Button>
+          <Link href={"/investor-dashboard/wallet"}>
+            <Button variant="secondary" className="!w-full">
+              View Transactions
+            </Button>
+          </Link>
         </div>
       </section>
       {showPayoutModal && (

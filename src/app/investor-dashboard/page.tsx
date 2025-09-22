@@ -14,6 +14,8 @@ import ProjectList from "../components/dashboard/overview/investments";
 import WalletCard from "../components/dashboard/overview/walletCard";
 import { getInvestorDashboardStore } from "@/stores/investor-dashboard/overview/dashboard";
 import { getInvestorBids } from "@/stores/investor-dashboard/overview/bids";
+import SkeletonLoader from "@/components/ui/skeleton-loader";
+import ErrorFetch from "../components/common/errorFetch";
 
 interface data {
   text?: string;
@@ -109,7 +111,11 @@ const InvestorDashboardPage = () => {
 
   const { fetchInvestorDashboardData, loading, error } =
     getInvestorDashboardStore();
-  const { fetchInvestorBids } = getInvestorBids();
+  const {
+    fetchInvestorBids,
+    loading: loadingBids,
+    error: errorBids,
+  } = getInvestorBids();
 
   useEffect(() => {
     fetchInvestorDashboardData();
@@ -248,13 +254,54 @@ const InvestorDashboardPage = () => {
             </div>
           </div>
         </div>
-        <InvestorAnalyticsTab />
-        <div className="flex flex-row xl:flex-col justify-between gap-6">
-          <ProjectList />
-          <WalletCard />
-        </div>
-        <div className="flex flex-row lg:flex-col justify-between gap-6">
-          <InvestorRecentActivity />
+
+        {loading ? (
+          <SkeletonLoader className="h-[100px] w-full my-6" />
+        ) : error ? (
+          <ErrorFetch
+            message="Error Fetching Dashboard Overview"
+            onRefetch={fetchInvestorDashboardData}
+          />
+        ) : (
+          <InvestorAnalyticsTab />
+        )}
+
+        <div className="grid grid-cols-2 lg:grid-cols-1 justify-between gap-6">
+          <div>
+            {loading ? (
+              <SkeletonLoader className="h-[100px] w-full my-6" />
+            ) : error ? (
+              <ErrorFetch
+                message="Error Fetching Dashboard Overview"
+                onRefetch={fetchInvestorDashboardData}
+              />
+            ) : (
+              <InvestorRecentActivity />
+            )}
+
+            {loadingBids ? (
+              <SkeletonLoader className="h-[100px] w-full my-6" />
+            ) : errorBids ? (
+              <ErrorFetch
+                message="Error Fetching Dashboard Overview"
+                onRefetch={fetchInvestorDashboardData}
+              />
+            ) : (
+              <ProjectList />
+            )}
+          </div>
+
+          {loading ? (
+            <SkeletonLoader className="h-[100px] w-full my-6" />
+          ) : error ? (
+            <ErrorFetch
+              message="Error Fetching Dashboard Overview"
+              onRefetch={fetchInvestorDashboardData}
+            />
+          ) : (
+            <WalletCard />
+          )}
+
           {/* <InvestorMilestoneRequest /> */}
         </div>
       </main>

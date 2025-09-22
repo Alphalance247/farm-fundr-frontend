@@ -4,6 +4,10 @@ import Button from "@/app/components/common/Buttons";
 import InvestorLayout from "@/app/components/common/investor/investorsLayout";
 import BidsTable from "@/app/components/dashboard/my-investments/bidsTable";
 import { getInvestorBids } from "@/stores/investor-dashboard/overview/bids";
+import { getInvestorBidStatus } from "@/stores/investor-dashboard/overview/bids-by-status";
+import { useEffect } from "react";
+import ErrorFetch from "@/app/components/common/errorFetch";
+import SkeletonLoader from "@/components/ui/skeleton-loader";
 
 interface data {
   id: number;
@@ -11,8 +15,14 @@ interface data {
   image: string;
   totalFarms: string | number;
 }
-const MyInvestments = () => {
-  const { data: bidsData, loading } = getInvestorBids();
+const InvestmentBids = () => {
+  const {
+    data: bidsData,
+    loading: loadingOverview,
+    error: errorBidsOverview,
+    fetchInvestorBids,
+  } = getInvestorBids();
+  const { fetchInvestorsBidStatus, loading } = getInvestorBidStatus();
   const data: data[] = [
     {
       id: 1,
@@ -40,6 +50,11 @@ const MyInvestments = () => {
     },
   ];
 
+  useEffect(() => {
+    fetchInvestorsBidStatus();
+    fetchInvestorBids();
+  }, [fetchInvestorsBidStatus, fetchInvestorBids]);
+
   return (
     <InvestorLayout>
       <main className="px-10 py-10 bg-gray-50 overflow-y-scroll h-full xl:px-4 xl:py-6">
@@ -65,29 +80,48 @@ const MyInvestments = () => {
             </Button>
           </div>
         </div>
-        <div className="grid grid-cols-4 gap-x-4 mt-10 mb-4  xl:grid-cols-3 xl:gap-4 lg:grid-cols-2 md:grid-cols-2 md:gap-2">
-          {data.map((item) => (
-            <div key={item.id} className="bg-white rounded-lg px-6 py-4">
-              <Image src={item.image} width={50} height={50} alt="farm" />
 
-              <div className="flex items-center justify-between gap-y-2 pb-3 border-b border-[#F2F2F3] mt-2 md:flex-col md:items-start">
-                <h3 className="text-sm font-poppinsRegular text-[#34474E]">
-                  {item.name}
-                </h3>
-                <p className="text-2xl font-poppinsSemiBold text-[#0B222A]">
-                  {item.totalFarms}
-                </p>
+        {loadingOverview ? (
+          <SkeletonLoader className="h-[200px] w-full my-6" />
+        ) : errorBidsOverview ? (
+          <ErrorFetch
+            message="Error Fetching Bids Overview"
+            onRefetch={fetchInvestorBids}
+          />
+        ) : (
+          <div className="grid grid-cols-4 gap-x-4 mt-10 mb-4  xl:grid-cols-3 xl:gap-4 lg:grid-cols-2 md:grid-cols-2 md:gap-2">
+            {data.map((item) => (
+              <div key={item.id} className="bg-white rounded-lg px-6 py-4">
+                <Image src={item.image} width={50} height={50} alt="farm" />
+
+                <div className="flex items-center justify-between gap-y-2 pb-3 border-b border-[#F2F2F3] mt-2 md:flex-col md:items-start">
+                  <h3 className="text-sm font-poppinsRegular text-[#34474E]">
+                    {item.name}
+                  </h3>
+                  <p className="text-2xl font-poppinsSemiBold text-[#0B222A]">
+                    {item.totalFarms}
+                  </p>
+                </div>
               </div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        )}
 
-        <div className="mt-4">
-          <BidsTable />
-        </div>
+        {loading ? (
+          <SkeletonLoader className="h-[300px] w-full my-6" />
+        ) : errorBidsOverview ? (
+          <ErrorFetch
+            message="Error Fetching Bids Status"
+            onRefetch={fetchInvestorBids}
+          />
+        ) : (
+          <div className="mt-4">
+            <BidsTable />
+          </div>
+        )}
       </main>
     </InvestorLayout>
   );
 };
 
-export default MyInvestments;
+export default InvestmentBids;

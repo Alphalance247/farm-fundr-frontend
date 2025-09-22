@@ -4,7 +4,6 @@ import Button from "./Buttons";
 import { FaLocationDot } from "react-icons/fa6";
 import { GoDotFill } from "react-icons/go";
 
-
 interface BidCardProps {
   name: string;
   location: string;

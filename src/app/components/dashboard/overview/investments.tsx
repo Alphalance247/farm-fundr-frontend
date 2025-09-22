@@ -3,23 +3,9 @@ import { PiDotsThree } from "react-icons/pi";
 import SubHead from "../common/sectionHeading";
 import { IoIosArrowDown } from "react-icons/io";
 import Button from "../../common/Buttons";
-import ProjectCard, { ProjectCardProps } from "../wallet/projectCard";
-import { getInvestorBids } from "@/stores/investor-dashboard/overview/bids";
-
-const projectsList: ProjectCardProps[] = [
-  {
-    projectName: "Green Valley Farm",
-    investedAmount: 120000,
-    status: "Ongoing",
-    image: "/assets/my-farms/2.png",
-  },
-  {
-    projectName: "Apple Green House",
-    investedAmount: 120000,
-    status: "Active",
-    image: "/assets/my-farms/2.png",
-  },
-];
+import ProjectCard from "../wallet/projectCard";
+import { getInvestorInvestment } from "@/stores/investor-dashboard/overview/investment";
+import Link from "next/link";
 
 // const projects = [
 //   {
@@ -61,9 +47,9 @@ const projectsList: ProjectCardProps[] = [
 // ];
 
 export default function ProjectList() {
-  const { data } = getInvestorBids();
+  const { data } = getInvestorInvestment();
   return (
-    <section className="mt-6 px-8 md:px-4 w-[60%] xl:w-full py-8 border border-[#E4E7EC] bg-[white] rounded-xl">
+    <section className="mt-6 px-8 md:px-4 w-full py-8 border h-fit border-[#E4E7EC] bg-[white] rounded-xl">
       <div className="flex border-b pb-3 border-[#E4E7EC] justify-between items-center mb-5">
         <SubHead text="My Investments" />
         <div className="relative flex items-center gap-x-4 ">
@@ -81,30 +67,47 @@ export default function ProjectList() {
           </div>
         </div>
       </div>
-      <div className="space-y-4 hidden md:block">
-        {projectsList.map((p, i) => (
-          <ProjectCard key={i} {...p} />
-        ))}
-      </div>
+
+      {data?.data?.length === 0 ? (
+        <div>
+          <p className="text-center py-8">No Investment list found</p>
+        </div>
+      ) : (
+        <div className="space-y-4 hidden md:block">
+          {data?.data.map((p, i) => (
+            <ProjectCard
+              key={i}
+              projectName={p?.farm_name}
+              investedAmount={p?.project?.budget}
+              status={p.project?.status}
+              image={p?.project_image}
+              detailsLink={
+                "/investor-dashboard/investment/" + p?.project?.id.toString()
+              }
+            />
+          ))}
+        </div>
+      )}
       <div className="overflow-x-auto block md:hidden border border-[#E4E7EC]">
         <table className="w-full border-collapse hide-scrollbar rounded-lg overflow-hidden">
           <thead className="bg-[#EEFEF6]">
             <tr>
               <th className="px-4 py-3 text-left text-sm font-poppinsSemiBold text-[#0B222A]">
-                Project Name
+                Farm Name
               </th>
               <th className="px-4 py-3 text-left text-sm font-poppinsSemiBold text-[#0B222A]">
-                Progress
+                Project Name
               </th>
+
               <th className="px-4 py-3 text-left text-sm font-poppinsSemiBold text-[#0B222A]">
                 Status
               </th>
               <th className="px-4 py-3 text-left text-sm font-poppinsSemiBold text-[#0B222A]">
-                Milestones
+                Amount Invested
               </th>
             </tr>
           </thead>
-          {data?.bids?.length === 0 ? (
+          {data?.data?.length === 0 ? (
             <tbody>
               <tr>
                 <td colSpan={6} className="text-center py-8">
@@ -114,18 +117,28 @@ export default function ProjectList() {
             </tbody>
           ) : (
             <tbody className="bg-white divide-y divide-gray-200">
-              {data?.bids.map((project, index) => {
+              {data?.data.map((project, index) => {
                 // const isComplete = project.progress === 100;
                 // const barColor = isComplete ? "bg-[#00C853]" : "bg-[#DEA304]";
                 const statusColor =
-                  project?.status === "pending"
+                  project?.project.status === "Ongoing"
                     ? "bg-[#00C853]"
                     : "bg-[#DEA304]";
 
                 return (
                   <tr key={index}>
                     <td className="px-4 py-4 whitespace-nowrap text-sm text-[#1B2229]">
-                      {project.project?.name}
+                      <Link
+                        href={
+                          "/investor-dashboard/investment/" +
+                            project?.project?.id.toString() || "/"
+                        }
+                      >
+                        <div>{project.farm_name}</div>
+                      </Link>
+                    </td>
+                    <td className="px-4 py-4 whitespace-nowrap text-sm text-[#1B2229]">
+                      {project.project_name}
                     </td>
                     {/* <td className="px-4 py-4 whitespace-nowrap text-sm flex items-center gap-2">
                     <div className="w-32 bg-[#FFFAE6] rounded-full h-3">
@@ -136,21 +149,17 @@ export default function ProjectList() {
                     </div>
                     <span>{project.progress}%</span>
                   </td> */}
+
                     <td className="px-4 py-4 whitespace-nowrap">
                       <span
                         className={`px-4 py-2 rounded-full text-sm  text-white ${statusColor}`}
                       >
-                        {project.status}
+                        {project?.project?.status}
                       </span>
                     </td>
+
                     <td className="px-4 py-4 whitespace-nowrap text-sm text-[#1B2229]">
-                      {/* <span className="font-poppins font-semibold">
-                      Phase {project.milestones.current}
-                    </span>
-                    / Phase {project.milestones.total} */}
-                      <span className="font-poppins font-semibold">
-                        {project?.status}
-                      </span>
+                      {project.project?.budget}
                     </td>
                   </tr>
                 );
@@ -160,9 +169,11 @@ export default function ProjectList() {
         </table>
       </div>
       <div className="mt-4 flex justify-center">
-        <Button variant="secondary" size="medium">
-          View All Investments
-        </Button>
+        <Link href={"/investor-dashboard/investment"}>
+          <Button variant="secondary" size="medium">
+            View All Investments
+          </Button>
+        </Link>
       </div>
     </section>
   );

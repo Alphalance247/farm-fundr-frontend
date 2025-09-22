@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Image from "next/image";
 import Button from "../../common/Buttons";
 import { IoArrowDownOutline } from "react-icons/io5";
@@ -12,14 +12,9 @@ export default function WalletCard() {
   const [hideBalance, setHideBalance] = useState(false);
   const [showPayoutModal, setShowPayoutModal] = useState(false);
   const [showWithdrawModal, setShowWithdrawModal] = useState(false);
-  const { data: overviewData, fetchInvestorDashboardData } =
-    getInvestorDashboardStore();
+  const { data: overviewData } = getInvestorDashboardStore();
   const walletBalance = overviewData?.wallet_balance || 0;
   const roiBalance = overviewData?.roi_total || 0;
-
-  useEffect(() => {
-    fetchInvestorDashboardData();
-  }, [fetchInvestorDashboardData]);
 
   const handleFundWallet = () => {
     setShowPayoutModal(true);
