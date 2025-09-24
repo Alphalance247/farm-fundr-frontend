@@ -22,16 +22,16 @@ const Header = () => {
       id: 3,
       name: "About Us",
       scrollSection: "solution",
-      link: "/",
+      link: "/about-us",
       subMenu: [
         {
           name: "About Us",
           link: "/about-us",
         },
-        {
-          name: "Meet our team",
-          link: "/meet-team",
-        },
+        // {
+        //   name: "Meet our team",
+        //   link: "/meet-team",
+        // },
       ],
       icon: <FaCaretDown size={16} />,
     },
@@ -62,11 +62,11 @@ const Header = () => {
       name: "About Us",
       link: "/about-us",
     },
-    {
-      id: 3,
-      name: "Meet our team",
-      link: "/meet-team",
-    },
+    // {
+    //   id: 3,
+    //   name: "Meet our team",
+    //   link: "/meet-team",
+    // },
     {
       id: 4,
       name: "How It Works",
@@ -182,7 +182,7 @@ const Header = () => {
                     <Button
                       variant="secondary"
                       size="small"
-                      className="w-[180px]"
+                      className="w-[180px] "
                     >
                       Dashboard
                     </Button>
@@ -271,7 +271,7 @@ const Header = () => {
                       <Button
                         variant="secondary"
                         size="small"
-                        className="w-[180px]"
+                        className="w-[180px] md:mb-4"
                       >
                         Dashboard
                       </Button>

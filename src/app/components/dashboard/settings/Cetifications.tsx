@@ -14,6 +14,7 @@ export default function Certifications() {
   const [form, setForm] = useState({
     highest_education: userDetails?.highest_education || "",
     university: userDetails?.university || "",
+    years_of_exp:userDetails?.years_of_exp || ''
   });
   const [loading, setIsLoading] = useState(false);
   const handleCertificationUpdate = async (e: React.FormEvent) => {
@@ -24,14 +25,10 @@ export default function Certifications() {
         ...form,
       });
 
-      if (res.status === 200) {
+      if (res.status === 200 || res.status === 201) {
         toast.success("Profile update successfully");
       }
-      setForm({
-        ...form,
-        highest_education: "",
-        university: "",
-      });
+   
       setIsLoading(false);
     } catch (err) {
       // Extract the error message from the response
@@ -53,7 +50,7 @@ export default function Certifications() {
         subHead="Update your profile and personal details here"
       />
 
-      <div className="mt-8 pb-10 border-b border-[#E4E7EC] w-[55%] mx-auto">
+      <div className="mt-8 pb-10 border-b border-[#E4E7EC] w-[55%] lg:w-full mx-auto">
         <form action="post" onSubmit={handleCertificationUpdate}>
           <div className="grid grid-cols-1 gap-6">
             <div>
@@ -88,10 +85,28 @@ export default function Certifications() {
                 }
               />
             </div>
+
+            <div>
+              <Label className="mb-1 block">
+               Years of Experience
+              </Label>
+
+              <Input
+                name="years_of_exp"
+                className=""
+                type="number"
+                value={form?.years_of_exp}
+                placeholder=""
+                variant="tertiary"
+                onChange={(e) =>
+                  setForm({ ...form, years_of_exp: e.target.value })
+                }
+              />
+            </div>
           </div>
 
           <div className="text-right mt-10">
-            <Button className="w-[211px]" type="submit">
+            <Button className="w-[211px] md:w-full" type="submit">
               {loading ? "Uploading..." : "Save Changes"}
             </Button>
           </div>

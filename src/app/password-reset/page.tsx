@@ -50,6 +50,9 @@ const PasswordReset = () => {
         const storedEmail = localStorage.getItem("password_reset_email");
         if (storedEmail) {
           setResetEmail(storedEmail);
+        }else{
+          router.push('/forgot-password')
+              router.push("/forgot-password");
         }
       }
 
@@ -85,7 +88,7 @@ const PasswordReset = () => {
           setResetPasswordSuccessful("successfulreset");
           router.push("/login");
         }
-
+// need
         setLoading(false);
       } catch (err) {
         // Extract the error message from the response

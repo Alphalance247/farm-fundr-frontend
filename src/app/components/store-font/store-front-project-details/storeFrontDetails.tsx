@@ -42,9 +42,11 @@ const StoreFrontDetails = ({ id }: { id: string }) => {
   } = getFarmPageProjectDetails();
 
   useEffect(() => {
-    fetchFarmPageProjectList(farmName);
-    fetchProjectsDetails(farmName, id);
-    fetchFarmPageList(farmName);
+    if (farmName) {
+      fetchFarmPageProjectList(farmName);
+      fetchProjectsDetails(farmName, id);
+      fetchFarmPageList(farmName);
+    }
   }, [
     fetchFarmPageProjectList,
     fetchProjectsDetails,
@@ -71,18 +73,20 @@ const StoreFrontDetails = ({ id }: { id: string }) => {
             farmerName={farmPageData?.owner_name}
             cacRegNo={farmPageData?.cac_reg_no || "N/A"}
             verifiedText={farmPageData?.cac_reg_no ? "Verified" : "Unverified"}
+            farmpageLogo={farmPageData?.logo}
+            farmWhatsAppNumber={`https://wa.me/${farmPageData?.farm_whatsapp_number}`}
           />
 
           <section className="max-w-[1300px] mx-auto px-4 py-10 md:px-4 md:py-12">
             <div className="">
-              <GoBackBtn href="/farm-page" />
+              <GoBackBtn href="/farm-page/projects/" />
               {loading ? (
                 <Spinner />
               ) : error ? (
                 <ErrorFetch
                   message="Error project details"
                   onRefetch={() => {
-                    fetchProjectsDetails("bandele-farm", id);
+                    fetchProjectsDetails(farmName, id);
                   }}
                 />
               ) : (
@@ -92,9 +96,9 @@ const StoreFrontDetails = ({ id }: { id: string }) => {
                   </h3>
                   <div className="grid grid-cols-2 gap-x-10 lg:grid-cols-1 lg:gap-y-6">
                     <div className="w-full">
-                      <Image
+                      <img
                         src={
-                          `https://padycvgcoops.name.ng/${detailsData?.project_images[0]?.image}` ||
+                          `${detailsData?.project_images[0]?.image}` ||
                           "/assets/my-farms/no-img.avif"
                         }
                         alt={`store-front-details-image-${id}`}
@@ -105,9 +109,9 @@ const StoreFrontDetails = ({ id }: { id: string }) => {
                     </div>
                     <div className="grid grid-cols-1 gap-y-2">
                       <div className="grid grid-cols-2 gap-x-2">
-                        <Image
+                        <img
                           src={
-                            `https://padycvgcoops.name.ng/${detailsData?.project_images[1]?.image}` ||
+                            `${detailsData?.project_images[1]?.image}` ||
                             "/assets/my-farms/no-img.avif"
                           }
                           alt={`store-front-details-image-2`}
@@ -115,9 +119,9 @@ const StoreFrontDetails = ({ id }: { id: string }) => {
                           height={237}
                           className="w-[296px] h-[237px] rounded-lg lg:w-full lg:h-[137px]"
                         />
-                        <Image
+                        <img
                           src={
-                            `https://padycvgcoops.name.ng/${detailsData?.project_images[2]?.image}` ||
+                            `${detailsData?.project_images[2]?.image}` ||
                             "/assets/my-farms/no-img.avif"
                           }
                           alt="store-front-details-image-3"
@@ -127,9 +131,9 @@ const StoreFrontDetails = ({ id }: { id: string }) => {
                         />
                       </div>
 
-                      <Image
+                      <img
                         src={
-                          `https://padycvgcoops.name.ng/${detailsData?.project_images[3]?.image}` ||
+                          `${detailsData?.project_images[3]?.image}` ||
                           "/assets/my-farms/no-img.avif"
                         }
                         alt="store-front-details-image-4"
@@ -255,14 +259,20 @@ const StoreFrontDetails = ({ id }: { id: string }) => {
                       </div>
 
                       <div className="flex items-center gap-x-3">
-                        <Button
-                          variant="primary"
-                          size="small"
-                          className="w-full flex items-center justify-center gap-x-2"
+                        <a
+                          href={`https://wa.me/${farmPageData?.farm_whatsapp_number}`}
+                          target="_blank"
+                          className="w-full"
                         >
-                          <MdCardTravel color="white" size={24} />
-                          Bid Now
-                        </Button>
+                          <Button
+                            variant="primary"
+                            size="small"
+                            className="w-full flex items-center justify-center gap-x-2"
+                          >
+                            <MdCardTravel color="white" size={24} />
+                            Bid Now
+                          </Button>
+                        </a>
                       </div>
                     </div>
                   </div>
@@ -290,12 +300,12 @@ const StoreFrontDetails = ({ id }: { id: string }) => {
                           )}....`}
                           projectName={`${card?.name?.slice(0, 20)}...`}
                           projectROI={card?.ROI?.toString()}
-                          imageUrl={`https://padycvgcoops.name.ng/${card?.images[0]}`}
+                          imageUrl={`${card?.images[2]}`}
                           status={card?.status}
                           onViewProjects={() => {
                             /* handle click */
                           }}
-                          href={`/farm-page/${card?.id}`}
+                          href={`/farm-page/projects/${card?.id}`}
                           onViewBid={() => {}}
                         />
                       ))}

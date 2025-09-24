@@ -52,7 +52,7 @@ const FarmBranches = () => {
           </Link>
         </div>
       ) : (
-        <div className="grid grid-cols-3 gap-x-10 gap-y-10">
+        <div className="grid grid-cols-3 gap-x-10 gap-y-10 xl:grid-cols-2 md:grid-cols-1">
           {farmBranchData?.map((data) => (
             <BranchFarmCard
               branchName={data?.name || "N/A"}
@@ -65,8 +65,7 @@ const FarmBranches = () => {
               id={data?.id}
               status={data?.status}
               imageUrl={
-                `https://padycvgcoops.name.ng/${data?.branch_images[0]?.image}` ||
-                "/assets/my-farms/2.png"
+                `${data?.branch_images[0]?.image}` || "/assets/my-farms/2.png"
               }
               href={`/farmer-dashboard/my-farms/${farmDetails?.data?.farm?.id}/farm-branches/${data?.id}`}
               key={data?.id}

@@ -1,20 +1,22 @@
 import SubHead from "../common/sectionHeading";
-import { PiDotsThree } from "react-icons/pi";
+// import { PiDotsThree } from "react-icons/pi";
 import Image from "next/image";
+import { getDashboardStore } from "@/stores/farmer-dashboard/dashboard";
 
 const FarmingSummary = () => {
+  const { data: dashboardData } = getDashboardStore();
   return (
     <div className="mt-6 px-[22px] py-8 border border-[#E4E7EC] bg-[white] rounded-xl">
       <div className="flex justify-between items-center mb-4">
         <SubHead text="Farm Summary" />
-        <div className="relative flex items-center gap-x-4">
+        {/* <div className="relative flex items-center gap-x-4">
           <div
             className=" p-2 bg-white border border-[#d9d9d9]  rounded-xl cursor-pointer w-fit"
             // onClick={handleOpen}
           >
             <PiDotsThree size={20} color="#7C7C7C" />
           </div>
-        </div>
+        </div> */}
       </div>
 
       <div className="bg-[#F6F6F6] px-6 py-4 flex gap-x-4 items-center rounded-xl lg:items-start">
@@ -29,17 +31,16 @@ const FarmingSummary = () => {
           <p className="text-[#7C7C7C] font-poppinsSemiBold text-base">
             Total farms
           </p>
-          <p className="text-[#2D865B] text-[32px] font-poppinsSemiBold">13</p>
+          <p className="text-[#2D865B] text-[32px] font-poppinsSemiBold">
+            {dashboardData?.data?.total_farms}
+          </p>
 
           <div className="flex gap-x-3 items-center mt-4 lg:flex-col lg:gap-y-6">
             <p className="text-[#226646] rounded-[0.5rem] bg-white px-[10px] py-[5px] text-xs font-poppinsRegular">
-              10 Active
+              {dashboardData?.data?.farm_by_status?.published} Active
             </p>
             <p className="rounded-[0.5rem] text-[#B40402] bg-white px-[10px] py-[5px] text-xs font-poppinsRegular">
-              2 InActive
-            </p>
-            <p className="bg-white px-[10px] py-[5px] text-[#5F5F5F] rounded-[0.5rem] text-xs font-poppinsRegular">
-              1 Draft
+              {dashboardData?.data?.farm_by_status?.draft || 0} InActive
             </p>
           </div>
         </div>

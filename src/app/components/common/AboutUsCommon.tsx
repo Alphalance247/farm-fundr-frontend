@@ -1,9 +1,12 @@
+"use client";
 import Image from "next/image";
 import HeadingTextWithSubHead from "./headingTextWithSubHead";
 import Container from "./container";
 import Button from "./Buttons";
 import { GoArrowRight } from "react-icons/go";
 import SlideInSection from "./slideInSection";
+import { useAuth } from "@/context/authContext";
+import Link from "next/link";
 
 interface aboutUsProp {
   withAboutUsHeading?: boolean;
@@ -12,7 +15,6 @@ interface aboutUsProp {
   paragraphHeading?: boolean;
   btnAvailable?: boolean;
   btnText?: string;
-  imgUrl?: string;
   alignment?: string;
 }
 
@@ -23,9 +25,9 @@ const AboutUsCommon: React.FC<aboutUsProp> = ({
   paragraphHeading,
   btnAvailable,
   btnText,
-  imgUrl,
   alignment,
 }) => {
+  const { isAuthenticated } = useAuth();
   return (
     <SlideInSection>
       <section className="bg-[#fcfcfc] relative">
@@ -67,30 +69,50 @@ const AboutUsCommon: React.FC<aboutUsProp> = ({
                 className="mb-8 text-left lg:text-center lg:mb-3"
                 subhead={
                   subhead ||
-                  "FarmPady is a platform designed to connect farmers and investors, fostering  collaboration and innovation in the agricultural sector. The platform aims to drive  agricultural growth and sustainability while providing mutual benefits to farmers  and investors"
+                  "FarmPady is a platform designed to connect farmers and investors, fostering  collaboration and innovation in the agricultural sector. We aim to drive  agricultural growth and sustainability while providing mutual benefits to farmers  and investors"
                 }
                 withImage={false}
               />
-              {btnAvailable && (
-                <Button
-                  size="medium"
-                  className="flex lg:mx-auto items-center gap-x-4 justify-center mt-10 lg:mt-4 md:mt-8"
-                >
-                  <span>{btnText || "Learn More"}</span>
-                  <span>
-                    <GoArrowRight size={24} className="text-white" />
-                  </span>
-                </Button>
+              {!isAuthenticated && (
+                <>
+                  {btnAvailable && (
+                    <Link href={"/about-us"}>
+                      <Button
+                        size="medium"
+                        className="flex items-center gap-x-4 justify-center mt-10 lg:mt-4 md:mt-8"
+                      >
+                        <span>{btnText || "Learn More"}</span>
+                        <span>
+                          <GoArrowRight size={24} className="text-white" />
+                        </span>
+                      </Button>
+                    </Link>
+                  )}
+                </>
               )}
             </div>
 
-            <Image
+            <div>
+              <video
+                width="577"
+                height="573"
+                className=" shadow-xl rounded-lg"
+                controls
+              >
+                <source
+                  src="/assets/about/farmpadyVideo.mp4"
+                  type="video/mp4"
+                />
+              </video>
+            </div>
+
+            {/* <Image
               width={577}
               height={573}
               className="w-full"
               src={imgUrl || "/assets/LandingPage/images/5.png"}
               alt="frame1"
-            />
+            /> */}
           </div>
         </Container>
       </section>

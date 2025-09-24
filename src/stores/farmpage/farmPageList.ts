@@ -14,6 +14,10 @@ export interface farmPageDataStore {
     street: string;
     city: string;
     state: string;
+    instagram_link: string;
+    active_farm:boolean;
+    x_link: string;
+    linkedln_link: string;
     country: string;
     farm_whatsapp_number: string;
     farm_email: string;
@@ -97,7 +101,7 @@ export const getFarmPageListStore = create<farmPageListStore>((set) => ({
     set({ loading: true, error: null });
     try {
       const res = await axios.get(
-        `https://${farmName}.${environment?.farmPageBaseUrl}/farmpage`
+        `${environment?.farmPageBaseUrl}/farmpage?farm-name=${farmName}`
       );
       set({ data: res.data, loading: false });
     } catch (err) {

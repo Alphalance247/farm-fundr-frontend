@@ -1,22 +1,17 @@
 import { SearchIcon } from "lucide-react";
-import { useRouter } from "next/navigation";
 import Button from "../../common/Buttons";
 
 interface FarmNotFoundProps {
   farmName: string;
-  onRetry?: () => void;
+  notFoundText?:string;
+  farmNotExistText?:string;
 }
 
-const FarmNotFound = ({ farmName, onRetry }: FarmNotFoundProps) => {
-  const router = useRouter();
+const FarmNotFound = ({ farmName, notFoundText ,farmNotExistText}: FarmNotFoundProps) => {
 
-  const handleGoHome = () => {
-    router.push("/");
-  };
 
-  const handleSearchFarms = () => {
-    router.push("/farm-marketplace");
-  };
+
+
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50">
@@ -40,52 +35,60 @@ const FarmNotFound = ({ farmName, onRetry }: FarmNotFoundProps) => {
 
         {/* Error Message */}
         <h1 className="text-2xl font-bold text-gray-900 mb-4">
-          Farm Not Found
+      { notFoundText ||   'Farm Not Found'}
         </h1>
+        {  farmNotExistText || 
         <p className="text-gray-600 mb-6">
-          The farm{" "}
-          <span className="font-semibold text-gray-800">{farmName}</span> doesnt
-          exist or may have been removed.
+        
+
+
+ The farm{" "}
+      <span className="font-semibold text-gray-800">{farmName} </span>
+      doesnt     exist or may have been removed.`
+       
+         
         </p>
+         }
 
         {/* Action Buttons */}
-        <div className="space-y-3">
-          {onRetry && (
-            <Button
-              onClick={onRetry}
-              className="w-full bg-[#51F4A6] text-[#282A03] hover:bg-[#45D895]"
-            >
-              Try Again
-            </Button>
-          )}
+        <div className="space-y-3 mt-4">
+         
+
+         <a href="https://farmpady.com/farm-marketplace
+         " rel="noopener noreferrer" className="block">
 
           <Button
-            onClick={handleSearchFarms}
             className="w-full bg-[#2D865B] text-white hover:bg-[#246B4A] flex items-center justify-center gap-2"
           >
             <SearchIcon className="w-4 h-4" />
             Browse Other Farms
           </Button>
 
+         </a>
+
+         <a href="https://farmpady.com/
+         " rel="noopener noreferrer" className="block">
           <Button
-            onClick={handleGoHome}
             variant="primary"
             className="w-full border-gray-300 text-gray-700 hover:bg-gray-50"
           >
             Go to Homepage
           </Button>
+          </a>
         </div>
 
         {/* Additional Info */}
         <div className="mt-8 pt-6 border-t border-gray-200">
           <p className="text-sm text-gray-500">
             Looking for a specific farm? Try searching in our{" "}
+
+            <a href="https://farmpady.com/farm-marketplace" rel="noopener noreferrer">
             <button
-              onClick={handleSearchFarms}
               className="text-[#2D865B] hover:underline font-medium"
             >
               farm marketplace
             </button>
+            </a>
           </p>
         </div>
       </div>

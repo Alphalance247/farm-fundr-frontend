@@ -6,11 +6,12 @@ import Image from "next/image";
 import Button from "../common/Buttons";
 import { GoArrowRight } from "react-icons/go";
 import { motion, AnimatePresence } from "framer-motion";
+import { useAuth } from "@/context/authContext";
 
 const Process = () => {
   const [activeTab, setActiveTab] = useState<string>("investors");
   const [isOpen, setIsOpen] = useState<number | null>(null);
-
+  const { isAuthenticated } = useAuth();
   const handleToggle = (i: number) => {
     if (isOpen === i) {
       setIsOpen(null);
@@ -33,12 +34,12 @@ const Process = () => {
     {
       step: "3",
       description: "Search for Projects to Bid On",
-      answer: `Browse and select farm projects that match your interests`,
+      answer: `Browse and select farm projects that match your interests.`,
     },
     {
       step: "4",
       description: "Select mode of operation",
-      answer: `Choose your preferred investment type - lump-sum, or milestone`,
+      answer: `Choose your preferred investment type - lump-sum, or milestone.`,
     },
     {
       step: "5",
@@ -178,15 +179,17 @@ const Process = () => {
           </motion.div>
         </AnimatePresence>
 
-        <Button
-          size="medium"
-          className="flex items-center gap-x-4 justify-center mt-20 text-center w-[535px] mx-auto relative z-10"
-        >
-          <span>Get Started</span>
-          <span>
-            <GoArrowRight size={24} className="text-white" />
-          </span>
-        </Button>
+        {!isAuthenticated && (
+          <Button
+            size="medium"
+            className="flex items-center gap-x-4 justify-center mt-20 text-center w-[535px] mx-auto relative z-10"
+          >
+            <span>Get Started</span>
+            <span>
+              <GoArrowRight size={24} className="text-white" />
+            </span>
+          </Button>
+        )}
       </Container>
     </section>
   );

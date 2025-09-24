@@ -1,3 +1,4 @@
+"use client";
 import Image from "next/image";
 import Container from "../common/container";
 import HeadingTextWithSubHead from "../common/headingTextWithSubHead";
@@ -6,10 +7,34 @@ import Button from "../common/Buttons";
 import { GoArrowRight } from "react-icons/go";
 import SlideInSection from "../common/slideInSection";
 import Link from "next/link";
+import { getFarmMarketPlaceListStore } from "@/stores/farm-marketplace/farmMarketPlace";
+import { useEffect } from "react";
+import Spinner from "../common/modals/spinner";
 
 const FeaturedProject = () => {
+  const { data, error, loading, fetchFarmMarketPlaceList } =
+    getFarmMarketPlaceListStore();
+
+  useEffect(() => {
+    fetchFarmMarketPlaceList();
+  }, [fetchFarmMarketPlaceList]);
+
+  const projects = data?.results?.data ?? [];
+
+  if (loading) {
+    return <Spinner />;
+  }
+
+  if (error) {
+    return (
+      <div className="text-center py-10 text-red-600 font-medium">
+        Failed to load projects. Please try again later.
+      </div>
+    );
+  }
   return (
     <SlideInSection>
+   
       <section className="relative bg-[#fcfcfc]">
         <div className="absolute bottom-0 z-[1]">
           <Image
@@ -28,12 +53,30 @@ const FeaturedProject = () => {
             withSubHead={false}
             className="text-center mb-16 lg:mb-12"
           />
+   {
+        data?.results?.data?.length === 0 ? <p className="text-2xl text-center font-aristoBold font-bold text-[#5F5F5F] mb-10 md:capitalize md:text-center">Our Farmers are being onboarded, Projects will be available very soon!!!</p>:
 
-          <div className="grid grid-cols-3 gap-x-6 xl:grid-cols-2 lg:gap-x-4 lg:gap-y-10 md:grid-cols-1 md:gap-y-8">
-            <Card />
-            <Card />
-            <Card />
+          <>
+          
+          <div className="grid grid-cols-3 gap-x-6 lg:grid-cols-2 lg:gap-x-4 lg:gap-y-10 md:grid-cols-1 md:gap-y-8">
+            {projects.slice(0, 3).map((project) => (
+              <Card
+                key={project.id}
+                projectImage={
+                  project.project_images?.find((img) => img.is_main)?.image ??
+                  project.images?.[0]
+                }
+                projectName={project.name}
+                projectFarm={project.farm_name}
+                projectDescrip={project.short_description}
+                projectLocation={project.project_location}
+                projectROI={String(project.ROI)}
+                btnText2="View Details"
+                btnTextLink2={`${project?.farm_page_link}`}
+              />
+            ))}
           </div>
+
           <Link href={"/farm-marketplace"}>
             <Button
               size="medium"
@@ -45,6 +88,8 @@ const FeaturedProject = () => {
               </span>
             </Button>
           </Link>
+          </>
+      }
         </Container>
       </section>
     </SlideInSection>

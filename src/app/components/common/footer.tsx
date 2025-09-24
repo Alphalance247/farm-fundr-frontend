@@ -4,47 +4,112 @@ import Image from "next/image";
 import Link from "next/link";
 import Button from "./Buttons";
 import { useState } from "react";
+import toast from "react-hot-toast";
+import axios, { AxiosError } from "axios";
+import { environment } from "@/env/env.local";
+import { useAuth } from "@/context/authContext";
+import { usePathname, useRouter } from "next/navigation";
+
+const navs = [
+
+  {
+    id: 3,
+    name1: "About Us",
+    name2: "Create free account",
+    name3: "Get Started",
+    link1: "/about-us",
+    link2: "/signup",
+    link3: "/user-select",
+  },
+  {
+    id: 4,
+    name1: "Project Listing",
+    name2: "Contact Us",
+    name3: "Login",
+    link1: "/farm-marketplace",
+    link2: "/contact-us",
+    link3: "/login",
+  },
+  {
+    id: 5,
+    name1: "How it works",
+    name2: "FAQs",
+    name3: "Home",
+    link1: "/how-it-works",
+    link2: "/",
+    link3: "/",
+  },
+];
 
 const Footer = () => {
   const [activeMenu, setActiveMenu] = useState("Home");
-  const navs = [
-    {
-      id: 1,
-      name1: "Navigation",
-      name2: "Navigation",
-      name3: "Get Started",
-      link1: "/",
-      link2: "/",
-      link3: "/",
-    },
-    {
-      id: 3,
-      name1: "About Us",
-      name2: "Pricing",
-      name3: "Create free account",
-      link1: "/",
-      link2: "/",
-      link3: "/",
-    },
-    {
-      id: 4,
-      name1: "Project Listing",
-      name2: "Contact Us",
-      name3: "Login",
-      link1: "/",
-      link2: "/",
-      link3: "/",
-    },
-    {
-      id: 5,
-      name1: "How it works",
-      name2: "FAQs",
-      name3: "Home",
-      link1: "/",
-      link2: "/",
-      link3: "/",
-    },
-  ];
+  const { isAuthenticated, logout } = useAuth();
+  const [form, setForm] = useState({
+    email: "",
+  });
+  const router = useRouter();
+  const pathname = usePathname();
+  const [loading, setIsLoading] = useState(false);
+  const handleNavClick = (name: string, link: string) => {
+    if (name === "FAQs") {
+      if (pathname === "/") {
+        // already on homepage → smooth scroll
+        const faqSection = document.getElementById("faq");
+        faqSection?.scrollIntoView({ behavior: "smooth" });
+      } else {
+        // go to homepage with #faq
+        router.push("/#faq");
+      }
+    } else {
+      router.push(link);
+    }
+  };
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    const errors: string[] = [];
+    if (!form.email.trim()) errors.push("Email is required");
+
+    if (errors.length > 0) {
+      errors.forEach((err) => toast.error(err));
+      return;
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(form.email)) {
+      toast.error("Please enter a valid email address");
+      return;
+    }
+
+    try {
+      setIsLoading(true);
+      const res = await axios.post(
+        `${environment?.baseUrl}farms/email-subscribe`,
+        {
+          email: form.email,
+        }
+      );
+      if (res.status === 200 || res?.status === 201) {
+        toast.success(
+          res.data?.statusmessage || "Email subscribed successfully"
+        );
+        setForm({ email: "" });
+      }
+    } catch (err) {
+      const errorMessage =
+        err instanceof AxiosError
+          ? err.response?.data?.statusmessage ||
+            "Something went wrong, please try again."
+          : "Unexpected error occurred";
+      toast.error(errorMessage);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+  const handleLogout = async () => {
+    await logout();
+    router.push("/login");
+  };
   return (
     <footer className="bg-[#282A03]">
       <Container>
@@ -55,39 +120,45 @@ const Footer = () => {
           alt="footer logo"
           className="mx-auto"
         />
-        <div className="py-10 px-5 border-[#51F4A6]  border flex justify-between gap-20 rounded-[20px] mt-16 lg:gap-10 lg:flex-col">
-          <div className="w-[45%] xl:w-[60%] lg:w-full">
-            <p className="text-[white] text-left lg:text-center text-4xl font-aristoBold mb-6">
-              Subscribe to our newsletter
-            </p>
-            <p className="text-lg text-left lg:text-center font-poppinsRegular text-white">
-              Receive weekly newsletter to stay informed on the latest trends of
-              your investment
-            </p>
-          </div>
-
-          <div className="w-[37%] xl:w-[60%] lg:w-full">
-            <div className="flex gap-x-2 mb-6 md:flex-col md:gap-y-6">
-              <input
-                type="text"
-                placeholder="Enter your email address"
-                className="px-4 py-3 text-[#EEFEF6] border border-[#51F4A6] rounded-md w-[100%]"
-              />
-              <Button variant="tertiary">Subscribe</Button>
+        <form onSubmit={handleSubmit}>
+          <div className="py-10 px-5 border-[#51F4A6]  border flex justify-between gap-20 rounded-[20px] mt-16 lg:gap-10 md:flex-col">
+            <div className="w-[45%] lg:w-[60%] md:w-full">
+              <p className="text-[white] text-4xl font-aristoBold mb-6">
+                Subscribe to our newsletter
+              </p>
+              <p className="text-lg font-poppinsRegular text-white">
+                Receive weekly newsletter to stay informed on the latest trends
+                of your investment
+              </p>
             </div>
 
-            <p className="text-xs text-left lg:text-center text-white">
-              By submitting your email address, you agree to receive weekly news
-              from farmpady.{" "}
-              <span className="text-[#51F4A6] underline-offset-2">
-                <a href="http://" target="_blank" rel="noopener noreferrer">
-                  Click here
-                </a>
-              </span>{" "}
-              to unsubscribe
-            </p>
+            <div className="w-[37%] lg:w-[60%] md:w-full">
+              <div className="flex gap-x-2 mb-6 md:flex-col md:gap-y-6">
+                <input
+                  type="email"
+                  placeholder="Enter your email address"
+                  className="px-4 py-3 text-black border border-[#51F4A6] rounded-md w-[100%]"
+                  onChange={(e) => setForm({ ...form, email: e.target.value })}
+                  value={form.email}
+                />
+                <Button type="submit" variant="tertiary">
+                  {loading ? "Loading..." : "Subscribe"}
+                </Button>
+              </div>
+
+              <p className="text-xs text-white">
+                By submitting your email address, you agree to receive weekly
+                news from farmfundr.{" "}
+                <span className="text-[#51F4A6] underline-offset-2">
+                  <a href="http://" target="_blank" rel="noopener noreferrer">
+                    Click here
+                  </a>
+                </span>{" "}
+                to unsubscribe
+              </p>
+            </div>
           </div>
-        </div>
+        </form>
         <div className="grid grid-cols-[25%auto] gap-x-20 mt-24 lg:grid-cols-[30%auto] lg:gap-x-10 md:grid-cols-1 md:gap-y-8">
           <div>
             <Image
@@ -102,18 +173,31 @@ const Footer = () => {
             </p>
 
             <div className="flex gap-x-8 mt-6">
-              <Image
-                src="/assets/LandingPage/icons/x.svg"
-                width={24}
-                height={24}
-                alt="logo"
-              />
-              <Image
-                src="/assets/LandingPage/icons/instagram.svg"
-                width={24}
-                height={24}
-                alt="logo"
-              />
+              <a
+                href="https://www.instagram.com/farmpady?igsh=MWxzMWs0ZDh3cnJldQ=="
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <Image
+                  src="/assets/LandingPage/icons/x.svg"
+                  width={24}
+                  height={24}
+                  alt="Twitter"
+                />
+              </a>
+
+              <a
+                href="https://x.com/farmpady?t=EaSInmdoSp7MMoKvnacbUg&s=09"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <Image
+                  src="/assets/LandingPage/icons/instagram.svg"
+                  width={24}
+                  height={24}
+                  alt="Instagram"
+                />
+              </a>
             </div>
           </div>
 
@@ -138,22 +222,49 @@ const Footer = () => {
                         activeMenu === items?.name2
                           ? " border-b-[3px] text-[white] border-[#51F4A6] pb-2 md:pb-0"
                           : "text-[white]"
-                      }  cursor-pointer mb-3 w-fit text-base font-poppinsRegular max-xl:text-xs md:mb-2`}
+                      } cursor-pointer mb-3 w-fit text-base font-poppinsRegular max-xl:text-xs md:mb-2`}
                       onClick={() => setActiveMenu(items?.name2)}
                     >
-                      <Link href={items?.link2}>{items?.name2}</Link>
+                      {items?.name2 === "FAQs" ? (
+                        <button
+                          type="button"
+                          onClick={() =>
+                            handleNavClick(items?.name2, items?.link2)
+                          }
+                          className="bg-transparent text-white"
+                        >
+                          {items?.name2}
+                        </button>
+                      ) : (
+                        <Link href={items?.link2}>{items?.name2}</Link>
+                      )}
                     </li>
 
-                    <li
-                      className={`${
-                        activeMenu === items?.name3
-                          ? " border-b-[3px] text-[white] border-[#51F4A6] pb-2 md:pb-0"
-                          : "text-[white]"
-                      }  cursor-pointer mb-3 w-fit text-base font-poppinsRegular max-xl:text-xs md:mb-2`}
-                      onClick={() => setActiveMenu(items?.name3)}
-                    >
-                      <Link href={items?.link3}>{items?.name3}</Link>
-                    </li>
+                    {items?.name3 && (
+                      <li
+                        className={`${
+                          activeMenu === items?.name3
+                            ? "border-b-[3px] text-white border-[#51F4A6] pb-2 md:pb-0"
+                            : "text-white"
+                        } cursor-pointer mb-3 w-fit text-base font-poppinsRegular max-xl:text-xs md:mb-2`}
+                        onClick={() => setActiveMenu(items.name3!)}
+                      >
+                        {isAuthenticated && items?.name3 === "Login" ? (
+                          <Link href="/dashboard">Dashboard</Link>
+                        ) : isAuthenticated &&
+                          items?.name3 === "Get Started" ? (
+                          <button
+                            onClick={handleLogout}
+                            disabled={loading}
+                            className="text-white"
+                          >
+                            Logout
+                          </button>
+                        ) : (
+                          <Link href={items?.link3 ?? "#"}>{items?.name3}</Link>
+                        )}
+                      </li>
+                    )}
                   </ul>
                 </div>
               );

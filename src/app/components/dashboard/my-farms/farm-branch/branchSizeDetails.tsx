@@ -8,6 +8,7 @@ import Image from "next/image";
 import { useState } from "react";
 import { toast } from "react-hot-toast";
 
+// hello
 const BranchSizeDetails = ({
   form,
   setForm,
@@ -41,13 +42,13 @@ const BranchSizeDetails = ({
 
   return (
     <div>
-      <div className="p-6 bg-white mt-6 rounded-lg flex flex-col gap-y-6">
+      <div className="p-6 md:p-4 bg-white mt-6 rounded-lg flex flex-col gap-y-6">
         <div>
           <Label className="">Branch Size (plots, hectares, e.g 20)</Label>
           <Input
             name="branchSize"
             className=""
-            type="text"
+            type="number"
             value={form?.branchSize}
             placeholder="Enter farm size"
             variant="tertiary"
@@ -55,7 +56,7 @@ const BranchSizeDetails = ({
           />
         </div>
 
-        <div className="grid grid-cols-2 gap-2">
+        <div className="grid grid-cols-2 md:grid-cols-1 md:gap-4 gap-x-4">
           <div>
             <Label>Work Hours (7am - 7pm)</Label>
 
@@ -85,8 +86,8 @@ const BranchSizeDetails = ({
         </div>
 
         <div className="w-full">
-          <p className="mb-2">
-            Upload Farm Images
+          <p className="mb-2 flex flex-row md:flex-col">
+            Upload Branch Image
             <span className=" font-poppinsRegular text-[#5F5F5F]">
               (5mb size, jpg, png format only)
             </span>
@@ -144,7 +145,7 @@ const BranchSizeDetails = ({
         </div>
       </div>
 
-      <div className="mt-8 flex items-center justify-between">
+      <div className="mt-8 flex flex-row md:flex-col md:gap-4 items-center justify-between">
         <Button
           className="w-fit flex items-center justify-center gap-x-4"
           onClick={(e) => {

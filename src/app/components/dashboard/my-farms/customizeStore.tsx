@@ -1,33 +1,95 @@
 "use client";
-import { IoCheckmarkCircle } from "react-icons/io5";
-import Input from "../../common/input";
-import { RiPencilFill } from "react-icons/ri";
 import StoreFrontHeading from "../common/storeFrontHeading";
 import { color } from "@/app/components/data";
 import { useTab } from "@/context/TabContext";
-import { useState } from "react";
 import Button from "../../common/Buttons";
+import { useState } from "react";
+import { AxiosError } from "axios";
+import toast from "react-hot-toast";
+import axiosInstance from "@/lib/axios";
+import { getFarmDetails } from "@/stores/farms/getFarmDetails";
+import SocialLinksForm from "../common/socialMediaForm";
 
 const CustomizeStore = () => {
   const { activeTab, setActiveTab } = useTab();
-  const [address, setAddress] = useState("");
-  const [address1, setAddress1] = useState("");
+  const { data: farmDetails, fetchFarmDetails } = getFarmDetails();
+  const farm = farmDetails?.data;
+  console.log(setActiveTab);
 
-  console.log(address, address1, setAddress1);
+  const [loading, setIsLoading] = useState(false);
+  const [file, setFile] = useState<File | null>(null);
+
+  const [form, setForm] = useState({
+    instagram: farm?.farm?.instagram_link || "",
+    linkedin: farm?.farm?.linkedln_link || "",
+    facebook: farm?.farm?.facebook_link || "",
+    x: farm?.farm?.x_link || "",
+  });
+
+  const handleProfileUpdate = async () => {
+    try {
+      setIsLoading(true);
+      // Create FormData to handle file upload
+      const formData = new FormData();
+
+      if (file) {
+        formData.append("logo", file);
+      }
+
+      formData.append("facebook_link", form?.facebook);
+      formData.append("instagram_link", form?.instagram);
+      formData.append("linkedln_link", form?.linkedin);
+      formData.append("x_link", form?.x);
+
+      const res = await axiosInstance.patch(
+        `farms/${farm?.farm?.id}`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+
+      if (res.status === 200) {
+        toast.success("Farm logo updated successfully");
+        // Refresh user details after successful update
+        fetchFarmDetails(farm?.farm?.id || "");
+      }
+
+      setIsLoading(false);
+    } catch (err) {
+      // Extract the error message from the response
+      let errorMessage = "An error occurred please try again or contact Admin";
+      if (err instanceof AxiosError) {
+        // Check if err is an instance of AxiosError
+        errorMessage = err.response?.data?.statusmessage || errorMessage;
+      }
+
+      toast.error(errorMessage);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   return (
     <div>
-      <div className="flex justify-between border-b border-[#E4E7EC] pb-3 mb-8">
+      <div className="flex justify-between border-b border-[#E4E7EC] pb-3 mb-8 md:flex-col md:gap-y-6">
         <div className="flex flex-col">
           <h3 className="text-sm font-poppinsSemiBold text-[#5F5F5F] mb-3">
-            StoreFront Settings
+            Farm Page Settings
           </h3>
           <p className="text-sm text-[#7C7C7C] font-poppinsRegular">
             Customise your store front to fit your preference
           </p>
         </div>
-        <Button type="button" variant="primary" className="w-[160px]">
-          Save
+        <Button
+          type="button"
+          variant="primary"
+          className="w-[160px]"
+          onClick={handleProfileUpdate}
+        >
+          {loading ? "Uploading...." : "Save"}
         </Button>
       </div>
 
@@ -37,9 +99,10 @@ const CustomizeStore = () => {
           textColor={color[activeTab]?.textColor}
           badgeColor={color[activeTab]?.badgeColor}
           iconColor={color[activeTab]?.iconColor}
+          setFile={setFile}
         />
 
-        <div className="flex flex-col items-center gap-y-[7px] justify-between">
+        {/* <div className="flex flex-col items-center gap-y-[7px] justify-between">
           {color?.map((item, index) => (
             <div
               key={index}
@@ -51,54 +114,9 @@ const CustomizeStore = () => {
               )}
             </div>
           ))}
-        </div>
+        </div> */}
       </div>
-
-      {/* input address */}
-      <div className="mt-8 grid grid-cols-2 gap-x-8">
-        <div>
-          <div className="flex items-center justify-between mb-2">
-            <p className="text-sm font-poppinsSemiBold text-[#5F5F5F]">
-              Address
-            </p>
-            <p className="text-sm font-poppinsSemiBold text-[#226646] flex items-center gap-x-1">
-              Change{" "}
-              <span>
-                <RiPencilFill size={16} color="#226646" />
-              </span>
-            </p>
-          </div>
-          <Input
-            placeholder="Enter your address"
-            type="text"
-            name="address"
-            value="Lagos, Nigeria"
-            variant="primary"
-            onChange={(e) => setAddress(e.target.value)}
-          />
-        </div>
-        <div>
-          <div className="flex items-center justify-between mb-2">
-            <p className="text-sm font-poppinsSemiBold text-[#5F5F5F]">
-              Address
-            </p>
-            <p className="text-sm font-poppinsSemiBold text-[#226646] flex items-center gap-x-1">
-              Change{" "}
-              <span>
-                <RiPencilFill size={16} color="#226646" />
-              </span>
-            </p>
-          </div>
-          <Input
-            placeholder="Enter your address"
-            type="text"
-            name="address"
-            value="Lagos, Nigeria"
-            variant="primary"
-            onChange={(e) => setAddress(e.target.value)}
-          />
-        </div>
-      </div>
+      <SocialLinksForm form={form} setForm={setForm} />
     </div>
   );
 };

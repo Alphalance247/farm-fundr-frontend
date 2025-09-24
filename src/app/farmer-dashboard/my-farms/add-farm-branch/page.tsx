@@ -10,6 +10,7 @@ import axiosInstance from "@/lib/axios";
 import { AxiosError } from "axios";
 import ProtectedRoute from "@/app/components/common/ProtectedRoute/protectedRoute";
 import SpinnerModal from "@/app/components/common/modals/SpinnerModal";
+import { useRouter } from "next/navigation";
 
 const AddFarmBranch = () => {
   const [formStep, setFormStep] = useState(1);
@@ -17,6 +18,7 @@ const AddFarmBranch = () => {
   const [completedSteps, setCompletedSteps] = useState<number[]>([]);
   const [loading, setLoading] = useState(false);
   const [selectedFarmId, setSelectedFarmId] = useState<string | null>(null);
+  const router = useRouter();
   const [form, setForm] = useState({
     selectFarm: "",
     branchName: "",
@@ -64,8 +66,8 @@ const AddFarmBranch = () => {
         formData.append("state", form?.state);
         formData.append("plots", form?.branchSize);
         formData.append("images", file as Blob);
-        formData.append("open_time", form?.time);
-        formData.append("close_time", form?.workHours);
+        formData.append("open_time", form?.workHours);
+        formData.append("close_time", form?.time);
 
         const res = await axiosInstance.post(
           `farms/${selectedFarmId}/branches`,
@@ -81,6 +83,8 @@ const AddFarmBranch = () => {
           toast.success(
             res.data?.statusmessage || "Farm successfully submitted for review"
           );
+
+          router?.push("/farmer-dashboard/my-farms");
 
           // Reset form
           setFormStep(1);
@@ -133,12 +137,13 @@ const AddFarmBranch = () => {
             />
           </div>
         )}
-        <main className="px-10 py-10 bg-gray-50 overflow-auto">
-          <div className="flex gap-x-6">
-            <div className="w-[30%]">
+
+        <main className="px-10 md:px-4 py-10 bg-gray-50 overflow-auto">
+          <div className="flex flex-row md:flex-col md:gap-6 gap-x-6">
+            <div className="w-[30%] xl:w-[60%] lg:w-[50%] md:w-full">
               <GoBackBtn href="/farmer-dashboard/my-farms" />
 
-              <div className="border border-[#FEF0B0] bg-[#FFFAE6] rounded-lg p-3 flex gap-x-5 items-start mt-6 ">
+              <div className="border lg:items-center border-[#FEF0B0] bg-[#FFFAE6] rounded-lg p-3 flex gap-x-5 items-start mt-6 ">
                 <Image
                   src="/assets/my-farms/danger.svg"
                   width={46}
@@ -166,7 +171,7 @@ const AddFarmBranch = () => {
                 alt="warning"
                 className="mx-auto"
               />
-              <h3 className="text-[#303030] font-aristoBold text-3xl mt-4">
+              <h3 className="text-[#303030] font-aristoBold text-3xl xl:text-2xl  mt-4">
                 {formStep === 1
                   ? " Set Up Your farm Details"
                   : formStep === 2
@@ -197,7 +202,7 @@ const AddFarmBranch = () => {
             <form
               action="submit"
               onSubmit={(e) => handleFinalSubmit(e)}
-              className="w-[70%] mx-auto"
+              className="w-[70%] xl:w-full mx-auto"
             >
               {formStep === 1 && (
                 <BranchInformation

@@ -4,16 +4,16 @@ import Image from "next/image";
 import { HiOutlineHome } from "react-icons/hi2";
 import { usePathname } from "next/navigation";
 import {
-  MdOutlineMessage,
-  MdOutlineAnalytics,
   MdOutlineAccountBalanceWallet,
   MdOutlinePayment,
+  MdOutlinePermContactCalendar,
 } from "react-icons/md";
 import { TbReportAnalytics } from "react-icons/tb";
 import { CiSettings } from "react-icons/ci";
 import { PiHeadsetLight } from "react-icons/pi";
 import Subsribe from "../../dashboard/subscribe";
-import { GoSignOut } from "react-icons/go";
+import { useEffect, useRef } from "react";
+import { getFarmListStore } from "@/stores/farms/getFarmList";
 
 interface sideBarData {
   heading?: string;
@@ -25,8 +25,22 @@ interface sideBarData {
   textColor?: string;
 }
 
-const Sidebar: React.FC = () => {
+interface mobileMenuProps {
+  showMobileMenu: boolean;
+  setShowMobile: (showMobileMenu: boolean) => void;
+}
+
+const Sidebar: React.FC<mobileMenuProps> = ({
+  showMobileMenu,
+  setShowMobile,
+}) => {
   const pathname = usePathname();
+  const { data: farmList, fetchFarmList } = getFarmListStore();
+  const farmData = farmList?.results?.extra_data?.total_farms ?? null;
+
+  useEffect(() => {
+    fetchFarmList();
+  }, [fetchFarmList]);
 
   const sideBarData: sideBarData[] = [
     {
@@ -38,22 +52,22 @@ const Sidebar: React.FC = () => {
       text: "My Farms",
       link: "/farmer-dashboard/my-farms",
       icons: <TbReportAnalytics size={20} />,
-      notification: "10",
+      notification: farmData?.toString() || "0",
       bgColor: "bg-[#F2F2F2]",
       textColor: "text-[#2D865B]",
     },
+    // {
+    //   text: "Message",
+    //   link: "/farmer-dashboard/message",
+    //   icons: <MdOutlineMessage size={20} />,
+    //   notification: "10",
+    //   bgColor: "bg-[#2D865B]",
+    //   textColor: "text-white",
+    // },
     {
-      text: "Message",
-      link: "/farmer-dashboard/message",
-      icons: <MdOutlineMessage size={20} />,
-      notification: "10",
-      bgColor: "bg-[#2D865B]",
-      textColor: "text-white",
-    },
-    {
-      text: "Analytics",
-      link: "/farmer-dashboard/analytics",
-      icons: <MdOutlineAnalytics size={20} />,
+      text: "Business Registration",
+      link: "/farmer-dashboard/business-registration",
+      icons: <MdOutlinePermContactCalendar size={20} />,
     },
     {
       text: "Wallet",
@@ -77,13 +91,40 @@ const Sidebar: React.FC = () => {
     },
   ];
 
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node)
+      ) {
+        setShowMobile(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [showMobileMenu, setShowMobile]);
+
   return (
-    <aside className="bg-white overflow-y-scroll lg:hidden">
+    <aside
+      className={`bg-white overflow-y-auto  ${
+        showMobileMenu
+          ? "xl:block xl:absolute xl:w-[80%] xl:z-20 xl:overflow-y-auto xl:h-auto"
+          : "xl:hidden"
+      } `}
+      ref={dropdownRef}
+    >
       {/* Logo / Brand Name */}
       <div className="flex flex-col justify-between ">
         <div className="font-bold">
           <div className="flex justify-end items-end mt-2">
-            <button>
+            <button
+              className={`cursor-pointer`}
+              onClick={() => setShowMobile(!showMobileMenu)}
+            >
               <Image
                 src="/assets/DashBoard/closeIcon.svg"
                 width={35}
@@ -152,7 +193,7 @@ const Sidebar: React.FC = () => {
 
       <Subsribe />
 
-      <div className="flex justify-between items-center py-4 pl-2 pr-2 pb-10 mt-3">
+      {/* <div className="flex justify-between items-center py-4 pl-2 pr-2 pb-10 mt-3">
         <div className="flex items-center gap-x-3">
           <Image
             src="/assets/DashBoard/overview/avatar.svg"
@@ -172,7 +213,7 @@ const Sidebar: React.FC = () => {
         <span>
           <GoSignOut color="#282A03" size={20} />
         </span>
-      </div>
+      </div> */}
     </aside>
   );
 };

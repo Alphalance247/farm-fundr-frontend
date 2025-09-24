@@ -109,14 +109,17 @@ const Login = () => {
         .post("/api/login", { ...form })
         .then((response) => {
           setLoading(false);
-          console.log("Login response:", response);
-          console.log("Status:", response.status);
+
           if (response.status >= 200 && response.status < 300) {
             // Store in localStorage
             const { fullname, user_type } = response?.data;
             toast.success(`Login Successful Welcome back ${fullname}`);
 
-            login({ fullname, user_type });
+            login({
+              fullname,
+              user_type,
+              profileImage: "",
+            });
             const redirectPath = getRedirectPath(user_type, redirectTo);
             router.push(redirectPath);
             setForm({ email: "", password: "" });
@@ -176,7 +179,7 @@ const Login = () => {
               <p className="text-lg font-poppinsRegular text-[#7C7C7C] mt-2 text-center mb-8 md:text-base md:mb-4">
                 We miss you!
               </p>
-
+              {/* 
               <Button
                 className="w-full flex items-center gap-x-4 justify-center text-center mb-3"
                 variant="googleBtn"
@@ -192,15 +195,15 @@ const Login = () => {
                   />
                 </span>
                 <span>{"Continue with google"}</span>
-              </Button>
+              </Button> */}
 
-              <div className="flex justify-center items-center gap-4 self-stretch mb-4">
+              {/* <div className="flex justify-center items-center gap-4 self-stretch mb-4">
                 <hr className="h-[1px] w-full md:w-[174.5px] text-[#B5B5B5] " />
                 <p className="font-[Inter] not-italic font-[450px] text-[16px] leading-4">
                   Or
                 </p>{" "}
                 <hr className="h-1 w-full md:w-44" />
-              </div>
+              </div> */}
 
               <form action="submit" onSubmit={handleUserLogin}>
                 <div className="mb-4">
