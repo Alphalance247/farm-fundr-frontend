@@ -5,8 +5,8 @@ import { IoIosArrowForward } from "react-icons/io";
 
 export interface ProjectCardProps {
   projectName: string;
-  investedAmount: number;
-  status: "Ongoing" | "Active" | "Completed";
+  investedAmount: string;
+  status: string;
   image?: string;
   detailsLink?: string;
 }

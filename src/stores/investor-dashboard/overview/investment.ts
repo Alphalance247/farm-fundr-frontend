@@ -12,6 +12,9 @@ export interface investorInvestmentDataStore {
   data: {
     project_name: string;
     project_image: string;
+    farm_name: string;
+    date_invested: string;
+    duration: string;
     milestone: string;
     roi_earned: string;
     start_date: string;

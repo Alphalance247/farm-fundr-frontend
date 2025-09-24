@@ -9,6 +9,11 @@ export interface investorDashboardListDataStore {
   total_bid_sent: number;
   wallet_balance: number;
   roi_total: number;
+  audit_logs: {
+    content: string;
+    created: string;
+    title: string;
+  }[];
 }
 
 interface investorDashboardListStore {

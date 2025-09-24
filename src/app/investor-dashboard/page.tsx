@@ -12,7 +12,10 @@ import InvestorAnalyticsTab from "../components/dashboard/overview/investorAnaly
 import InvestorRecentActivity from "../components/dashboard/overview/investorRecentActivity";
 import ProjectList from "../components/dashboard/overview/investments";
 import WalletCard from "../components/dashboard/overview/walletCard";
-import ProtectedRoute from "../components/common/ProtectedRoute/protectedRoute";
+import { getInvestorDashboardStore } from "@/stores/investor-dashboard/overview/dashboard";
+import { getInvestorBids } from "@/stores/investor-dashboard/overview/bids";
+import SkeletonLoader from "@/components/ui/skeleton-loader";
+import ErrorFetch from "../components/common/errorFetch";
 
 interface data {
   text?: string;
@@ -108,7 +111,11 @@ const InvestorDashboardPage = () => {
 
   const { fetchInvestorDashboardData, loading, error } =
     getInvestorDashboardStore();
-  const { fetchInvestorBids } = getInvestorBids();
+  const {
+    fetchInvestorBids,
+    loading: loadingBids,
+    error: errorBids,
+  } = getInvestorBids();
 
   useEffect(() => {
     fetchInvestorDashboardData();
@@ -200,47 +207,107 @@ const InvestorDashboardPage = () => {
               </div>
             </div>
 
-            <div className="px-[22px] py-8 border border-[#E4E7EC] bg-[white] rounded-xl h-fit xl:px-4 xl:py-6">
-              <h2 className="text-[#5F5F5F] text-2xl font-aristoBold mb-4">
-                Quick Actions
-              </h2>
-              <div className="grid grid-cols-2 gap-2">
-                {data.map((item, i) => (
-                  <Link
-                    href={item?.link || "/"}
-                    key={i}
-                    className="block first:col-span-2"
+          <div className="px-[22px] py-8 border border-[#E4E7EC] bg-[white] rounded-xl h-fit xl:px-4 xl:py-6">
+            <h2 className="text-[#5F5F5F] text-2xl font-aristoBold mb-4">
+              Quick Actions
+            </h2>
+            <div className="grid grid-cols-2 lg:grid-cols-3 md:hidden gap-2">
+              {data.map((item, i) => (
+                <Link
+                  href={item?.link || "/"}
+                  key={i}
+                  className="block first:col-span-2 lg:first:col-span-1"
+                >
+                  <div
+                    className={`flex flex-col ${item?.borderColor} justify-center items-center cursor-pointer ${item?.bgColor} rounded-md py-4 w-full`}
                   >
-                    <div
-                      className={`flex flex-col ${item?.borderColor} justify-center items-center cursor-pointer ${item?.bgColor} rounded-md py-4 w-full`}
-                    >
-                      <Image
-                        src={item?.img || ""}
-                        width={100}
-                        height={100}
-                        alt="asset icons"
-                      />
-                      <p className="text-[#5F5F5F] text-xs mt-[6px]">
-                        {item?.text}
-                      </p>
-                    </div>
-                  </Link>
-                ))}
-              </div>
+                    <Image
+                      src={item?.img || ""}
+                      width={100}
+                      height={100}
+                      alt="asset icons"
+                    />
+                    <p className="text-[#5F5F5F] text-xs mt-[6px]">
+                      {item?.text}
+                    </p>
+                  </div>
+                </Link>
+              ))}
+            </div>
+            <div className="hidden md:grid md:grid-cols-3 gap-2 ">
+              {mobileData.map((item, i) => (
+                <Link href={item?.link || "/"} key={i}>
+                  <div
+                    className={`flex flex-col ${item?.borderColor} justify-center items-center cursor-pointer ${item?.bgColor} rounded-2xl py-4 w-full`}
+                  >
+                    <Image
+                      src={item?.img || ""}
+                      width={60}
+                      height={60}
+                      alt="asset icons"
+                    />
+                    <p className="text-[#5F5F5F] text-xs mt-[6px]">
+                      {item?.text}
+                    </p>
+                  </div>
+                </Link>
+              ))}
             </div>
           </div>
+        </div>
+
+        {loading ? (
+          <SkeletonLoader className="h-[100px] w-full my-6" />
+        ) : error ? (
+          <ErrorFetch
+            message="Error Fetching Dashboard Overview"
+            onRefetch={fetchInvestorDashboardData}
+          />
+        ) : (
           <InvestorAnalyticsTab />
-          <div className="flex flex-row lg:flex-col justify-between gap-6">
-            <ProjectList />
+        )}
+
+        <div className="grid grid-cols-2 lg:grid-cols-1 justify-between gap-6">
+          <div>
+            {loading ? (
+              <SkeletonLoader className="h-[100px] w-full my-6" />
+            ) : error ? (
+              <ErrorFetch
+                message="Error Fetching Dashboard Overview"
+                onRefetch={fetchInvestorDashboardData}
+              />
+            ) : (
+              <InvestorRecentActivity />
+            )}
+
+            {loadingBids ? (
+              <SkeletonLoader className="h-[100px] w-full my-6" />
+            ) : errorBids ? (
+              <ErrorFetch
+                message="Error Fetching Dashboard Overview"
+                onRefetch={fetchInvestorDashboardData}
+              />
+            ) : (
+              <ProjectList />
+            )}
+          </div>
+
+          {loading ? (
+            <SkeletonLoader className="h-[100px] w-full my-6" />
+          ) : error ? (
+            <ErrorFetch
+              message="Error Fetching Dashboard Overview"
+              onRefetch={fetchInvestorDashboardData}
+            />
+          ) : (
             <WalletCard />
-          </div>
-          <div className="flex flex-row lg:flex-col justify-between gap-6">
-            <InvestorRecentActivity />
-            <InvestorMilestoneRequest />
-          </div>
-        </main>
-      </InvestorLayout>
-    </ProtectedRoute>
+          )}
+
+          {/* <InvestorMilestoneRequest /> */}
+        </div>
+      </main>
+    </InvestorLayout>
+    // </ProtectedRoute>
   );
 };
 

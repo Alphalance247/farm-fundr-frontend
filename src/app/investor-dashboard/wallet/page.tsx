@@ -4,12 +4,22 @@ import TransactionSearchTable from "@/app/components/investor-wallet/investorTra
 import WalletCard from "../../components/dashboard/my-investments/investmentWallet";
 import { getInvestorTransaction } from "@/stores/investor-dashboard/overview/transaction";
 import { useEffect } from "react";
+import { getInvestorDashboardStore } from "@/stores/investor-dashboard/overview/dashboard";
+import SkeletonLoader from "@/components/ui/skeleton-loader";
+import ErrorFetch from "@/app/components/common/errorFetch";
 
 const Wallet = () => {
-  const { fetchInvestorsTransaction } = getInvestorTransaction();
+  const { fetchInvestorsTransaction, loading, error } =
+    getInvestorTransaction();
+  const {
+    fetchInvestorDashboardData,
+    loading: loadingTransaction,
+    error: errTransact,
+  } = getInvestorDashboardStore();
   useEffect(() => {
     fetchInvestorsTransaction();
-  }, [fetchInvestorsTransaction]);
+    fetchInvestorDashboardData();
+  }, [fetchInvestorsTransaction, fetchInvestorDashboardData]);
 
   return (
     <InvestorLayout>
@@ -22,12 +32,31 @@ const Wallet = () => {
             Overview of your project payments and wallet activity
           </p>
         </div>
-        <div>
-          <WalletCard />
-        </div>
-        <div>
-          <TransactionSearchTable />
-        </div>
+        {loading ? (
+          <SkeletonLoader className="h-[100px] w-full my-6" />
+        ) : error ? (
+          <ErrorFetch
+            message="Error Fetching wallet"
+            onRefetch={fetchInvestorDashboardData}
+          />
+        ) : (
+          <div>
+            <WalletCard />
+          </div>
+        )}
+
+        {loadingTransaction ? (
+          <SkeletonLoader className="h-[300px] w-full my-6" />
+        ) : errTransact ? (
+          <ErrorFetch
+            message="Error Fetching Transaction data"
+            onRefetch={fetchInvestorsTransaction}
+          />
+        ) : (
+          <div>
+            <TransactionSearchTable />
+          </div>
+        )}
       </main>
     </InvestorLayout>
   );

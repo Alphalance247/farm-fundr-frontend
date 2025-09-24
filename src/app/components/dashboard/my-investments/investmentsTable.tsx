@@ -7,105 +7,12 @@ import TransactionSearch, {
 } from "../wallet/transactionSearch";
 import Button from "../../common/Buttons";
 import Pagination from "@/components/ui/pagination";
-import ProjectCard, { ProjectCardProps } from "../wallet/projectCard";
+import ProjectCard from "../wallet/projectCard";
 import TransactionFilterMobile from "../wallet/mobileTransactionSearch";
 import { getInvestorInvestment } from "@/stores/investor-dashboard/overview/investment";
-
-interface Project {
-  id: number;
-  name: string;
-  investedAmount: string;
-  status: "Ongoing" | "Completed" | "Canceled";
-  roi: string;
-  duration: string;
-  date: string;
-  image: string;
-}
-
-const DUMMY_PROJECTS: Project[] = [
-  {
-    id: 1,
-    name: "Green Valley Farm",
-    investedAmount: "₦1,000,000",
-    status: "Ongoing",
-    roi: "15% (₦150,000)",
-    duration: "12 Months",
-    date: "Jan 2, 2025",
-    image: "/assets/my-farms/farmpic.svg",
-  },
-  {
-    id: 2,
-    name: "Apple Green House",
-    investedAmount: "₦1,000,000",
-    status: "Ongoing",
-    roi: "20%",
-    duration: "6 Months",
-    date: "Jan 2, 2025",
-    image: "/assets/my-farms/farmpic.svg",
-  },
-  {
-    id: 3,
-    name: "Green Valley Farm",
-    investedAmount: "₦1,000,000",
-    status: "Completed",
-    roi: "30%",
-    duration: "12 Months",
-    date: "Jan 2, 2025",
-    image: "/assets/my-farms/farmpic.svg",
-  },
-  {
-    id: 4,
-    name: "Apple Green House",
-    investedAmount: "₦1,000,000",
-    status: "Completed",
-    roi: "10%",
-    duration: "6 Months",
-    date: "Jan 2, 2025",
-    image: "/assets/my-farms/farmpic.svg",
-  },
-  {
-    id: 5,
-    name: "Green Valley Farm",
-    investedAmount: "₦1,000,000",
-    status: "Completed",
-    roi: "15%",
-    duration: "12 Months",
-    date: "Aug 17, 2024",
-    image: "/assets/my-farms/farmpic.svg",
-  },
-  {
-    id: 6,
-    name: "Apple Green House",
-    investedAmount: "₦1,000,000",
-    status: "Canceled",
-    roi: "20%",
-    duration: "6 Months",
-    date: "Aug 17, 2024",
-    image: "/assets/my-farms/farmpic.svg",
-  },
-];
-const projectsList: ProjectCardProps[] = [
-  {
-    projectName: "Green Valley Farm",
-    investedAmount: 120000,
-    status: "Ongoing",
-    image: "/assets/my-farms/2.png",
-  },
-  {
-    projectName: "Apple Green House",
-    investedAmount: 120000,
-    status: "Active",
-    image: "/assets/my-farms/2.png",
-  },
-];
-// const statusColors: Record<Project["status"], string> = {
-//   Ongoing: "bg-[#DEA304]",
-//   Completed: "bg-[#34C759]",
-//   Canceled: "bg-[#DE4204]",
-// };
+import Link from "next/link";
 
 export default function ProjectTable() {
-  const [projects] = useState<Project[]>(DUMMY_PROJECTS);
   const [searchQuery, setSearchQuery] = useState("");
   const [sortBy, setSortBy] = useState<SortOption>("firstName");
   const [filterBy, setFilterBy] = useState<FilterOption>("all");
@@ -180,7 +87,7 @@ export default function ProjectTable() {
                       </span>
                     </td>
                     <td className="py-3 text-sm text-[#5F5F5F] px-4">
-                      {project?.project?.budget}
+                      N {project?.project?.budget}
                     </td>
                     <td className="py-3 px-4">
                       <span
@@ -197,18 +104,25 @@ export default function ProjectTable() {
                       {project?.roi_earned}
                     </td>
                     <td className="py-3 text-sm text-[#5F5F5F] px-4">
-                      {project?.start_date}
+                      {project?.duration}
                     </td>
                     <td className="py-3 text-sm text-[#5F5F5F] px-4">
-                      {project?.start_date}
+                      {project?.date_invested}
                     </td>
                     <td className="py-3 px-4">
-                      <Button
-                        variant="primary"
-                        className="text-xs  !px-4 !py-2"
+                      <Link
+                        href={
+                          "/investor-dashboard/investment/" +
+                          project?.project?.id.toString()
+                        }
                       >
-                        View Details
-                      </Button>
+                        <Button
+                          variant="primary"
+                          className="text-xs  !px-4 !py-2"
+                        >
+                          View Details
+                        </Button>
+                      </Link>
                     </td>
                   </tr>
                 ))}
@@ -227,11 +141,26 @@ export default function ProjectTable() {
           tableHeading="All Investments"
           showViewAll={false}
         />
-        <div className="space-y-4">
-          {projectsList.map((p, i) => (
-            <ProjectCard key={i} {...p} />
-          ))}
-        </div>
+        {data?.data?.length === 0 ? (
+          <div>
+            <p className="text-center py-8">No Investment list found</p>
+          </div>
+        ) : (
+          <div className="space-y-4">
+            {data?.data.map((p, i) => (
+              <ProjectCard
+                key={i}
+                projectName={p?.farm_name}
+                investedAmount={p?.project?.budget}
+                status={p.project?.status}
+                image={p?.project_image}
+                detailsLink={
+                  "/investor-dashboard/investment/" + p?.project?.id.toString()
+                }
+              />
+            ))}
+          </div>
+        )}
       </div>
     </section>
   );

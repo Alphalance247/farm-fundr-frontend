@@ -13,12 +13,12 @@ const InvestorAnalyticsTab: React.FC = ({}) => {
   const data: data[] = [
     {
       totalInvestmentType: "Total Funds Invested",
-      totalInvestmentAmount: "N " + overviewData?.total_funds_invested,
+      totalInvestmentAmount: "N " + overviewData?.total_funds_invested || 0,
       totalInvestmentIcon: "/assets/DashBoard/overview/funds.svg",
     },
     {
       totalInvestmentType: "Total Earning",
-      totalInvestmentAmount: "N " + overviewData?.total_earning,
+      totalInvestmentAmount: "N " + overviewData?.total_earning || 0,
       totalInvestmentIcon: "/assets/DashBoard/overview/earning.svg",
     },
     {
