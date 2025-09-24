@@ -1,37 +1,43 @@
 "use client";
-    import { useState } from "react";
-    import DashboardLayout from "../../../components/common/dashboardLayout";
-    import GoBackBtn from "../../../components/common/goBack";
-    import Button from "../../../components/common/Buttons";
-    import { FaArrowRightLong, FaArrowLeftLong, FaCopy } from "react-icons/fa6";
-    import { FaTimes } from "react-icons/fa";
-    import { toast } from "react-hot-toast";
-    import { useRouter } from "next/navigation";
-    import Image from "next/image";
-    import StepSidebar from "../../../components/common/stepSidebar";
-    import StepProgressBar from "../../../components/common/stepProgressBar";
-    import ModalOverlay from "../../../components/common/modals/modalOverlay";
-    import Input from "../../../components/common/input";
-    import Label from "../../../components/common/label";
-    import businessInfo from "../../../../../public/assets/image 96.png";
-    import pay from "../../../../../public/assets/image 110.png";
-    import paystack from "../../../../../public/assets/paystack_symbol.svg (1).png";
-    import bank from "../../../../../public/assets/paystack_symbol.svg (2).png";
+import { useState } from "react";
+import Button from "../common/Buttons";
+import { FaArrowRightLong, FaArrowLeftLong, FaCopy } from "react-icons/fa6";
+import { FaTimes } from "react-icons/fa";
+import { toast } from "react-hot-toast";
+import Image from "next/image";
+import StepProgressBar from "../common/stepProgressBar";
+import ModalOverlay from "../common/modals/modalOverlay";
+import Input from "../common/input";
+import Label from "../common/label";
+import businessInfo from "../../../../public/assets/image 96.png";
+import pay from "../../../../public/assets/image 110.png";
+import paystack from "../../../../public/assets/paystack_symbol.svg (1).png";
+import bank from "../../../../public/assets/paystack_symbol.svg (2).png";
 import { RiBankFill } from "react-icons/ri";
-import success from "../../../../../public/assets/image 109.png";
-const BusinessRegistrationStep4 = () => {
-  const router = useRouter();
+import success from "../../../../public/assets/image 109.png";
+
+interface PaymentStepProps {
+  onNext: () => void;
+  onBack: () => void;
+  onComplete: () => void;
+  currentStep: number;
+  totalSteps: number;
+}
+
+const PaymentStep: React.FC<PaymentStepProps> = ({
+  onNext,
+  onBack,
+  onComplete,
+  currentStep,
+  totalSteps
+}) => {
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState("card");
   const [showTransferModal, setShowTransferModal] = useState(false);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
 
   const handlePayment = () => {
     toast.success("Payment processed successfully!");
-    router.push("/farmer-dashboard");
-  };
-
-  const handleGoBack = () => {
-    router.push("/farmer-dashboard/business-registration/step-3");
+    onComplete();
   };
 
   const handlePaymentMethodSelect = (methodId: string) => {
@@ -57,7 +63,7 @@ const BusinessRegistrationStep4 = () => {
 
   const handleGoToDashboard = () => {
     setShowSuccessModal(false);
-    router.push("/farmer-dashboard");
+    onComplete();
   };
 
   const handleCheckApplicationStatus = () => {
@@ -70,152 +76,145 @@ const BusinessRegistrationStep4 = () => {
     {
       id: "paystack",
       name: "Pay With Paystack",
-      icon: paystack, // You'll need to add this icon
+      icon: paystack,
       description: "Pay with your debit/credit card"
     },
     {
       id: "transfer",
       name: "Make Transfer",
-      icon: bank, // You'll need to add this icon
+      icon: bank,
       description: "Direct bank transfer"
     }
   ];
 
   return (
-    <DashboardLayout>
-      <main className="px-10 py-8 bg-gray-50 min-h-screen">
-        <div className="mb-6">
-          <GoBackBtn href="/farmer-dashboard/business-registration/step-3" />
+    <>
+      <div className="flex-1">
+        <div className="text-center mb-8">
+          <div className="mb-4">
+            <div className="mb-4">
+              <Image
+                src={businessInfo}
+                alt="Farm illustration"
+                width={120}
+                height={80}
+                className="mx-auto"
+              />
+            </div>
+          </div>
+          <h1 className="text-3xl font-aristoBold text-[#303030] mb-2">
+            Payment
+          </h1>
+          <p className="text-sm text-[#7C7C7C] font-poppinsRegular mb-4">
+            Make payment to complete registration
+          </p>
+          <StepProgressBar currentStep={currentStep} totalSteps={totalSteps} />
         </div>
-        <div className="flex gap-8 max-w-5xl mx-auto">
-          <StepSidebar currentStep={4} totalSteps={4} />
-          <div className="flex-1 ">
-            <div className="text-center mb-8">
-              <div className="mb-4">
-                <div className="mb-4">
-                  <Image
-                    src={businessInfo}
-                    alt="Farm illustration"
-                    width={120}
-                    height={80}
-                    className="mx-auto"
-                  />
-                </div>
+
+        <div className="bg-white shadow rounded-lg p-6">
+          {/* Payment Illustration */}
+          <div className="bg-[#EEFEF6] border border-[#F2F2F3] rounded-lg p-8 mb-6">
+            <Image
+              src={pay}
+              alt="Farm illustration"
+              width={120}
+              height={80}
+              className="mx-auto"
+            />
+          </div>
+
+          {/* Payment Summary */}
+          <div className="mb-8 border-t border-[#F2F2F3] pt-2">
+            <h3 className="font-semibold text-[#121212] mb-4">
+              Payment Summary
+            </h3>
+            <div className="space-y-3 border-t border-[#F2F2F3] pt-2">
+              <div className="flex border-b border-[#F2F2F3] pb-2 justify-between items-center py-2">
+                <p className="text-sm text-[#5F5F5F] font-poppinsRegular">
+                  Application Type
+                </p>
+                <p className="text-sm text-[#5F5F5F] font-poppinsSemiBold">
+                  Business Name Registration
+                </p>
               </div>
-              <h1 className="text-3xl font-aristoBold text-[#303030] mb-2">
-                Payment
-              </h1>
-              <p className="text-sm text-[#7C7C7C] font-poppinsRegular mb-4">
-                Make payment to complete registration
-              </p>
-              <StepProgressBar currentStep={4} totalSteps={4} />
+              <div className="flex border-b border-[#F2F2F3] pb-2 justify-between items-center py-2">
+                <p className="text-sm text-[#5F5F5F] font-poppinsRegular">
+                  Total Amount
+                </p>
+                <p className="text-sm text-[#5F5F5F] font-poppinsSemiBold">
+                  ₦15,000.00
+                </p>
+              </div>
+              <div className="flex border-b border-[#F2F2F3] pb-2 justify-between items-center py-2">
+                <p className="text-sm text-[#5F5F5F] font-poppinsRegular">
+                  Date
+                </p>
+                <p className="text-sm text-[#5F5F5F] font-poppinsSemiBold">
+                  {new Date().toLocaleDateString("en-GB", {
+                    day: "2-digit",
+                    month: "short",
+                    year: "numeric",
+                  })}
+                </p>
+              </div>
             </div>
-
-            <div className="bg-white shadow rounded-lg p-6">
-              {/* Payment Illustration */}
-              <div className="bg-[#EEFEF6] border border-[#F2F2F3] rounded-lg p-8 mb-6">
-                <Image
-                  src={pay}
-                  alt="Farm illustration"
-                  width={120}
-                  height={80}
-                  className="mx-auto"
-                />
-              </div>
-
-              {/* Payment Summary */}
-              <div className="mb-8 border-t border-[#F2F2F3] pt-2">
-                <h3 className="font-semibold text-[#121212] mb-4">
-                  Payment Summary
-                </h3>
-                <div className="space-y-3 border-t border-[#F2F2F3] pt-2">
-                  <div className="flex border-b border-[#F2F2F3] pb-2 justify-between items-center py-2">
-                    <p className="text-sm text-[#5F5F5F] font-poppinsRegular">
-                      Application Type
-                    </p>
-                    <p className="text-sm text-[#5F5F5F] font-poppinsSemiBold">
-                      Business Name Registration
-                    </p>
-                  </div>
-                  <div className="flex border-b border-[#F2F2F3] pb-2 justify-between items-center py-2">
-                    <p className="text-sm text-[#5F5F5F] font-poppinsRegular">
-                      Total Amount
-                    </p>
-                    <p className="text-sm text-[#5F5F5F] font-poppinsSemiBold">
-                      ₦15,000.00
-                    </p>
-                  </div>
-                  <div className="flex border-b border-[#F2F2F3] pb-2 justify-between items-center py-2">
-                    <p className="text-sm text-[#5F5F5F] font-poppinsRegular">
-                      Date
-                    </p>
-                    <p className="text-sm text-[#5F5F5F] font-poppinsSemiBold">
-                      {new Date().toLocaleDateString("en-GB", {
-                        day: "2-digit",
-                        month: "short",
-                        year: "numeric",
-                      })}
-                    </p>
-                  </div>
-                </div>
-              </div>
-              <div className="mb-8 border-t border-[#F2F2F3] pt-2">
-                <h3 className="font-semibold text-[#121212] mb-4">
-                  Choose a payment method
-                </h3>
-                <div className="grid grid-cols-2 gap-4">
-                  {paymentMethods.map((method) => (
-                    <div
-                      key={method.id}
-                      onClick={() => handlePaymentMethodSelect(method.id)}
-                      className={`p-4 border-2 rounded-lg cursor-pointer transition-all ${
-                        selectedPaymentMethod === method.id
-                          ? "border-[#51F4A6] bg-[#FFFFFF]"
-                          : "border-[#E2E2E2] bg-white"
-                      }`}
-                    >
-                      <div className="flex flex-col  text-left">
-                        <div className="mb-2">
-                          <Image
-                            src={method.icon}
-                            alt={method.name}
-                            width={32} 
-                            height={32}  
-                          />
-                        </div>
-                        <p className="text-xs text-[#5F5F5F] font-poppinsSemiBold">
-                          {method.name}
-                        </p>
-                      </div>
+          </div>
+          <div className="mb-8 border-t border-[#F2F2F3] pt-2">
+            <h3 className="font-semibold text-[#121212] mb-4">
+              Choose a payment method
+            </h3>
+            <div className="grid grid-cols-2 gap-4">
+              {paymentMethods.map((method) => (
+                <div
+                  key={method.id}
+                  onClick={() => handlePaymentMethodSelect(method.id)}
+                  className={`p-4 border-2 rounded-lg cursor-pointer transition-all ${
+                    selectedPaymentMethod === method.id
+                      ? "border-[#51F4A6] bg-[#FFFFFF]"
+                      : "border-[#E2E2E2] bg-white"
+                  }`}
+                >
+                  <div className="flex flex-col  text-left">
+                    <div className="mb-2">
+                      <Image
+                        src={method.icon}
+                        alt={method.name}
+                        width={32} 
+                        height={32}  
+                      />
                     </div>
-                  ))}
+                    <p className="text-xs text-[#5F5F5F] font-poppinsSemiBold">
+                      {method.name}
+                    </p>
+                  </div>
                 </div>
-              </div>
-            </div>
-
-            <div className="flex justify-between mt-8">
-              <Button
-                variant="secondary"
-                size="medium"
-                onClick={handleGoBack}
-                className="flex items-center gap-2"
-              >
-                <FaArrowLeftLong size={16} />
-                Go Back To Previous
-              </Button>
-              <Button
-                variant="primary"
-                size="medium"
-                onClick={handlePayment}
-                className="flex items-center gap-2"
-              >
-                Complete Payment
-                <FaArrowRightLong size={16} />
-              </Button>
+              ))}
             </div>
           </div>
         </div>
-      </main>
+
+        <div className="flex justify-between mt-8">
+          <Button
+            variant="secondary"
+            size="medium"
+            onClick={onBack}
+            className="flex items-center gap-2"
+          >
+            <FaArrowLeftLong size={16} />
+            Go Back To Previous
+          </Button>
+          <Button
+            variant="primary"
+            size="medium"
+            onClick={handlePayment}
+            className="flex items-center gap-2"
+          >
+            Complete Payment
+            <FaArrowRightLong size={16} />
+          </Button>
+        </div>
+      </div>
+
       {showTransferModal && (
         <ModalOverlay onClose={() => setShowTransferModal(false)}>
           <div className="bg-white rounded-lg p-6 w-full max-w-md mx-4 shadow-lg z-50">
@@ -295,6 +294,7 @@ const BusinessRegistrationStep4 = () => {
           </div>
         </ModalOverlay>
       )}
+
       {showSuccessModal && (
         <ModalOverlay onClose={() => setShowSuccessModal(false)}>
           <div className="bg-white rounded-lg p-8 w-full max-w-2xl mx-4 shadow-lg z-50">
@@ -370,8 +370,8 @@ const BusinessRegistrationStep4 = () => {
           </div>
         </ModalOverlay>
       )}
-    </DashboardLayout>
+    </>
   );
 };
 
-export default BusinessRegistrationStep4;
+export default PaymentStep;
