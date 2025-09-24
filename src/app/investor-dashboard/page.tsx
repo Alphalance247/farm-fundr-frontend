@@ -12,8 +12,7 @@ import InvestorAnalyticsTab from "../components/dashboard/overview/investorAnaly
 import InvestorRecentActivity from "../components/dashboard/overview/investorRecentActivity";
 import ProjectList from "../components/dashboard/overview/investments";
 import WalletCard from "../components/dashboard/overview/walletCard";
-import { getInvestorDashboardStore } from "@/stores/investor-dashboard/overview/dashboard";
-import { getInvestorBids } from "@/stores/investor-dashboard/overview/bids";
+import ProtectedRoute from "../components/common/ProtectedRoute/protectedRoute";
 
 interface data {
   text?: string;
@@ -117,149 +116,131 @@ const InvestorDashboardPage = () => {
   }, [fetchInvestorDashboardData, fetchInvestorBids]);
 
   return (
-    <InvestorLayout>
-      <main className="px-10 py-8 bg-gray-50 overflow-y-scroll h-full xl:px-4 xl:py-6 lg:mb-4">
-        <div className="grid grid-cols-[60%auto] gap-6 xl:gap-4 lg:grid-cols-1 lg:mt-6">
-          <div className="bg-[url('/assets/DashBoard/overview/investorBg.png')] h-fit bg-cover bg-no-repeat bg-center rounded-2xl flex  xl:gap-x-6 lg:justify-between md:flex-col md:gap-y-3">
-            <div className="pl-6 py-11 xl:py-6 xl:pl-4 md:pl-4 md:py-3 md:pr-4">
-              {dat !== 100 ? (
-                <>
-                  <h2 className="text-3xl font-aristoBold text-[#FCFCFC] mb-4 md:text-lg">
-                    Welcome {user?.fullname || "Investor Nelson"}
-                  </h2>
+    <ProtectedRoute requiredUserType="investor">
+      <InvestorLayout>
+        <main className="px-10 py-8 bg-gray-50 overflow-auto xl:px-4 xl:py-6 lg:mb-4">
+          <div className="grid grid-cols-[60%auto] gap-6 xl:gap-4 lg:grid-cols-1 lg:mt-6">
+            <div className="bg-[url('/assets/DashBoard/overview/investorBg.png')] h-fit bg-cover bg-no-repeat bg-center rounded-2xl flex  xl:gap-x-6 lg:justify-between md:flex-col md:gap-y-3">
+              <div className="pl-6 py-11 xl:py-6 xl:pl-4 md:pl-4 md:py-3 md:pr-4">
+                {dat !== 100 ? (
+                  <>
+                    <h2 className="text-3xl font-aristoBold text-[#FCFCFC] mb-4 md:text-lg">
+                      Welcome {user?.fullname || "Investor Nelson"}
+                    </h2>
 
-                  <div>
+                    <div>
+                      <p className="text-sm font-poppinsRegular text-[#FCFCFC] mb-2 md:text-xs">
+                        Profile Completion
+                      </p>
+                      <div className="w-full bg-[#F0F2F5] rounded-[20px] h-3 mb-2">
+                        <div
+                          className="bg-[#51F4A6] w-[70%] h-3 rounded-[20px]"
+                          style={{ width: `${kycData?.kyc_percentage}%` }}
+                        ></div>
+                      </div>
+                      <p className="text-sm font-poppinsRegular text-[#FCFCFC] mb-4 md:text-[10px]">
+                        {kycData?.kyc_percentage}% Complete • Complete profile
+                        to stand out
+                      </p>
+                      <Link href={"/farmer-dashboard/settings"}>
+                        <Button
+                          className="w-fit"
+                          variant="secondary"
+                          size="small"
+                        >
+                          Complete profile
+                        </Button>
+                      </Link>
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    <div className="flex gap-x-3 mb-3 items-center">
+                      <span>
+                        <MdOutlineDateRange size={20} fill="white" />
+                      </span>
+                      <p className="font-poppinsSemiBold text-xs text-white">
+                        {dateTime}
+                      </p>
+                    </div>
+                    <div className="flex gap-3 items-center bg-[#F5F5F533] py-2 px-4 rounded-2xl mt-7 mb-7 w-fit">
+                      <Image
+                        src="/assets/DashBoard/sunny.svg"
+                        width={32}
+                        height={32}
+                        alt="sunny"
+                      />
+                      <div className="">
+                        <p className="text-xs text-white font-poppinsSemiBold mb-1">
+                          Weather for today
+                        </p>
+                        <p className="text-[10px] text-white font-poppinsSemiBold">
+                          50% Sunny
+                        </p>
+                      </div>
+                    </div>
+                    <h2 className="text-3xl font-aristoBold text-[#FCFCFC] mb-3 md:text-lg">
+                      Good Day, {user?.fullname || "Investor Nelson"}
+                    </h2>
                     <p className="text-sm font-poppinsRegular text-[#FCFCFC] mb-2 md:text-xs">
-                      Profile Completion
+                      Have a Nice {greeting} !
                     </p>
-                    <div className="w-full bg-[#F0F2F5] rounded-[20px] h-3 mb-2">
-                      <div
-                        className="bg-[#51F4A6] w-[70%] h-3 rounded-[20px]"
-                        style={{ width: `${kycData?.kyc_percentage}%` }}
-                      ></div>
-                    </div>
-                    <p className="text-sm font-poppinsRegular text-[#FCFCFC] mb-4 md:text-[10px]">
-                      {kycData?.kyc_percentage}% Complete • Complete profile to
-                      stand out
-                    </p>
-                    <Link href={"/farmer-dashboard/settings"}>
-                      <Button
-                        className="w-fit"
-                        variant="secondary"
-                        size="small"
-                      >
-                        Complete profile
-                      </Button>
-                    </Link>
-                  </div>
-                </>
-              ) : (
-                <>
-                  <div className="flex gap-x-3 mb-3 items-center">
-                    <span>
-                      <MdOutlineDateRange size={20} fill="white" />
-                    </span>
-                    <p className="font-poppinsSemiBold text-xs text-white">
-                      {dateTime}
-                    </p>
-                  </div>
-                  <div className="flex gap-3 items-center bg-[#F5F5F533] py-2 px-4 rounded-2xl mt-7 mb-7 w-fit">
-                    <Image
-                      src="/assets/DashBoard/sunny.svg"
-                      width={32}
-                      height={32}
-                      alt="sunny"
-                    />
-                    <div className="">
-                      <p className="text-xs text-white font-poppinsSemiBold mb-1">
-                        Weather for today
-                      </p>
-                      <p className="text-[10px] text-white font-poppinsSemiBold">
-                        50% Sunny
-                      </p>
-                    </div>
-                  </div>
-                  <h2 className="text-3xl font-aristoBold text-[#FCFCFC] mb-3 md:text-lg">
-                    Good Day, {user?.fullname || "Investor Nelson"}
-                  </h2>
-                  <p className="text-sm font-poppinsRegular text-[#FCFCFC] mb-2 md:text-xs">
-                    Have a Nice {greeting} !
-                  </p>
-                </>
-              )}
+                  </>
+                )}
+              </div>
+
+              <div className=" pt-8 md:pr-3 md:pt-3 align-bottom">
+                <Image
+                  src="/assets/DashBoard/overview/investorAvatar.png"
+                  width={222}
+                  height={330}
+                  alt="avatar"
+                  className="md:h-[150px] md:w-[150px]"
+                />
+              </div>
             </div>
 
-            <div className=" pt-8 md:pr-3 md:pt-3 align-bottom">
-              <Image
-                src="/assets/DashBoard/overview/investorAvatar.png"
-                width={222}
-                height={330}
-                alt="avatar"
-                className="md:h-[150px] md:w-[150px]"
-              />
+            <div className="px-[22px] py-8 border border-[#E4E7EC] bg-[white] rounded-xl h-fit xl:px-4 xl:py-6">
+              <h2 className="text-[#5F5F5F] text-2xl font-aristoBold mb-4">
+                Quick Actions
+              </h2>
+              <div className="grid grid-cols-2 gap-2">
+                {data.map((item, i) => (
+                  <Link
+                    href={item?.link || "/"}
+                    key={i}
+                    className="block first:col-span-2"
+                  >
+                    <div
+                      className={`flex flex-col ${item?.borderColor} justify-center items-center cursor-pointer ${item?.bgColor} rounded-md py-4 w-full`}
+                    >
+                      <Image
+                        src={item?.img || ""}
+                        width={100}
+                        height={100}
+                        alt="asset icons"
+                      />
+                      <p className="text-[#5F5F5F] text-xs mt-[6px]">
+                        {item?.text}
+                      </p>
+                    </div>
+                  </Link>
+                ))}
+              </div>
             </div>
           </div>
-
-          <div className="px-[22px] py-8 border border-[#E4E7EC] bg-[white] rounded-xl h-fit xl:px-4 xl:py-6">
-            <h2 className="text-[#5F5F5F] text-2xl font-aristoBold mb-4">
-              Quick Actions
-            </h2>
-            <div className="grid grid-cols-2 lg:grid-cols-3 md:hidden gap-2">
-              {data.map((item, i) => (
-                <Link
-                  href={item?.link || "/"}
-                  key={i}
-                  className="block first:col-span-2 lg:first:col-span-1"
-                >
-                  <div
-                    className={`flex flex-col ${item?.borderColor} justify-center items-center cursor-pointer ${item?.bgColor} rounded-md py-4 w-full`}
-                  >
-                    <Image
-                      src={item?.img || ""}
-                      width={100}
-                      height={100}
-                      alt="asset icons"
-                    />
-                    <p className="text-[#5F5F5F] text-xs mt-[6px]">
-                      {item?.text}
-                    </p>
-                  </div>
-                </Link>
-              ))}
-            </div>
-            <div className="hidden md:grid md:grid-cols-3 gap-2 ">
-              {mobileData.map((item, i) => (
-                <Link href={item?.link || "/"} key={i}>
-                  <div
-                    className={`flex flex-col ${item?.borderColor} justify-center items-center cursor-pointer ${item?.bgColor} rounded-2xl py-4 w-full`}
-                  >
-                    <Image
-                      src={item?.img || ""}
-                      width={60}
-                      height={60}
-                      alt="asset icons"
-                    />
-                    <p className="text-[#5F5F5F] text-xs mt-[6px]">
-                      {item?.text}
-                    </p>
-                  </div>
-                </Link>
-              ))}
-            </div>
+          <InvestorAnalyticsTab />
+          <div className="flex flex-row lg:flex-col justify-between gap-6">
+            <ProjectList />
+            <WalletCard />
           </div>
-        </div>
-        <InvestorAnalyticsTab />
-        <div className="flex flex-row xl:flex-col justify-between gap-6">
-          <ProjectList />
-          <WalletCard />
-        </div>
-        <div className="flex flex-row lg:flex-col justify-between gap-6">
-          <InvestorRecentActivity />
-          {/* <InvestorMilestoneRequest /> */}
-        </div>
-      </main>
-    </InvestorLayout>
-    // </ProtectedRoute>
+          <div className="flex flex-row lg:flex-col justify-between gap-6">
+            <InvestorRecentActivity />
+            <InvestorMilestoneRequest />
+          </div>
+        </main>
+      </InvestorLayout>
+    </ProtectedRoute>
   );
 };
 

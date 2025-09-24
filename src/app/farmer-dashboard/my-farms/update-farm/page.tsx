@@ -96,8 +96,6 @@ const UpdateFarm = () => {
         city: farmData?.city || "",
       }));
 
-      setFile(farmData?.cac_reg_doc);
-
       // // Prefill images with backend data
       if (farmData?.farm_images && farmData?.farm_images.length > 0) {
         const imageKeys = ["image1", "image2", "image3", "image4"];

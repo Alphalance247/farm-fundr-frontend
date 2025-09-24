@@ -25,9 +25,11 @@ const ProtectedRoute = ({
       if (requiredUserType && user?.user_type !== requiredUserType) {
         // Redirect to appropriate dashboard based on user type
         if (user?.user_type === "farmer") {
-          router.push("/farmer-dashboard");
+          window.location.href = "/farmer-dashboard";
+          // router.push("/farmer-dashboard");
         } else if (user?.user_type === "investor") {
-          router.push("/investor-dashboard"); // Create this route if needed
+          window.location.href = "/investor-dashboard";
+          // router.push("/investor-dashboard"); // Create this route if needed
         }
         return;
       }
