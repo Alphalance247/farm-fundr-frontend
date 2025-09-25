@@ -1,14 +1,19 @@
 "use client";
 import Label from "../common/label";
 import Input from "../common/input";
+import Select from "../common/select";
 import Button from "../common/Buttons";
 import { FaArrowRightLong, FaArrowLeftLong } from "react-icons/fa6";
 import { toast } from "react-hot-toast";
+import { useState } from "react";
 import Image from "next/image";
 import businessInfo from "../../../../public/assets/image 96.png";
 import StepProgressBar from "../common/stepProgressBar";
 import FileUpload from "../common/fileUpload";
 import { ProprietorFormData } from "./types";
+import PhoneInput from "react-phone-number-input";
+import "react-phone-number-input/style.css";
+import { useLocationData } from "@/hooks/useLocationData";
 
 interface ProprietorStepProps {
   formData: ProprietorFormData;
@@ -27,6 +32,18 @@ const ProprietorStep: React.FC<ProprietorStepProps> = ({
   currentStep,
   totalSteps,
 }) => {
+  const [errors, setErrors] = useState<Record<string, string>>({});
+  const {
+    countries,
+    states,
+    filteredCities,
+    filteredLGAs,
+    loading,
+    error,
+    fetchCitiesByState,
+    fetchLGAsByState,
+    clearFilteredData,
+  } = useLocationData();
   const handleInputChange = (
     e: React.ChangeEvent<
       HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
@@ -46,69 +63,147 @@ const ProprietorStep: React.FC<ProprietorStepProps> = ({
         [name]: value,
       });
     }
+
+    // Clear error when user starts typing
+    if (errors[name]) {
+      setErrors((prev) => ({ ...prev, [name]: "" }));
+    }
+  };
+
+  // Handle country change for residential address
+  const handleResidentialCountryChange = async (
+    e: React.ChangeEvent<HTMLSelectElement>
+  ) => {
+    const countryName = e.target.value;
+
+    onFormDataChange({
+      ...formData,
+      residentialCountry: countryName,
+      residentialState: "",
+      residentialLGA: "",
+      residentialTown: "",
+    });
+
+    // Clear filtered data
+    clearFilteredData();
+  };
+
+  // Handle state change for residential address
+  const handleResidentialStateChange = async (
+    e: React.ChangeEvent<HTMLSelectElement>
+  ) => {
+    const stateName = e.target.value;
+
+    onFormDataChange({
+      ...formData,
+      residentialState: stateName,
+      residentialLGA: "",
+      residentialTown: "",
+    });
+    clearFilteredData();
+
+    // Fetch LGAs and cities for the selected state
+    if (stateName) {
+      await fetchLGAsByState(stateName);
+      await fetchCitiesByState(stateName);
+    }
+  };
+
+  // Handle country change for postal address
+  const handlePostalCountryChange = async (
+    e: React.ChangeEvent<HTMLSelectElement>
+  ) => {
+    const countryName = e.target.value;
+
+    onFormDataChange({
+      ...formData,
+      postalCountry: countryName,
+      postalState: "",
+      postalLGA: "",
+      postalTown: "",
+    });
+  };
+
+  // Handle state change for postal address
+  const handlePostalStateChange = async (
+    e: React.ChangeEvent<HTMLSelectElement>
+  ) => {
+    const stateName = e.target.value;
+
+    onFormDataChange({
+      ...formData,
+      postalState: stateName,
+      postalLGA: "",
+      postalTown: "",
+    });
+    if (stateName) {
+      await fetchLGAsByState(stateName);
+      await fetchCitiesByState(stateName);
+    }
   };
 
   const handleSaveAndContinue = () => {
-    const errors = [];
+    const newErrors: Record<string, string> = {};
 
     if (!formData.firstName.trim()) {
-      errors.push("First Name is required");
+      newErrors.firstName = "First Name is required";
     }
     if (!formData.lastName.trim()) {
-      errors.push("Last Name is required");
+      newErrors.lastName = "Last Name is required";
     }
     if (!formData.dateOfBirth) {
-      errors.push("Date of Birth is required");
+      newErrors.dateOfBirth = "Date of Birth is required";
     }
     if (!formData.occupation.trim()) {
-      errors.push("Occupation is required");
+      newErrors.occupation = "Occupation is required";
     }
     if (!formData.gender) {
-      errors.push("Gender is required");
+      newErrors.gender = "Gender is required";
     }
     if (!formData.email.trim()) {
-      errors.push("Email Address is required");
+      newErrors.email = "Email Address is required";
     }
     if (!formData.phoneNumber.trim()) {
-      errors.push("Phone Number is required");
+      newErrors.phoneNumber = "Phone Number is required";
     }
     if (!formData.meansOfId) {
-      errors.push("Means of ID is required");
+      newErrors.meansOfId = "Means of ID is required";
     }
     if (!formData.idNumber.trim()) {
-      errors.push("ID Number is required");
+      newErrors.idNumber = "ID Number is required";
     }
     if (!formData.idDocument) {
-      errors.push("ID Document upload is required");
+      newErrors.idDocument = "ID Document upload is required";
     }
     if (!formData.passportPhoto) {
-      errors.push("Passport Photograph upload is required");
+      newErrors.passportPhoto = "Passport Photograph upload is required";
     }
     if (!formData.signature) {
-      errors.push("Signature upload is required");
+      newErrors.signature = "Signature upload is required";
     }
     if (!formData.residentialCountry) {
-      errors.push("Residential Country is required");
+      newErrors.residentialCountry = "Residential Country is required";
     }
     if (!formData.residentialState) {
-      errors.push("Residential State is required");
+      newErrors.residentialState = "Residential State is required";
     }
     if (!formData.residentialLGA) {
-      errors.push("Residential LGA is required");
+      newErrors.residentialLGA = "Residential LGA is required";
     }
     if (!formData.residentialTown.trim()) {
-      errors.push("Residential Town is required");
+      newErrors.residentialTown = "Residential Town is required";
     }
     if (!formData.residentialPostalCode.trim()) {
-      errors.push("Residential Postal Code is required");
+      newErrors.residentialPostalCode = "Residential Postal Code is required";
     }
     if (!formData.residentialStreetAddress.trim()) {
-      errors.push("Residential Street Address is required");
+      newErrors.residentialStreetAddress =
+        "Residential Street Address is required";
     }
 
-    if (errors.length > 0) {
-      toast.error(errors.join("\n"));
-    } else {
+    setErrors(newErrors);
+
+    if (Object.keys(newErrors).length === 0) {
       localStorage.setItem(
         "proprietorRegistrationData",
         JSON.stringify(formData)
@@ -140,6 +235,11 @@ const ProprietorStep: React.FC<ProprietorStepProps> = ({
       </div>
 
       <div className="bg-white shadow rounded-lg p-6 md:p-3">
+        {error && (
+          <div className="mb-4 p-3 bg-yellow-50 border border-yellow-200 rounded-md">
+            <p className="text-sm text-yellow-800">{error}</p>
+          </div>
+        )}
         <div className="space-y-6 md:space-y-4">
           <div>
             <div className="grid grid-cols-2 md:grid-cols-1 gap-4">
@@ -152,6 +252,7 @@ const ProprietorStep: React.FC<ProprietorStepProps> = ({
                   placeholder="Enter name 1"
                   variant="tertiary"
                   onChange={handleInputChange}
+                  error={errors.firstName}
                 />
               </div>
               <div>
@@ -176,6 +277,7 @@ const ProprietorStep: React.FC<ProprietorStepProps> = ({
                   placeholder="Enter name 1"
                   variant="tertiary"
                   onChange={handleInputChange}
+                  error={errors.lastName}
                 />
               </div>
               <div>
@@ -187,6 +289,7 @@ const ProprietorStep: React.FC<ProprietorStepProps> = ({
                   placeholder="Enter Date"
                   variant="tertiary"
                   onChange={handleInputChange}
+                  error={errors.dateOfBirth}
                 />
               </div>
             </div>
@@ -200,21 +303,23 @@ const ProprietorStep: React.FC<ProprietorStepProps> = ({
                   placeholder="Enter occupation"
                   variant="tertiary"
                   onChange={handleInputChange}
+                  error={errors.occupation}
                 />
               </div>
               <div>
                 <Label>Gender</Label>
-                <select
+                <Select
                   name="gender"
                   value={formData.gender}
                   onChange={handleInputChange}
-                  className="w-full border bg-[#F6F6F6] focus:ring-[#51F4A6] focus:border-[#51F4A6] border-[#E0E0E0] rounded-md text-sm p-3.5 focus:outline-none focus:ring-1 text-[#7C7C7C] font-poppinsRegular"
-                >
-                  <option value="">Select</option>
-                  <option value="male">Male</option>
-                  <option value="female">Female</option>
-                  <option value="other">Other</option>
-                </select>
+                  placeholder="Select Gender"
+                  error={errors.gender}
+                  options={[
+                    { value: "male", label: "Male" },
+                    { value: "female", label: "Female" },
+                    { value: "other", label: "Other" },
+                  ]}
+                />
               </div>
             </div>
           </div>
@@ -230,48 +335,54 @@ const ProprietorStep: React.FC<ProprietorStepProps> = ({
                   placeholder="Enter business email"
                   variant="tertiary"
                   onChange={handleInputChange}
+                  error={errors.email}
                 />
               </div>
               <div>
                 <Label>Phone Number</Label>
-                <div className="flex gap-2">
-                  <select
-                    name="countryCode"
-                    value={formData.countryCode}
-                    onChange={handleInputChange}
-                    className="w-24 border bg-[#F6F6F6] focus:ring-[#51F4A6] focus:border-[#51F4A6] border-[#E0E0E0] rounded-md text-sm p-2 focus:outline-none focus:ring-1 text-[#7C7C7C] font-poppinsRegular"
-                  >
-                    <option value="NG +234">NG +234</option>
-                    <option value="GH +233">GH +233</option>
-                    <option value="KE +254">KE +254</option>
-                    <option value="ZA +27">ZA +27</option>
-                  </select>
-                  <Input
-                    name="phoneNumber"
-                    type="tel"
-                    value={formData.phoneNumber}
-                    placeholder="Enter phone number"
-                    variant="tertiary"
-                    onChange={handleInputChange}
-                  />
-                </div>
+                <PhoneInput
+                  placeholder="Enter phone number"
+                  international
+                  defaultCountry="NG"
+                  required
+                  value={formData.phoneNumber || ""}
+                  onChange={(value) => {
+                    onFormDataChange({ ...formData, phoneNumber: value || "" });
+                    // Clear error when user starts typing
+                    if (errors.phoneNumber) {
+                      setErrors((prev) => ({ ...prev, phoneNumber: "" }));
+                    }
+                  }}
+                  className="phone-input"
+                  numberInputProps={{
+                    className: `outline-none border-[#E0E0E0] bg-[#F6F6F6] border-[1px] text-[#5F5F5F] rounded-tr-md rounded-br-md rounded-tl-none rounded-bl-none text-sm w-[100%] px-3 py-[14px] ${
+                      errors.phoneNumber ? "border-red-500" : ""
+                    }`,
+                  }}
+                />
+                {errors.phoneNumber && (
+                  <p className="text-red-500 text-xs mt-1 font-poppinsRegular">
+                    {errors.phoneNumber}
+                  </p>
+                )}
               </div>
             </div>
             <div className="grid grid-cols-2 md:grid-cols-1 gap-4 mt-4">
               <div>
                 <Label>Means Of ID</Label>
-                <select
+                <Select
                   name="meansOfId"
                   value={formData.meansOfId}
                   onChange={handleInputChange}
-                  className="w-full border bg-[#F6F6F6] focus:ring-[#51F4A6] focus:border-[#51F4A6] border-[#E0E0E0] rounded-md text-sm p-3.5 focus:outline-none focus:ring-1 text-[#7C7C7C] font-poppinsRegular"
-                >
-                  <option value="">Select type</option>
-                  <option value="national-id">National ID</option>
-                  <option value="passport">Passport</option>
-                  <option value="drivers-license">Driver&apos;s License</option>
-                  <option value="voters-card">Voter&apos;s Card</option>
-                </select>
+                  placeholder="Select ID Type"
+                  error={errors.meansOfId}
+                  options={[
+                    { value: "national-id", label: "National ID" },
+                    { value: "passport", label: "Passport" },
+                    { value: "drivers-license", label: "Driver's License" },
+                    { value: "voters-card", label: "Voter's Card" },
+                  ]}
+                />
               </div>
               <div>
                 <Label>ID Number</Label>
@@ -282,6 +393,7 @@ const ProprietorStep: React.FC<ProprietorStepProps> = ({
                   placeholder="Enter id number"
                   variant="tertiary"
                   onChange={handleInputChange}
+                  error={errors.idNumber}
                 />
               </div>
             </div>
@@ -293,10 +405,15 @@ const ProprietorStep: React.FC<ProprietorStepProps> = ({
                 accept=".pdf,.jpeg,.jpg,.png"
                 maxSize={1 * 1024 * 1024}
                 maxSizeText="Max size of 1mb, pdf, jpeg, png format only"
-                onFileChange={(file) =>
-                  onFormDataChange({ ...formData, idDocument: file })
-                }
+                onFileChange={(file) => {
+                  onFormDataChange({ ...formData, idDocument: file });
+                  // Clear error when user uploads file
+                  if (errors.idDocument) {
+                    setErrors((prev) => ({ ...prev, idDocument: "" }));
+                  }
+                }}
                 currentFile={formData.idDocument}
+                error={errors.idDocument}
               />
               <div className="grid grid-cols-2 xl:grid-cols-1 gap-4">
                 <FileUpload
@@ -304,20 +421,30 @@ const ProprietorStep: React.FC<ProprietorStepProps> = ({
                   accept=".pdf,.jpeg,.jpg,.png"
                   maxSize={5 * 1024 * 1024}
                   maxSizeText="5mb size, pdf, jpeg, png format only"
-                  onFileChange={(file) =>
-                    onFormDataChange({ ...formData, passportPhoto: file })
-                  }
+                  onFileChange={(file) => {
+                    onFormDataChange({ ...formData, passportPhoto: file });
+                    // Clear error when user uploads file
+                    if (errors.passportPhoto) {
+                      setErrors((prev) => ({ ...prev, passportPhoto: "" }));
+                    }
+                  }}
                   currentFile={formData.passportPhoto}
+                  error={errors.passportPhoto}
                 />
                 <FileUpload
                   label="Upload Signature (kindly sign on a white paper)"
                   accept=".pdf,.jpeg,.jpg,.png"
                   maxSize={5 * 1024 * 1024}
                   maxSizeText="5mb size, pdf, jpeg, png format only"
-                  onFileChange={(file) =>
-                    onFormDataChange({ ...formData, signature: file })
-                  }
+                  onFileChange={(file) => {
+                    onFormDataChange({ ...formData, signature: file });
+                    // Clear error when user uploads file
+                    if (errors.signature) {
+                      setErrors((prev) => ({ ...prev, signature: "" }));
+                    }
+                  }}
                   currentFile={formData.signature}
+                  error={errors.signature}
                 />
               </div>
             </div>
@@ -329,60 +456,92 @@ const ProprietorStep: React.FC<ProprietorStepProps> = ({
             <div className="grid grid-cols-2 md:grid-cols-1 gap-4">
               <div>
                 <Label>Country</Label>
-                <select
+                <Select
                   name="residentialCountry"
                   value={formData.residentialCountry}
-                  onChange={handleInputChange}
-                  className="w-full border bg-[#F6F6F6] focus:ring-[#51F4A6] focus:border-[#51F4A6] border-[#E0E0E0] rounded-md text-sm p-4 focus:outline-none focus:ring-1 text-[#7C7C7C] font-poppinsRegular"
-                >
-                  <option value="">Select Country</option>
-                  <option value="Nigeria">Nigeria</option>
-                  <option value="Ghana">Ghana</option>
-                  <option value="Kenya">Kenya</option>
-                  <option value="South Africa">South Africa</option>
-                </select>
+                  onChange={handleResidentialCountryChange}
+                  disabled={loading.countries}
+                  loading={loading.countries}
+                  loadingText="Loading countries..."
+                  placeholder="Select Country"
+                  error={errors.residentialCountry}
+                  options={
+                    countries?.map((country) => ({
+                      value: country.name,
+                      label: country.name,
+                    })) || []
+                  }
+                />
               </div>
               <div>
                 <Label>State</Label>
-                <select
+                <Select
                   name="residentialState"
                   value={formData.residentialState}
-                  onChange={handleInputChange}
-                  className="w-full border bg-[#F6F6F6] focus:ring-[#51F4A6] focus:border-[#51F4A6] border-[#E0E0E0] rounded-md text-sm p-4 focus:outline-none focus:ring-1 text-[#7C7C7C] font-poppinsRegular"
-                >
-                  <option value="">Select State</option>
-                  <option value="Lagos">Lagos</option>
-                  <option value="Abuja">Abuja</option>
-                  <option value="Kano">Kano</option>
-                  <option value="Rivers">Rivers</option>
-                </select>
+                  onChange={handleResidentialStateChange}
+                  disabled={loading.states || !formData.residentialCountry}
+                  loading={loading.states}
+                  loadingText="Loading states..."
+                  placeholder={
+                    !formData.residentialCountry
+                      ? "Select Country first"
+                      : "Select State"
+                  }
+                  error={errors.residentialState}
+                  options={
+                    states?.map((state) => ({
+                      value: state.name,
+                      label: state.name,
+                    })) || []
+                  }
+                />
               </div>
             </div>
             <div className="grid grid-cols-2 md:grid-cols-1 gap-4 mt-4">
               <div>
                 <Label>LGA</Label>
-                <select
+                <Select
                   name="residentialLGA"
                   value={formData.residentialLGA}
                   onChange={handleInputChange}
-                  className="w-full border bg-[#F6F6F6] focus:ring-[#51F4A6] focus:border-[#51F4A6] border-[#E0E0E0] rounded-md text-sm p-4 focus:outline-none focus:ring-1 text-[#7C7C7C] font-poppinsRegular"
-                >
-                  <option value="">Select LGA</option>
-                  <option value="Ikeja">Ikeja</option>
-                  <option value="Victoria Island">Victoria Island</option>
-                  <option value="Surulere">Surulere</option>
-                  <option value="Lekki">Lekki</option>
-                </select>
+                  disabled={loading.lgas || !formData.residentialState}
+                  loading={loading.lgas}
+                  loadingText="Loading LGAs..."
+                  placeholder={
+                    !formData.residentialState
+                      ? "Select State first"
+                      : "Select LGA"
+                  }
+                  error={errors.residentialLGA}
+                  options={
+                    filteredLGAs?.map((lga) => ({
+                      value: lga.name,
+                      label: lga.name,
+                    })) || []
+                  }
+                />
               </div>
               <div>
                 <Label>Town</Label>
-                <Input
+                <Select
                   name="residentialTown"
-                  type="text"
                   value={formData.residentialTown}
-                  placeholder="Enter town name"
-                  variant="tertiary"
                   onChange={handleInputChange}
+                  disabled={loading.cities || !formData.residentialState}
+                  loading={loading.cities}
+                  loadingText="Loading cities..."
+                  placeholder={
+                    !formData.residentialState
+                      ? "Select State first"
+                      : "Select Town/City"
+                  }
+                  error={errors.residentialTown}
+                  options={
+                    filteredCities?.map((city) => ({
+                      value: city.name,
+                      label: city.name,
+                    })) || []
+                  }
                 />
               </div>
             </div>
@@ -396,6 +555,7 @@ const ProprietorStep: React.FC<ProprietorStepProps> = ({
                   placeholder="Enter postal code"
                   variant="tertiary"
                   onChange={handleInputChange}
+                  error={errors.residentialPostalCode}
                 />
               </div>
               <div>
@@ -407,6 +567,7 @@ const ProprietorStep: React.FC<ProprietorStepProps> = ({
                   placeholder="Enter street address"
                   variant="tertiary"
                   onChange={handleInputChange}
+                  error={errors.residentialStreetAddress}
                 />
               </div>
             </div>
@@ -434,60 +595,88 @@ const ProprietorStep: React.FC<ProprietorStepProps> = ({
                 <div className="grid grid-cols-2 md:grid-cols-1 gap-4">
                   <div>
                     <Label>Country</Label>
-                    <select
+                    <Select
                       name="postalCountry"
                       value={formData.postalCountry}
-                      onChange={handleInputChange}
-                      className="w-full border bg-[#F6F6F6] focus:ring-[#51F4A6] focus:border-[#51F4A6] border-[#E0E0E0] rounded-md text-sm p-4 focus:outline-none focus:ring-1 text-[#7C7C7C] font-poppinsRegular"
-                    >
-                      <option value="">Select Country</option>
-                      <option value="Nigeria">Nigeria</option>
-                      <option value="Ghana">Ghana</option>
-                      <option value="Kenya">Kenya</option>
-                      <option value="South Africa">South Africa</option>
-                    </select>
+                      onChange={handlePostalCountryChange}
+                      disabled={loading.countries}
+                      loading={loading.countries}
+                      loadingText="Loading countries..."
+                      placeholder="Select Country"
+                      options={
+                        countries?.map((country) => ({
+                          value: country.name,
+                          label: country.name,
+                        })) || []
+                      }
+                    />
                   </div>
                   <div>
                     <Label>State</Label>
-                    <select
+                    <Select
                       name="postalState"
                       value={formData.postalState}
-                      onChange={handleInputChange}
-                      className="w-full border bg-[#F6F6F6] focus:ring-[#51F4A6] focus:border-[#51F4A6] border-[#E0E0E0] rounded-md text-sm p-4 focus:outline-none focus:ring-1 text-[#7C7C7C] font-poppinsRegular"
-                    >
-                      <option value="">Select State</option>
-                      <option value="Lagos">Lagos</option>
-                      <option value="Abuja">Abuja</option>
-                      <option value="Kano">Kano</option>
-                      <option value="Rivers">Rivers</option>
-                    </select>
+                      onChange={handlePostalStateChange}
+                      disabled={loading.states || !formData.postalCountry}
+                      loading={loading.states}
+                      loadingText="Loading states..."
+                      placeholder={
+                        !formData.postalCountry
+                          ? "Select Country first"
+                          : "Select State"
+                      }
+                      options={
+                        states?.map((state) => ({
+                          value: state.name,
+                          label: state.name,
+                        })) || []
+                      }
+                    />
                   </div>
                 </div>
                 <div className="grid grid-cols-2 md:grid-cols-1 gap-4 mt-4">
                   <div>
                     <Label>LGA</Label>
-                    <select
+                    <Select
                       name="postalLGA"
                       value={formData.postalLGA}
                       onChange={handleInputChange}
-                      className="w-full border bg-[#F6F6F6] focus:ring-[#51F4A6] focus:border-[#51F4A6] border-[#E0E0E0] rounded-md text-sm p-4 focus:outline-none focus:ring-1 text-[#7C7C7C] font-poppinsRegular"
-                    >
-                      <option value="">Select LGA</option>
-                      <option value="Ikeja">Ikeja</option>
-                      <option value="Victoria Island">Victoria Island</option>
-                      <option value="Surulere">Surulere</option>
-                      <option value="Lekki">Lekki</option>
-                    </select>
+                      disabled={loading.lgas || !formData.postalState}
+                      loading={loading.lgas}
+                      loadingText="Loading LGAs..."
+                      placeholder={
+                        !formData.postalState
+                          ? "Select State first"
+                          : "Select LGA"
+                      }
+                      options={
+                        filteredLGAs?.map((lga) => ({
+                          value: lga.name,
+                          label: lga.name,
+                        })) || []
+                      }
+                    />
                   </div>
                   <div>
                     <Label>Town</Label>
-                    <Input
+                    <Select
                       name="postalTown"
-                      type="text"
                       value={formData.postalTown}
-                      placeholder="Enter town name"
-                      variant="tertiary"
                       onChange={handleInputChange}
+                      disabled={loading.cities || !formData.postalState}
+                      loading={loading.cities}
+                      loadingText="Loading cities..."
+                      placeholder={
+                        !formData.postalState
+                          ? "Select State first"
+                          : "Select Town/City"
+                      }
+                      options={
+                        filteredCities?.map((city) => ({
+                          value: city.name,
+                          label: city.name,
+                        })) || []
+                      }
                     />
                   </div>
                 </div>
@@ -546,3 +735,5 @@ const ProprietorStep: React.FC<ProprietorStepProps> = ({
 };
 
 export default ProprietorStep;
+
+

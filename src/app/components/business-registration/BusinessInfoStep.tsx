@@ -4,11 +4,14 @@ import Input from "../common/input";
 import Button from "../common/Buttons";
 import { FaArrowRightLong, FaArrowLeftLong } from "react-icons/fa6";
 import { toast } from "react-hot-toast";
+import { useState } from "react";
 import Image from "next/image";
 import businessInfo from "../../../../public/assets/image 96.png";
 import { IoMdInformationCircleOutline } from "react-icons/io";
 import StepProgressBar from "../common/stepProgressBar";
 import { BusinessFormData } from "./types";
+import PhoneInput from "react-phone-number-input";
+import "react-phone-number-input/style.css";
 
 interface BusinessInfoStepProps {
   formData: BusinessFormData;
@@ -27,6 +30,7 @@ const BusinessInfoStep: React.FC<BusinessInfoStepProps> = ({
   currentStep,
   totalSteps,
 }) => {
+  const [errors, setErrors] = useState<Record<string, string>>({});
   const handleInputChange = (
     e: React.ChangeEvent<
       HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
@@ -37,36 +41,42 @@ const BusinessInfoStep: React.FC<BusinessInfoStepProps> = ({
       ...formData,
       [name]: value,
     });
+
+    // Clear error when user starts typing
+    if (errors[name]) {
+      setErrors((prev) => ({ ...prev, [name]: "" }));
+    }
   };
 
   const handleSaveAndContinue = () => {
-    const errors = [];
+    const newErrors: Record<string, string> = {};
 
     if (!formData.proposedName1.trim()) {
-      errors.push("Proposed Name 1 is required");
+      newErrors.proposedName1 = "Proposed Name 1 is required";
     }
     if (!formData.proposedName2.trim()) {
-      errors.push("Proposed Name 2 is required");
+      newErrors.proposedName2 = "Proposed Name 2 is required";
     }
     if (!formData.typeOfBusiness) {
-      errors.push("Type of Business is required");
+      newErrors.typeOfBusiness = "Type of Business is required";
     }
     if (!formData.specificBusinessCategory) {
-      errors.push("Specific Business Category is required");
+      newErrors.specificBusinessCategory =
+        "Specific Business Category is required";
     }
     if (!formData.businessEmail.trim()) {
-      errors.push("Business Email is required");
+      newErrors.businessEmail = "Business Email is required";
     }
     if (!formData.businessPhone.trim()) {
-      errors.push("Business Phone Number is required");
+      newErrors.businessPhone = "Business Phone Number is required";
     }
     if (!formData.businessDescription.trim()) {
-      errors.push("Business Description is required");
+      newErrors.businessDescription = "Business Description is required";
     }
 
-    if (errors.length > 0) {
-      toast.error(errors.join("\n"));
-    } else {
+    setErrors(newErrors);
+
+    if (Object.keys(newErrors).length === 0) {
       // Save business data to localStorage
       localStorage.setItem(
         "businessRegistrationData",
@@ -110,6 +120,7 @@ const BusinessInfoStep: React.FC<BusinessInfoStepProps> = ({
                 placeholder="Enter name 1"
                 variant="tertiary"
                 onChange={handleInputChange}
+                error={errors.proposedName1}
               />
             </div>
 
@@ -122,6 +133,7 @@ const BusinessInfoStep: React.FC<BusinessInfoStepProps> = ({
                 placeholder="Enter Name 2"
                 variant="tertiary"
                 onChange={handleInputChange}
+                error={errors.proposedName2}
               />
             </div>
           </div>
@@ -150,7 +162,11 @@ const BusinessInfoStep: React.FC<BusinessInfoStepProps> = ({
                 name="typeOfBusiness"
                 value={formData.typeOfBusiness}
                 onChange={handleInputChange}
-                className="w-full border bg-[#F6F6F6] focus:ring-[#51F4A6] focus:border-[#51F4A6] border-[#E0E0E0] rounded-md text-sm p-4 focus:outline-none focus:ring-1 text-[#7C7C7C] font-poppinsRegular"
+                className={`w-full border bg-[#F6F6F6] focus:ring-[#51F4A6] focus:border-[#51F4A6] border-[#E0E0E0] rounded-md text-sm p-4 focus:outline-none focus:ring-1 text-[#7C7C7C] font-poppinsRegular ${
+                  errors.typeOfBusiness
+                    ? "border-red-500 focus:border-red-500"
+                    : ""
+                }`}
               >
                 <option value="">Select type</option>
                 <option value="sole-proprietorship">Sole Proprietorship</option>
@@ -168,7 +184,11 @@ const BusinessInfoStep: React.FC<BusinessInfoStepProps> = ({
                 name="specificBusinessCategory"
                 value={formData.specificBusinessCategory}
                 onChange={handleInputChange}
-                className="w-full border bg-[#F6F6F6] focus:ring-[#51F4A6] focus:border-[#51F4A6] border-[#E0E0E0] rounded-md text-sm p-4 focus:outline-none focus:ring-1 text-[#7C7C7C] font-poppinsRegular"
+                className={`w-full border bg-[#F6F6F6] focus:ring-[#51F4A6] focus:border-[#51F4A6] border-[#E0E0E0] rounded-md text-sm p-4 focus:outline-none focus:ring-1 text-[#7C7C7C] font-poppinsRegular ${
+                  errors.specificBusinessCategory
+                    ? "border-red-500 focus:border-red-500"
+                    : ""
+                }`}
               >
                 <option value="">Select type</option>
                 <option value="crop-farming">Crop Farming</option>
@@ -177,6 +197,11 @@ const BusinessInfoStep: React.FC<BusinessInfoStepProps> = ({
                 <option value="aquaculture">Aquaculture</option>
                 <option value="mixed-farming">Mixed Farming</option>
               </select>
+              {errors.specificBusinessCategory && (
+                <p className="text-red-500 text-xs mt-1 font-poppinsRegular">
+                  {errors.specificBusinessCategory}
+                </p>
+              )}
             </div>
           </div>
           <div className="grid grid-cols-2 md:grid-cols-1 gap-4">
@@ -189,32 +214,37 @@ const BusinessInfoStep: React.FC<BusinessInfoStepProps> = ({
                 placeholder="Enter business email"
                 variant="tertiary"
                 onChange={handleInputChange}
+                error={errors.businessEmail}
               />
             </div>
 
             <div>
               <Label>Business Phone Number</Label>
-              <div className="flex gap-2">
-                <select
-                  name="countryCode"
-                  value={formData.countryCode}
-                  onChange={handleInputChange}
-                  className="w-24 border bg-[#F6F6F6] focus:ring-[#51F4A6] focus:border-[#51F4A6] border-[#E0E0E0] rounded-md text-sm p-2 focus:outline-none focus:ring-1 text-[#7C7C7C] font-poppinsRegular"
-                >
-                  <option value="NG +234">NG +234</option>
-                  <option value="GH +233">GH +233</option>
-                  <option value="KE +254">KE +254</option>
-                  <option value="ZA +27">ZA +27</option>
-                </select>
-                <Input
-                  name="businessPhone"
-                  type="tel"
-                  value={formData.businessPhone}
-                  placeholder="9012345678"
-                  variant="tertiary"
-                  onChange={handleInputChange}
-                />
-              </div>
+              <PhoneInput
+                placeholder="Enter business phone number"
+                international
+                defaultCountry="NG"
+                required
+                value={formData.businessPhone || ""}
+                onChange={(value) => {
+                  onFormDataChange({ ...formData, businessPhone: value || "" });
+                  // Clear error when user starts typing
+                  if (errors.businessPhone) {
+                    setErrors((prev) => ({ ...prev, businessPhone: "" }));
+                  }
+                }}
+                className="phone-input"
+                numberInputProps={{
+                  className: `outline-none border-[#E0E0E0] bg-[#F6F6F6] border-[1px] text-[#5F5F5F] rounded-tr-md rounded-br-md rounded-tl-none rounded-bl-none text-sm w-[100%] px-3 py-[14px] ${
+                    errors.businessPhone ? "border-red-500" : ""
+                  }`,
+                }}
+              />
+              {errors.businessPhone && (
+                <p className="text-red-500 text-xs mt-1 font-poppinsRegular">
+                  {errors.businessPhone}
+                </p>
+              )}
             </div>
           </div>
 
@@ -226,8 +256,17 @@ const BusinessInfoStep: React.FC<BusinessInfoStepProps> = ({
               placeholder="Enter business description here"
               onChange={handleInputChange}
               rows={4}
-              className="w-full border bg-[#F6F6F6] focus:ring-[#51F4A6] focus:border-[#51F4A6] border-[#E0E0E0] rounded-md text-sm p-4 focus:outline-none focus:ring-1 text-[#7C7C7C] font-poppinsRegular resize-none"
+              className={`w-full border bg-[#F6F6F6] focus:ring-[#51F4A6] focus:border-[#51F4A6] border-[#E0E0E0] rounded-md text-sm p-4 focus:outline-none focus:ring-1 text-[#7C7C7C] font-poppinsRegular resize-none ${
+                errors.businessDescription
+                  ? "border-red-500 focus:border-red-500"
+                  : ""
+              }`}
             />
+            {errors.businessDescription && (
+              <p className="text-red-500 text-xs mt-1 font-poppinsRegular">
+                {errors.businessDescription}
+              </p>
+            )}
           </div>
         </div>
       </div>

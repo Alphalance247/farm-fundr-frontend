@@ -26,6 +26,9 @@ const BusinessRegistration = () => {
   const router = useRouter();
   const [currentStep, setCurrentStep] = useState(0);
   const [completedSteps, setCompletedSteps] = useState<number[]>([]);
+  const [initialErrors, setInitialErrors] = useState<Record<string, string>>(
+    {}
+  );
   const [initialFormData, setInitialFormData] = useState<InitialFormData>({
     country: "Nigeria",
     businessName: "FarmPady",
@@ -38,7 +41,6 @@ const BusinessRegistration = () => {
     typeOfBusiness: "",
     specificBusinessCategory: "",
     businessEmail: "",
-    countryCode: "NG +234",
     businessPhone: "",
     businessDescription: "",
   });
@@ -52,7 +54,6 @@ const BusinessRegistration = () => {
       occupation: "",
       gender: "",
       email: "",
-      countryCode: "NG +234",
       phoneNumber: "",
       meansOfId: "",
       idNumber: "",
@@ -84,21 +85,26 @@ const BusinessRegistration = () => {
       ...prev,
       [name]: value,
     }));
+
+    // Clear error when user starts typing
+    if (initialErrors[name]) {
+      setInitialErrors((prev) => ({ ...prev, [name]: "" }));
+    }
   };
 
   const handleSaveAndContinue = () => {
-    const errors = [];
+    const newErrors: Record<string, string> = {};
 
     if (!initialFormData.country) {
-      errors.push("Country selection is required");
+      newErrors.country = "Country selection is required";
     }
     if (!initialFormData.businessName.trim()) {
-      errors.push("Business name is required");
+      newErrors.businessName = "Business name is required";
     }
 
-    if (errors.length > 0) {
-      toast.error(errors.join("\n"));
-    } else {
+    setInitialErrors(newErrors);
+
+    if (Object.keys(newErrors).length === 0) {
       toast.success("Business registration details saved successfully!");
       setCurrentStep(1);
     }
@@ -238,13 +244,22 @@ const BusinessRegistration = () => {
                       name="country"
                       value={initialFormData.country}
                       onChange={handleInitialInputChange}
-                      className="w-full border bg-[#F6F6F6] focus:ring-[#51F4A6] focus:border-[#51F4A6] border-[#E0E0E0] rounded-md text-sm p-4 focus:outline-none focus:ring-1 text-[#7C7C7C] font-poppinsRegular"
+                      className={`w-full border bg-[#F6F6F6] focus:ring-[#51F4A6] focus:border-[#51F4A6] border-[#E0E0E0] rounded-md text-sm p-4 focus:outline-none focus:ring-1 text-[#7C7C7C] font-poppinsRegular ${
+                        initialErrors.country
+                          ? "border-red-500 focus:border-red-500"
+                          : ""
+                      }`}
                     >
                       <option value="Nigeria">Nigeria</option>
                       <option value="Ghana">Ghana</option>
                       <option value="Kenya">Kenya</option>
                       <option value="South Africa">South Africa</option>
                     </select>
+                    {initialErrors.country && (
+                      <p className="text-red-500 text-xs mt-1 font-poppinsRegular">
+                        {initialErrors.country}
+                      </p>
+                    )}
                   </div>
 
                   <div>
@@ -256,6 +271,7 @@ const BusinessRegistration = () => {
                       placeholder="Enter your farm business name"
                       variant="tertiary"
                       onChange={handleInitialInputChange}
+                      error={initialErrors.businessName}
                     />
                   </div>
                 </div>

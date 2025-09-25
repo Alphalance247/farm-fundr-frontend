@@ -13,6 +13,7 @@ interface FileUploadProps {
   currentFile?: File | null;
   preview?: string | null;
   className?: string;
+  error?: string;
 }
 
 const FileUpload: React.FC<FileUploadProps> = ({
@@ -23,9 +24,12 @@ const FileUpload: React.FC<FileUploadProps> = ({
   onFileChange,
   currentFile,
   preview,
-  className = ""
+  className = "",
+  error,
 }) => {
-  const [localPreview, setLocalPreview] = useState<string | null>(preview || null);
+  const [localPreview, setLocalPreview] = useState<string | null>(
+    preview || null
+  );
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFile = e.target.files?.[0];
@@ -51,21 +55,19 @@ const FileUpload: React.FC<FileUploadProps> = ({
     <div className={className}>
       <label className="text-sm font-poppinsSemiBold text-[#5F5F5F] block mb-2">
         {label}
-        <span className="text-red-600 text-sm ml-1">
-          ({maxSizeText})
-        </span>
+        <span className="text-red-600 text-sm ml-1">({maxSizeText})</span>
       </label>
-      
+
       <input
-        id={`file-upload-${label.replace(/\s+/g, '-').toLowerCase()}`}
+        id={`file-upload-${label.replace(/\s+/g, "-").toLowerCase()}`}
         type="file"
         accept={accept}
         onChange={handleFileChange}
         className="hidden"
       />
-      
-      <label 
-        htmlFor={`file-upload-${label.replace(/\s+/g, '-').toLowerCase()}`} 
+
+      <label
+        htmlFor={`file-upload-${label.replace(/\s+/g, "-").toLowerCase()}`}
         className="cursor-pointer w-full block"
       >
         {displayPreview ? (
@@ -83,8 +85,12 @@ const FileUpload: React.FC<FileUploadProps> = ({
                     {displayFile?.name || "Uploaded file"}
                   </p>
                   <p className="text-xs text-gray-500">
-                    {displayFile?.lastModified ? new Date(displayFile.lastModified).toLocaleString() : ""} 
-                    {displayFile?.size ? ` • ${(displayFile.size / 1024 / 1024).toFixed(1)}MB` : ""}
+                    {displayFile?.lastModified
+                      ? new Date(displayFile.lastModified).toLocaleString()
+                      : ""}
+                    {displayFile?.size
+                      ? ` • ${(displayFile.size / 1024 / 1024).toFixed(1)}MB`
+                      : ""}
                   </p>
                 </div>
               </div>
@@ -106,13 +112,16 @@ const FileUpload: React.FC<FileUploadProps> = ({
             <FiDownload size={24} color="#2D865B" />
             <p className="text-xs text-gray-600 text-center">
               Upload document or <br />
-              <span className="font-semibold mt-1 block">
-                click to browse
-              </span>
+              <span className="font-semibold mt-1 block">click to browse</span>
             </p>
           </div>
         )}
       </label>
+
+      {/* Show error message if there is one */}
+      {error && (
+        <p className="text-red-500 text-xs mt-1 font-poppinsRegular">{error}</p>
+      )}
     </div>
   );
 };

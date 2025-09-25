@@ -5,7 +5,6 @@ export interface BusinessFormData {
   typeOfBusiness: string;
   specificBusinessCategory: string;
   businessEmail: string;
-  countryCode: string;
   businessPhone: string;
   businessDescription: string;
 }
@@ -18,7 +17,6 @@ export interface ProprietorFormData {
   occupation: string;
   gender: string;
   email: string;
-  countryCode: string;
   phoneNumber: string;
   meansOfId: string;
   idNumber: string;
