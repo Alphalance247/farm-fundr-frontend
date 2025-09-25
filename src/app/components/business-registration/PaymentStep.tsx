@@ -295,7 +295,7 @@ const PaymentStep: React.FC<PaymentStepProps> = ({
 
       {showSuccessModal && (
         <ModalOverlay onClose={() => setShowSuccessModal(false)}>
-          <div className="bg-white rounded-lg p-8 w-full max-w-2xl mx-4 shadow-lg z-50">
+          <div className="bg-white rounded-lg p-8 md:p-3 md:h-[80vh] md:overflow-y-auto md:scrollbar-hide w-full max-w-2xl mx-4 shadow-lg z-50">
             <div className="bg-[#EEFEF6] rounded-lg p-8 mb-6 text-center">
               <Image
                 src={success}
@@ -306,7 +306,7 @@ const PaymentStep: React.FC<PaymentStepProps> = ({
               />
             </div>
 
-            <div className="text-center mb-8">
+            <div className="text-center md:text-left mb-8">
               <h2 className="text-2xl font-aristoBold text-[#303030] mb-2">
                 Application Submitted Successfully!
               </h2>
@@ -316,11 +316,11 @@ const PaymentStep: React.FC<PaymentStepProps> = ({
             </div>
 
             <div className="bg-white border border-[#C9FCE3] rounded-lg px-6 pt-2 pb-6 mb-8">
-              <h3 className="font-aristoBold border-b border-[#C9FCE3] pb-2 text-[#5F5F5F] text-2xl mb-6 text-center">
+              <h3 className="font-aristoBold border-b border-[#C9FCE3] pb-2 text-[#5F5F5F] text-2xl mb-6 md:text-left text-center">
                 Application Summary
               </h3>
               <div className="space-y-4">
-                <div className="flex justify-between items-center">
+                <div className="flex flex-row md:flex-col md:gap-4 md:items-start justify-between items-center">
                   <span className="text-sm text-[#5F5F5F] font-poppinsRegular">
                     Application Type
                   </span>
@@ -328,7 +328,7 @@ const PaymentStep: React.FC<PaymentStepProps> = ({
                     Business Registration
                   </span>
                 </div>
-                <div className="flex justify-between items-center">
+                <div className="flex flex-row md:flex-col md:gap-4 md:items-start justify-between items-center">
                   <span className="text-sm text-[#5F5F5F] font-poppinsRegular">
                     Amount
                   </span>
@@ -336,7 +336,7 @@ const PaymentStep: React.FC<PaymentStepProps> = ({
                     ₦15,000.00
                   </span>
                 </div>
-                <div className="flex justify-between items-center">
+                <div className="flex flex-row md:flex-col md:gap-4 md:items-start justify-between items-center">
                   <span className="text-sm text-[#5F5F5F] font-poppinsRegular">
                     Application ID
                   </span>
@@ -347,12 +347,12 @@ const PaymentStep: React.FC<PaymentStepProps> = ({
               </div>
             </div>
 
-            <div className="flex gap-4">
+            <div className="flex flex-row md:flex-col md:gap-4 gap-4">
               <Button
                 onClick={handleGoToDashboard}
                 variant="subprimary"
                 size="medium"
-                className="flex-1"
+                className="flex-1 justify-center"
               >
                 Go To Dashboard
               </Button>
@@ -360,7 +360,7 @@ const PaymentStep: React.FC<PaymentStepProps> = ({
                 onClick={handleCheckApplicationStatus}
                 variant="primary"
                 size="medium"
-                className="flex-1"
+                className="flex-1 justify-center"
               >
                 Check Application Status
               </Button>
