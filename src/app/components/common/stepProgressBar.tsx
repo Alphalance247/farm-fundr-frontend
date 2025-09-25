@@ -17,14 +17,15 @@ const StepProgressBar: React.FC<StepProgressBarProps> = ({ currentStep, totalSte
             const stepNumber = index + 1;
             const isCompleted = stepNumber < currentStep;
             const isCurrent = stepNumber === currentStep;
-            // Show all segments filled when on the last step (step 4)
             const isLastStep = currentStep === totalSteps;
-            
+
             return (
               <div
                 key={stepNumber}
-                className={`w-40 h-1 rounded-full ${
-                  isCompleted || isCurrent || isLastStep ? "bg-[#51F4A6]" : "bg-[#E2E2E2]"
+                className={`w-40 xl:w-36 h-1 rounded-full ${
+                  isCompleted || isCurrent || isLastStep
+                    ? "bg-[#51F4A6]"
+                    : "bg-[#E2E2E2]"
                 }`}
               ></div>
             );
