@@ -6,6 +6,7 @@ import Label from "../../components/common/label";
 import Input from "../../components/common/input";
 import Button from "../../components/common/Buttons";
 import { FaArrowRightLong } from "react-icons/fa6";
+import { FaChevronDown, FaChevronUp } from "react-icons/fa";
 import { toast } from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import TabSidebar from "../../components/business-registration/TabSidebar";
@@ -18,6 +19,7 @@ import type {
 } from "../../components/business-registration/types";
 import Image from "next/image";
 import businessInfo from "../../../../public/assets/image 96.png";
+import caution from "../../../../public/assets/caution.png";
 import BusinessInfoStep from "@/app/components/business-registration/BusinessInfoStep";
 import ProprietorStep from "@/app/components/business-registration/ProprietorStep";
 import ReviewStep from "@/app/components/business-registration/ReviewStep";
@@ -29,6 +31,7 @@ const BusinessRegistration = () => {
   const [initialErrors, setInitialErrors] = useState<Record<string, string>>(
     {}
   );
+  const [isImportantExpanded, setIsImportantExpanded] = useState(false);
   const [initialFormData, setInitialFormData] = useState<InitialFormData>({
     country: "Nigeria",
     businessName: "FarmPady",
@@ -299,7 +302,45 @@ const BusinessRegistration = () => {
         <div className="mb-6">
           <GoBackBtn href="/farmer-dashboard" />
         </div>
-        <div className="hidden lg:block max-w-4xl mx-auto">
+        <div className="hidden pb-8 lg:block max-w-4xl mx-auto">
+          <div className="mb-4">
+            <div className="bg-[#FFFAE6] mt-6 border border-[#FEF0B0] rounded-xl p-2">
+              <div
+                className="flex items-center justify-between cursor-pointer"
+                onClick={() => setIsImportantExpanded(!isImportantExpanded)}
+              >
+                <div className="flex items-center gap-3">
+                  <Image src={caution} alt="Business Registration" width={40} />
+                  <p className="text-[#7C7C7C] font-poppinsSemiBold text-sm">
+                    Important
+                  </p>
+                </div>
+                {isImportantExpanded ? (
+                  <FaChevronUp className="text-[#7C7C7C]" size={16} />
+                ) : (
+                  <FaChevronDown className="text-[#7C7C7C]" size={16} />
+                )}
+              </div>
+              {isImportantExpanded && (
+                <div className="flex mt-4 w-full flex-col gap-2">
+                  <p className="text-[#7C7C7C] font-poppinsRegular text-xs">
+                    Support Email:{" "}
+                    <span className="font-bold text-xs">
+                      support@norebase.com
+                    </span>
+                  </p>
+                  <p className="text-[#7C7C7C] font-poppinsRegular text-xs">
+                    Support Number:{" "}
+                    <span className="font-bold text-xs"> +2349012345678</span>
+                  </p>
+                  <p className="text-[#7C7C7C] font-poppinsRegular text-xs">
+                    Whatsapp:{" "}
+                    <span className="font-bold text-xs"> +2349012345678</span>
+                  </p>
+                </div>
+              )}
+            </div>
+          </div>
           <MobileTab
             currentStep={currentStep}
             completedSteps={completedSteps}
@@ -313,6 +354,20 @@ const BusinessRegistration = () => {
             onEditStep={handleEditStep}
             onCompleteRegistration={handleCompleteRegistration}
           />
+          <div className="my-6">
+            <div className="bg-[#ECF2FF] border border-[#C5D5FF] rounded-3xl p-6">
+              <div className="bg-[#FCFCFC] border border-[#C5D5FF] rounded-3xl p-6">
+                <div className="bg-[#E0EFFF] rounded-lg p-2 mb-3">
+                  <div className="text-[#3056B5] font-poppinsRegular text-center text-xs">
+                    Total Price
+                  </div>
+                </div>
+                <div className="text-[#5F5F5F] font-poppinsBold text-4xl text-center">
+                  ₦15,000.00
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
         <div className="lg:hidden flex gap-8 max-w-7xl mx-auto">
           <TabSidebar

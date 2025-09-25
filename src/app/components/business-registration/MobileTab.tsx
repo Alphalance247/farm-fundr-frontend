@@ -149,32 +149,32 @@ const MobileTab: React.FC<MobileTabProps> = ({
     <div className="bg-white rounded-lg shadow-sm border border-gray-200">
       {tabs.map((tab, index) => (
         <div key={tab.id}>
-            <div
-              className="p-4 cursor-pointer flex items-center justify-between transition-colors"
-              onClick={() => handleStepClick(tab.id)}
-            >
-              <div className="flex items-center">
-                <h3 className="font-medium text-lg text-[#2D865B]">
-                  {tab.title}
-                </h3>
-              </div>
-              <div className="flex items-center space-x-2">
-                <div
-                  className={`w-5 h-5 rounded-full flex items-center justify-center text-xs ${
-                    tab.isCompleted
-                      ? "bg-[#4CAF50] text-white"
-                      : "border-2 border-gray-300"
-                  }`}
-                >
-                  {tab.isCompleted ? "✓" : ""}
-                </div>
-                {tab.isOpen ? (
-                  <FaChevronUp className="w-4 h-4 text-gray-600" />
-                ) : (
-                  <FaChevronDown className="w-4 h-4 text-gray-600" />
-                )}
-              </div>
+          <div
+            className="p-4 cursor-pointer flex items-center justify-between transition-colors"
+            onClick={() => handleStepClick(tab.id)}
+          >
+            <div className="flex items-center">
+              <h3 className="font-medium text-lg text-[#2D865B]">
+                {tab.title}
+              </h3>
             </div>
+            <div className="flex items-center space-x-2">
+              <div
+                className={`w-5 h-5 rounded-full flex items-center justify-center text-xs ${
+                  tab.isCompleted
+                    ? "bg-[#4CAF50] text-white"
+                    : "border-2 border-gray-300"
+                }`}
+              >
+                {tab.isCompleted ? "✓" : ""}
+              </div>
+              {tab.isOpen ? (
+                <FaChevronUp className="w-4 h-4 text-gray-600" />
+              ) : (
+                <FaChevronDown className="w-4 h-4 text-gray-600" />
+              )}
+            </div>
+          </div>
 
           {index < tabs.length - 1 && (
             <div className="border-b border-[#4CAF50] mx-4"></div>
@@ -182,13 +182,12 @@ const MobileTab: React.FC<MobileTabProps> = ({
 
           {tab.isOpen && (
             <div className=" bg-white">
-              <div className="p-4">
-                {renderStepContent(tab.id)}
-              </div>
+              <div className="p-4">{renderStepContent(tab.id)}</div>
             </div>
           )}
         </div>
       ))}
+    
     </div>
   );
 };
