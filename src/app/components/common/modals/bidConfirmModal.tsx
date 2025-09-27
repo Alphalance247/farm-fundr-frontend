@@ -2,7 +2,6 @@ import ModalOverlay from "./modalOverlay";
 import { FaRegCopy } from "react-icons/fa";
 import Image from "next/image";
 import Button from "../Buttons";
-import Link from "next/link";
 
 interface BidConfirmModalProps {
   onClose: () => void;
@@ -128,11 +127,11 @@ const BidConfirmModal = ({
             </div>
           </div>
         </div>
-        <Link href="/farmer-dashboard/wallet">
-          <Button className="w-full mt-8" onClick={onClose}>
-            Okay, Thank You
-          </Button>
-        </Link>
+        {/* <Link href="/farmer-dashboard/wallet"> */}
+        <Button className="w-full mt-8" onClick={onClose}>
+          Okay, Thank You
+        </Button>
+        {/* </Link> */}
       </div>
     </ModalOverlay>
   );

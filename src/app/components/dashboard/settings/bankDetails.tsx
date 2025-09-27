@@ -117,7 +117,7 @@ const BankDetails = () => {
   const handleRequestOtp = async () => {
     try {
       setIsReuestingOtp();
-      const res = await axiosInstance.post(`/farms/banks/send-otp`);
+      const res = await axiosInstance.post(`/farms/banks/send-otp`); //investment
 
       if (res.status === 200) {
         toast.success(res.data.statusmessage);

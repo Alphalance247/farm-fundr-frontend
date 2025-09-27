@@ -13,6 +13,7 @@ import { getFarmerBalanceStore } from "@/stores/wallet/getFarmerBalance";
 // import { getInvestorBalanceStore } from "@/stores/wallet/getInvestorBalance";
 import ModalOverlay from "./modalOverlay";
 import BackIcon from "../backIcon";
+import { getInvestorBalanceStore } from "@/stores/wallet/getInvestorBalance";
 
 interface WithdrawFundModalProps {
   isOpen: boolean;
@@ -33,30 +34,36 @@ interface tranactionData {
   };
 }
 
-export default function WithdrawFundModal({ 
-  isOpen, 
-  onClose, 
-  userType 
+export default function WithdrawFundModal({
+  isOpen,
+  onClose,
+  userType,
 }: WithdrawFundModalProps) {
   const { data, fetchUserBank } = getUserBankStore();
-  const { data: farmerBalanceData, fetchFarmerBalance } = getFarmerBalanceStore();
-  // const { data: investorBalanceData, fetchInvestorBalance } = getInvestorBalanceStore();
-  
-  const investorBalanceData = {
-    wallet: {
-      balance: 1500000 // 1.5M dummy balance
-    }
-  };
-  const [transactionDetails, setTranactionDetails] = useState<tranactionData | null>(null);
+  const { data: farmerBalanceData, fetchFarmerBalance } =
+    getFarmerBalanceStore();
+  const { data: investorBalanceData, fetchInvestorBalance } =
+    getInvestorBalanceStore();
+
+  const [transactionDetails, setTranactionDetails] =
+    useState<tranactionData | null>(null);
 
   useEffect(() => {
     if (isOpen) {
       fetchUserBank();
       if (userType === "farmer") {
         fetchFarmerBalance();
+      } else {
+        fetchInvestorBalance();
       }
     }
-  }, [isOpen, fetchUserBank, fetchFarmerBalance, userType]);
+  }, [
+    isOpen,
+    fetchUserBank,
+    fetchFarmerBalance,
+    userType,
+    fetchInvestorBalance,
+  ]);
 
   const bankData = data?.bank_details || null;
   const details = transactionDetails?.data || null;
@@ -64,9 +71,9 @@ export default function WithdrawFundModal({
   const bankAccounts = [
     {
       id: 1,
-      name: bankData?.bank_name || "N/A",
-      number: bankData?.account_number || "N/A",
-      holder: bankData?.account_name || "N/A",
+      name: bankData?.bank_name || "",
+      number: bankData?.account_number || "",
+      holder: bankData?.account_name || "",
       icon: "/assets/DashBoard/wallet/access.svg",
     },
   ];
@@ -75,14 +82,16 @@ export default function WithdrawFundModal({
   const [withdrawAll, setWithdrawAll] = useState(false);
   const [loading, setIsLoading] = useState(false);
 
-  const [showTransactionDetails, setShowTransactionDetails] = useState("enterAmount");
+  const [showTransactionDetails, setShowTransactionDetails] =
+    useState("enterAmount");
   const [showBidConfirmModal, setShowBidConfirmModal] = useState(false);
-  
+
   // Get balance based on user type
-  const WALLET_BALANCE = userType === "farmer" 
-    ? farmerBalanceData?.wallet?.balance || 0
-    : investorBalanceData?.wallet?.balance || 0;
-    
+  const WALLET_BALANCE =
+    userType === "farmer"
+      ? farmerBalanceData?.wallet?.balance || 0
+      : investorBalanceData?.data?.balance || 0;
+
   const [amount, setAmount] = useState(WALLET_BALANCE);
   const CHARGE_RATE = 0.0015; // 0.15%
   const charges = Math.round(amount * CHARGE_RATE);
@@ -102,46 +111,48 @@ export default function WithdrawFundModal({
     setWithdrawAll(value === WALLET_BALANCE);
   };
 
-  const handleConfirmWithdraw = async (e: React.MouseEvent<HTMLButtonElement>) => {
+  const handleConfirmWithdraw = async (
+    e: React.MouseEvent<HTMLButtonElement>
+  ) => {
     e.preventDefault();
 
     try {
       setIsLoading(true);
       // Use different endpoints based on user type
-      const endpoint = userType === "farmer" 
-        ? "farms/wallet/withdraw" 
-        : "investors/wallet/withdraw";
-        
-      // For investors, simulate a successful response with dummy data
-      if (userType === "investor") {
-        // Simulate API delay
-        await new Promise(resolve => setTimeout(resolve, 1000));
-        
-        const dummyTransactionData = {
-          data: {
-            amount,
-            bank_details: {
-              account_name: bankData?.account_name || "John Doe",
-              account_number: bankData?.account_number || "1234567890",
-              bank_name: bankData?.bank_name || "Access Bank",
-            },
-            id: `TXN_${Date.now()}`,
-            status: "pending",
-          }
-        };
-        
-        setShowBidConfirmModal(true);
-        setTranactionDetails(dummyTransactionData);
-        toast.success("Withdrawal request submitted successfully!");
-      } else {
-        const res = await axiosInstance.post(endpoint, {
-          amount,
-        });
+      const endpoint =
+        userType === "farmer"
+          ? "farms/wallet/withdraw"
+          : "investment/wallet/withdraw";
 
-        if (res.status === 201) {
-          setShowBidConfirmModal(true);
-          setTranactionDetails(res?.data);
-        }
+      // For investors, simulate a successful response with dummy data
+      // if (userType === "investor") {
+      //   // Simulate API delay
+      //   await new Promise((resolve) => setTimeout(resolve, 1000));
+
+      //   const dummyTransactionData = {
+      //     data: {
+      //       amount,
+      //       bank_details: {
+      //         account_name: bankData?.account_name || "John Doe",
+      //         account_number: bankData?.account_number || "1234567890",
+      //         bank_name: bankData?.bank_name || "Access Bank",
+      //       },
+      //       id: `TXN_${Date.now()}`,
+      //       status: "pending",
+      //     },
+      //   };
+
+      //   setShowBidConfirmModal(true);
+      //   setTranactionDetails(dummyTransactionData);
+      //   toast.success("Withdrawal request submitted successfully!");
+      // } else {
+      const res = await axiosInstance.post(endpoint, {
+        amount,
+      });
+
+      if (res.status === 201) {
+        setShowBidConfirmModal(true);
+        setTranactionDetails(res?.data);
       }
 
       setIsLoading(false);
@@ -311,26 +322,44 @@ export default function WithdrawFundModal({
                       </div>
 
                       <div className="flex flex-col gap-y-4">
-                        <Button
-                          className={`w-full flex items-center justify-center ${
-                            amount > WALLET_BALANCE
-                              ? "cursor-not-allowed opacity-60"
-                              : "cursor-pointer"
-                          }`}
-                          onClick={handleGotNextStep}
-                          disabled={amount > WALLET_BALANCE}
-                          variant={
-                            amount > WALLET_BALANCE ? "googleBtn" : "primary"
-                          }
-                        >
-                          Proceed{" "}
-                          <span>
-                            <FaArrowRightLong
-                              color="#FCFCFC"
-                              className="ml-2"
-                            />
-                          </span>
-                        </Button>
+                        {WALLET_BALANCE <= 0 ? (
+                          <Button
+                            className={`w-full flex items-center justify-center cursor-not-allowed opacity-60`}
+                            onClick={handleGotNextStep}
+                            disabled={true}
+                            variant={"googleBtn"}
+                          >
+                            Proceed{" "}
+                            <span>
+                              <FaArrowRightLong
+                                color="#FCFCFC"
+                                className="ml-2"
+                              />
+                            </span>
+                          </Button>
+                        ) : (
+                          <Button
+                            className={`w-full flex items-center justify-center ${
+                              amount > WALLET_BALANCE
+                                ? "cursor-not-allowed opacity-60"
+                                : "cursor-pointer"
+                            }`}
+                            onClick={handleGotNextStep}
+                            disabled={amount > WALLET_BALANCE}
+                            variant={
+                              amount > WALLET_BALANCE ? "googleBtn" : "primary"
+                            }
+                          >
+                            Proceed{" "}
+                            <span>
+                              <FaArrowRightLong
+                                color="#FCFCFC"
+                                className="ml-2"
+                              />
+                            </span>
+                          </Button>
+                        )}
+
                         <Button
                           variant="secondary"
                           className="w-full"
