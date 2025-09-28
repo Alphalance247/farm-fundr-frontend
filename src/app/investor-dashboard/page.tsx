@@ -148,7 +148,7 @@ const InvestorDashboardPage = () => {
                       {kycData?.kyc_percentage}% Complete • Complete profile to
                       stand out
                     </p>
-                    <Link href={"/farmer-dashboard/settings"}>
+                    <Link href={"/investor-dashboard/settings"}>
                       <Button
                         className="w-fit"
                         variant="secondary"

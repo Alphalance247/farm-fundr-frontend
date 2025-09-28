@@ -181,7 +181,6 @@ const Wallet = () => {
         <WithdrawFundModal
           isOpen={showWithdrawModal}
           onClose={handleCloseWithdrawModal}
-          userType="farmer"
         />
       </main>
     </DashboardLayout>

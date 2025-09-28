@@ -3,10 +3,10 @@ import { create } from "zustand";
 import axiosInstance from "@/lib/axios";
 
 export interface investorTransactionListDataStore {
-  results: {
-    transaction_id: string;
-    amount: string;
-    date: string;
+  transactions: {
+    id: string;
+    amount: number;
+    created: string;
     type: string;
     status: string;
   }[];

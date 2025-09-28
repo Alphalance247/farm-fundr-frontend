@@ -3,13 +3,14 @@ import { useEffect, useState } from "react";
 import GoBackBtn from "@/app/components/common/goBack";
 import { IoPerson } from "react-icons/io5";
 import { ReactNode } from "react";
-import { MdOutlineCreditCard } from "react-icons/md";
+import { MdFolderShared, MdOutlineCreditCard } from "react-icons/md";
 import ProfileSettings from "@/app/components/dashboard/settings/profileSettings";
 import BankDetails from "@/app/components/dashboard/settings/bankDetails";
 import { useAuth } from "@/context/authContext";
 import { getKYCPercentageStore } from "@/stores/settings/getKycPercentage";
 import { getUserDetailsStore } from "@/stores/settings/getUserDetails";
 import InvestorLayout from "@/app/components/common/investor/investorsLayout";
+import IdentitySettings from "@/app/components/dashboard/settings/identitySettings";
 
 const InvestorSettings = () => {
   const [activeTab, setActiveTab] = useState<string>("Profile settings");
@@ -29,11 +30,8 @@ const InvestorSettings = () => {
       icon: <MdOutlineCreditCard size={20} />,
     },
 
-    // {
-    //   id: 3,
-    //   name: "Account security",
-    //   icon: <MdOutlineSecurity size={20} />,
-    // },
+    { id: 3, name: "Identity", icon: <MdFolderShared size={20} /> },
+
     // {
     //   id: 4,
     //   name: "Notification Settings",
@@ -114,7 +112,11 @@ const InvestorSettings = () => {
                 )}
               </>
             )}
+
             {activeTab === "Bank Details" && <BankDetails />}
+            {activeTab === "Identity" && (
+              <>{userDetails && <IdentitySettings />}</>
+            )}
           </div>
         </div>
       </main>

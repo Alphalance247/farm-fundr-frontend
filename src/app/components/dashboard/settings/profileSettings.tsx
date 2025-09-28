@@ -21,6 +21,7 @@ interface UserDetails {
   phone: string;
   street_address: string;
   image: string;
+  dob: string;
 }
 
 const ProfileSettings = ({ UserDetails }: { UserDetails: UserDetails }) => {
@@ -59,6 +60,7 @@ const ProfileSettings = ({ UserDetails }: { UserDetails: UserDetails }) => {
     country: UserDetails?.country || "",
     phone: UserDetails?.phone || "",
     street_address: UserDetails?.street_address || "",
+    dob: UserDetails?.dob || "",
   });
 
   const handleProfileUpdate = async (e: React.FormEvent) => {
@@ -285,6 +287,19 @@ const ProfileSettings = ({ UserDetails }: { UserDetails: UserDetails }) => {
                   }
                 />
               </div>
+            </div>
+
+            <div>
+              <Label className="block mb-1">Date Of birth</Label>
+              <Input
+                name="dob"
+                className=""
+                type="date"
+                value={form?.dob || ""}
+                placeholder=""
+                variant="tertiary"
+                onChange={(e) => setForm({ ...form, dob: e.target.value })}
+              />
             </div>
           </div>
           <div className="text-right">

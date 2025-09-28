@@ -107,6 +107,7 @@ export default function WalletCard() {
           </div>
         </div>
       </section>
+
       {showPayoutModal && (
         <RequestPayoutUser handleRequestPayoutModal={handleCloseModal} />
       )}
@@ -114,7 +115,6 @@ export default function WalletCard() {
       <WithdrawFundModal
         isOpen={showWithdrawModal}
         onClose={handleCloseWithdrawModal}
-        userType="investor"
       />
     </>
   );

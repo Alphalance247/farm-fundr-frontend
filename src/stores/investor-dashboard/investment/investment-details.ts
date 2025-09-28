@@ -4,12 +4,16 @@ import axiosInstance from "@/lib/axios";
 
 export interface investDetailsDataStore {
   data: {
+    bid_data: {
+      id: string;
+    };
     farm_status: {
       name: string;
     };
     project: {
       budget: number;
       name: string;
+      id: string;
       description: string;
       images: string[];
       start_date: string;

@@ -10,6 +10,7 @@ interface TransactionCardProps {
   amount: number;
   status: string;
   viewDetailsLink?: string;
+  isLink?: boolean;
 }
 
 const TransactionCard: React.FC<TransactionCardProps> = ({
@@ -17,6 +18,7 @@ const TransactionCard: React.FC<TransactionCardProps> = ({
   amount,
   status,
   viewDetailsLink = "#",
+  isLink = true,
 }) => {
   // ✅ Determine icon based on transaction type
   const getIcon = () => {
@@ -72,12 +74,15 @@ const TransactionCard: React.FC<TransactionCardProps> = ({
           {getIcon()}
           <h3 className="text-[#0B222A] font-medium text-sm">{type}</h3>
         </div>
-        <Link
-          href={viewDetailsLink}
-          className="flex items-center gap-1 text-xs text-[#00C853]"
-        >
-          View Details <FiChevronRight />
-        </Link>
+
+        {isLink && (
+          <Link
+            href={viewDetailsLink}
+            className="flex items-center gap-1 text-xs text-[#00C853]"
+          >
+            View Details <FiChevronRight />
+          </Link>
+        )}
       </div>
 
       <hr className="border-gray-100" />

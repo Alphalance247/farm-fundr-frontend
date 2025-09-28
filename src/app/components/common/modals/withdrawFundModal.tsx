@@ -14,11 +14,11 @@ import { getFarmerBalanceStore } from "@/stores/wallet/getFarmerBalance";
 import ModalOverlay from "./modalOverlay";
 import BackIcon from "../backIcon";
 import { getInvestorBalanceStore } from "@/stores/wallet/getInvestorBalance";
+import { useAuth } from "@/context/authContext";
 
 interface WithdrawFundModalProps {
   isOpen: boolean;
   onClose: () => void;
-  userType: "farmer" | "investor";
 }
 
 interface tranactionData {
@@ -37,13 +37,13 @@ interface tranactionData {
 export default function WithdrawFundModal({
   isOpen,
   onClose,
-  userType,
 }: WithdrawFundModalProps) {
   const { data, fetchUserBank } = getUserBankStore();
   const { data: farmerBalanceData, fetchFarmerBalance } =
     getFarmerBalanceStore();
   const { data: investorBalanceData, fetchInvestorBalance } =
     getInvestorBalanceStore();
+  const { user } = useAuth();
 
   const [transactionDetails, setTranactionDetails] =
     useState<tranactionData | null>(null);
@@ -51,7 +51,7 @@ export default function WithdrawFundModal({
   useEffect(() => {
     if (isOpen) {
       fetchUserBank();
-      if (userType === "farmer") {
+      if (user?.user_type === "farmer") {
         fetchFarmerBalance();
       } else {
         fetchInvestorBalance();
@@ -61,7 +61,7 @@ export default function WithdrawFundModal({
     isOpen,
     fetchUserBank,
     fetchFarmerBalance,
-    userType,
+    user?.user_type,
     fetchInvestorBalance,
   ]);
 
@@ -88,7 +88,7 @@ export default function WithdrawFundModal({
 
   // Get balance based on user type
   const WALLET_BALANCE =
-    userType === "farmer"
+    user?.user_type === "farmer"
       ? farmerBalanceData?.wallet?.balance || 0
       : investorBalanceData?.data?.balance || 0;
 
@@ -120,7 +120,7 @@ export default function WithdrawFundModal({
       setIsLoading(true);
       // Use different endpoints based on user type
       const endpoint =
-        userType === "farmer"
+        user?.user_type === "farmer"
           ? "farms/wallet/withdraw"
           : "investment/wallet/withdraw";
 

@@ -131,13 +131,14 @@ export default function TransactionSearchTable() {
         <>
           {/* Desktop view */}
           <div className="space-y-4 hidden md:block">
-            {transactionData.transactions.map((emp) => (
+            {data?.transactions?.map((emp) => (
               <TransactionCard
                 key={emp.id}
                 id={emp.id}
-                type={emp.name}
-                amount={emp.amount}
+                type={emp?.type}
+                amount={emp?.amount}
                 status={emp.status}
+                isLink={false}
                 viewDetailsLink={`/transaction/${emp.id}`}
               />
             ))}
@@ -174,7 +175,7 @@ export default function TransactionSearchTable() {
                   </th>
                 </tr>
               </thead>
-              {data?.results?.length === 0 ? (
+              {data?.transactions?.length === 0 ? (
                 <tbody className="">
                   <tr>
                     <td colSpan={6} className="text-center py-8">
@@ -184,13 +185,13 @@ export default function TransactionSearchTable() {
                 </tbody>
               ) : (
                 <tbody>
-                  {data?.results.map((emp) => (
-                    <tr key={emp?.transaction_id}>
+                  {data?.transactions.map((emp) => (
+                    <tr key={emp?.id}>
                       <td className="py-3 px-4">
                         <input type="checkbox" className="rounded" />
                       </td>
                       <td className="py-3 px-4 text-sm text-[#1B2229]">
-                        {emp.transaction_id}
+                        {emp?.id}
                       </td>
                       <td className="py-3 px-4 text-sm text-[#1B2229] flex items-center gap-2">
                         {/* {emp.typeIcons} */}
@@ -200,7 +201,7 @@ export default function TransactionSearchTable() {
                         {emp.amount}
                       </td>
                       <td className="py-3 px-4 text-sm text-[#34474E]">
-                        {emp.date}
+                        {emp?.created}
                       </td>
                       <td className="py-3 px-4">
                         <span

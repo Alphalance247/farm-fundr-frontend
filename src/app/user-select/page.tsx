@@ -32,8 +32,6 @@ const UserSelectPage: React.FC = () => {
       usertype: "investor",
       desc: "Invest in farms and grow your wealth. (Coming Soon)",
     },
-
- 
   ];
 
   return (
@@ -76,19 +74,19 @@ const UserSelectPage: React.FC = () => {
             {data.map((el, i) => (
               <div
                 key={i}
-                className={`px-10 py-5  rounded-[20px] border-[#E2E2E2] border w-[400px] ${
+                className={`px-10 py-5 cursor-pointer rounded-[20px] border-[#E2E2E2] border w-[400px]  ${
+                  select === el?.usertype ? "bg-[#EEFEF6]" : "bg-[#FFFFFF]"
+                } md:w-full`}
+                onClick={() => {
+                  // if (el?.usertype !== "investor")
+                  handleUserSelect(el?.usertype);
+                }}
+              >
+                {/* ${
                   el?.usertype === "investor"
                     ? "cursor-not-allowed opacity-60"
                     : "cursor-pointer"
-                } ${
-                  select === el?.usertype ? "bg-[#EEFEF6]" : "bg-[#FFFFFF]"
-                } md:w-full`}
-                onClick={() =>{
-                  if (el?.usertype !== "investor") 
-                  handleUserSelect(el?.usertype)
-                } }
-                
-              >
+                } */}
                 <div className="flex justify-end mb-4">
                   {select === el?.usertype ? (
                     <HiCheckCircle size={20} color="#2D865B" />
