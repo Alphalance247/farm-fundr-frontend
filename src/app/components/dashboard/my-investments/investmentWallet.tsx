@@ -4,9 +4,9 @@ import Image from "next/image";
 import Button from "../../common/Buttons";
 import { IoArrowDownOutline } from "react-icons/io5";
 import { IoMdArrowUp } from "react-icons/io";
-import RequestPayoutUser from "../wallet/requestPayoutUser";
 import { getInvestorDashboardStore } from "@/stores/investor-dashboard/overview/dashboard";
 import WithdrawFundModal from "../../common/modals/withdrawFundModal";
+import FundWallet from "../common/fundWallet";
 
 export default function WalletCard() {
   const [hideBalance, setHideBalance] = useState(false);
@@ -108,9 +108,7 @@ export default function WalletCard() {
         </div>
       </section>
 
-      {showPayoutModal && (
-        <RequestPayoutUser handleRequestPayoutModal={handleCloseModal} />
-      )}
+      {showPayoutModal && <FundWallet onCloseModal={handleCloseModal} />}
 
       <WithdrawFundModal
         isOpen={showWithdrawModal}

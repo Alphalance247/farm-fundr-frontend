@@ -3,6 +3,10 @@ import Image from "next/image";
 import Button from "./Buttons";
 import { FaLocationDot } from "react-icons/fa6";
 import { GoDotFill } from "react-icons/go";
+import { getInvestorBidStatus } from "@/stores/investor-dashboard/overview/bids-by-status";
+import { useState } from "react";
+import ReleaseFunds from "./investor/releaseFunds";
+import CancelBids from "./investor/cancelBids";
 
 interface BidCardProps {
   name: string;
@@ -27,8 +31,29 @@ export default function BidCard({
     Declined: "bg-[#FCECE6] text-[#DE4204]",
   };
 
+  const { data: bidsStatusData } = getInvestorBidStatus();
+  const [showReleaseFundsModal, setShowReleaseFundsModal] = useState(false);
+  const [showCancelBidsModal, setShowCancelBidsModal] = useState(false);
+
+  const acceptedId = bidsStatusData?.accepted?.find((bidId) => bidId?.id)?.id;
+  const pendingId = bidsStatusData?.pending?.find((bidId) => bidId?.id)?.id;
+
+  // const handleReleaseFunds = async () => {};
+
   return (
     <div>
+      {showReleaseFundsModal && (
+        <ReleaseFunds
+          onCloseModal={() => setShowReleaseFundsModal(false)}
+          acceptedId={acceptedId || ""}
+        />
+      )}
+      {showCancelBidsModal && (
+        <CancelBids
+          onCloseModal={() => setShowCancelBidsModal(false)}
+          pendingId={pendingId || ""}
+        />
+      )}
       <div className="bg-white md:hidden rounded-xl shadow-md p-4 flex flex-col gap-4">
         <div className="flex justify-between items-start">
           <div className="flex items-center gap-3">
@@ -75,7 +100,12 @@ export default function BidCard({
         <div className="flex xl:flex-col flex-row gap-3">
           {status === "Accepted" && (
             <>
-              <Button variant="primary" size="small" className="flex-1">
+              <Button
+                variant="primary"
+                size="small"
+                className="flex-1"
+                onClick={() => setShowReleaseFundsModal(true)}
+              >
                 Release Funds
               </Button>
               <Button variant="secondary" size="small" className="flex-1">
@@ -97,7 +127,12 @@ export default function BidCard({
               <Button variant="primary" size="small" className="flex-1">
                 View Details
               </Button>
-              <Button className="flex-1" size="small" variant="secondary">
+              <Button
+                className="flex-1"
+                size="small"
+                variant="secondary"
+                onClick={() => setShowCancelBidsModal(true)}
+              >
                 Cancel Bid
               </Button>
             </>
@@ -148,7 +183,12 @@ export default function BidCard({
         <div className="flex xl:flex-col flex-row gap-3">
           {status === "Accepted" && (
             <>
-              <Button variant="primary" size="small" className="flex-1">
+              <Button
+                variant="primary"
+                size="small"
+                className="flex-1"
+                onClick={() => setShowReleaseFundsModal(true)}
+              >
                 Release Funds
               </Button>
               <Button variant="secondary" size="small" className="flex-1">
@@ -170,7 +210,12 @@ export default function BidCard({
               <Button variant="primary" size="small" className="flex-1">
                 View Details
               </Button>
-              <Button className="flex-1" size="small" variant="secondary">
+              <Button
+                className="flex-1"
+                size="small"
+                variant="secondary"
+                onClick={() => setShowCancelBidsModal(true)}
+              >
                 Cancel Bid
               </Button>
             </>

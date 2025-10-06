@@ -6,6 +6,7 @@ export interface investorBidsStatusDataStore {
   accepted: {
     amount: number;
     created: string;
+    id: string;
     status: string;
     created_at: string;
     milestone: string;
@@ -24,6 +25,7 @@ export interface investorBidsStatusDataStore {
   all_bids: {
     amount: number;
     created: string;
+    id: string;
     status: string;
     created_at: string;
     milestone: string;
@@ -43,6 +45,7 @@ export interface investorBidsStatusDataStore {
     amount: number;
     created: string;
     status: string;
+    id: string;
     milestone: string;
     created_at: string;
     roi_earned: string;
@@ -58,6 +61,7 @@ export interface investorBidsStatusDataStore {
   }[];
   declined: {
     amount: number;
+    id: string;
     created: string;
     status: string;
     milestone: string;

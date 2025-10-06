@@ -5,7 +5,6 @@ import { HiOutlineHome } from "react-icons/hi2";
 import { usePathname } from "next/navigation";
 import {
   MdOutlineMessage,
-  MdOutlineAnalytics,
   MdOutlineAccountBalanceWallet,
 } from "react-icons/md";
 import { TbReportAnalytics } from "react-icons/tb";
@@ -14,6 +13,7 @@ import { PiHeadsetLight } from "react-icons/pi";
 import { useEffect, useRef } from "react";
 import { getInvestorInvestment } from "@/stores/investor-dashboard/overview/investment";
 import { getInvestorBids } from "@/stores/investor-dashboard/overview/bids";
+import { SiCoinmarketcap } from "react-icons/si";
 
 interface sideBarData {
   heading?: string;
@@ -69,9 +69,9 @@ const InvestorSidebar: React.FC<mobileMenuProps> = ({
       textColor: "text-white",
     },
     {
-      text: "Analytics",
-      link: "/investor-dashboard/analytics",
-      icons: <MdOutlineAnalytics size={20} />,
+      text: "Marketplace",
+      link: "/investor-dashboard/marketplace",
+      icons: <SiCoinmarketcap size={20} />,
     },
     {
       text: "Wallet",

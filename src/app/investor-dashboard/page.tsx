@@ -64,21 +64,21 @@ const InvestorDashboardPage = () => {
   const data: data[] = [
     {
       text: "Fund Wallet",
-      link: "/farmer-dashboard/my-farms/add-farm",
+      link: "/investor-dashboard/wallet",
       img: "/assets/DashBoard/overview/investorWithdraw.svg",
       bgColor: "bg-[#C5D5FF]/30",
       borderColor: "border-[#C5D5FF] border",
     },
     {
       text: "Withdraw Funds",
-      link: "/farmer-dashboard/wallet",
+      link: "/investor-dashboard/wallet",
       img: "/assets/DashBoard/overview/investorFund.svg",
       bgColor: "bg-[#C9FCE3]/30",
       borderColor: "border-[#C9FCE3] border",
     },
     {
       text: "Update Bank Details",
-      link: "/farmer-dashboard",
+      link: "/investor-dashboard/settings",
       img: "/assets/DashBoard/overview/investorwalletIcon.svg",
       borderColor: "border-[#FEF0B0] border",
       bgColor: "bg-[#FEF0B0]/30",
@@ -126,7 +126,7 @@ const InvestorDashboardPage = () => {
     <InvestorLayout>
       <main className="px-10 py-8 bg-gray-50 overflow-y-scroll h-full xl:px-4 xl:py-6 lg:mb-4">
         <div className="grid grid-cols-[60%auto] gap-6 xl:gap-4 lg:grid-cols-1 lg:mt-6">
-          <div className="bg-[url('/assets/DashBoard/overview/investorBg.png')] h-fit bg-cover bg-no-repeat bg-center rounded-2xl flex  xl:gap-x-6 lg:justify-between md:flex-col md:gap-y-3">
+          <div className="bg-[url('/assets/DashBoard/overview/investorBg.png')] h-fit bg-cover bg-no-repeat bg-center justify-between rounded-2xl flex  xl:gap-x-6 lg:justify-between md:flex-col md:gap-y-3">
             <div className="pl-6 py-11 xl:py-6 xl:pl-4 md:pl-4 md:py-3 md:pr-4">
               {dat !== 100 ? (
                 <>
@@ -195,7 +195,7 @@ const InvestorDashboardPage = () => {
               )}
             </div>
 
-            <div className=" pt-8 md:pr-3 md:pt-3 align-bottom">
+            <div className=" pt-8 pr-6 md:pt-3 align-bottom">
               <Image
                 src="/assets/DashBoard/overview/investorAvatar.png"
                 width={222}

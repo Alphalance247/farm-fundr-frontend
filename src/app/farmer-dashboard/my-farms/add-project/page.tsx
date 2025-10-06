@@ -11,6 +11,7 @@ import ProtectedRoute from "@/app/components/common/ProtectedRoute/protectedRout
 import SpinnerModal from "@/app/components/common/modals/SpinnerModal";
 import axiosInstance from "@/lib/axios";
 import { AxiosError } from "axios";
+import { useRouter } from "next/navigation";
 
 const AddPoject = () => {
   const [formStep, setFormStep] = useState(1);
@@ -18,7 +19,7 @@ const AddPoject = () => {
   const [selectedFarmId, setSelectedFarmId] = useState("");
   const [selectedBranchId, setSelectedBranchId] = useState("");
   const [loading, setLoading] = useState(false);
-  // const [loading, setLoading] = useState(false);
+  const router = useRouter();
 
   const [form, setForm] = useState({
     selectFarm: "",
@@ -109,6 +110,8 @@ const AddPoject = () => {
           toast.success(
             response.data.message || "Project created successfully!"
           );
+
+          router?.push("/farmer-dashboard/my-farms");
 
           setForm({
             selectFarm: "",

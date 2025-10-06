@@ -95,7 +95,7 @@ const BranchInformation = ({
             className=""
             type="text"
             value={form?.branchName}
-            placeholder="Enter farm size"
+            placeholder="Enter Branch Name"
             variant="tertiary"
             onChange={(e) => setForm({ ...form, branchName: e.target.value })}
           />

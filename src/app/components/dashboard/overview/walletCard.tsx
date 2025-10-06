@@ -2,8 +2,6 @@
 import { useState } from "react";
 import Image from "next/image";
 import Button from "../../common/Buttons";
-import { IoArrowDownOutline } from "react-icons/io5";
-import { IoMdArrowUp } from "react-icons/io";
 import RequestPayoutUser from "../wallet/requestPayoutUser";
 import { getInvestorDashboardStore } from "@/stores/investor-dashboard/overview/dashboard";
 import Link from "next/link";
@@ -15,13 +13,13 @@ export default function WalletCard() {
   const walletBalance = overviewData?.wallet_balance || 0;
   const roiBalance = overviewData?.roi_total || 0;
 
-  const handleFundWallet = () => {
-    setShowPayoutModal(true);
-  };
+  // const handleFundWallet = () => {
+  //   setShowPayoutModal(true);
+  // };
 
-  const handleWithdrawReturns = () => {
-    setShowPayoutModal(true);
-  };
+  // const handleWithdrawReturns = () => {
+  //   setShowPayoutModal(true);
+  // };
 
   const handleCloseModal = () => {
     setShowPayoutModal(false);
@@ -58,13 +56,13 @@ export default function WalletCard() {
                   width={45}
                   height={45}
                 />
-                <Button
+                {/* <Button
                   onClick={handleFundWallet}
                   variant="subprimary"
                   className="!w-fit flex items-center !py-2 !px-4 !text-center  gap-2 font-poppinsSemiBold font-semibold text-xs"
                 >
                   <IoArrowDownOutline className="" /> Fund Wallet
-                </Button>
+                </Button> */}
               </div>
               <p className="text-sm text-[#FFFFFF]">Wallet Balance</p>
               <p className="text-2xl font-bold">
@@ -84,14 +82,14 @@ export default function WalletCard() {
                   width={45}
                   height={45}
                 />
-                <Button
+                {/* <Button
                   onClick={handleWithdrawReturns}
                   variant="subprimary"
                   className="!w-fit flex items-center !py-2 !px-4 !text-center font-poppinsSemiBold font-semibold gap-2 text-xs"
                 >
                   <IoMdArrowUp />
                   Withdraw Returns
-                </Button>
+                </Button> */}
               </div>
               <p className="text-sm text-[#34474E]">
                 Total Return of Interest (ROI)
