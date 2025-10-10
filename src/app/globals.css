@@ -127,8 +127,8 @@ body {
 }
 
 .hide-scrollbar {
-  -ms-overflow-style: none;  /* IE + Edge */
-  scrollbar-width: none;     /* Firefox */
+  -ms-overflow-style: none; /* IE + Edge */
+  scrollbar-width: none; /* Firefox */
 }
 
 .PhoneInput > div {
@@ -140,4 +140,15 @@ body {
   padding: 0.5rem;
   margin-right: 0;
   width: 10%;
+}
+
+.lower-line-through::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background-color: #22e27f;
+  top: 55%; /* Adjust this percentage to position the line */
+  transform: translateY(-50%);
 }

@@ -11,7 +11,7 @@ import { FaRegEyeSlash } from "react-icons/fa";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { AxiosError } from "axios";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { useAuth } from "@/context/authContext";
 
 interface formState {
@@ -46,7 +46,6 @@ const Login = () => {
     });
     const { login } = useAuth();
     const [loading, setLoading] = useState(false);
-    const router = useRouter();
     const searchParams = useSearchParams();
     const togglePasswordVisibility = (field: string) => {
       setShowPassword((prev) => ({ ...prev, [field]: !prev[field] }));
@@ -121,7 +120,7 @@ const Login = () => {
               profileImage: "",
             });
             const redirectPath = getRedirectPath(user_type, redirectTo);
-            router.push(redirectPath);
+            window.location.href = redirectPath;
             setForm({ email: "", password: "" });
           } else {
             toast.error("Error login please try again or contact Admin");
@@ -179,7 +178,7 @@ const Login = () => {
               <p className="text-lg font-poppinsRegular text-[#7C7C7C] mt-2 text-center mb-8 md:text-base md:mb-4">
                 We miss you!
               </p>
-
+              {/* 
               <Button
                 className="w-full flex items-center gap-x-4 justify-center text-center mb-3"
                 variant="googleBtn"
@@ -195,15 +194,15 @@ const Login = () => {
                   />
                 </span>
                 <span>{"Continue with google"}</span>
-              </Button>
+              </Button> */}
 
-              <div className="flex justify-center items-center gap-4 self-stretch mb-4">
+              {/* <div className="flex justify-center items-center gap-4 self-stretch mb-4">
                 <hr className="h-[1px] w-full md:w-[174.5px] text-[#B5B5B5] " />
                 <p className="font-[Inter] not-italic font-[450px] text-[16px] leading-4">
                   Or
                 </p>{" "}
                 <hr className="h-1 w-full md:w-44" />
-              </div>
+              </div> */}
 
               <form action="submit" onSubmit={handleUserLogin}>
                 <div className="mb-4">

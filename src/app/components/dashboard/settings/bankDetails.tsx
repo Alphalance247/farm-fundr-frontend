@@ -104,7 +104,7 @@ const BankDetails = () => {
           "An error occurred please try again or contact Admin";
         if (err instanceof AxiosError) {
           // Check if err is an instance of AxiosError
-          errorMessage = err.response?.data?.message || errorMessage;
+          errorMessage = err.response?.data?.statusmessage || errorMessage;
         }
 
         toast.error(errorMessage);
@@ -117,7 +117,7 @@ const BankDetails = () => {
   const handleRequestOtp = async () => {
     try {
       setIsReuestingOtp();
-      const res = await axiosInstance.post(`/farms/banks/send-otp`);
+      const res = await axiosInstance.post(`/farms/banks/send-otp`); //investment
 
       if (res.status === 200) {
         toast.success(res.data.statusmessage);

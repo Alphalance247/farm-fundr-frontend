@@ -23,12 +23,14 @@ import axiosInstance from "@/lib/axios";
 import { environment } from "@/env/env.local";
 import ProtectedRoute from "@/app/components/common/ProtectedRoute/protectedRoute";
 import SpinnerModal from "@/app/components/common/modals/SpinnerModal";
+import { useRouter } from "next/navigation";
 
 const AddFarm = () => {
   const [formStep, setFormStep] = useState(1);
   const [completedSteps, setCompletedSteps] = useState<number[]>([]);
   const [useSameAsPhone, setUseSameAsPhone] = useState(false);
   const [loading, setLoading] = useState(false);
+  const router = useRouter();
   const [form, setForm] = useState({
     country: "",
     state: "",
@@ -262,6 +264,7 @@ const AddFarm = () => {
         toast.success(
           res.data?.statusmessage || "Farm successfully submitted for review"
         );
+        router.push("/farmer-dashboard/my-farms/");
 
         // Reset form
         setFormStep(1);
@@ -322,7 +325,7 @@ const AddFarm = () => {
             message="Uploading farm details, please wait this might take a while...."
           />
         )}
-{/* guide */}
+        {/* guide */}
         <main className="px-10 md:px-4 py-10 bg-gray-50 overflow-auto">
           <div
             className={`flex flex-row md:flex-col gap-x-6  ${
@@ -465,7 +468,7 @@ const AddFarm = () => {
                         )}
                         cols={20}
                         rows={5}
-                        className={`bg-[#F6F6F6] border-[#E2E2E2] border w-full text-[#7C7C7C] rounded-lg text-sm p-4 focus:ring-[#51F4A6] ${
+                        className={`bg-[#F6F6F6] border-[#51F4A6] border w-full text-[#7C7C7C] rounded-lg text-sm p-4 focus:ring-[#51F4A6] ${
                           errors.fieldDescription ? "border-red-500" : ""
                         }`}
                         placeholder="Enter description here (minimum 10 characters)"

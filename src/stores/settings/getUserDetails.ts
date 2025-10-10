@@ -8,11 +8,13 @@ export interface userDetailsDataStore {
     first_name: string;
     country: string;
     city: string;
+    dob: string;
     highest_education: string;
     last_name: string;
     phone: string;
     state: string;
     street_address: string;
+    years_of_exp: string;
     university: string;
     username: string;
     whatsapp_number: string;

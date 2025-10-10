@@ -161,14 +161,12 @@ const StoreFrontHeading = ({
                 <p
                   className={`text-sm font-poppinsRegular mt-2 w-fit ${textColor} px-3 py-[6px] rounded-[79px] flex items-center justify-center gap-2 bg-[#FFFFFF33]`}
                 >
-                  {farm?.farm?.cac_reg_status !== "Unregistered" ? (
+                  {farm?.farm?.verified ? (
                     <MdVerifiedUser className={`${badgeColor}`} size={16} />
                   ) : (
                     <VscUnverified className={`${badgeColor}`} size={16} />
                   )}
-                  {farm?.farm?.cac_reg_status !== "Unregistered"
-                    ? "Verified"
-                    : "Unverified"}
+                  {farm?.farm?.verified ? "Verified" : "Unverified"}
                 </p>
               )}
 
@@ -189,13 +187,13 @@ const StoreFrontHeading = ({
                   </a>
                 )}
                 {!withBorderRadius ? (
-                  <Link href={"/farm-page/farm-page-farm-details"}>
+                  <Link href={"/farm-page/projects"}>
                     <Button
                       className="w-fit flex items-center justify-center gap-2"
                       variant="secondary"
                     >
                       <BsEyeFill size={16} />
-                      View Farm
+                      View Projects
                     </Button>
                   </Link>
                 ) : (
@@ -225,13 +223,13 @@ const StoreFrontHeading = ({
                 </Button>
               </a>
 
-              <Link href="/farm-page/farm-page-farm-details">
+              <Link href="/farm-page/projects">
                 <Button
                   className="w-fit flex items-center justify-center gap-2"
                   variant="secondary"
                 >
                   <BsEyeFill size={16} />
-                  View Farm
+                  View Projects
                 </Button>
               </Link>
             </div>

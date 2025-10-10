@@ -9,10 +9,11 @@ import { useState } from "react";
 import SlideInSection from "../common/slideInSection";
 import { motion, AnimatePresence } from "framer-motion";
 import { useAuth } from "@/context/authContext";
+import Link from "next/link";
 
 const Benefits = () => {
   const { isAuthenticated } = useAuth();
-  const [activeTab, setActiveTab] = useState<string>("investors");
+  const [activeTab, setActiveTab] = useState<string>("farmers");
   const data = [
     {
       border: "#4379FF",
@@ -60,7 +61,7 @@ const Benefits = () => {
     },
   ];
 
-  const tab = activeTab === "investors" ? data : data2;
+  const tab = activeTab === "farmers" ? data2 : data;
 
   return (
     <SlideInSection>
@@ -137,15 +138,17 @@ const Benefits = () => {
           </AnimatePresence>
 
           {!isAuthenticated && (
-            <Button
-              size="medium"
-              className="flex items-center gap-x-4 justify-center mt-10 text-center w-[535px] mx-auto relative z-10"
-            >
-              <span>Get Started</span>
-              <span>
-                <GoArrowRight size={24} className="text-white" />
-              </span>
-            </Button>
+            <Link href={"/user-select"}>
+              <Button
+                size="medium"
+                className="flex items-center gap-x-4 justify-center mt-10 text-center w-[535px] mx-auto relative z-10"
+              >
+                <span>Get Started</span>
+                <span>
+                  <GoArrowRight size={24} className="text-white" />
+                </span>
+              </Button>
+            </Link>
           )}
         </Container>
       </section>

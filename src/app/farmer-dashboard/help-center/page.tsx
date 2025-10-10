@@ -8,7 +8,7 @@ import {
 } from "react-icons/md";
 import React, { useState } from "react";
 import { IoPersonSharp } from "react-icons/io5";
-import { IoMdBusiness, IoMdMail } from "react-icons/io";
+import { IoMdMail } from "react-icons/io";
 import { PiHeadsetLight } from "react-icons/pi";
 import Image from "next/image";
 
@@ -17,7 +17,7 @@ interface tabsBtn {
   icons: React.ReactNode;
 }
 
-const FarmerDashboard = () => {
+const HelpCenter = () => {
   const [tab, setTab] = useState<string>("General");
   const [isOpen, setIsOpen] = useState<number>(0);
 
@@ -34,33 +34,15 @@ const FarmerDashboard = () => {
       feedback: [
         {
           question: " What is FarmPady?",
-          answer: `FarmPady is a platform where investors and farmers connect to
-                    collaborate on Agricultural products, fostering partnerships that
-                    drive agricultural innovation and mutual growth`,
+          answer: `FarmPady is a platform designed to connect investors with farmers, fostering collaboration and innovation in the agricultural sector. Our goal is to drive agricultural growth and sustainability while providing mutual benefits to both parties.`,
         },
         {
           question: "Who can invest on Farmpady?",
-          answer: `FarmPady is a platform where investors and farmers connect to
-                    collaborate on Agricultural products, fostering partnerships that
-                    drive agricultural innovation and mutual growth`,
+          answer: `FarmPady is open to Individuals or agencies looking to invest in sustainable agricultural projects.`,
         },
         {
           question: "How can I reach Farmpady support team?",
-          answer: `FarmPady is a platform where investors and farmers connect to
-                    collaborate on Agricultural products, fostering partnerships that
-                    drive agricultural innovation and mutual growth`,
-        },
-        {
-          question: "How can I reach Farmpady support team?",
-          answer: `FarmPady is a platform where investors and farmers connect to
-                    collaborate on Agricultural products, fostering partnerships that
-                    drive agricultural innovation and mutual growth`,
-        },
-        {
-          question: "Is my investment secure?",
-          answer: `FarmPady is a platform where investors and farmers connect to
-                    collaborate on Agricultural products, fostering partnerships that
-                    drive agricultural innovation and mutual growth`,
+          answer: `You can drop us a message via https://farmpady.com/contact-us or send us an email at support@farmpady.com `,
         },
       ],
       tab: "General",
@@ -68,22 +50,14 @@ const FarmerDashboard = () => {
     {
       feedback: [
         {
-          question: " What is FarmPady?",
-          answer: `FarmPady is a platform where investors and farmers connect to
-                        collaborate on Agricultural products, fostering partnerships that
-                        drive agricultural innovation and mutual growth`,
+          question: "How can I make a subscription payment?",
+          answer: `Go to https://farmpady.com/farmer-dashboard/subscription
+, choose your preferred plan, and click Make Payment. Once you complete the process, we’ll handle the rest.
+`,
         },
         {
-          question: " What is FarmPady?",
-          answer: `FarmPady is a platform where investors and farmers connect to
-                        collaborate on Agricultural products, fostering partnerships that
-                        drive agricultural innovation and mutual growth`,
-        },
-        {
-          question: " What is FarmPady?",
-          answer: `FarmPady is a platform where investors and farmers connect to
-                        collaborate on Agricultural products, fostering partnerships that
-                        drive agricultural innovation and mutual growth`,
+          question: "How can I report a payment issue?",
+          answer: `If you experience any issues with your payment, please contact us at support@farmpady.com  with the details, and our team will get back to you as soon as possible.`,
         },
       ],
       tab: "Payment",
@@ -92,59 +66,26 @@ const FarmerDashboard = () => {
       feedback: [
         {
           question: "How can I reset my password?",
-          answer: `FarmPady is a platform where investors and farmers connect to
-                        collaborate on Agricultural products, fostering partnerships that
-                        drive agricultural innovation and mutual growth`,
+          answer: `To reset your password, visit https://farmpady.com/forgot-password
+ and enter your email. A reset token will be sent to your inbox. Use the token to set a new password.
+`,
         },
         {
           question: "Can I update my account details?",
-          answer: `FarmPady is a platform where investors and farmers connect to
-                        collaborate on Agricultural products, fostering partnerships that
-                        drive agricultural innovation and mutual growth`,
+          answer: `Yes, you can. Go to your profile settings and update your information as needed.
+`,
         },
         {
           question: "Why is my KYC getting rejected?",
-          answer: `FarmPady is a platform where investors and farmers connect to
-                        collaborate on Agricultural products, fostering partnerships that
-                        drive agricultural innovation and mutual growth`,
+          answer: `You should receive an email explaining the reason for the rejection. If you haven’t, please contact us at support@farmpady.com
+ for clarification.`,
         },
         {
           question: "Why is my account suspended?",
-          answer: `FarmPady is a platform where investors and farmers connect to
-                        collaborate on Agricultural products, fostering partnerships that
-                        drive agricultural innovation and mutual growth`,
-        },
-        {
-          question: "How do I delete my account?",
-          answer: `FarmPady is a platform where investors and farmers connect to
-                        collaborate on Agricultural products, fostering partnerships that
-                        drive agricultural innovation and mutual growth`,
+          answer: `Your account will never be suspended without prior notice. Please check your email for details on the reason for the suspension.`,
         },
       ],
       tab: "Account",
-    },
-    {
-      feedback: [
-        {
-          question: " What is FarmPady?",
-          answer: `FarmPady is a platform where investors and farmers connect to
-                        collaborate on Agricultural products, fostering partnerships that
-                        drive agricultural innovation and mutual growth`,
-        },
-        {
-          question: " What is FarmPady?",
-          answer: `FarmPady is a platform where investors and farmers connect to
-                        collaborate on Agricultural products, fostering partnerships that
-                        drive agricultural innovation and mutual growth`,
-        },
-        {
-          question: " What is FarmPady?",
-          answer: `FarmPady is a platform where investors and farmers connect to
-                        collaborate on Agricultural products, fostering partnerships that
-                        drive agricultural innovation and mutual growth`,
-        },
-      ],
-      tab: "About us",
     },
   ];
 
@@ -161,10 +102,7 @@ const FarmerDashboard = () => {
       text: "Account",
       icons: <IoPersonSharp size={48} />,
     },
-    {
-      text: "About us",
-      icons: <IoMdBusiness size={48} />,
-    },
+
     {
       text: "Support",
       icons: <PiHeadsetLight size={48} />,
@@ -187,9 +125,8 @@ const FarmerDashboard = () => {
           <div
             className="
       grid gap-4 md:gap-x-2
-      grid-cols-5 lg:px-4 
+      grid-cols-4 lg:px-4 
       lg:grid-cols-3 
-    
       justify-items-center
     "
           >
@@ -254,7 +191,7 @@ const FarmerDashboard = () => {
 
                       {isOpen === i && (
                         <div className="bg-[#FFFFFF] px-6 pb-4  pt-3 rounded-br-[10px] rounded-bl-[10px]">
-                          <p className="text-sm font-poppinsRegular text-justify lg:w-full text-[#282A03] w-[50%] md:text-sm">
+                          <p className="text-sm font-poppinsRegular text-justify lg:w-full text-[#282A03] w-[80%] md:text-sm">
                             {el?.answer}
                           </p>
                         </div>
@@ -275,20 +212,24 @@ const FarmerDashboard = () => {
                 </div>
 
                 <div className="bg-[#FFFFFF] px-6 pb-16  pt-8 rounded-br-lg rounded-bl-xl flex flex-wrap gap-x-4 items-center justify-center">
-                  <div className="flex items-center gap-x-1">
-                    <span>
-                      <IoMdMail size={24} fill="#2D865B" />
-                    </span>
-                    <p className="text-sm font-poppinsRegular text-[#282A03] md:text-sm">
-                      Email: support@farmfundr.com
-                    </p>
-                  </div>
+                  <a href="mailto:support@farmpady.com">
+                    <div className="flex items-center gap-x-1">
+                      <span>
+                        <IoMdMail size={24} fill="#2D865B" />
+                      </span>
+                      <p className="text-sm font-poppinsRegular text-[#282A03] md:text-sm">
+                        Email: support@farmpady.com
+                      </p>
+                    </div>
+                  </a>
+
+                  <a href="tel:+2349022291012"></a>
                   <div className="flex items-center gap-x-1">
                     <span>
                       <MdLocalPhone size={24} fill="#2D865B" />
                     </span>
                     <p className="text-sm font-poppinsRegular text-[#282A03]  md:text-sm">
-                      Phone: +234 XXXXXXXX
+                      Phone: +2349022291012
                     </p>
                   </div>
                   <div className="flex items-center gap-x-1">
@@ -309,4 +250,4 @@ const FarmerDashboard = () => {
   );
 };
 
-export default FarmerDashboard;
+export default HelpCenter;

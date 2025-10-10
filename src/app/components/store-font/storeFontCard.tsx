@@ -1,6 +1,6 @@
 import React from "react";
 import Image from "next/image";
-import { MdCardTravel } from "react-icons/md";
+// import { MdCardTravel } from "react-icons/md";
 import Button from "../common/Buttons";
 import Link from "next/link";
 
@@ -21,7 +21,7 @@ const StoreFontCard: React.FC<StoreFontCardProps> = ({
   status,
   imageUrl,
   onViewProjects,
-  onViewBid,
+  // onViewBid,
   projectName,
   farmName,
   projectDescription,
@@ -160,7 +160,7 @@ const StoreFontCard: React.FC<StoreFontCardProps> = ({
         </div> */}
 
         <div className="flex items-center gap-x-3">
-          <div className="block w-full">
+          {/* <div className="block w-full">
             <Button
               variant="primary"
               size="small"
@@ -170,7 +170,7 @@ const StoreFontCard: React.FC<StoreFontCardProps> = ({
               <MdCardTravel color="white" size={24} />
               Bid Now
             </Button>
-          </div>
+          </div> */}
           <Link href={href || "/store-front"} className="block w-full">
             <Button
               className="w-full"

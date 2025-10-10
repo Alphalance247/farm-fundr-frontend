@@ -10,6 +10,7 @@ import axiosInstance from "@/lib/axios";
 import { AxiosError } from "axios";
 import ProtectedRoute from "@/app/components/common/ProtectedRoute/protectedRoute";
 import SpinnerModal from "@/app/components/common/modals/SpinnerModal";
+import { useRouter } from "next/navigation";
 
 const AddFarmBranch = () => {
   const [formStep, setFormStep] = useState(1);
@@ -17,6 +18,7 @@ const AddFarmBranch = () => {
   const [completedSteps, setCompletedSteps] = useState<number[]>([]);
   const [loading, setLoading] = useState(false);
   const [selectedFarmId, setSelectedFarmId] = useState<string | null>(null);
+  const router = useRouter();
   const [form, setForm] = useState({
     selectFarm: "",
     branchName: "",
@@ -64,8 +66,8 @@ const AddFarmBranch = () => {
         formData.append("state", form?.state);
         formData.append("plots", form?.branchSize);
         formData.append("images", file as Blob);
-        formData.append("open_time", form?.time);
-        formData.append("close_time", form?.workHours);
+        formData.append("open_time", form?.workHours);
+        formData.append("close_time", form?.time);
 
         const res = await axiosInstance.post(
           `farms/${selectedFarmId}/branches`,
@@ -81,6 +83,8 @@ const AddFarmBranch = () => {
           toast.success(
             res.data?.statusmessage || "Farm successfully submitted for review"
           );
+
+          router?.push("/farmer-dashboard/my-farms");
 
           // Reset form
           setFormStep(1);

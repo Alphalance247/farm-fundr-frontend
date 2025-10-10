@@ -15,6 +15,7 @@ export interface farmPageDataStore {
     city: string;
     state: string;
     instagram_link: string;
+    active_farm:boolean;
     x_link: string;
     linkedln_link: string;
     country: string;

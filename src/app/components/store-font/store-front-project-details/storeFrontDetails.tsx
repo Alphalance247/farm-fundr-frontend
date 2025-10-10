@@ -79,7 +79,7 @@ const StoreFrontDetails = ({ id }: { id: string }) => {
 
           <section className="max-w-[1300px] mx-auto px-4 py-10 md:px-4 md:py-12">
             <div className="">
-              <GoBackBtn href="/farm-page" />
+              <GoBackBtn href="/farm-page/projects/" />
               {loading ? (
                 <Spinner />
               ) : error ? (
@@ -259,14 +259,20 @@ const StoreFrontDetails = ({ id }: { id: string }) => {
                       </div>
 
                       <div className="flex items-center gap-x-3">
-                        <Button
-                          variant="primary"
-                          size="small"
-                          className="w-full flex items-center justify-center gap-x-2"
+                        <a
+                          href={`https://wa.me/${farmPageData?.farm_whatsapp_number}`}
+                          target="_blank"
+                          className="w-full"
                         >
-                          <MdCardTravel color="white" size={24} />
-                          Bid Now
-                        </Button>
+                          <Button
+                            variant="primary"
+                            size="small"
+                            className="w-full flex items-center justify-center gap-x-2"
+                          >
+                            <MdCardTravel color="white" size={24} />
+                            Bid Now
+                          </Button>
+                        </a>
                       </div>
                     </div>
                   </div>
@@ -299,7 +305,7 @@ const StoreFrontDetails = ({ id }: { id: string }) => {
                           onViewProjects={() => {
                             /* handle click */
                           }}
-                          href={`/farm-page/${card?.id}`}
+                          href={`/farm-page/projects/${card?.id}`}
                           onViewBid={() => {}}
                         />
                       ))}
