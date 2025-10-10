@@ -44,13 +44,13 @@ const BranchSizeDetails = ({
     <div>
       <div className="p-6 md:p-4 bg-white mt-6 rounded-lg flex flex-col gap-y-6">
         <div>
-          <Label className="">Branch Size (plots, hectares, e.g 20)</Label>
+          <Label className="">Branch Size (plots e.g 20)</Label>
           <Input
             name="branchSize"
             className=""
             type="number"
             value={form?.branchSize}
-            placeholder="Enter farm size"
+            placeholder="Enter branch size"
             variant="tertiary"
             onChange={(e) => setForm({ ...form, branchSize: e.target.value })}
           />

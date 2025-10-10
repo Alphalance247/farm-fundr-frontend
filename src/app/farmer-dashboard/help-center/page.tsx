@@ -8,7 +8,7 @@ import {
 } from "react-icons/md";
 import React, { useState } from "react";
 import { IoPersonSharp } from "react-icons/io5";
-import {  IoMdMail } from "react-icons/io";
+import { IoMdMail } from "react-icons/io";
 import { PiHeadsetLight } from "react-icons/pi";
 import Image from "next/image";
 
@@ -17,7 +17,7 @@ interface tabsBtn {
   icons: React.ReactNode;
 }
 
-const FarmerDashboard = () => {
+const HelpCenter = () => {
   const [tab, setTab] = useState<string>("General");
   const [isOpen, setIsOpen] = useState<number>(0);
 
@@ -44,8 +44,6 @@ const FarmerDashboard = () => {
           question: "How can I reach Farmpady support team?",
           answer: `You can drop us a message via https://farmpady.com/contact-us or send us an email at support@farmpady.com `,
         },
-      
-
       ],
       tab: "General",
     },
@@ -61,7 +59,6 @@ const FarmerDashboard = () => {
           question: "How can I report a payment issue?",
           answer: `If you experience any issues with your payment, please contact us at support@farmpady.com  with the details, and our team will get back to you as soon as possible.`,
         },
-     
       ],
       tab: "Payment",
     },
@@ -87,11 +84,9 @@ const FarmerDashboard = () => {
           question: "Why is my account suspended?",
           answer: `Your account will never be suspended without prior notice. Please check your email for details on the reason for the suspension.`,
         },
-     
       ],
       tab: "Account",
     },
-   
   ];
 
   const tabsBtn: tabsBtn[] = [
@@ -107,7 +102,7 @@ const FarmerDashboard = () => {
       text: "Account",
       icons: <IoPersonSharp size={48} />,
     },
-  
+
     {
       text: "Support",
       icons: <PiHeadsetLight size={48} />,
@@ -218,15 +213,14 @@ const FarmerDashboard = () => {
 
                 <div className="bg-[#FFFFFF] px-6 pb-16  pt-8 rounded-br-lg rounded-bl-xl flex flex-wrap gap-x-4 items-center justify-center">
                   <a href="mailto:support@farmpady.com">
-
-                  <div className="flex items-center gap-x-1">
-                    <span>
-                      <IoMdMail size={24} fill="#2D865B" />
-                    </span>
-                    <p className="text-sm font-poppinsRegular text-[#282A03] md:text-sm">
-                      Email: support@farmpady.com
-                    </p>
-                  </div>
+                    <div className="flex items-center gap-x-1">
+                      <span>
+                        <IoMdMail size={24} fill="#2D865B" />
+                      </span>
+                      <p className="text-sm font-poppinsRegular text-[#282A03] md:text-sm">
+                        Email: support@farmpady.com
+                      </p>
+                    </div>
                   </a>
 
                   <a href="tel:+2349022291012"></a>
@@ -256,4 +250,4 @@ const FarmerDashboard = () => {
   );
 };
 
-export default FarmerDashboard;
+export default HelpCenter;

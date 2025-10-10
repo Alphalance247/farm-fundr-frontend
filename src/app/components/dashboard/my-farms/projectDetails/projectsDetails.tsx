@@ -11,6 +11,7 @@ import Spinner from "@/app/components/common/modals/spinner";
 import { IoMdArrowBack } from "react-icons/io";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import Messaging from "../../common/messaging";
 
 const ProjectDetails = ({
   projectDetailsId,
@@ -125,7 +126,9 @@ const ProjectDetails = ({
                           src={`${images}` || "/assets/my-farms/no-img.avif"}
                           alt={`Uploaded images`}
                           className={`object-cover w-full  rounded-[12px] border-dashed border border-[#51F4A6] ${
-                            i === 0 ? "col-span-3 h-[158px] md:col-span-1" : "h-[95px]"
+                            i === 0
+                              ? "col-span-3 h-[158px] md:col-span-1"
+                              : "h-[95px]"
                           }`}
                           key={i}
                         />
@@ -172,32 +175,6 @@ const ProjectDetails = ({
               </div>
               {/* Branch setup and optional info */}
               <div className="flex flex-col gap-y-6">
-                {/* <div className="bg-white shadow-md rounded-[12px] p-6 h-fit">
-                  <div className="flex gap-x-2 items-center justify-center pt-6 border-t border-[#F6F6F6] mb-4">
-                    {" "}
-                    <FarmHeading text="Branch Set Up" />
-                    <EditBtn
-                      onButtonEdit={() => {
-                        router.push(
-                          "/farmer-dashboard/my-farms/update-project"
-                        );
-                      }}
-                    />
-                  </div>
-
-                  <div>
-                    {branchSetup.slice(0, 5).map((el, i) => (
-                      <div
-                        key={i}
-                        className="flex justify-between items-center py-3 border-t border-[#F6F6F6] font-poppinsRegular text-sm text-[#5F5F5F]"
-                      >
-                        <p>{el?.name}</p>
-                        <p className=" font-poppinsSemiBold">{el?.details}</p>
-                      </div>
-                    ))}
-                  </div>
-                </div> */}
-
                 <div className="bg-white shadow-md rounded-[12px] p-6 h-fit">
                   <div className="border-t border-[#F6F6F6] pt-3 pb-3">
                     <p className="font-poppinsRegular text-sm text-[#5F5F5F] pb-2">
@@ -219,6 +196,8 @@ const ProjectDetails = ({
                     </p>
                   </div>
                 </div>
+
+                <Messaging investmentDetailsId={projectDetailsId} />
               </div>
             </div>
 

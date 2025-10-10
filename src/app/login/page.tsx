@@ -12,6 +12,7 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import { AxiosError } from "axios";
 import { useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { useAuth } from "@/context/authContext";
 
 interface formState {
@@ -121,7 +122,6 @@ const Login = () => {
             });
             const redirectPath = getRedirectPath(user_type, redirectTo);
             window.location.href = redirectPath;
-            // router.push(redirectPath);
             setForm({ email: "", password: "" });
           } else {
             toast.error("Error login please try again or contact Admin");

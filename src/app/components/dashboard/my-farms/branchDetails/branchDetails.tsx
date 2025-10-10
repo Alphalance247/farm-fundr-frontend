@@ -8,6 +8,7 @@ import Spinner from "@/app/components/common/modals/spinner";
 import Button from "@/app/components/common/Buttons";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { getBranchDetails } from "@/stores/farms/getBranchDetails";
 
 const BranchDetails = ({
   farmId,
@@ -18,6 +19,16 @@ const BranchDetails = ({
 }) => {
   const { data, fetchProjectsList, error, loading } = getProjectsListStore();
   const router = useRouter();
+
+  const { fetchBranchDetails, data: branchList } = getBranchDetails();
+
+  // Get the farm ID from localStorage on component mount
+  useEffect(() => {
+    const storedBranchId = localStorage.getItem("slectedEditBranchId");
+    if (storedBranchId) {
+      fetchBranchDetails(storedBranchId);
+    }
+  }, [fetchBranchDetails]);
 
   useEffect(() => {
     fetchProjectsList(branchId, farmId);
@@ -34,9 +45,9 @@ const BranchDetails = ({
     <DashboardLayout>
       <main className="px-10 py-10 bg-gray-50 overflow-y-auto h-full md:px-4">
         <FarmHeadingOverview
-          farmName={projectsCard[0]?.farm_branch_name}
-          overview={`Overview of ${projectsCard[0]?.farm_branch_name}(${
-            data?.results?.data?.length || "0"
+          farmName={branchList?.data?.farm_name}
+          overview={`Overview of ${branchList?.data?.name} (${
+            branchList?.data?.projects?.length || "0"
           })`}
           goBackLink={`/farmer-dashboard/my-farms/${farmId}/farm-branches/`}
           isProject={true}

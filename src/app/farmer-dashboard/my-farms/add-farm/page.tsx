@@ -468,7 +468,7 @@ const AddFarm = () => {
                         )}
                         cols={20}
                         rows={5}
-                        className={`bg-[#F6F6F6] border-[#E2E2E2] border w-full text-[#7C7C7C] rounded-lg text-sm p-4 focus:ring-[#51F4A6] ${
+                        className={`bg-[#F6F6F6] border-[#51F4A6] border w-full text-[#7C7C7C] rounded-lg text-sm p-4 focus:ring-[#51F4A6] ${
                           errors.fieldDescription ? "border-red-500" : ""
                         }`}
                         placeholder="Enter description here (minimum 10 characters)"

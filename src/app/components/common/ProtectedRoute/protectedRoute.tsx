@@ -27,9 +27,9 @@ const ProtectedRoute = ({
         if (user?.user_type === "farmer") {
           window.location.href = "/farmer-dashboard";
           // router.push("/farmer-dashboard");
+          window.location.href = "/farmer-dashboard";
         } else if (user?.user_type === "investor") {
-          window.location.href = "/investor-dashboard";
-          // router.push("/investor-dashboard"); // Create this route if needed
+          window.location.href = "/investor-dashboard"; // Create this route if needed
         }
         return;
       }

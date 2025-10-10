@@ -9,6 +9,7 @@ import { motion } from "framer-motion";
 import { FaCaretDown } from "react-icons/fa";
 import { useAuth } from "@/context/authContext";
 import { useRouter } from "next/navigation";
+import { MdOutlineKeyboardArrowRight } from "react-icons/md";
 
 const Header = () => {
   const [activeMenu, setActiveMenu] = useState("Home");
@@ -21,26 +22,34 @@ const Header = () => {
     {
       id: 3,
       name: "About Us",
-      scrollSection: "solution",
+      link: "/about-us",
+    },
+    {
+      id: 2,
+      name: "Our Services",
       link: "/about-us",
       subMenu: [
         {
-          name: "About Us",
-          link: "/about-us",
+          name: "For Farmers",
+          link: "/for-farmers",
         },
-        // {
-        //   name: "Meet our team",
-        //   link: "/meet-team",
-        // },
+        {
+          name: "For Investors",
+          link: "/for-investors",
+        },
+        {
+          name: "For Agency",
+          link: "/for-agency",
+        },
       ],
       icon: <FaCaretDown size={16} />,
     },
-    {
-      id: 4,
-      name: "How It Works",
-      scrollSection: "serve",
-      link: "/how-it-works",
-    },
+    // {
+    //   id: 4,
+    //   name: "How It Works",
+    //   scrollSection: "serve",
+    //   link: "/how-it-works",
+    // },
     {
       id: 5,
       name: "MarketPlace",
@@ -62,15 +71,24 @@ const Header = () => {
       name: "About Us",
       link: "/about-us",
     },
-    // {
-    //   id: 3,
-    //   name: "Meet our team",
-    //   link: "/meet-team",
-    // },
     {
-      id: 4,
-      name: "How It Works",
-      link: "/how-it-works",
+      id: 3,
+      name: "Our Services",
+      subMenu: [
+        {
+          name: "For Farmers",
+          link: "/for-farmers",
+        },
+        {
+          name: "For Investors",
+          link: "/for-investors",
+        },
+        {
+          name: "For Agency",
+          link: "/for-agency",
+        },
+      ],
+      icon: <FaCaretDown size={16} />,
     },
     {
       id: 5,
@@ -84,7 +102,7 @@ const Header = () => {
     },
   ];
 
-  const { isAuthenticated, isLoading, logout, isLoggingOut } = useAuth();
+  const { isAuthenticated, user, isLoading, logout, isLoggingOut } = useAuth();
 
   const handleLogout = async () => {
     await logout();
@@ -178,7 +196,13 @@ const Header = () => {
             <>
               {isAuthenticated ? (
                 <>
-                  <Link href={"/farmer-dashboard"}>
+                  <Link
+                    href={
+                      user?.user_type === "farmer"
+                        ? "/farmer-dashboard"
+                        : "/investor-dashbaord"
+                    }
+                  >
                     <Button
                       variant="secondary"
                       size="small"
@@ -214,7 +238,7 @@ const Header = () => {
                   </Link>
                   <Link href={"/user-select"}>
                     <Button className="w-fit" size="small">
-                      Get Started
+                      Join FarmPady
                     </Button>
                   </Link>
                 </>
@@ -244,17 +268,54 @@ const Header = () => {
         transition={{ duration: 0.1 }}
       >
         <nav className="hidden xl:justify-start xl:items-left gap-4 xl:flex xl:flex-col xl:py-8 xl:px-3">
-          {navsMobile.map((items) => {
+          {navsMobile.map((items, i) => {
             return (
-              <ul key={items?.id} className="">
-                <Link href={items?.link}>
-                  <li
-                    className="text-[#a19494] cursor-pointer px-4 text-sm font-semibold font-geist block"
-                    onClick={() => setShowMobileMenu(false)}
+              <ul key={items?.id} className="relative">
+                {items?.subMenu ? (
+                  <button
+                    className={`flex gap-x-2 items-center text-[#2D865B] px-4 text-sm font-semibold font-geist transition-colors duration-300 cursor-pointer`}
+                    onClick={() => {
+                      if (showDropDown === i) {
+                        setShowDropDown(null);
+                      } else {
+                        setShowDropDown(i);
+                      }
+                    }}
                   >
-                    {items?.name}
-                  </li>
-                </Link>
+                    {items?.name} <span>{items?.icon}</span>
+                  </button>
+                ) : (
+                  <Link href={items?.link || ""}>
+                    <li
+                      className="text-[#2D865B] cursor-pointer px-4 text-sm font-semibold font-geist block"
+                      onClick={() => setShowMobileMenu(false)}
+                    >
+                      {items?.name}
+                    </li>
+                  </Link>
+                )}
+
+                {items?.subMenu && showDropDown === i && (
+                  <div className="mt-2 w-full bg-[#C9FCE3] shadow-lg px-4 py-3 rounded-xl">
+                    {items?.subMenu.map((subLink, subIndex) => (
+                      <Link key={subIndex} href={subLink?.link}>
+                        <div className="flex justify-between border-[#E2E2E2] border-[0.3px] gap-x-3 items-center bg-[#EEFEF6] px-4 rounded-xl cursor-pointer py-[15px] mb-3">
+                          <span className="block font-poppinsSemiBold text-sm  text-[#2D865B] ">
+                            {subLink?.name}
+                          </span>
+
+                          <span className="block text-[#2D865B]">
+                            <MdOutlineKeyboardArrowRight
+                              size={24}
+                              color="#2D865B"
+                              fill="#2D865B"
+                            />
+                          </span>
+                        </div>
+                      </Link>
+                    ))}
+                  </div>
+                )}
               </ul>
             );
           })}
