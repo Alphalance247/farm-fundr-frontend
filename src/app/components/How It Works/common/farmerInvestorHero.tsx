@@ -41,7 +41,7 @@ const FarmerInvestorHero = ({
           </p>
         </div>
 
-        <Link href={btnLink || "/farmer-dashbaord"}>
+        <Link href={btnLink || "/farmer-dashboard"}>
           <Button className="flex gap-x-2 items-center mt-8 justify-center lg:w-full">
             {btnText || "Start Your farm profile"}
             <span>
