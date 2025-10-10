@@ -1,10 +1,14 @@
+"use client";
 import Image from "next/image";
 import Button from "../common/Buttons";
 import Container from "../common/container";
 import { GoArrowRight } from "react-icons/go";
 import HeroHeading from "./common/heroHeading";
+import { useAuth } from "@/context/authContext";
+import Link from "next/link";
 
 const Hero = () => {
+  const { isAuthenticated } = useAuth();
   return (
     <section className="bg-[#EEFEF6] relative">
       <div className="absolute z-[0] top-0 right-0 bottom-0 left-0">
@@ -45,12 +49,16 @@ const Hero = () => {
                 digital marketplace
               </p>
 
-              <Button className="flex gap-x-2 items-center justify-center">
-                Join FarmPady{" "}
-                <span>
-                  <GoArrowRight />
-                </span>
-              </Button>
+              {isAuthenticated || (
+                <Link href={"/user-select"}>
+                  <Button className="flex gap-x-2 items-center justify-center">
+                    Join FarmPady{" "}
+                    <span>
+                      <GoArrowRight />
+                    </span>
+                  </Button>
+                </Link>
+              )}
             </div>
           </div>
 

@@ -1,8 +1,17 @@
 import { GoArrowRight } from "react-icons/go";
 import Button from "../common/Buttons";
 import Container from "../common/container";
+import Link from "next/link";
 
-const Overview = () => {
+const Overview = ({
+  isFarmer = true,
+  isInvestor = true,
+  isAgency = true,
+}: {
+  isFarmer?: boolean;
+  isInvestor?: boolean;
+  isAgency?: boolean;
+}) => {
   return (
     <section
       className={`relative bg-center bg-cover bg-[url('/assets/Homepage-Redesign/overview.jpg')]`}
@@ -18,35 +27,47 @@ const Overview = () => {
           </h1>
 
           <div className="flex gap-x-3 justify-center md:flex-col md:gap-y-3">
-            <Button
-              className="flex gap-x-2 items-center justify-center md:w-full"
-              variant="tertiary"
-            >
-              Create your farm
-              <span>
-                <GoArrowRight color="#2D865B" />
-              </span>
-            </Button>
+            {isFarmer && (
+              <Link href={"/farmer-dashboard"}>
+                <Button
+                  className="flex gap-x-2 items-center justify-center md:w-full"
+                  variant="tertiary"
+                >
+                  Create your farm
+                  <span>
+                    <GoArrowRight color="#2D865B" />
+                  </span>
+                </Button>
+              </Link>
+            )}
 
-            <Button
-              className="flex gap-x-2 items-center !text-[#2D865B] !bg-[#EEFEF6] justify-center  md:w-full"
-              variant="search"
-            >
-              Start Investing
-              <span>
-                <GoArrowRight color="#2D865B" />
-              </span>
-            </Button>
+            {isInvestor && (
+              <Link href={"/investor-dashboard"}>
+                <Button
+                  className="flex gap-x-2 items-center !text-[#2D865B] !bg-[#EEFEF6] justify-center  md:w-full"
+                  variant="search"
+                >
+                  Start Investing
+                  <span>
+                    <GoArrowRight color="#2D865B" />
+                  </span>
+                </Button>
+              </Link>
+            )}
 
-            <Button
-              className="flex gap-x-2 items-center !text-[#2D865B] !bg-[#EEFEF6] justify-center  md:w-full"
-              variant="search"
-            >
-              Create your grant
-              <span>
-                <GoArrowRight color="#2D865B" />
-              </span>
-            </Button>
+            {isAgency && (
+              <Link href={"/user-select"}>
+                <Button
+                  className="flex gap-x-2 items-center !text-[#2D865B] !bg-[#EEFEF6] justify-center  md:w-full"
+                  variant="search"
+                >
+                  Create your grant
+                  <span>
+                    <GoArrowRight color="#2D865B" />
+                  </span>
+                </Button>
+              </Link>
+            )}
           </div>
         </div>
       </Container>

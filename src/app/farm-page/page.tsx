@@ -1,23 +1,4 @@
 "use client";
-// import { SearchIcon } from "lucide-react";
-// import StoreFrontHeading from "../components/dashboard/common/storeFrontHeading";
-// import { color } from "../components/data";
-// import { TabProvider, useTab } from "@/context/TabContext";
-// import { useEffect, useState } from "react";
-// import Input from "../components/common/input";
-// import Button from "../components/common/Buttons";
-// import StoreFontCard from "../components/store-font/storeFontCard";
-// import { FaSortDown } from "react-icons/fa";
-// import StoreFontFooter from "../components/store-font/storeFontFooter";
-// import PlaceBid from "../components/store-font/placeBid";
-// import { getFarmPageListStore } from "@/stores/farmpage/farmPageList";
-// import { getFarmPageProjectListStore } from "@/stores/farmpage/farmPageProjectList";
-// import ErrorFetch from "../components/common/errorFetch";
-// import Spinner from "../components/common/modals/spinner";
-// import { useFarmName } from "@/stores/farmpage/useFarmName";
-// import FarmNotFound from "../components/dashboard/common/farmNotFound";
-// import { WithSuspense } from "../components/dashboard/common/suspense";
-
 import StoreFrontHeading from "@/app/components/dashboard/common/storeFrontHeading";
 import { color } from "@/app/components/data";
 import StoreFontFooter from "@/app/components/store-font/storeFontFooter";

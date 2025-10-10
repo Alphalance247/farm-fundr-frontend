@@ -40,7 +40,7 @@ const FarmerAction = () => {
       </div>
       <Container>
         <OurServicesCards
-          btnLink="/"
+          btnLink="/farmer-dashboard"
           btnText=""
           benefit={benefit}
           heading="Your Farm Deserves Digital Visibility"

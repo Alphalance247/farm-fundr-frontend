@@ -46,14 +46,9 @@ const ForFarmers = () => {
       subhed:
         "Browse through a curated list of projects available for bidding. Each project comes with detailed information, helping you make informed investment decisions.",
     },
+
     {
       image: "/assets/HowItWorks/redesign/4.svg",
-      head: "Search your mode of operation",
-      subhed: "",
-      list: [],
-    },
-    {
-      image: "/assets/HowItWorks/redesign/5.svg",
       head: "Monitor your Investment",
       subhed:
         "Track your investment’s progress in real-time through your dashboard. Stay updated with project milestones, financial performance, and regular reports to ensure transparency and growth.",
@@ -86,8 +81,8 @@ const ForFarmers = () => {
             subheadText="FarmPady connects you with certified farms and transparent projects, so you can invest securely and track real growth"
             imgSrc="/assets/HowItWorks/redesign/1b.png"
             investFarmText="Invest like "
-            name="Adebayo"
-            btnLink="/farm-marketplace"
+            name="Emmanuel"
+            btnLink="/investor-dashboard"
             btnText="Explore Projects to Invest In"
           />
         </Container>
@@ -104,10 +99,11 @@ const ForFarmers = () => {
         list={learnMorelist}
         text="How it works"
         subheadText="Simple steps to get your farm funded"
+        className=" !grid-cols-4 lg:!grid-cols-2 md:!grid-cols-1"
       />
       <FeaturedProject />
       <Faqs />
-      <Overview />
+      <Overview isFarmer={false} isAgency={false} />
     </LayOuts>
   );
 };

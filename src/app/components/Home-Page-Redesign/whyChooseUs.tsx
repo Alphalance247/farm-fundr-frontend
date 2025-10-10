@@ -1,10 +1,14 @@
+"use client";
 import Image from "next/image";
 import Container from "../common/container";
 import Heading from "./common/heading";
 import Button from "../common/Buttons";
 import { GoArrowRight } from "react-icons/go";
+import Link from "next/link";
+import { useAuth } from "@/context/authContext";
 
 const WhyChooseUs = () => {
+  const { isAuthenticated } = useAuth();
   const data = [
     {
       border: "#4379FF",
@@ -158,17 +162,21 @@ const WhyChooseUs = () => {
               </div>
             </div>
 
-            <div>
-              <Button
-                className="flex gap-x-2 items-center !text-[#2D865B] !bg-[#EEFEF6] justify-center w-[470px] mx-auto"
-                variant="search"
-              >
-                Let’s Get you Started
-                <span>
-                  <GoArrowRight color="#2D865B" />
-                </span>
-              </Button>
-            </div>
+            {isAuthenticated || (
+              <div>
+                <Link href={"/user-select"}>
+                  <Button
+                    className="flex gap-x-2 items-center !text-[#2D865B] !bg-[#EEFEF6] justify-center w-[470px] mx-auto"
+                    variant="search"
+                  >
+                    Let’s Get you Started
+                    <span>
+                      <GoArrowRight color="#2D865B" />
+                    </span>
+                  </Button>
+                </Link>
+              </div>
+            )}
           </div>
         </div>
       </Container>

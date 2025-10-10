@@ -38,7 +38,7 @@ const InvestorAction = () => {
       </div>
       <Container>
         <OurServicesCards
-          btnLink="/"
+          btnLink="/investor-dashboard"
           btnText="Start Investing"
           isRowReverse={true}
           isFarmMarketPlace={true}

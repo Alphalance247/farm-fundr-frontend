@@ -12,6 +12,7 @@ const LearnMore = ({
   list,
   text,
   subheadText,
+  className,
 }: {
   btnLink: string;
   btnText: string;
@@ -23,6 +24,7 @@ const LearnMore = ({
   }[];
   text: string;
   subheadText: string;
+  className?: string;
 }) => {
   return (
     <section className="bg-[#EEFEF6] relative">
@@ -52,7 +54,9 @@ const LearnMore = ({
             </p>
           </div>
 
-          <div className="grid grid-cols-3 gap-x-6 gap-y-20 lg:grid-cols-2 md:grid-cols-1 lg:gap-8">
+          <div
+            className={`grid grid-cols-3 gap-x-6 gap-y-20 ${className} lg:grid-cols-2  md:grid-cols-1 lg:gap-8 `}
+          >
             {list?.map((item, i) => (
               <div
                 className="bg-[#FCFCFC] rounded-[20px] p-6 text-center border border-[#E2E2E2] lg:p-4"

@@ -58,7 +58,7 @@ const ForFarmers = () => {
         "When investors express interest and bid on your project, you can evaluate their offers and choose to accept or reject them according to your goals.",
     },
     {
-      image: "/assets/HowItWorks/redesign/5.svg",
+      image: "/assets/HowItWorks/redesign/6.svg",
       head: "Run project",
       subhed:
         "With funding in place, bring your project to life. Manage resources, stick to your plan, and hit milestones. Track progress and adjust as needed.",
@@ -100,14 +100,14 @@ const ForFarmers = () => {
       </section>
       <WhyFarmPady text="" subheadText="" list={list} className="" />
       <LearnMore
-        btnLink=""
+        btnLink="/farmer-dashboard"
         list={learnMorelist}
         text=""
         subheadText=""
         btnText=""
       />
       <Faqs />
-      <Overview />
+      <Overview isInvestor={false} isAgency={false} />
     </LayOuts>
   );
 };

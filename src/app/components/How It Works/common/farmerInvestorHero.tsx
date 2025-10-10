@@ -34,14 +34,14 @@ const FarmerInvestorHero = ({
         />
         <div className="mt-6 flex gap-x-4 items-center">
           <p className="text-lg font-poppinsRegular text-[#7C7C7C]  xl:text-base">
-            {investFarmText || "Farm"} like{" "}
+            {investFarmText || "Farm like "}
           </p>
           <p className="font-poppinsSemiBold text-2xl text-[#2D865B] border-none px-3 py-1 bg-[#C9FCE3] rounded-lg">
-            {name || "Adebayo"}
+            {name || "Rofiah"}
           </p>
         </div>
 
-        <Link href={btnLink || "/"}>
+        <Link href={btnLink || "/farmer-dashbaord"}>
           <Button className="flex gap-x-2 items-center mt-8 justify-center lg:w-full">
             {btnText || "Start Your farm profile"}
             <span>
@@ -53,7 +53,7 @@ const FarmerInvestorHero = ({
 
       <div>
         <Image
-          src={imgSrc || "/assets/HowItWorks/redesign/1.png"}
+          src={imgSrc || "/assets/HowItWorks/redesign/1a.png"}
           width={588}
           height={511}
           className="w-full h-full"
