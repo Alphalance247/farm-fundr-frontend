@@ -53,7 +53,7 @@ const FarmerInvestorHero = ({
 
       <div>
         <Image
-          src={imgSrc || "/assets/HowItWorks/redesign/1a.png"}
+          src={imgSrc || "/assets/HowItWorks/redesign/1aa.png"}
           width={588}
           height={511}
           className="w-full h-full"
