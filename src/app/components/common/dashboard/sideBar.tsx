@@ -5,6 +5,7 @@ import { HiOutlineHome } from "react-icons/hi2";
 import { usePathname } from "next/navigation";
 import {
   MdOutlineAccountBalanceWallet,
+  MdOutlineMessage,
   MdOutlinePayment,
 } from "react-icons/md";
 import { TbReportAnalytics } from "react-icons/tb";
@@ -13,6 +14,7 @@ import { PiHeadsetLight } from "react-icons/pi";
 import Subsribe from "../../dashboard/subscribe";
 import { useEffect, useRef } from "react";
 import { getFarmListStore } from "@/stores/farms/getFarmList";
+import { getFarmerBidWithInvestorStore } from "@/stores/farmer-dashboard/bids/farmerBids";
 
 interface sideBarData {
   heading?: string;
@@ -37,9 +39,13 @@ const Sidebar: React.FC<mobileMenuProps> = ({
   const { data: farmList, fetchFarmList } = getFarmListStore();
   const farmData = farmList?.results?.extra_data?.total_farms ?? null;
 
+  const { data: bidsData, fetchFarmerBidsWithInvestor } =
+    getFarmerBidWithInvestorStore();
+
   useEffect(() => {
+    fetchFarmerBidsWithInvestor();
     fetchFarmList();
-  }, [fetchFarmList]);
+  }, [fetchFarmList, fetchFarmerBidsWithInvestor]);
 
   const sideBarData: sideBarData[] = [
     {
@@ -54,6 +60,14 @@ const Sidebar: React.FC<mobileMenuProps> = ({
       notification: farmData?.toString() || "0",
       bgColor: "bg-[#F2F2F2]",
       textColor: "text-[#2D865B]",
+    },
+    {
+      text: "Bids",
+      link: "/farmer-dashboard/bids",
+      icons: <MdOutlineMessage size={20} />,
+      notification: bidsData?.data?.length.toString() || "0",
+      bgColor: "bg-[#2D865B]",
+      textColor: "text-white",
     },
     // {
     //   text: "Message",

@@ -16,6 +16,7 @@ export interface investorBidsStatusDataStore {
       id: string;
       name: string;
       budget: string;
+      farm_page_link: string;
       project_images: {
         image: string;
       }[];
@@ -35,6 +36,7 @@ export interface investorBidsStatusDataStore {
       id: string;
       name: string;
       budget: string;
+      farm_page_link: string;
       project_images: {
         image: string;
       }[];
@@ -53,6 +55,7 @@ export interface investorBidsStatusDataStore {
     project: {
       id: string;
       name: string;
+      farm_page_link: string;
       budget: string;
       project_images: {
         image: string;
@@ -64,6 +67,7 @@ export interface investorBidsStatusDataStore {
     id: string;
     created: string;
     status: string;
+
     milestone: string;
     created_at: string;
     roi_earned: string;
@@ -72,6 +76,7 @@ export interface investorBidsStatusDataStore {
       id: string;
       name: string;
       budget: string;
+      farm_page_link: string;
       project_images: {
         image: string;
       }[];

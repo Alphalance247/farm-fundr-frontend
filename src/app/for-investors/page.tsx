@@ -32,26 +32,26 @@ const ForFarmers = () => {
       image: "/assets/HowItWorks/redesign/one.svg",
       head: "Register/Login",
       subhed:
-        "Begin your journey by creating an account or logging into your existing one. This gives you access to all features designed to streamline your investment process.",
+        "Start by creating a new account or logging into your existing one to access features that simplify your investment process.",
     },
     {
       image: "/assets/HowItWorks/redesign/2.svg",
       head: "Complete KYC Verification",
       subhed:
-        "For security and compliance, verify your identity by completing the KYC (Know Your Customer) process. This step ensures a secure and transparent investment experience.",
+        "To ensure security and compliance, complete the KYC (Know Your Customer) process for a secure investment experience.",
     },
     {
       image: "/assets/HowItWorks/redesign/3.svg",
-      head: "Search for Projects to Bid On",
+      head: "Browse Projects",
       subhed:
-        "Browse through a curated list of projects available for bidding. Each project comes with detailed information, helping you make informed investment decisions.",
+        "Explore a curated list of bidding projects, each with detailed info to help you make smart investment choices.",
     },
 
     {
       image: "/assets/HowItWorks/redesign/4.svg",
-      head: "Monitor your Investment",
+      head: "Monitor your investment",
       subhed:
-        "Track your investment’s progress in real-time through your dashboard. Stay updated with project milestones, financial performance, and regular reports to ensure transparency and growth.",
+        "Track your investment’s progress in real-time through your dashboard. Stay updated with project milestones.",
     },
   ];
   return (

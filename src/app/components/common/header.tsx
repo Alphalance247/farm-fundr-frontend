@@ -200,7 +200,7 @@ const Header = () => {
                     href={
                       user?.user_type === "farmer"
                         ? "/farmer-dashboard"
-                        : "/investor-dashbaord"
+                        : "/investor-dashboard"
                     }
                   >
                     <Button
@@ -328,7 +328,13 @@ const Header = () => {
               <>
                 {isAuthenticated ? (
                   <>
-                    <Link href={"/farmer-dashboard"}>
+                    <Link
+                      href={
+                        user?.user_type === "farmer"
+                          ? "/farmer-dashboard"
+                          : "/investor-dashboard"
+                      }
+                    >
                       <Button
                         variant="secondary"
                         size="small"

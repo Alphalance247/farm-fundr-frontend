@@ -7,6 +7,7 @@ import { getInvestorBidStatus } from "@/stores/investor-dashboard/overview/bids-
 import { useState } from "react";
 import ReleaseFunds from "./investor/releaseFunds";
 import CancelBids from "./investor/cancelBids";
+import Link from "next/link";
 
 interface BidCardProps {
   name: string;
@@ -15,6 +16,7 @@ interface BidCardProps {
   date: string;
   status: "Accepted" | "Pending" | "Declined";
   image: string;
+  farm_page_link: string;
 }
 
 export default function BidCard({
@@ -24,6 +26,7 @@ export default function BidCard({
   date,
   status,
   image,
+  farm_page_link,
 }: BidCardProps) {
   const statusColors = {
     Accepted: "bg-[#E6FAEE] text-[#005423]",
@@ -100,35 +103,48 @@ export default function BidCard({
         <div className="flex xl:flex-col flex-row gap-3">
           {status === "Accepted" && (
             <>
-              <Button
-                variant="primary"
-                size="small"
-                className="flex-1"
-                onClick={() => setShowReleaseFundsModal(true)}
-              >
-                Release Funds
-              </Button>
-              <Button variant="secondary" size="small" className="flex-1">
-                View Details
-              </Button>
+              <div className="flex-1">
+                <Button
+                  variant="primary"
+                  size="small"
+                  className="w-full"
+                  onClick={() => setShowReleaseFundsModal(true)}
+                >
+                  Release Funds
+                </Button>
+              </div>
+
+              <Link href={farm_page_link || ""} className="flex-1">
+                <Button variant="secondary" size="small" className="w-full">
+                  View Details
+                </Button>
+              </Link>
             </>
           )}
 
           {status === "Declined" && (
             <>
-              <Button variant="secondary" size="small" className="flex-1">
-                View Details
-              </Button>
+              <Link href={farm_page_link || ""} className="flex-1">
+                <Button variant="secondary" size="small" className="w-full">
+                  View Details
+                </Button>
+              </Link>
             </>
           )}
 
           {status === "Pending" && (
             <>
-              <Button variant="primary" size="small" className="flex-1">
-                View Details
-              </Button>
-              <Button
+              <Link
+                href={farm_page_link || ""}
                 className="flex-1"
+                target="__blank"
+              >
+                <Button variant="secondary" size="small" className="w-full">
+                  View Details
+                </Button>
+              </Link>
+              <Button
+                className="flex-1 w-full"
                 size="small"
                 variant="secondary"
                 onClick={() => setShowCancelBidsModal(true)}
@@ -186,32 +202,50 @@ export default function BidCard({
               <Button
                 variant="primary"
                 size="small"
-                className="flex-1"
+                className="flex-1 w-full"
                 onClick={() => setShowReleaseFundsModal(true)}
               >
                 Release Funds
               </Button>
-              <Button variant="secondary" size="small" className="flex-1">
-                View Details
-              </Button>
+              <Link
+                href={farm_page_link || ""}
+                className="flex-1"
+                target="__blank"
+              >
+                <Button variant="secondary" size="small" className="w-full">
+                  View Details
+                </Button>
+              </Link>
             </>
           )}
 
           {status === "Declined" && (
             <>
-              <Button variant="secondary" size="small" className="flex-1">
-                View Details
-              </Button>
+              <Link
+                href={farm_page_link || ""}
+                className="flex-1"
+                target="__blank"
+              >
+                <Button variant="secondary" size="small" className="w-full">
+                  View Details
+                </Button>
+              </Link>
             </>
           )}
 
           {status === "Pending" && (
             <>
-              <Button variant="primary" size="small" className="flex-1">
-                View Details
-              </Button>
-              <Button
+              <Link
+                href={farm_page_link || ""}
                 className="flex-1"
+                target="__blank"
+              >
+                <Button variant="secondary" size="small" className="w-full">
+                  View Details
+                </Button>
+              </Link>
+              <Button
+                className="flex-1 w-full"
                 size="small"
                 variant="secondary"
                 onClick={() => setShowCancelBidsModal(true)}

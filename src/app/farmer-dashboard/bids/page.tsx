@@ -1,13 +1,12 @@
 "use client";
 import Image from "next/image";
-import { getInvestorBids } from "@/stores/investor-dashboard/overview/bids";
-import { getInvestorBidStatus } from "@/stores/investor-dashboard/overview/bids-by-status";
 import { useEffect } from "react";
 import ErrorFetch from "@/app/components/common/errorFetch";
 import SkeletonLoader from "@/components/ui/skeleton-loader";
 import ProtectedRoute from "@/app/components/common/ProtectedRoute/protectedRoute";
 import DashboardLayout from "@/app/components/common/dashboardLayout";
 import FarmerBidsTable from "@/app/components/dashboard/farmerBids/farmerBidsTable";
+import { getFarmerBidWithInvestorStore } from "@/stores/farmer-dashboard/bids/farmerBids";
 
 interface data {
   id: number;
@@ -20,34 +19,33 @@ const InvestmentBids = () => {
     data: bidsData,
     loading: loadingOverview,
     error: errorBidsOverview,
-    fetchInvestorBids,
-  } = getInvestorBids();
-  const { fetchInvestorsBidStatus } = getInvestorBidStatus();
+    fetchFarmerBidsWithInvestor,
+  } = getFarmerBidWithInvestorStore();
+
   const data: data[] = [
     {
       id: 1,
       name: "Total Bids By Investors",
       image: "/assets/DashBoard/bids/3.svg",
-      totalFarms: bidsData?.total_bids || 0,
+      totalFarms: bidsData?.bid_status_count?.accepted || 0,
     },
     {
       id: 2,
       name: "Accepted Bid",
       image: "/assets/DashBoard/bids/2.svg",
-      totalFarms: bidsData?.accepted_bids_count || 0,
+      totalFarms: bidsData?.bid_status_count?.accepted || 0,
     },
     {
       id: 3,
       name: "Rejected Bid",
       image: "/assets/DashBoard/bids/1.svg",
-      totalFarms: bidsData?.pending_bids_count || 0,
+      totalFarms: bidsData?.bid_status_count?.declined || 0,
     },
   ];
 
   useEffect(() => {
-    fetchInvestorsBidStatus();
-    fetchInvestorBids();
-  }, [fetchInvestorsBidStatus, fetchInvestorBids]);
+    fetchFarmerBidsWithInvestor();
+  }, [fetchFarmerBidsWithInvestor]);
 
   return (
     <ProtectedRoute requiredUserType="farmer">
@@ -69,7 +67,7 @@ const InvestmentBids = () => {
           ) : errorBidsOverview ? (
             <ErrorFetch
               message="Error Fetching Bids Overview"
-              onRefetch={fetchInvestorBids}
+              onRefetch={fetchFarmerBidsWithInvestor}
             />
           ) : (
             <div className="grid grid-cols-3 gap-x-4 mt-10 mb-4  xl:grid-cols-3 xl:gap-4 lg:grid-cols-2 md:grid-cols-2 md:gap-2">

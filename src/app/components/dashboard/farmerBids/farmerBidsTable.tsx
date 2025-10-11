@@ -1,6 +1,8 @@
 "use client";
 import { useState } from "react";
-import FarmerBidsCard from "./farmerBidsCard";
+import AllBids from "./allBids";
+import AcceptedBids from "./acceptedBid";
+import DeclinedBids from "./declinedBid";
 
 const FarmerBidsTable = () => {
   const [activeBtn, setActiveBtn] = useState<string>("All Bids");
@@ -19,7 +21,7 @@ const FarmerBidsTable = () => {
                 activeBtn === el.name
                   ? "text-[#2D865B] border-b-[2px] border-[#2D865B] text-sm"
                   : "text-[#7C7C7C] border-transparent "
-              }   font-medium text-sm p-4 border-b-2`}
+              }   font-medium text-sm p-4 border-b-2 md:p-2`}
               onClick={() => setActiveBtn(el.name)}
               key={i}
             >
@@ -27,9 +29,10 @@ const FarmerBidsTable = () => {
             </button>
           ))}
         </div>
-        <div className="mt-8 grid grid-cols-2 gap-6">
-          <FarmerBidsCard />
-          <FarmerBidsCard />
+        <div className="mt-8">
+          {activeBtn === "All Bids" && <AllBids />}
+          {activeBtn === "Accepted Bids" && <AcceptedBids />}
+          {activeBtn === "Declined Bids" && <DeclinedBids />}
         </div>
       </div>
     </section>

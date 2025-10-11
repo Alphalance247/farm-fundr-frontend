@@ -23,6 +23,7 @@ interface TransformedBid {
   date: string;
   status: "Accepted" | "Pending" | "Declined";
   image: string;
+  farm_page_link: string;
 }
 
 // Transform store data to BidCard format
@@ -37,6 +38,7 @@ const transformBidData = (
   date: bid.created_at,
   status: status,
   image: bid.project.project_images[0]?.image || "/assets/my-farms/farmpic.svg",
+  farm_page_link: bid?.project?.farm_page_link,
 });
 
 export default function BidsPage() {
