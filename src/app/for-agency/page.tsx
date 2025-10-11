@@ -91,7 +91,7 @@ const ForFarmers = () => {
             subheadText="Post grants, reach verified farmers, and track how your funding changes lives — all in one digital platform."
             imgSrc="/assets/HowItWorks/redesign/1c.png"
             investFarmText="Create Impact like "
-            name="FarmPday"
+            name="FarmPady"
             btnLink="/user-select"
             btnText="Create a Grant"
           />
