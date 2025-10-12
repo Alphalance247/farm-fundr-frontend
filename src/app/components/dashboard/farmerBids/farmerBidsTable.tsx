@@ -5,9 +5,9 @@ import AcceptedBids from "./acceptedBid";
 import DeclinedBids from "./declinedBid";
 
 const FarmerBidsTable = () => {
-  const [activeBtn, setActiveBtn] = useState<string>("All Bids");
+  const [activeBtn, setActiveBtn] = useState<string>("New Bids");
   const tabs: { id: number; name: string }[] = [
-    { id: 1, name: "All Bids" },
+    { id: 1, name: "New Bids" },
     { id: 2, name: "Accepted Bids" },
     { id: 2, name: "Declined Bids" },
   ];
@@ -30,7 +30,7 @@ const FarmerBidsTable = () => {
           ))}
         </div>
         <div className="mt-8">
-          {activeBtn === "All Bids" && <AllBids />}
+          {activeBtn === "New Bids" && <AllBids />}
           {activeBtn === "Accepted Bids" && <AcceptedBids />}
           {activeBtn === "Declined Bids" && <DeclinedBids />}
         </div>

@@ -12,7 +12,7 @@ const MarketPlace = () => {
               Marketplace
             </h2>
             <p className="text-sm font-poppinsRegular text-[#7C7C7C] mt-3">
-              Overview of your project payments and wallet activity
+              Discover farms and projects seeking investors
             </p>
           </div>
 

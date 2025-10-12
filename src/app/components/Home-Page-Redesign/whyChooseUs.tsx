@@ -101,10 +101,10 @@ const WhyChooseUs = () => {
             <Heading text="For Farmers" className="text-4xl !text-[white]" />
 
             <div className="grid grid-cols-3 gap-6 mb-14 lg:grid-cols-2 md:grid-cols-1">
-              {data.map((item, i) => {
+              {data2.map((item, i) => {
                 return (
                   <div
-                    className={`shadow-md border-l-[15px] py-5 px-8 flex bg-[#EEFEF6] gap-x-2 rounded-[20px] xl:flex-col-reverse xl:px-6 xl:py-3`}
+                    className={`shadow-md border-l-[15px] py-5 px-8 flex flex-col-reverse bg-[#EEFEF6] gap-x-2 rounded-[20px] xl:flex-col-reverse xl:px-6 xl:py-3`}
                     key={i}
                     style={{ borderColor: item?.border }}
                   >
@@ -134,10 +134,10 @@ const WhyChooseUs = () => {
                 className="text-4xl !text-[white]"
               />
               <div className="grid grid-cols-3 gap-6 mt-6 lg:grid-cols-2 md:grid-cols-1">
-                {data2.map((item, i) => {
+                {data.map((item, i) => {
                   return (
                     <div
-                      className={`shadow-md border-l-[15px] py-5 px-8 flex bg-[#EEFEF6] gap-x-2 rounded-[20px] xl:flex-col-reverse xl:px-6 xl:py-3`}
+                      className={`shadow-md border-l-[15px] py-5 px-8 flex flex-col-reverse bg-[#EEFEF6] gap-x-2 rounded-[20px] xl:flex-col-reverse xl:px-6 xl:py-3`}
                       key={i}
                       style={{ borderColor: item?.border }}
                     >

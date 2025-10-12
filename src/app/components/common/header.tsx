@@ -26,8 +26,7 @@ const Header = () => {
     },
     {
       id: 2,
-      name: "Our Services",
-      link: "/about-us",
+      name: "Services",
       subMenu: [
         {
           name: "For Farmers",
@@ -73,7 +72,7 @@ const Header = () => {
     },
     {
       id: 3,
-      name: "Our Services",
+      name: "Services",
       subMenu: [
         {
           name: "For Farmers",

@@ -30,7 +30,7 @@ const UserSelectPage: React.FC = () => {
     {
       svg: "/assets/UserOnboarding/1.svg",
       usertype: "investor",
-      desc: "Invest in farms and grow your wealth. (Coming Soon)",
+      desc: "Invest in farms and grow your wealth.",
     },
   ];
 
