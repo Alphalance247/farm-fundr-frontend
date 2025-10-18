@@ -52,41 +52,35 @@ const Login = () => {
     };
 
     // Get the redirect URL from query params
-    const redirectTo = searchParams.get("redirect") || "/farmer-dashboard";
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       const { name, value } = e.target;
       setForm((prev) => ({ ...prev, [name]: value }));
     };
 
+    const redirectParam = searchParams.get("redirect");
+    const redirectTo = redirectParam ? decodeURIComponent(redirectParam) : null;
+
     // Function to determine where to redirect based on user type and intended route
     const getRedirectPath = (
       userType: string,
       intendedRoute?: string | null
     ) => {
-      // If there's a specific intended route, check if user can access it
       if (intendedRoute) {
-        // If user is farmer and trying to access farmer routes, allow it
+        // If intendedRoute points to another role's dashboard, send them to their own dashboard instead
         if (
-          userType === "farmer" &&
-          intendedRoute.startsWith("/farmer-dashboard")
+          intendedRoute.startsWith("/farmer-dashboard") &&
+          userType !== "farmer"
         ) {
-          return intendedRoute;
-        }
-        // If user is investor and trying to access investor routes, allow it
-        if (
-          userType === "investor" &&
-          intendedRoute.startsWith("/investor-dashboard")
-        ) {
-          return intendedRoute;
-        }
-        // If user type doesn't match the intended route, redirect to their dashboard
-        if (userType === "farmer") {
-          return "/farmer-dashboard";
-        }
-        if (userType === "investor") {
           return "/investor-dashboard";
         }
+        if (
+          intendedRoute.startsWith("/investor-dashboard") &&
+          userType !== "investor"
+        ) {
+          return "/farmer-dashboard";
+        }
+        return intendedRoute;
       }
 
       // Default redirects based on user type
@@ -97,7 +91,6 @@ const Login = () => {
         return "/investor-dashboard";
       }
 
-      // Fallback
       return "/";
     };
 
@@ -128,11 +121,9 @@ const Login = () => {
         })
         .catch((err) => {
           setLoading(false);
-          // Extract the error message from the response
           let errorMessage =
             "An error occurred please try again or contact Admin";
           if (err instanceof AxiosError) {
-            // Check if err is an instance of AxiosError
             errorMessage = err.response?.data?.message || errorMessage;
           }
 

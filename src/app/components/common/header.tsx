@@ -10,12 +10,14 @@ import { FaCaretDown } from "react-icons/fa";
 import { useAuth } from "@/context/authContext";
 import { useRouter } from "next/navigation";
 import { MdOutlineKeyboardArrowRight } from "react-icons/md";
+import { usePathname } from "next/navigation";
 
 const Header = () => {
   const [activeMenu, setActiveMenu] = useState("Home");
   const [showMobileMenu, setShowMobileMenu] = useState(false);
   const [showDropDown, setShowDropDown] = useState<number | null>(null);
   const router = useRouter();
+  const pathname = usePathname();
 
   const navs = [
     { id: 1, name: "Home", scrollSection: "about", link: "/" },
@@ -146,7 +148,7 @@ const Header = () => {
               >
                 <li
                   className={`${
-                    activeMenu === items?.name
+                    pathname === items?.link
                       ? "text-[#51F4A6] border-b-[2px] border-[#51F4A6] pb-2"
                       : "text-[#282A03]"
                   }  cursor-pointer  hover:text-[#51F4A6] px-4 text-base font-poppinsRegular xl:text-xs xl:px-2`}
@@ -171,7 +173,7 @@ const Header = () => {
                   )}
 
                   {items?.subMenu && showDropDown === i && (
-                    <div className="absolute left-0 top-6 mt-2 w-48 bg-[#2D865B] shadow-lg p-4 rounded-xl">
+                    <div className="absolute left-0 top-4 mt-2 w-48 bg-[#2D865B] shadow-lg p-4 rounded-xl">
                       {items?.subMenu.map((subLink, subIndex) => (
                         <Link key={subIndex} href={subLink?.link}>
                           <span className="block px-4 border-[#E2E2E2] border-[0.3px] text-[#FCFCFC] rounded-xl cursor-pointer py-[15px] mb-3">

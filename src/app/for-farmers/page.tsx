@@ -6,6 +6,7 @@ import FarmerInvestorHero from "@/app/components/How It Works/common/farmerInves
 import LearnMore from "@/app/components/How It Works/common/learnMore";
 import WhyFarmPady from "@/app/components/How It Works/common/whyFarmPady";
 import Image from "next/image";
+import SlideInSection from "../components/common/slideInSection";
 
 const ForFarmers = () => {
   const list = [
@@ -67,47 +68,56 @@ const ForFarmers = () => {
 
   return (
     <LayOuts>
-      <section className="bg-[#EEFEF6] relative">
-        <div className="absolute z-[0] top-0 right-0 bottom-0 left-0">
-          <Image
-            src="/assets/Homepage-Redesign/background.png"
-            width={2000}
-            height={1505}
-            className="w-full h-full"
-            alt="positionlogo"
-          />
-        </div>
-        <div className="absolute z-[7] top-0 left-0 right-0 opacity-50">
-          <Image
-            src="/assets/Homepage-Redesign/s1.png"
-            width={1581}
-            height={967}
-            className="w-full h-full"
-            alt="positionlogo"
-          />
-        </div>
-        <Container>
-          <FarmerInvestorHero
-            text=""
-            subheadText=""
-            imgSrc=""
-            investFarmText=""
-            name=""
-            btnLink=""
-            btnText=""
-          />
-        </Container>
-      </section>
-      <WhyFarmPady text="" subheadText="" list={list} className="" />
-      <LearnMore
-        btnLink="/farmer-dashboard"
-        list={learnMorelist}
-        text=""
-        subheadText=""
-        btnText=""
-      />
+      <SlideInSection>
+        <section className="bg-[#EEFEF6] relative">
+          <div className="absolute z-[0] top-0 right-0 bottom-0 left-0">
+            <Image
+              src="/assets/Homepage-Redesign/background.png"
+              width={2000}
+              height={1505}
+              className="w-full h-full"
+              alt="positionlogo"
+            />
+          </div>
+          <div className="absolute z-[7] top-0 left-0 right-0 opacity-50">
+            <Image
+              src="/assets/Homepage-Redesign/s1.png"
+              width={1581}
+              height={967}
+              className="w-full h-full"
+              alt="positionlogo"
+            />
+          </div>
+          <Container>
+            <FarmerInvestorHero
+              text=""
+              subheadText=""
+              imgSrc=""
+              investFarmText=""
+              name=""
+              btnLink=""
+              btnText=""
+            />
+          </Container>
+        </section>
+      </SlideInSection>
+
+      <SlideInSection>
+        <WhyFarmPady text="" subheadText="" list={list} className="" />
+      </SlideInSection>
+      <SlideInSection>
+        <LearnMore
+          btnLink="/farmer-dashboard"
+          list={learnMorelist}
+          text=""
+          subheadText=""
+          btnText=""
+        />
+      </SlideInSection>
       <Faqs />
-      <Overview isInvestor={false} isAgency={false} />
+      <SlideInSection>
+        <Overview isInvestor={false} isAgency={false} />
+      </SlideInSection>
     </LayOuts>
   );
 };

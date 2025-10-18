@@ -20,6 +20,13 @@ import ErrorFetch from "../../common/errorFetch";
 import { getFarmPageListStore } from "@/stores/farmpage/farmPageList";
 import { useFarmName } from "@/stores/farmpage/useFarmName";
 import { WithSuspense } from "../../dashboard/common/suspense";
+import PlaceBid from "../placeBid";
+import axiosInstance from "@/lib/axios";
+import toast from "react-hot-toast";
+import { AxiosError } from "axios";
+import { useRouter } from "next/navigation";
+import { useAuth } from "@/context/authContext";
+import { usePathname } from "next/navigation";
 
 const StoreFrontDetails = ({ id }: { id: string }) => {
   const { activeTab } = useTab();
@@ -31,6 +38,12 @@ const StoreFrontDetails = ({ id }: { id: string }) => {
     { id: 3, name: "Performance Over Time" },
     { id: 4, name: "Risk Assurance" },
   ];
+  const pathname = usePathname();
+  const { isAuthenticated } = useAuth();
+  const router = useRouter();
+  const [placeBidOpen, setPlaceBidOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [placeBid, setPlaceBid] = useState("initial");
   const { data: projectDataList, fetchFarmPageProjectList } =
     getFarmPageProjectListStore();
   const { data, fetchFarmPageList } = getFarmPageListStore();
@@ -58,6 +71,44 @@ const StoreFrontDetails = ({ id }: { id: string }) => {
   const detailsData = projectDetailsData?.data?.project;
   const farmPageData = data?.farm_data;
 
+  const handleBidding = async () => {
+    setIsLoading(true);
+
+    if (!isAuthenticated) {
+      // capture full path + query so we can return the user exactly where they came from
+      const current =
+        typeof window !== "undefined"
+          ? window.location.pathname + window.location.search
+          : pathname || "/";
+      const redirectUrl = encodeURIComponent(current);
+      router.push(`/login?redirect=${redirectUrl}`);
+      toast.error("Please log in to place a bid.");
+      return;
+    }
+
+    try {
+      const res = await axiosInstance.post(`investment/bids/create/`, {
+        project: detailsData?.id,
+      });
+
+      if (res.status === 200 || res.status === 201) {
+        toast.success(res?.data?.statusmessage);
+        setPlaceBid("success");
+      }
+
+      setIsLoading(false);
+    } catch (err) {
+      let errorMessage = "An error occurred please try again or contact Admin";
+      if (err instanceof AxiosError) {
+        errorMessage = err.response?.data?.statusmessage || errorMessage;
+      }
+
+      toast.error(errorMessage);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   const StoreDetailsContent = () => {
     return (
       <div>
@@ -76,6 +127,16 @@ const StoreFrontDetails = ({ id }: { id: string }) => {
             farmpageLogo={farmPageData?.logo}
             farmWhatsAppNumber={`https://wa.me/${farmPageData?.farm_whatsapp_number}`}
           />
+
+          {placeBidOpen && (
+            <PlaceBid
+              onCloseBid={() => setPlaceBidOpen(false)}
+              onPaceBid={handleBidding}
+              placeBid={placeBid}
+              loading={isLoading}
+              farmlink={detailsData?.farm_page_link}
+            />
+          )}
 
           <section className="max-w-[1300px] mx-auto px-4 py-10 md:px-4 md:py-12">
             <div className="">
@@ -259,20 +320,21 @@ const StoreFrontDetails = ({ id }: { id: string }) => {
                       </div>
 
                       <div className="flex items-center gap-x-3">
-                        <a
+                        {/* <a
                           href={`https://wa.me/${farmPageData?.farm_whatsapp_number}`}
                           target="_blank"
                           className="w-full"
+                        > */}
+                        <Button
+                          variant="primary"
+                          size="small"
+                          className="w-full flex items-center justify-center gap-x-2"
+                          onClick={() => setPlaceBidOpen(true)}
                         >
-                          <Button
-                            variant="primary"
-                            size="small"
-                            className="w-full flex items-center justify-center gap-x-2"
-                          >
-                            <MdCardTravel color="white" size={24} />
-                            Bid Now
-                          </Button>
-                        </a>
+                          <MdCardTravel color="white" size={24} />
+                          Bid Now
+                        </Button>
+                        {/* </a> */}
                       </div>
                     </div>
                   </div>

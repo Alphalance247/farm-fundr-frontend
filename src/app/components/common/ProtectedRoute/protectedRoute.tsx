@@ -18,7 +18,11 @@ const ProtectedRoute = ({
   useEffect(() => {
     if (!isLoading) {
       if (!isAuthenticated) {
-        router.push("/login");
+        const current =
+          typeof window !== "undefined"
+            ? window.location.pathname + window.location.search
+            : "/";
+        window.location.href = `/login?redirect=${encodeURIComponent(current)}`;
         return;
       }
 

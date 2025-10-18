@@ -13,6 +13,7 @@ export interface projectsDetailsDataStore {
       name: string;
       risk_assurance: string;
       plots: string;
+      farm_page_link: string;
       description: string;
       project_location: string;
       images: string[];
