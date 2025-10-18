@@ -7,7 +7,6 @@ import FarmerInvestorHero from "@/app/components/How It Works/common/farmerInves
 import LearnMore from "@/app/components/How It Works/common/learnMore";
 import WhyFarmPady from "@/app/components/How It Works/common/whyFarmPady";
 import Image from "next/image";
-import SlideInSection from "../components/common/slideInSection";
 
 const ForFarmers = () => {
   const list = [

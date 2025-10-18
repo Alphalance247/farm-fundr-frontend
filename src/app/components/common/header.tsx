@@ -13,7 +13,6 @@ import { MdOutlineKeyboardArrowRight } from "react-icons/md";
 import { usePathname } from "next/navigation";
 
 const Header = () => {
-  const [activeMenu, setActiveMenu] = useState("Home");
   const [showMobileMenu, setShowMobileMenu] = useState(false);
   const [showDropDown, setShowDropDown] = useState<number | null>(null);
   const router = useRouter();
@@ -152,7 +151,6 @@ const Header = () => {
                       ? "text-[#51F4A6] border-b-[2px] border-[#51F4A6] pb-2"
                       : "text-[#282A03]"
                   }  cursor-pointer  hover:text-[#51F4A6] px-4 text-base font-poppinsRegular xl:text-xs xl:px-2`}
-                  onClick={() => setActiveMenu(items?.name)}
                   onMouseLeave={() => setShowDropDown(null)}
                 >
                   {items?.subMenu ? (

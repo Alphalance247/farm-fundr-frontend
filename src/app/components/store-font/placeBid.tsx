@@ -14,7 +14,7 @@ const PlaceBid = ({
   onCloseBid: () => void;
   onPaceBid: () => void;
   loading?: boolean;
-  placeBid?: String;
+  placeBid?: string;
   farmlink?: string;
 }) => {
   return (
