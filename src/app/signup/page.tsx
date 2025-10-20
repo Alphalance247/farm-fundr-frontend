@@ -5,7 +5,7 @@ import Button from "../components/common/Buttons";
 import { GoArrowRight } from "react-icons/go";
 import Input from "../components/common/input";
 import Link from "next/link";
-import { useEffect, useMemo, useState } from "react";
+import { use, useEffect, useMemo, useState } from "react";
 import { IoEye } from "react-icons/io5";
 import { FaRegEyeSlash } from "react-icons/fa";
 import { useCallback } from "react";
@@ -175,16 +175,17 @@ const SignUp = () => {
 
       <Container>
         <div className="grid grid-cols-2 gap-8 lg:grid-cols-1 relative z-10">
-          <div className="h-full w-full relative lg:hidden">
+          <div className="h-auto w-full relative lg:hidden">
             <Image
               src="/assets/UserOnboarding/signupimg.png"
               width={580}
               height={775}
               alt="signImage"
+              className="w-full h-auto object-contain"
             />
           </div>
 
-          <div className="bg-[#FCFCFC] px-10 py-5 rounded-[2.5rem] border border-[#CECECE] md:px-4">
+          <div className="bg-[#FCFCFC] px-10 py-10 rounded-[2.5rem] h-fit border border-[#CECECE] md:px-4">
             <h1 className="text-[#5F5F5F] font-aristoBold text-4xl text-center md:text-2xl">
               Let’s get started
             </h1>
@@ -218,35 +219,89 @@ const SignUp = () => {
             </div> */}
 
             <form action="" onSubmit={handleSubmit}>
-              <div className="grid grid-cols-2 gap-4 mb-4 md:grid-cols-1">
-                <div>
-                  <label className="text-sm text-[#5F5F5F] mb-2 font-poppinsSemiBold">
-                    Full Name
-                  </label>
-                  <Input
-                    type="text"
-                    name="fullname"
-                    value={form?.fullname || ""}
-                    onChange={handleChange}
-                    placeholder="Enter full name"
-                    variant="primary"
-                  />
-                </div>
+              {userType !== "agency" ? (
+                <div className="mb-4">
+                  <div className="grid grid-cols-2 gap-4 mb-4 md:grid-cols-1">
+                    <div>
+                      <label className="text-sm text-[#5F5F5F] mb-2 font-poppinsSemiBold">
+                        Organization Name
+                      </label>
+                      <Input
+                        type="text"
+                        name="fullname"
+                        value={form?.fullname || ""}
+                        onChange={handleChange}
+                        placeholder="Enter full name"
+                        variant="primary"
+                      />
+                    </div>
 
-                <div>
-                  <label className="text-sm text-[#5F5F5F] mb-2 font-poppinsSemiBold">
-                    Email
-                  </label>
-                  <Input
-                    type="email"
-                    name="email"
-                    value={form?.email || ""}
-                    onChange={handleChange}
-                    placeholder="Enter email address"
-                    variant="primary"
-                  />
+                    <div>
+                      <label className="text-sm text-[#5F5F5F] mb-2 font-poppinsSemiBold">
+                        Organization Type
+                      </label>
+
+                      <select
+                        name=""
+                        id=""
+                        value={"Non-Profit"}
+                        className="w-full px-4 py-[14px] rounded-lg border border-[#CECECE] mb-2 outline-[#51F4A6]"
+                      >
+                        <option value="">Select organization type</option>
+                        <option value="Private/NGO/Govt">
+                          Private/NGO/Govt
+                        </option>
+                        <option value="Non-Profit">Non-Profit</option>
+                        <option value="For-Profit">For-Profit</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div>
+                    <label className="text-sm text-[#5F5F5F] font-poppinsSemiBold">
+                      Organization Email Address
+                    </label>
+                    <Input
+                      type="email"
+                      name="email"
+                      value={form?.email || ""}
+                      onChange={handleChange}
+                      placeholder="Enter email address"
+                      variant="primary"
+                    />
+                  </div>
                 </div>
-              </div>
+              ) : (
+                <div className="grid grid-cols-2 gap-4 mb-4 md:grid-cols-1">
+                  <div>
+                    <label className="text-sm text-[#5F5F5F] mb-2 font-poppinsSemiBold">
+                      Full Name
+                    </label>
+                    <Input
+                      type="text"
+                      name="fullname"
+                      value={form?.fullname || ""}
+                      onChange={handleChange}
+                      placeholder="Enter full name"
+                      variant="primary"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="text-sm text-[#5F5F5F] mb-2 font-poppinsSemiBold">
+                      Email
+                    </label>
+                    <Input
+                      type="email"
+                      name="email"
+                      value={form?.email || ""}
+                      onChange={handleChange}
+                      placeholder="Enter email address"
+                      variant="primary"
+                    />
+                  </div>
+                </div>
+              )}
 
               <div className="mb-4 relative">
                 <div>
