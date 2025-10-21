@@ -44,9 +44,9 @@ const AgencySideBar: React.FC<mobileMenuProps> = ({
     },
     {
       text: "My Grants",
-      link: "/investor-dashboard/investment",
+      link: "/agency-dashboard/my-grants",
       icons: <TbReportAnalytics size={20} />,
-      notification: 0,
+      notification: 4,
       bgColor: "bg-[#2D865B]",
       textColor: "text-white",
     },
