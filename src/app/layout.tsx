@@ -8,7 +8,7 @@ import Script from "next/script";
 export const metadata: Metadata = {
   title: "FarmPady — Africa’s agriculture investment hub",
   description:
-    "Nubyira LTD is an online based consulting and training company that specialise in process and plant design",
+    "FarmPady - Africa’s agriculture investment hub. Support farm projects, connect with farmers, and unlock agribusiness opportunities.",
   keywords:
     "FarmPady, Agriculture investment Nigeria, Invest in farming Africa, Farm crowdfunding platform, Support farmers Nigeria, Agriculture marketplace Africa, Farm projects funding, Farm to investor connection, Sustainable agriculture investment, Farming opportunities Nigeria, AgriTech Nigeria, Agriculture startup Africa, Farm investment platform, Nigerian farmers funding, Agribusiness investment",
   icons: {
