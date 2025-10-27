@@ -231,3 +231,14 @@ export interface projectFormData {
   branchSize: string;
   plots: string;
 }
+
+export interface grantFormData {
+  grant_name: string;
+  grant_category: string;
+  fund_type: string;
+  funding_amount: string;
+  description: string;
+  eligibility: string;
+  application__deadline: string;
+  disburse_type: string;
+}

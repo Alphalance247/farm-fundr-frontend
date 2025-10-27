@@ -11,6 +11,8 @@ import { AxiosError } from "axios";
 import { useRouter } from "next/navigation";
 import AgencyLayout from "@/app/components/common/agency/agencyLayout";
 import BasicInformation from "@/app/components/agency/My-Grants/create-grant/BasicInformation";
+import GrantDetails from "@/app/components/agency/My-Grants/create-grant/grantDetails";
+import Overview from "@/app/components/agency/My-Grants/create-grant/overview";
 
 const CreateGrant = () => {
   const [formStep, setFormStep] = useState(1);
@@ -21,20 +23,14 @@ const CreateGrant = () => {
   const router = useRouter();
 
   const [form, setForm] = useState({
-    selectFarm: "",
-    selectBranch: "",
-    projectName: "",
-    projectType: "",
+    grant_name: "",
+    grant_category: "",
+    fund_type: "",
     description: "",
-    investmentStart: "",
-    investmentEnd: "",
-    paymentType: "",
-    howItWorks: "",
-    fundingDetails: "",
-    progressOvertime: "",
-    branchSize: "",
-    expectedReturn: "",
-    plots: "",
+    funding_amount: "",
+    eligibility: "",
+    application__deadline: "",
+    disburse_type: "",
   });
 
   const [uploadedImages, setUploadedImages] = useState<{
@@ -54,7 +50,7 @@ const CreateGrant = () => {
       (img) => img.file !== null
     ).length;
 
-    const decriptionLength24 = form?.howItWorks.trim().length > 100;
+    const decriptionLength24 = form?.eligibility.trim().length > 100;
 
     if (uploadedImageCount < 3) {
       toast.error(
@@ -72,18 +68,18 @@ const CreateGrant = () => {
 
         // Create FormData for file upload
         const formData = new FormData();
-        formData.append("name", form.projectName);
-        formData.append("project_type", form.projectType);
-        formData.append("description", form.description);
-        formData.append("start_date", form.investmentStart);
-        formData.append("end_date", form.investmentEnd);
-        formData.append("payment_structure", form.paymentType);
-        formData.append("how_it_works", form.howItWorks);
-        formData.append("budget", form.fundingDetails);
-        formData.append("progress_over_time", form.progressOvertime);
-        formData.append("plots", form?.plots);
-        formData.append("ROI", form.expectedReturn);
-        formData.append("published", "true");
+        formData.append("name", form?.fund_type);
+        // formData.append("project_type", form.projectType);
+        // formData.append("description", form.description);
+        // formData.append("start_date", form.investmentStart);
+        // formData.append("end_date", form.investmentEnd);
+        // formData.append("payment_structure", form.paymentType);
+        // formData.append("how_it_works", form.howItWorks);
+        // formData.append("budget", form.fundingDetails);
+        // formData.append("progress_over_time", form.progressOvertime);
+        // formData.append("plots", form?.plots);
+        // formData.append("ROI", form.expectedReturn);
+        // formData.append("published", "true");
 
         // Add images
         Object.entries(uploadedImages).forEach(([, imageData]) => {
@@ -111,22 +107,21 @@ const CreateGrant = () => {
 
           router?.push("/farmer-dashboard/my-farms");
 
-          setForm({
-            selectFarm: "",
-            selectBranch: "",
-            projectName: "",
-            projectType: "",
-            description: "",
-            investmentStart: "",
-            investmentEnd: "",
-            paymentType: "",
-            howItWorks: "",
-            fundingDetails: "",
-            progressOvertime: "",
-            branchSize: "",
-            expectedReturn: "",
-            plots: "",
-          });
+          // setForm({
+          //   grant_name: "",
+          //   grant_category:'',
+          //   projectType: "",
+          //   description: "",
+          //   investmentStart: "",
+          //   investmentEnd: "",
+          //   paymentType: "",
+          //   howItWorks: "",
+          //   fundingDetails: "",
+          //   progressOvertime: "",
+          //   branchSize: "",
+          //   expectedReturn: "",
+          //   plots: "",
+          // });
 
           setUploadedImages({
             image1: { file: null, preview: null },
@@ -246,7 +241,7 @@ const CreateGrant = () => {
             )}
 
             {formStep === 2 && (
-              <FundingDetails
+              <GrantDetails
                 form={form}
                 setForm={setForm}
                 setFormStep={setFormStep}
@@ -254,15 +249,14 @@ const CreateGrant = () => {
                 setCompletedSteps={setCompletedSteps}
               />
             )}
+
             {formStep === 3 && (
-              <OptionalInfo
+              <Overview
                 form={form}
                 setForm={setForm}
                 setFormStep={setFormStep}
                 formStep={formStep}
                 setCompletedSteps={setCompletedSteps}
-                setUploadedImages={setUploadedImages}
-                uploadedImages={uploadedImages}
               />
             )}
           </form>

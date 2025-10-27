@@ -1,11 +1,8 @@
 import Label from "@/app/components/common/label";
 import Input from "@/app/components/common/input";
-import { projectFormData } from "@/utils/form";
+import { grantFormData } from "@/utils/form";
 import Button from "@/app/components/common/Buttons";
 import { FaArrowRightLong } from "react-icons/fa6";
-import { getFarmListStore } from "@/stores/farms/getFarmList";
-import { getBranchListStore } from "@/stores/farms/getBranchList";
-import { useEffect } from "react";
 import toast from "react-hot-toast";
 
 const BasicInformation = ({
@@ -15,8 +12,8 @@ const BasicInformation = ({
   setCompletedSteps,
   formStep,
 }: {
-  form: projectFormData;
-  setForm: (form: projectFormData) => void;
+  form: grantFormData;
+  setForm: (form: grantFormData) => void;
   setFormStep: (formStep: number) => void;
   setCompletedSteps: (steps: number[] | ((prev: number[]) => number[])) => void;
   formStep: number;
@@ -26,18 +23,16 @@ const BasicInformation = ({
   const handleProceed = () => {
     const errors = [];
 
-    if (form?.selectFarm === "") {
-      errors.push("Select Farm is required");
+    if (form?.grant_name === "") {
+      errors.push("Grant Name is required");
     }
-    if (form?.selectBranch === "") {
+    if (form?.grant_category === "") {
       errors.push("Select Branch is required");
     }
-    if (form?.projectName === "") {
+    if (form?.fund_type === "") {
       errors.push("Project Name is required");
     }
-    if (form?.projectType === "") {
-      errors.push("Project Type is required");
-    }
+
     if (!decriptionLength24) {
       errors.push("Description must be at least 24 characters");
     }
@@ -60,29 +55,29 @@ const BasicInformation = ({
         <div>
           <Label className="">Grant Title</Label>
           <Input
-            name="projectName"
+            name="grant_name"
             className=""
             type="text"
-            value={form?.projectName}
+            value={form?.grant_name}
             placeholder="Grant name"
             variant="tertiary"
-            onChange={(e) => setForm({ ...form, projectName: e.target.value })}
+            onChange={(e) => setForm({ ...form, grant_name: e.target.value })}
           />
         </div>
 
         <div>
           <Label>Grant Category</Label>
           <select
-            id="selectFarm"
-            name="selectFarm"
-            value={form?.selectFarm || ""}
+            id="grant_category"
+            name="grant_category"
+            value={form?.grant_category || ""}
             onChange={(e) => {
-              setForm({ ...form, selectFarm: e.target.value });
+              setForm({ ...form, grant_category: e.target.value });
             }}
             className="w-full border bg-[#F6F6F6] focus:ring-[#51F4A6] focus:border-[#51F4A6] border-[#E0E0E0] rounded-md text-sm p-4 focus:outline-none focus:ring-1 text-[#7C7C7C] font-poppinsRegular"
           >
             <option value="">Select field type</option>
-            <option key="" value="">
+            <option key="" value="nill">
               nill
             </option>
           </select>
@@ -91,17 +86,17 @@ const BasicInformation = ({
         <div>
           <Label>Funding Type</Label>
           <select
-            id="selectBranch"
-            name="selectBranch"
-            value={form?.selectBranch || ""}
+            id="fund_type"
+            name="fund_type"
+            value={form?.fund_type || ""}
             onChange={(e) => {
-              setForm({ ...form, selectBranch: e.target.value });
+              setForm({ ...form, fund_type: e.target.value });
             }}
             className={`w-full border bg-[#F6F6F6] focus:ring-[#51F4A6] focus:border-[#51F4A6] border-[#E0E0E0] rounded-md text-sm p-4 focus:outline-none focus:ring-1 text-[#7C7C7C] font-poppinsRegular`}
           >
             <option value="">Select branch</option>
 
-            <option key="" value="">
+            <option key="" value="nill">
               nill
             </option>
           </select>

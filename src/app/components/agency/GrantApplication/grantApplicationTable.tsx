@@ -31,7 +31,7 @@ interface Employee {
   typeIcons: string;
 }
 
-export default function GrantTable() {
+export default function GrantApplicationTable() {
   // Search and filter state
   const [searchQuery, setSearchQuery] = useState("");
   const [sortBy, setSortBy] = useState<SortOption>("firstName");
@@ -135,7 +135,7 @@ export default function GrantTable() {
             ))}
           </div>
           <div className="overflow-x-auto  block md:hidden">
-            <table className="w-full min-w-[1300px] md:w-[800px]">
+            <table className="w-full min-w-[1100px] md:w-[800px]">
               <thead className="bg-[#FAFEFF]">
                 <tr>
                   <th className="py-3 px-4 w-[10px] text-left">
@@ -144,17 +144,17 @@ export default function GrantTable() {
                       className="rounded border-gray-300"
                     />
                   </th>
-                  <th className="py-3 px-4 text-sm text-[#0B222A] font-poppinsSemiBold w-[300px] text-left">
-                    Grant Title
+                  <th className="py-3 px-4 text-sm text-[#0B222A] font-poppinsSemiBold w-[200px] text-left">
+                    Farmer Name
                   </th>
                   <th className="py-3 px-4 text-sm  text-[#0B222A] font-poppinsSemiBold text-left w-[150px]">
-                    Application
-                  </th>
-                  <th className="py-3 px-4 text-sm  text-[#0B222A] font-poppinsSemiBold text-left w-[150px]">
-                    Deadline
+                    Grant Name
                   </th>
                   <th className="py-3 px-4 text-sm  text-[#0B222A] font-poppinsSemiBold text-left w-[150px]">
                     Status
+                  </th>
+                  <th className="py-3 px-4 text-sm  text-[#0B222A] font-poppinsSemiBold text-left w-[150px]">
+                    Date Applied
                   </th>
                   <th className="py-3 px-4 text-sm  text-[#0B222A] font-poppinsSemiBold text-left w-[100px]">
                     Action
@@ -177,15 +177,13 @@ export default function GrantTable() {
                             height={40}
                             className="rounded-full"
                           />
-                          Anchor Cooperative Support Grant
+                          Adamu Michael
                         </span>
                       </div>
                     </td>
-                    <td className="py-3 px-4 text-sm text-[#2F2F33]">2</td>
-                    <td className={`py-3 px-4 text-sm font-poppinsRegular`}>
-                      Undisclosed
+                    <td className="py-3 px-4 text-sm text-[#2F2F33]">
+                      Youth in Agri 2025
                     </td>
-
                     <td className="py-3 px-4 text-sm text-[#2F2F33] md:hidden">
                       <span
                         className={`py-2 px-5 text-white rounded-xl font-poppinsRegular tracking-[-2%] ${
@@ -194,36 +192,18 @@ export default function GrantTable() {
                             : "bg-[#00C853]"
                         }`}
                       >
-                        {emp?.status}
+                        Pending
                       </span>
+                    </td>
+                    <td className={`py-3 px-4 text-sm font-poppinsRegular`}>
+                      August 21, 2025
                     </td>
 
                     <td
                       className="py-3 px-4 relative"
                       onClick={() => handleDropdownToggle(emp?.id)}
                     >
-                      <p className="w-8 h-8 bg-white p-2 rounded-lg border-[#E4E7EC] border cursor-pointer">
-                        <PiDotsThreeVertical color="#001F3F" size={16} />
-                      </p>
-
-                      {/* Dropdown Menu */}
-                      {openDropdown === emp?.id && (
-                        <div className="absolute right-24 bottom-0 mt-2 w-28 bg-white rounded-lg shadow-lg border border-gray-200 z-50">
-                          <div className="py-1">
-                            <button
-                              onClick={() => handleEditFarm(emp.id)}
-                              className="w-full px-2 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center gap-2"
-                            >
-                              <FiEdit size={14} />
-                              Edit
-                            </button>
-                            <button className="w-full px-2 py-2 text-sm text-red-600 hover:bg-gray-100 flex items-center gap-2">
-                              <FiTrash2 size={14} />
-                              Delete
-                            </button>
-                          </div>
-                        </div>
-                      )}
+                      <Button className="!py-2">View Details</Button>
                     </td>
                   </tr>
                 ))}

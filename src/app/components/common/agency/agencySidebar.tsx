@@ -52,7 +52,7 @@ const AgencySideBar: React.FC<mobileMenuProps> = ({
     },
     {
       text: "Applications",
-      link: "/investor-dashboard/bids",
+      link: "/agency-dashboard/grant-applications",
       icons: <MdOutlinePeopleAlt size={20} />,
       notification: 0,
       bgColor: "bg-[#2D865B]",
