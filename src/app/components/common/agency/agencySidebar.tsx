@@ -60,12 +60,12 @@ const AgencySideBar: React.FC<mobileMenuProps> = ({
     },
     {
       text: "Disbursement",
-      link: "/investor-dashboard/marketplace",
+      link: "/agency-dashboard/grant-disbursement",
       icons: <MdOutlineMoney size={20} />,
     },
     {
       text: "Wallet",
-      link: "/investor-dashboard/wallet",
+      link: "/agency-dashboard/wallet",
       icons: <MdOutlineAccountBalanceWallet size={20} />,
     },
     {

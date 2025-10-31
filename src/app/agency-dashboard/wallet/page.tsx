@@ -8,6 +8,7 @@ import AgencyLayout from "@/app/components/common/agency/agencyLayout";
 import GrantApplicationTable from "@/app/components/agency/GrantApplication/grantApplicationTable";
 import WalletOverviewManagent from "@/app/components/agency/disbursement/wallet";
 import DisburseTable from "@/app/components/agency/disbursement/disburseTable";
+import RecentTransaction from "@/app/components/agency/wallet/recentTransaction";
 
 interface data {
   id: number;
@@ -16,7 +17,7 @@ interface data {
   totalFarms: number;
   color: string;
 }
-const GrantDisbursement = () => {
+const Wallet = () => {
   const { data: farmList, loading, error, fetchFarmList } = getFarmListStore();
 
   const data: data[] = [
@@ -56,42 +57,22 @@ const GrantDisbursement = () => {
         <div className="flex justify-between items-center">
           <div className="">
             <h2 className="text-xl font-poppinsSemiBold text-[#5F5F5F]">
-              Disbursement Management
+              Agency wallet
             </h2>
             <p className="text-sm font-poppinsRegular text-[#7C7C7C] mt-3">
-              Manage and release funds to approved farmer applications
+              manage your funds for grant disbursement
             </p>
           </div>
         </div>
 
-        <div className="grid grid-cols-2 gap-4 mt-10">
-          <WalletOverviewManagent />
-          <div className="bg-white rounded-lg px-6 py-4 md:px-3">
-            <div className="flex items-center gap-x-2 mb-3">
-              <Image
-                src="/assets/Agency/disburse/1.svg"
-                width={54}
-                height={50}
-                alt="farm"
-                className=""
-              />
-            </div>
-
-            <div className="flex flex-col items-start justify-between gap-y-2  border-b border-[#F2F2F3] pb-3 md:flex-col md:items-start">
-              <h3 className="text-sm font-poppinsRegular text-[#34474E] mb-2 md:hidden">
-                Funds Disbursed
-              </h3>
-              <p className="text-3xl font-poppinsSemiBold text-[#5F5F5F]">
-                ₦2,000,000
-              </p>
-            </div>
-          </div>
+        <div className="grid grid-cols-1 gap-4 mt-10">
+          <WalletOverviewManagent isAgency={true} />
         </div>
 
-        <DisburseTable />
+        <RecentTransaction />
       </main>
     </AgencyLayout>
   );
 };
 
-export default GrantDisbursement;
+export default Wallet;
