@@ -70,17 +70,17 @@ const AgencySideBar: React.FC<mobileMenuProps> = ({
     },
     {
       text: "Subscription",
-      link: "/farmer-dashboard/subscription",
+      link: "/agency-dashboard/subscription",
       icons: <MdOutlinePayment size={20} />,
     },
     {
       text: "Settings",
-      link: "/investor-dashboard/settings",
+      link: "/agency-dashboard/settings",
       icons: <CiSettings size={20} />,
     },
     {
       text: "Help Center",
-      link: "/investor-dashboard/help-center",
+      link: "/agency-dashboard/help-center",
       icons: <PiHeadsetLight size={20} />,
     },
   ];
