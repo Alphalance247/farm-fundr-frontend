@@ -64,7 +64,7 @@ const GrantDisbursement = () => {
           </div>
         </div>
 
-        <div className="grid grid-cols-2 gap-4 mt-10">
+        <div className="grid grid-cols-2 gap-4 mt-10 lg:grid-cols-1">
           <WalletOverviewManagent />
           <div className="bg-white rounded-lg px-6 py-4 md:px-3">
             <div className="flex items-center gap-x-2 mb-3">

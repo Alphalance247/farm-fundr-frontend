@@ -55,7 +55,7 @@ const Wallet = () => {
     <AgencyLayout>
       <main className="px-10 py-10 bg-gray-50 overflow-y-scroll h-full xl:px-4 xl:py-6">
         <div className="flex justify-between items-center">
-          <div className="">
+          <div className="md:w-[70%]">
             <h2 className="text-xl font-poppinsSemiBold text-[#5F5F5F]">
               Agency wallet
             </h2>
@@ -63,6 +63,16 @@ const Wallet = () => {
               manage your funds for grant disbursement
             </p>
           </div>
+
+          <button className="bg-[#282A03] hidden rounded-[40px] text-[#FCFCFC] p-4 font-poppinsSemiBol md:py-[6px] md:px-4 md:block">
+            <Image
+              src="/assets/my-farms/plus.svg"
+              width={24}
+              height={24}
+              alt="plus"
+              className="xl:w-[14px] xl:h-[14px]"
+            />
+          </button>
         </div>
 
         <div className="grid grid-cols-1 gap-4 mt-10">
