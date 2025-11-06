@@ -9,6 +9,8 @@ export interface ProjectCardProps {
   status: string;
   image?: string;
   detailsLink?: string;
+  withNaira?: boolean;
+  topContent?: string;
 }
 
 const ProjectCard: React.FC<ProjectCardProps> = ({
@@ -17,6 +19,8 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
   status,
   image = "/default-project.png",
   detailsLink = "#",
+  withNaira = true,
+  topContent,
 }) => {
   const getStatusBadge = () => {
     switch (status.toLowerCase()) {
@@ -59,9 +63,9 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
       {/* Body */}
       <div className="space-y-3 bg-[#F6F6F6] p-2 text-sm">
         <div className="flex justify-between">
-          <p className="text-[#5F5F5F]">Invested Amount</p>
+          <p className="text-[#5F5F5F]">{topContent || "Invested Amount"}</p>
           <p className="font-poppinsSemiBold  text-[#5F5F5F]">
-            ₦{investedAmount.toLocaleString()}
+            {withNaira && "₦"} {investedAmount.toLocaleString()}
           </p>
         </div>
         <div className="flex justify-between items-center">

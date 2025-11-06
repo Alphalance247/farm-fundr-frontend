@@ -27,13 +27,13 @@ const RecentApplication = () => {
       </div>
 
       <div>
-        <div className="p-4 bg-[#FCFCFC] rounded-lg flex  gap-6">
+        <div className="p-4 bg-[#FCFCFC] rounded-lg flex gap-6 lg:flex-col">
           <Image
             src="/assets/Agency/landing/user.png"
             width={127}
             height={127}
             alt="user__profile"
-            className=" object-contain"
+            className=" object-contain lg:mx-auto"
           />
 
           <div className="flex-1">

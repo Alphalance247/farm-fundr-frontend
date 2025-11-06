@@ -63,10 +63,10 @@ const GrantApplicationDetails = ({ detailsId }: { detailsId: string }) => {
         <GoBackBtn href="" />
 
         <div>
-          <div className="grid grid-cols-[60%auto] mt-8 gap-8">
+          <div className="grid grid-cols-[60%auto] mt-8 gap-8 lg:grid-cols-1">
             <div>
               <div className="flex justify-between p-4 bg-[#FCFCFC] rounded-lg shadow-lg">
-                <div className="flex gap-6 ">
+                <div className="flex gap-6 md:flex-col">
                   <Image
                     src="/assets/Agency/landing/user.png"
                     width={127}
@@ -157,7 +157,7 @@ const GrantApplicationDetails = ({ detailsId }: { detailsId: string }) => {
                     ))}
                   </div>
 
-                  <div className="border-t border-[#F6F6F6] pt-3 flex">
+                  <div className="border-t border-[#F6F6F6] pt-3 flex md:flex-col">
                     <p className="font-poppinsRegular text-sm text-[#5F5F5F] pb-2 flex-1">
                       Project Summary
                     </p>
@@ -193,7 +193,7 @@ const GrantApplicationDetails = ({ detailsId }: { detailsId: string }) => {
             </div>
             <div></div>
           </div>
-          <div className="p-4 bg-[#FCFCFC] rounded-lg shadow-lg mt-3 flex gap-x-2 ">
+          <div className="p-4 bg-[#FCFCFC] rounded-lg shadow-lg mt-3 flex gap-x-2 md:flex-col md:gap-4">
             <Button className="w-full flex items-center justify-center gap-x-4">
               Approve Request{" "}
               <span>

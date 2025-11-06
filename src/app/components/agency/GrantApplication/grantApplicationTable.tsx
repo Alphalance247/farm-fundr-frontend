@@ -12,6 +12,7 @@ import { FiEdit, FiTrash2 } from "react-icons/fi";
 import { useRouter } from "next/navigation";
 import FarmCardMobile from "../../common/dashboard/farmCardMobile";
 import TransactionFilterMobile from "../../dashboard/wallet/mobileTransactionSearch";
+import ProjectCard from "../../dashboard/wallet/projectCard";
 
 interface Employee {
   id: number;
@@ -119,18 +120,18 @@ export default function GrantApplicationTable() {
       ) : (
         <>
           <div className="space-y-4 hidden md:block">
-            {data?.map((emp) => (
-              <FarmCardMobile
-                key={emp.id}
-                cac_no={emp?.cac_reg_no}
-                farmName={emp?.name}
-                status={emp.status}
-                farmerLogo={emp?.logo || "/assets/my-farms/farmpic.svg"}
-                viewDetailsLink={"/farmer-dashboard/my-farms/" + emp?.id}
-                onClickDetails={() =>
-                  localStorage.setItem("selectedEditFarmId", emp?.id)
+            {data?.map((p, i) => (
+              <ProjectCard
+                topContent="Farmer name"
+                key={i}
+                projectName={p?.name}
+                investedAmount={p?.status}
+                status={p?.status}
+                withNaira={false}
+                image={p?.logo}
+                detailsLink={
+                  "/investor-dashboard/investment/" + p?.id.toString()
                 }
-                onEdit={() => handleEditFarm(emp.id)}
               />
             ))}
           </div>

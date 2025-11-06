@@ -43,16 +43,18 @@ const RecentGrants = () => {
 
       {data?.length === 0 ? (
         <div>
-          <p className="text-center py-8">No Investment list found</p>
+          <p className="text-center py-8">No Recent Grants found</p>
         </div>
       ) : (
         <div className="space-y-4 hidden md:block">
           {data?.map((p, i) => (
             <ProjectCard
+              topContent="Applications"
               key={i}
               projectName={p?.projectName}
-              investedAmount={p?.budget}
+              investedAmount={p?.application}
               status={p?.status}
+              withNaira={false}
               image={p?.img}
               detailsLink={"/investor-dashboard/investment/" + p?.id.toString()}
             />
@@ -86,7 +88,7 @@ const RecentGrants = () => {
             <tbody>
               <tr>
                 <td colSpan={6} className="text-center py-8">
-                  No Investment list found
+                  No Recent Grants found
                 </td>
               </tr>
             </tbody>

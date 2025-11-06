@@ -150,7 +150,7 @@ const FarmerDashboard = () => {
       <main className="px-10 py-8 bg-gray-50 overflow-auto xl:px-4 xl:py-6 lg:mb-4">
         <Heading overview="Overview" />
         <div className="grid grid-cols-[60%auto] gap-6 xl:gap-4 lg:grid-cols-1 lg:mt-6">
-          <div className="bg-[url('/assets/DashBoard/overview/avatarbg.png')] h-fit bg-cover bg-no-repeat bg-center items-center rounded-2xl flex gap-x-8 xl:gap-x-6 justify-between md:flex-col md:gap-y-3 md:items-start">
+          <div className="bg-[url('/assets/DashBoard/overview/avatarbg.png')] h-fit bg-cover bg-no-repeat bg-center items-center rounded-2xl flex gap-x-8 xl:gap-x-6 justify-between  md:flex-col-reverse md:gap-y-3 md:items-start md:p-2">
             <div className="pl-8 py-11 xl:py-6 xl:pl-4 md:pl-4 md:py-3 md:pr-4">
               {dat !== 100 ? (
                 <>
@@ -219,9 +219,9 @@ const FarmerDashboard = () => {
               )}
             </div>
 
-            <div className="pr-8 pt-8 md:pr-3 md:pt-3 align-bottom">
-              <div className="bg-[#EEFEF61A] p-4 rounded-full border border-[#E2E2E233]">
-                <div className="h-[175px] w-[175px] rounded-full bg-[#EEFEF6] text-[#2D865B] flex items-center justify-center text-[54px] tracking-[0.34px] font-medium">
+            <div className="pr-8 pt-8 md:pr-3 md:pl-6  md:pt-3 align-bottom">
+              <div className="bg-[#EEFEF61A] p-4 rounded-full border border-[#E2E2E233] md:p-2">
+                <div className="h-[175px] w-[175px] rounded-full bg-[#EEFEF6] text-[#2D865B] flex items-center justify-center text-[54px] md:w-12 md:h-12 md:text-sm tracking-[0.34px] font-medium">
                   {user?.fullname
                     .split(" ")
                     .slice(0, 2)
