@@ -4,40 +4,19 @@ import TransactionSearch, {
   type SortOption,
   type FilterOption,
 } from "../../dashboard/wallet/transactionSearch";
-import { PiDotsThreeVertical } from "react-icons/pi";
-import { getFarmListStore } from "@/stores/farms/getFarmList";
 import Link from "next/link";
 import Button from "../../common/Buttons";
-import { FiEdit, FiTrash2 } from "react-icons/fi";
-import { useRouter } from "next/navigation";
-import FarmCardMobile from "../../common/dashboard/farmCardMobile";
 import TransactionFilterMobile from "../../dashboard/wallet/mobileTransactionSearch";
-
-interface Employee {
-  id: number;
-  name: string;
-  transactionId: string;
-  description: string;
-  amount: string;
-  date: string;
-  status: string;
-  deductions: number;
-  miscAmount: number;
-  bg: string;
-  nameColor: string;
-  descriptionIconColor: string;
-  amountColor: string;
-  statusColor: string;
-  typeIcons: string;
-}
+import ProjectCard from "../../dashboard/wallet/projectCard";
+import WalletDetails from "./walletDetails";
 
 export default function RecentTransaction() {
   // Search and filter state
   const [searchQuery, setSearchQuery] = useState("");
   const [sortBy, setSortBy] = useState<SortOption>("firstName");
   const [filterBy, setFilterBy] = useState<FilterOption>("all");
+  const [showDetails, setShowDetails] = useState(false);
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
-  const router = useRouter();
 
   const data = [
     {
@@ -70,12 +49,6 @@ export default function RecentTransaction() {
     setOpenDropdown(openDropdown === farmId ? null : farmId);
   };
 
-  const handleEditFarm = (farmId: string) => {
-    // Store the farm ID in localStorage
-    localStorage.setItem("selectedEditFarmId", farmId);
-    router.push("/farmer-dashboard/my-farms/update-farm");
-  };
-
   // Close dropdown when clicking outside
   const handleClickOutside = () => {
     setOpenDropdown(null);
@@ -85,6 +58,14 @@ export default function RecentTransaction() {
     <section className="relative mt-10 border border-[#E2E2E2] bg-white px-4 pt-6 pb-4 rounded-xl">
       {openDropdown !== null && (
         <div className="fixed inset-0 z-40" onClick={handleClickOutside} />
+      )}
+
+      {showDetails && (
+        <WalletDetails
+          onCloseModal={() => {
+            setShowDetails(false);
+          }}
+        />
       )}
 
       <div>
@@ -122,18 +103,16 @@ export default function RecentTransaction() {
       ) : (
         <>
           <div className="space-y-4 hidden md:block">
-            {data?.map((emp) => (
-              <FarmCardMobile
-                key={emp.id}
-                cac_no={emp?.cac_reg_no}
-                farmName={emp?.name}
-                status={emp.status}
-                farmerLogo={emp?.logo || "/assets/my-farms/farmpic.svg"}
-                viewDetailsLink={"/farmer-dashboard/my-farms/" + emp?.id}
-                onClickDetails={() =>
-                  localStorage.setItem("selectedEditFarmId", emp?.id)
-                }
-                onEdit={() => handleEditFarm(emp.id)}
+            {data?.map((p, i) => (
+              <ProjectCard
+                topContent="Amount"
+                key={i}
+                projectName={"Funded"}
+                investedAmount={"N120,000"}
+                status={p?.status}
+                withNaira={false}
+                image={p?.logo}
+                onClickDetails={() => setShowDetails(true)}
               />
             ))}
           </div>

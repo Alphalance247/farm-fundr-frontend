@@ -6,7 +6,7 @@ const ModalOverlay = ({
   onClose: () => void;
 }) => {
   return (
-    <div className="fixed top-0 left-0 w-[100vw] h-[100vh] flex items-center justify-center z-50 m-auto">
+    <div className="fixed top-0 left-0 w-[100vw] h-[100vh] flex items-center justify-center z-50 m-auto md:px-4">
       <div
         className="absolute inset-0 bg-black   opacity-50 z-40"
         onClick={onClose}

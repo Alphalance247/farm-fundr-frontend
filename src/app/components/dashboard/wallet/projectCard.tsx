@@ -11,6 +11,8 @@ export interface ProjectCardProps {
   detailsLink?: string;
   withNaira?: boolean;
   topContent?: string;
+  onClickDetails?: () => void;
+  isClickDetails?: boolean;
 }
 
 const ProjectCard: React.FC<ProjectCardProps> = ({
@@ -21,6 +23,8 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
   detailsLink = "#",
   withNaira = true,
   topContent,
+  isClickDetails = false,
+  onClickDetails,
 }) => {
   const getStatusBadge = () => {
     switch (status.toLowerCase()) {
@@ -49,15 +53,27 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
           />
           <h3 className="text-[#5F5F5F] font-medium text-sm">{projectName}</h3>
         </div>
-        <Link
-          href={detailsLink}
-          className="text-[#2D865B] text-xs font-medium gap-1 flex items-center"
-        >
-          View Details{" "}
-          <span className="">
-            <IoIosArrowForward />
-          </span>
-        </Link>
+        {isClickDetails ? (
+          <Link
+            href={detailsLink}
+            className="text-[#2D865B] text-xs font-medium gap-1 flex items-center"
+          >
+            View Details{" "}
+            <span className="">
+              <IoIosArrowForward />
+            </span>
+          </Link>
+        ) : (
+          <button
+            className="text-[#2D865B] text-xs font-medium gap-1 flex items-center"
+            onClick={onClickDetails}
+          >
+            View Details{" "}
+            <span className="">
+              <IoIosArrowForward />
+            </span>
+          </button>
+        )}
       </div>
 
       {/* Body */}

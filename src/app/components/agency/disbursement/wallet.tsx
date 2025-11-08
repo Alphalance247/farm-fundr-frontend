@@ -6,12 +6,14 @@ import FundWallet from "../../dashboard/common/fundWallet";
 
 const WalletOverviewManagent = ({
   isAgency = false,
+  setShowFundWallet,
+  setShowWithdrawModal,
 }: {
   isAgency?: boolean;
+  setShowFundWallet: (showFundWallet: boolean) => void;
+  setShowWithdrawModal: (showWithdrawModal: boolean) => void;
 }) => {
   const [hideBalance, setHideBalance] = useState(false);
-  const [showWithdrawModal, setShowWithdrawModal] = useState(false);
-  const [showFundWallet, setShowFundWallet] = useState(false);
 
   return (
     <>
@@ -26,31 +28,32 @@ const WalletOverviewManagent = ({
                   width={45}
                   height={45}
                 />
-
-                <div
-                  className={` justify-center bg-[#EEFEF6] border-[0.75px] text-[#2D865B] rounded-[2.5rem] border-[#2D865B] hover:opacity-[0.8] hover:transition-all hover:duration-500 py-2 px-4 ${
-                    isAgency ? "md:flex hidden" : ""
-                  }`}
-                >
-                  <label className="flex items-center cursor-pointer">
-                    <span className="mr-2 text-[#34474E] text-xs">
-                      Hide Balance
-                    </span>
-                    <input
-                      type="checkbox"
-                      checked={hideBalance}
-                      onChange={() => setHideBalance(!hideBalance)}
-                      className="sr-only peer"
-                    />
-                    <div className="w-8 h-4 bg-[#D1D1DB] rounded-full peer-checked:bg-[#2D865B] relative transition-colors">
-                      <div
-                        className={`absolute top-0.5 left-0.5 h-3 w-3 bg-white rounded-full shadow transition-transform ${
-                          hideBalance ? "translate-x-4" : ""
-                        }`}
+                {isAgency && (
+                  <div
+                    className={` justify-center bg-[#EEFEF6] border-[0.75px] text-[#2D865B] rounded-[2.5rem] border-[#2D865B] hover:opacity-[0.8] hover:transition-all hover:duration-500 py-2 px-4 ${
+                      isAgency ? "md:flex hidden" : ""
+                    }`}
+                  >
+                    <label className="flex items-center cursor-pointer">
+                      <span className="mr-2 text-[#34474E] text-xs">
+                        Hide Balance
+                      </span>
+                      <input
+                        type="checkbox"
+                        checked={hideBalance}
+                        onChange={() => setHideBalance(!hideBalance)}
+                        className="sr-only peer"
                       />
-                    </div>
-                  </label>
-                </div>
+                      <div className="w-8 h-4 bg-[#D1D1DB] rounded-full peer-checked:bg-[#2D865B] relative transition-colors">
+                        <div
+                          className={`absolute top-0.5 left-0.5 h-3 w-3 bg-white rounded-full shadow transition-transform ${
+                            hideBalance ? "translate-x-4" : ""
+                          }`}
+                        />
+                      </div>
+                    </label>
+                  </div>
+                )}
 
                 {isAgency ? (
                   <div
@@ -131,13 +134,6 @@ const WalletOverviewManagent = ({
           </div>
         </div>
       </section>
-      <WithdrawFundModal
-        isOpen={showWithdrawModal}
-        onClose={() => setShowWithdrawModal(false)}
-      />
-      {showFundWallet && (
-        <FundWallet onCloseModal={() => setShowFundWallet(false)} />
-      )}
     </>
   );
 };
