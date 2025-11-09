@@ -45,7 +45,7 @@ const WalletOverview = () => {
         </div>
       </div>
       <div className="text-center w-full">
-        <Link href={"/investor-dashboard/wallet"}>
+        <Link href={"/agency-dashboard/wallet"}>
           <Button variant="secondary" className="!w-full">
             Fund Wallet
           </Button>

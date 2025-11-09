@@ -93,25 +93,25 @@ const FarmerDashboard = () => {
   const data: data[] = [
     {
       text: "Create Grant",
-      link: "/farmer-dashboard/my-farms/add-farm",
+      link: "/agency-dashboard/my-grants/create-grant",
       img: "/assets/DashBoard/overview/plus.svg",
       bgColor: "bg-[#ECF2FF]",
     },
     {
       text: "View All Grant",
-      link: "/farmer-dashboard/my-farms",
+      link: "/agency-dashboard/my-grants",
       img: "/assets/DashBoard/overview/copy.svg",
       bgColor: "bg-[#EEFEF6]",
     },
     {
       text: "Withdraw Funds",
-      link: "/farmer-dashboard/wallet",
+      link: "/agency-dashboard/wallet",
       img: "/assets/DashBoard/overview/bank.svg",
       bgColor: "bg-[#FFE6E6]",
     },
     {
       text: "Update Bank Details",
-      link: "/farmer-dashboard/settings",
+      link: "/agency-dashboard/settings",
       img: "/assets/DashBoard/overview/withdraw.svg",
       bgColor: "bg-[#FFFAE6]",
     },
@@ -169,7 +169,7 @@ const FarmerDashboard = () => {
                       ></div>
                     </div>
                     <p className="text-sm font-poppinsRegular text-[#FCFCFC] mb-4 md:text-[10px]">
-                      {kycData?.kyc_percentage}% Complete • Complete profile to
+                      {kycData?.kyc_percentage} % Complete • Complete profile to
                       stand out
                     </p>
                     <Link href={"/farmer-dashboard/settings"}>

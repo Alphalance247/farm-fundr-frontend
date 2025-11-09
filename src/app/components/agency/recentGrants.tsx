@@ -141,7 +141,7 @@ const RecentGrants = () => {
         </table>
       </div>
       <div className="mt-4 flex justify-center">
-        <Link href={"/investor-dashboard/investment"}>
+        <Link href={"/agency-dashboard/my-grants"}>
           <Button variant="secondary" size="medium">
             View All Grants
           </Button>
