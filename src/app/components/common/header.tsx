@@ -44,17 +44,17 @@ const Header = () => {
       ],
       icon: <FaCaretDown size={16} />,
     },
-    // {
-    //   id: 4,
-    //   name: "How It Works",
-    //   scrollSection: "serve",
-    //   link: "/how-it-works",
-    // },
+
     {
       id: 5,
       name: "MarketPlace",
       scrollSection: "technology",
       link: "/farm-marketplace",
+    },
+    {
+      id: 4,
+      name: "Resources",
+      link: "/resources",
     },
     {
       id: 6,
@@ -90,10 +90,16 @@ const Header = () => {
       ],
       icon: <FaCaretDown size={16} />,
     },
+
     {
       id: 5,
       name: "MarketPlace",
       link: "/farm-marketplace",
+    },
+    {
+      id: 4,
+      name: "Resources",
+      link: "/resources",
     },
     {
       id: 6,
@@ -127,7 +133,7 @@ const Header = () => {
 
   return (
     <header className="bg-[#EEFEF6] sticky z-[1000] top-0 h-[86px]">
-      <div className="transition-all duration-500 max-w-[1300px] mx-auto px-8 flex justify-between items-center py-3 md:px-4">
+      <div className="transition-all duration-500 max-w-[1300px] mx-auto px-4 flex justify-between items-center py-3 md:px-4">
         <Link href="/">
           <Image
             src="/assets/LandingPage/icons/fundrlogo.svg"
