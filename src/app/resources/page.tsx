@@ -56,7 +56,7 @@ const Resources = () => {
               most out of the platform.
             </p>
           </div>
-          <div className="bg-white border border-[#f0f0f0] p-6 rounded-lg mt-6 grid grid-cols-2 md:grid-cols-1 md:p-2 gap-6">
+          <div className="bg-white border border-[#f0f0f0] p-6 rounded-lg mt-6 grid grid-cols-2 md:grid-cols-1 md:p-2 gap-x-6 gap-y-10">
             {data?.map((video, i) => (
               <div className="" key={i}>
                 <iframe
@@ -69,7 +69,7 @@ const Resources = () => {
                   allowFullScreen
                 />
 
-                <div className="">
+                <div className=" text-2xl">
                   <p>{video?.subtext}</p>
                 </div>
               </div>
