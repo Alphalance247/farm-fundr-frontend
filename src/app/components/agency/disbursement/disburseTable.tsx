@@ -13,6 +13,7 @@ import { useRouter } from "next/navigation";
 import FarmCardMobile from "../../common/dashboard/farmCardMobile";
 import TransactionFilterMobile from "../../dashboard/wallet/mobileTransactionSearch";
 import ProjectCard from "../../dashboard/wallet/projectCard";
+import WalletDetails from "../wallet/walletDetails";
 
 interface Employee {
   id: number;
@@ -39,6 +40,7 @@ export default function DisburseTable() {
   const [filterBy, setFilterBy] = useState<FilterOption>("all");
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
   const router = useRouter();
+  const [showDetails, setShowDetails] = useState(false);
 
   const data = [
     {
@@ -86,6 +88,15 @@ export default function DisburseTable() {
     <section className="relative mt-10">
       {openDropdown !== null && (
         <div className="fixed inset-0 z-40" onClick={handleClickOutside} />
+      )}
+
+      {showDetails && (
+        <WalletDetails
+          showIndesktop={false}
+          onCloseModal={() => {
+            setShowDetails(false);
+          }}
+        />
       )}
 
       <div>
@@ -207,7 +218,14 @@ export default function DisburseTable() {
                       className="py-3 px-4 relative"
                       onClick={() => handleDropdownToggle(emp?.id)}
                     >
-                      <Button className="!py-2">View Details</Button>
+                      <Button
+                        className="!py-2"
+                        onClick={() => {
+                          setShowDetails(true);
+                        }}
+                      >
+                        View Details
+                      </Button>
                     </td>
                   </tr>
                 ))}

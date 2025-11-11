@@ -1,7 +1,13 @@
 import ModalOverlay from "../../common/modals/modalOverlay";
 import { FaRegTimesCircle } from "react-icons/fa";
 
-const WalletDetails = ({ onCloseModal }: { onCloseModal: () => void }) => {
+const WalletDetails = ({
+  onCloseModal,
+  showIndesktop = true,
+}: {
+  onCloseModal: () => void;
+  showIndesktop?: boolean;
+}) => {
   const data = [
     {
       head: "Transaction ID",
@@ -34,7 +40,11 @@ const WalletDetails = ({ onCloseModal }: { onCloseModal: () => void }) => {
         onCloseModal();
       }}
     >
-      <div className="bg-white w-full max-w-[600px] mx-auto rounded-[10px] shadow-lg z-50 px-4 hidden md:block">
+      <div
+        className={`bg-white w-full max-w-[600px] mx-auto rounded-[10px] shadow-lg z-50 px-4 ${
+          showIndesktop && "hidden"
+        }  md:block`}
+      >
         <div className="flex flex-col gap-y-4 px-4 py-6">
           <div className="flex justify-between mb-10">
             <h4 className="text-xl text-[#5F5F5F] font-aristoBold">
