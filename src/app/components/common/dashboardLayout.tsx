@@ -2,12 +2,21 @@
 import { useState } from "react";
 import Sidebar from "./dashboard/sideBar";
 import { Topbar } from "./dashboard/topBar";
+import PhoeNumberModal from "../dashboard/overview/phoneNumberModal";
 
 const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
   const [showMobileMenu, setShowMobileMenu] = useState(false);
+  const [showMobileModal, setShowMobileMoal] = useState(true);
 
   return (
     <div className="flex h-screen max-w-[1800px] mx-auto flex-col">
+      {showMobileModal && (
+        <PhoeNumberModal
+          onClose={() => {
+            setShowMobileMoal(false);
+          }}
+        />
+      )}
       <Topbar
         overview=""
         showMobileMenu={showMobileMenu}

@@ -2,11 +2,21 @@
 import { useState } from "react";
 import { Topbar } from "../dashboard/topBar";
 import InvestorSidebar from "./investorSidebar";
+import PhoeNumberModal from "../../dashboard/overview/phoneNumberModal";
 
 const InvestorLayout = ({ children }: { children: React.ReactNode }) => {
   const [showMobileMenu, setShowMobileMenu] = useState(false);
+  const [showMobileModal, setShowMobileMoal] = useState(true);
+
   return (
     <div className="flex h-screen max-w-[1800px] mx-auto flex-col">
+      {showMobileModal && (
+        <PhoeNumberModal
+          onClose={() => {
+            setShowMobileMoal(false);
+          }}
+        />
+      )}
       <Topbar
         setShowMobile={setShowMobileMenu}
         showMobileMenu={showMobileMenu}

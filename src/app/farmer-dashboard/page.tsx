@@ -39,8 +39,6 @@ const FarmerDashboard = () => {
   const { fetchFarmerBids, loading: isBidsLoading } = getFarmerBidsStore();
   const { fetchNotification } = getFarmerNotification();
 
-  // const isLoading = isDashboardLoading || isEarningsLoading || isBidsLoading;
-
   useEffect(() => {
     fetchFarmerEarnings();
     fetchFarmerBids();
