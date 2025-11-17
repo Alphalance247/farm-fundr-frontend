@@ -5,12 +5,21 @@ const Footer = () => {
     {
       id: "",
     },
+    {
+      id: "",
+    },
+    {
+      id: "",
+    },
+    {
+      id: "",
+    },
   ];
   return (
-    <footer className="bg-[url('/assets/Grant-page/bg.png')] bg-center bg-cover">
-      <div className="flex justify-between items-center max-w-[1400px] mx-auto px-10 relative z-20">
+    <footer className="bg-[url('/assets/Grant-page/bg.jpg')] bg-center bg-cover">
+      <div className="flex justify-between items-end max-w-[1400px] py-20 mx-auto px-10 relative z-20">
         <div>
-          <p className="text-2xl font-aristoBold text-white w-[50%]">
+          <p className="text-2xl font-aristoBold text-white w-[45%] mb-6">
             {" "}
             Send us a message on our social platform
           </p>
@@ -18,7 +27,7 @@ const Footer = () => {
           <div className="flex gap-x-3 items-center">
             {socialMedia?.map((el, i) => (
               <div
-                className="flex items-center gap-x-2 bg-[#EEFEF6] py-2 px-6"
+                className="flex items-center gap-x-2 bg-[#EEFEF6] py-2 px-6 rounded-lg"
                 key={i}
               >
                 <Image

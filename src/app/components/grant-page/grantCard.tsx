@@ -11,7 +11,7 @@ const GrantCard = () => {
           src="/assets/Grant-page/image.png"
           alt="grant logo"
         />
-        <p className=" font-poppinsSemiBold text-[#5F5F5F] ">
+        <p className=" font-poppinsSemiBold text-base text-[#5F5F5F]">
           Youth in agri 2025
         </p>
       </div>

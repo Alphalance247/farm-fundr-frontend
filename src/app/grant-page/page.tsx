@@ -1,3 +1,4 @@
+import Footer from "../components/grant-page/footer";
 import GrantCard from "../components/grant-page/grantCard";
 import Header from "../components/grant-page/header";
 
@@ -17,6 +18,8 @@ const GrantPage = () => {
         <GrantCard />
         <GrantCard />
       </div>
+
+      <Footer />
     </section>
   );
 };
