@@ -1,9 +1,5 @@
 "use client";
-import DashboardLayout from "../../components/common/dashboardLayout";
 import Image from "next/image";
-import FarmListTable from "@/app/components/dashboard/my-farms/farmsTable";
-import CreateNewFarmBtn from "@/app/components/dashboard/my-farms/createNewFarmBtn";
-import ProtectedRoute from "@/app/components/common/ProtectedRoute/protectedRoute";
 import { getFarmListStore } from "@/stores/farms/getFarmList";
 import Spinner from "@/app/components/common/modals/spinner";
 import Button from "@/app/components/common/Buttons";
@@ -11,6 +7,8 @@ import { MdAssignment } from "react-icons/md";
 import GrantTable from "@/app/components/agency/My-Grants/grantTable";
 import AgencyLayout from "@/app/components/common/agency/agencyLayout";
 import Link from "next/link";
+import { useEffect } from "react";
+import { getGrantList } from "@/stores/agency-dashbaord/grant-list";
 
 interface data {
   id: number;
@@ -21,6 +19,11 @@ interface data {
 }
 const MyGrants = () => {
   const { data: farmList, loading, error, fetchFarmList } = getFarmListStore();
+  const { fetchGrantList } = getGrantList();
+
+  useEffect(() => {
+    fetchGrantList();
+  }, [fetchGrantList]);
 
   const data: data[] = [
     {

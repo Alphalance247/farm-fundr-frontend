@@ -5,8 +5,15 @@ import GoBackBtn from "../../common/goBack";
 import FarmHeading from "../../dashboard/my-farms/common/farmHeading";
 import Button from "../../common/Buttons";
 import { FaArrowRightLong } from "react-icons/fa6";
+import { getGrantApplicationDetails } from "@/stores/agency-dashbaord/get-application-details";
+import { useEffect } from "react";
 
 const GrantApplicationDetails = ({ detailsId }: { detailsId: string }) => {
+  const { fetchGrantApplicationDetails } = getGrantApplicationDetails();
+
+  useEffect(() => {
+    fetchGrantApplicationDetails("3");
+  }, [fetchGrantApplicationDetails]);
   const farmDetailsConfirmation = [
     {
       name: "Farm Name",

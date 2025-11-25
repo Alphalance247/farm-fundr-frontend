@@ -6,6 +6,8 @@ import Button from "@/app/components/common/Buttons";
 import { MdAssignment } from "react-icons/md";
 import AgencyLayout from "@/app/components/common/agency/agencyLayout";
 import GrantApplicationTable from "@/app/components/agency/GrantApplication/grantApplicationTable";
+import { getGrantApplication } from "@/stores/agency-dashbaord/grant-application";
+import { useEffect } from "react";
 
 interface data {
   id: number;
@@ -16,6 +18,11 @@ interface data {
 }
 const GrantApplication = () => {
   const { data: farmList, loading, error, fetchFarmList } = getFarmListStore();
+  const { fetchApllicationList } = getGrantApplication();
+
+  useEffect(() => {
+    fetchApllicationList();
+  }, [fetchApllicationList]);
 
   const data: data[] = [
     {

@@ -2,12 +2,19 @@
 import Button from "@/app/components/common/Buttons";
 import FarmHeading from "@/app/components/dashboard/my-farms/common/farmHeading";
 import Image from "next/image";
-import { FaArrowLeftLong, FaArrowRightLong } from "react-icons/fa6";
+import { FaArrowLeftLong } from "react-icons/fa6";
 import GoBackBtn from "../../common/goBack";
 import AgencyLayout from "../../common/agency/agencyLayout";
 import { IoPencilSharp } from "react-icons/io5";
+import { getGrantDetails } from "@/stores/agency-dashbaord/grant-list-details";
+import { useEffect } from "react";
 
 const MyGrantDetails = ({ detailsId }: { detailsId: string }) => {
+  const { fetchGrantDetails } = getGrantDetails();
+
+  useEffect(() => {
+    fetchGrantDetails("3");
+  }, [fetchGrantDetails]);
   const farmDetailsConfirmation = [
     {
       name: "Grant Title",

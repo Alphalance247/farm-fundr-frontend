@@ -1,4 +1,3 @@
-import GrantApplicationDetails from "@/app/components/agency/GrantApplication/grantApplicationDetails";
 import MyGrantDetails from "@/app/components/agency/My-Grants/myGrantsDetails";
 import { JSX } from "react";
 
