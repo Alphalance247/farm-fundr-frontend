@@ -6,15 +6,10 @@ import { FaArrowLeftLong } from "react-icons/fa6";
 import GoBackBtn from "../../common/goBack";
 import AgencyLayout from "../../common/agency/agencyLayout";
 import { IoPencilSharp } from "react-icons/io5";
-import { getGrantDetails } from "@/stores/agency-dashbaord/grant-list-details";
-import { useEffect } from "react";
+import { useGrantDetails } from "@/context/queries/grants/getGrantDetails";
 
 const MyGrantDetails = ({ detailsId }: { detailsId: string }) => {
-  const { fetchGrantDetails } = getGrantDetails();
-
-  useEffect(() => {
-    fetchGrantDetails("3");
-  }, [fetchGrantDetails]);
+  const { data } = useGrantDetails({ id: "4" });
   const farmDetailsConfirmation = [
     {
       name: "Grant Title",

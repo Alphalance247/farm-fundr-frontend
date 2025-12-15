@@ -1,8 +1,8 @@
+import { useQuery } from "@tanstack/react-query";
 import { AxiosError } from "axios";
-import { create } from "zustand";
 import axiosInstance from "@/lib/axios";
 
-export interface grantDetailDataStore {
+interface grantDetailDataStore {
   data: {
     category: string;
     title: string;
@@ -39,27 +39,20 @@ export interface grantDetailDataStore {
   };
 }
 
-interface grantDetailsStore {
-  data: grantDetailDataStore | null;
-  loading: boolean;
-  error: string | null;
-  fetchGrantDetails: (id: string) => Promise<void>;
-}
+const fetchGrantDetails = async (id: string | number) => {
+  const res = await axiosInstance.get<grantDetailDataStore | null>(
+    `/agency/grants/${id}`
+  );
 
-export const getGrantDetails = create<grantDetailsStore>((set) => ({
-  data: null,
-  loading: false,
-  error: null,
+  return res.data;
+};
 
-  fetchGrantDetails: async (id: string) => {
-    set({ loading: true, error: null });
-    try {
-      const res = await axiosInstance.get(`/agency/grants/${id}`);
-      set({ data: res.data, loading: false });
-    } catch (err) {
-      if (err instanceof AxiosError) {
-        set({ error: err.message, loading: false });
-      }
-    }
-  },
-}));
+export const useGrantDetails = ({ id }: { id: string | number | null }) => {
+  return useQuery<grantDetailDataStore | null, AxiosError>({
+    queryKey: ["grant-details", id], // shared global key
+    queryFn: () => fetchGrantDetails(id!), // your Axios call
+    staleTime: 1000 * 60 * 5, // data fresh for 5 minutes
+    retry: 1, //
+    enabled: !!id, // only run when id exists
+  });
+};

@@ -4,6 +4,7 @@ import Notification from "./components/common/notifications";
 import { AuthProvider } from "@/context/authContext";
 import SessionExpired from "./components/common/sessionExpired";
 import Script from "next/script";
+import QueryProviders from "@/context/queryContext";
 
 export const metadata: Metadata = {
   title: "FarmPady — Africa’s agriculture investment hub",
@@ -27,7 +28,7 @@ export default function RootLayout({
         <AuthProvider>
           <Notification />
           <SessionExpired />
-          {children}
+          <QueryProviders>{children}</QueryProviders>
           <Script
             id="tawkto"
             strategy="afterInteractive"

@@ -1,14 +1,11 @@
 "use client";
 import Image from "next/image";
-import { getFarmListStore } from "@/stores/farms/getFarmList";
 import Spinner from "@/app/components/common/modals/spinner";
 import Button from "@/app/components/common/Buttons";
 import { MdAssignment } from "react-icons/md";
 import AgencyLayout from "@/app/components/common/agency/agencyLayout";
 import GrantApplicationTable from "@/app/components/agency/GrantApplication/grantApplicationTable";
-import { getGrantApplication } from "@/stores/agency-dashbaord/grant-application";
-import { useEffect } from "react";
-
+import { useGrantsApplicationList } from "@/context/queries/grant-application/getApplicationList";
 interface data {
   id: number;
   name: string;
@@ -17,12 +14,13 @@ interface data {
   color: string;
 }
 const GrantApplication = () => {
-  const { data: farmList, loading, error, fetchFarmList } = getFarmListStore();
-  const { fetchApllicationList } = getGrantApplication();
-
-  useEffect(() => {
-    fetchApllicationList();
-  }, [fetchApllicationList]);
+  const {
+    data: dat,
+    isError,
+    refetch,
+    isLoading,
+    error,
+  } = useGrantsApplicationList();
 
   const data: data[] = [
     {
@@ -68,13 +66,13 @@ const GrantApplication = () => {
             </p>
           </div>
         </div>
-        {loading ? (
+        {isLoading ? (
           <Spinner />
-        ) : error ? (
+        ) : isError ? (
           <div className="flex justify-center items-center h-screen">
             <div className="flex flex-col items-center">
-              <p className="text-red-500">Error fetching farm details</p>
-              <Button type="button" onClick={fetchFarmList} className="mt-4">
+              <p className="text-red-500">{error?.response?.status}</p>
+              <Button type="button" onClick={() => refetch()} className="mt-4">
                 Retry
               </Button>
             </div>

@@ -11,9 +11,9 @@ import { FiEdit, FiTrash2 } from "react-icons/fi";
 import { useRouter } from "next/navigation";
 import TransactionFilterMobile from "../../dashboard/wallet/mobileTransactionSearch";
 import ProjectCard from "../../dashboard/wallet/projectCard";
-import { getGrantList } from "@/stores/agency-dashbaord/grant-list";
 import Spinner from "../../common/modals/spinner";
 import ErrorFetch from "../../common/errorFetch";
+import { useGrantsList } from "@/context/queries/grants/getGrants";
 
 export default function GrantTable() {
   // Search and filter state
@@ -22,34 +22,7 @@ export default function GrantTable() {
   const [filterBy, setFilterBy] = useState<FilterOption>("all");
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
   const router = useRouter();
-  const { data, error, loading, fetchGrantList } = getGrantList();
-
-  // const data = [
-  //   {
-  //     id: "1",
-  //     name: "Anchor Cooperative Support Grant",
-  //     cac_reg_no: "123456789",
-  //     logo: "/assets/my-farms/farmpic.svg",
-  //     status: "active",
-  //     color: "#00C853",
-  //   },
-  //   {
-  //     id: "2",
-  //     name: "Anchor Cooperative Support Grant",
-  //     cac_reg_no: "123456789",
-  //     logo: "/assets/my-farms/farmpic.svg",
-  //     status: "active",
-  //     color: "#00C853",
-  //   },
-  //   {
-  //     id: "3",
-  //     name: "Anchor Cooperative Support Grant",
-  //     cac_reg_no: "123456789",
-  //     logo: "/assets/my-farms/farmpic.svg",
-  //     status: "active",
-  //     color: "#00C853",
-  //   },
-  // ];
+  const { data, isLoading: loading, isError, refetch, error } = useGrantsList();
 
   const handleDropdownToggle = (farmId: string) => {
     setOpenDropdown(openDropdown === farmId ? null : farmId);
@@ -91,12 +64,10 @@ export default function GrantTable() {
 
       {loading ? (
         <Spinner />
-      ) : error ? (
+      ) : isError ? (
         <ErrorFetch
-          message="Error Fetching Grant List"
-          onRefetch={() => {
-            fetchGrantList();
-          }}
+          onRefetch={() => refetch()}
+          message={` ${error?.response?.status}: ${error?.message}`}
         />
       ) : (
         <>
