@@ -117,7 +117,7 @@ const Card = ({
         </div>
       </div>
 
-      {withRating && (
+      {/* {withRating && (
         <div className="mt-3 flex items-center justify-between mb-6">
           <div>
             <p className="text-sm text-[#7C7C7C]">
@@ -143,7 +143,7 @@ const Card = ({
             </p>
           </div>
         </div>
-      )}
+      )} */}
 
       <div
         className={`flex items-center gap-3 lg:flex-col ${

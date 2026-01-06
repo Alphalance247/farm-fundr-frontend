@@ -6,12 +6,12 @@ import { usePathname } from "next/navigation";
 import {
   MdOutlineAccountBalanceWallet,
   MdOutlineMessage,
-  MdOutlinePayment,
+  // MdOutlinePayment,
 } from "react-icons/md";
 import { TbReportAnalytics } from "react-icons/tb";
 import { CiSettings } from "react-icons/ci";
 import { PiHeadsetLight } from "react-icons/pi";
-import Subsribe from "../../dashboard/subscribe";
+// import Subsribe from "../../dashboard/subscribe";
 import { useEffect, useRef } from "react";
 import { getFarmListStore } from "@/stores/farms/getFarmList";
 import { getFarmerBidWithInvestorStore } from "@/stores/farmer-dashboard/bids/farmerBids";
@@ -87,11 +87,11 @@ const Sidebar: React.FC<mobileMenuProps> = ({
       link: "/farmer-dashboard/wallet",
       icons: <MdOutlineAccountBalanceWallet size={20} />,
     },
-    {
-      text: "Subscription",
-      link: "/farmer-dashboard/subscription",
-      icons: <MdOutlinePayment size={20} />,
-    },
+    // {
+    //   text: "Subscription",
+    //   link: "/farmer-dashboard/subscription",
+    //   icons: <MdOutlinePayment size={20} />,
+    // },
     {
       text: "Settings",
       link: "/farmer-dashboard/settings",
@@ -204,7 +204,7 @@ const Sidebar: React.FC<mobileMenuProps> = ({
         </div>
       </div>
 
-      <Subsribe />
+      {/* <Subsribe /> */}
 
       {/* <div className="flex justify-between items-center py-4 pl-2 pr-2 pb-10 mt-3">
         <div className="flex items-center gap-x-3">

@@ -336,7 +336,7 @@ const AddFarm = () => {
               <div className="w-[30%] xl:w-[60%] lg:w-[50%] md:w-full">
                 <GoBackBtn href="/farmer-dashboard/my-farms" />
 
-                <div className="border lg:items-center border-[#FEF0B0] bg-[#FFFAE6] rounded-lg p-3 flex gap-x-5 items-start mt-6 ">
+                {/* <div className="border lg:items-center border-[#FEF0B0] bg-[#FFFAE6] rounded-lg p-3 flex gap-x-5 items-start mt-6 ">
                   <Image
                     src="/assets/my-farms/danger.svg"
                     width={46}
@@ -357,7 +357,7 @@ const AddFarm = () => {
                       must be uploaded for your farm to go active.
                     </p>
                   </div>
-                </div>
+                </div> */}
               </div>
             )}
 
