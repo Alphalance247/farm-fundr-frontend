@@ -13,7 +13,7 @@ const Subsribe = () => {
   }, [fetchUserSubscription]);
 
   return (
-    <div className="px-2">
+    <div className="px-2 pb-10">
       <div className="bg-[#EAFBFF] border border-[#E4E7EC] rounded-xl px-3 py-6">
         <p className="text-xl font-aristoBold text-[#5F5F5F] capitalize mb-3">
           Subscription status

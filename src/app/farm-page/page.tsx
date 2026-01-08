@@ -98,6 +98,8 @@ const StoreFront = () => {
           farmerName={farmPageData?.owner_name}
           cacRegNo={farmPageData?.cac_reg_no || "N/A"}
           verifiedText={farmPageData?.cac_reg_no ? "Verified" : "Unverified"}
+          farmpageLogo={farmPageData?.logo}
+          farmWhatsAppNumber={`https://wa.me/${farmPageData?.farm_whatsapp_number}`}
         />
 
         <section className="max-w-[1300px] mx-auto px-4 py-10 md:px-4 md:py-12">
@@ -161,7 +163,7 @@ const StoreFront = () => {
             <ErrorFetch
               message="Error Fetching branch List"
               onRefetch={() => {
-                fetchFarmPageProjectList("bandele-farm");
+                fetchFarmPageProjectList(farmName);
               }}
             />
           ) : (
@@ -181,7 +183,7 @@ const StoreFront = () => {
                       )}....`}
                       projectName={`${card?.name?.slice(0, 20)}...`}
                       projectROI={card?.ROI?.toString()}
-                      imageUrl={`https://padycvgcoops.name.ng/${card?.images[0]}`}
+                      imageUrl={`${card?.images[0]}`}
                       status={card?.status}
                       onViewProjects={() => {
                         /* handle click */

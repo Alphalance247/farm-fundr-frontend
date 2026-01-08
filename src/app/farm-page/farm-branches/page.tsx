@@ -16,7 +16,7 @@ import { WithSuspense } from "@/app/components/dashboard/common/suspense";
 const Farms = () => {
   const BranchDetailsContent = () => {
     const { activeTab } = useTab();
-    const farmerName = useFarmName();
+    const farmName = useFarmName();
     const { data: farmData, fetchFarmPageList } = getFarmPageListStore();
     const {
       data: farmBranch,
@@ -29,9 +29,11 @@ const Farms = () => {
     const data = farmBranch?.branches;
 
     useEffect(() => {
-      fetchFarmPageList(farmerName);
-      fetchFarmPageBranchList(farmerName);
-    }, [fetchFarmPageList, fetchFarmPageBranchList, farmerName]);
+      if (farmName) {
+        fetchFarmPageList(farmName);
+        fetchFarmPageBranchList(farmName);
+      }
+    }, [fetchFarmPageList, fetchFarmPageBranchList, farmName]);
     return (
       <>
         <StoreFrontHeading
@@ -45,6 +47,8 @@ const Farms = () => {
           farmerName={farmPageData?.owner_name}
           cacRegNo={farmPageData?.cac_reg_no || "N/A"}
           verifiedText={farmPageData?.cac_reg_no ? "Verified" : "Unverified"}
+          farmpageLogo={farmPageData?.logo}
+          farmWhatsAppNumber={`https://wa.me/${farmPageData?.farm_whatsapp_number}`}
         />
 
         <section className="max-w-[1300px] mx-auto px-4 py-10 md:px-4 md:py-12 mt-8">
@@ -55,7 +59,7 @@ const Farms = () => {
             <ErrorFetch
               message="Error Fetching branch List"
               onRefetch={() => {
-                fetchFarmPageBranchList("bandele-farm");
+                fetchFarmPageBranchList(farmName);
               }}
             />
           ) : (
@@ -79,7 +83,7 @@ const Farms = () => {
                       }`}
                       status={data?.status}
                       imageUrl={
-                        `https://padycvgcoops.name.ng/${data?.branch_images[0]?.image}` ||
+                        `${data?.branch_images[0]?.image}` ||
                         "/assets/my-farms/2.png"
                       }
                       onViewProjects={() => {

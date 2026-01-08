@@ -322,18 +322,18 @@ const AddFarm = () => {
             message="Uploading farm details, please wait this might take a while...."
           />
         )}
-
-        <main className="px-10 py-10 bg-gray-50 overflow-auto">
+{/* guide */}
+        <main className="px-10 md:px-4 py-10 bg-gray-50 overflow-auto">
           <div
-            className={`flex gap-x-6  ${
+            className={`flex flex-row md:flex-col gap-x-6  ${
               formStep !== 5 ? "" : "justify-center"
             }`}
           >
             {formStep !== 5 && (
-              <div className="w-[30%]">
+              <div className="w-[30%] xl:w-[60%] lg:w-[50%] md:w-full">
                 <GoBackBtn href="/farmer-dashboard/my-farms" />
 
-                <div className="border border-[#FEF0B0] bg-[#FFFAE6] rounded-lg p-3 flex gap-x-5 items-start mt-6 ">
+                <div className="border lg:items-center border-[#FEF0B0] bg-[#FFFAE6] rounded-lg p-3 flex gap-x-5 items-start mt-6 ">
                   <Image
                     src="/assets/my-farms/danger.svg"
                     width={46}
@@ -366,7 +366,7 @@ const AddFarm = () => {
                 alt="warning"
                 className="mx-auto"
               />
-              <h3 className="text-[#303030] font-aristoBold text-3xl mt-4">
+              <h3 className="text-[#303030] font-aristoBold text-3xl xl:text-2xl md:text-3xl mt-4">
                 {formStep === 1
                   ? " Set Up Your farm Details"
                   : formStep === 3
@@ -401,7 +401,7 @@ const AddFarm = () => {
             {/* form section */}
             <form
               action=""
-              className="w-[70%] mx-auto"
+              className="w-[70%] xl:w-full mx-auto"
               onSubmit={(e) => handleFinalSubmit(e)}
             >
               {formStep === 1 && (
@@ -419,8 +419,8 @@ const AddFarm = () => {
 
               {formStep === 2 && (
                 <div>
-                  <div className=" p-6 bg-white mt-6 rounded-lg flex flex-col gap-y-6">
-                    <div className="grid grid-cols-2 gap-x-4">
+                  <div className=" p-6 md:p-4 bg-white mt-6 rounded-lg flex flex-col gap-y-6">
+                    <div className="grid grid-cols-2 md:grid-cols-1 gap-x-4">
                       <div>
                         <Label className="">Farm Size</Label>
 
@@ -478,7 +478,7 @@ const AddFarm = () => {
                     </div>
                   </div>
 
-                  <div className="mt-8 flex items-center justify-between">
+                  <div className="mt-8 flex flex-row md:flex-col md:gap-4 items-center justify-between">
                     <Button
                       className="w-fit flex items-center justify-center gap-x-4"
                       onClick={handleStep2Back}
@@ -506,7 +506,7 @@ const AddFarm = () => {
               {/* third form */}
               {formStep === 3 && (
                 <div>
-                  <div className=" p-6 bg-white mt-6 rounded-lg flex flex-col gap-y-6">
+                  <div className=" p-6 md:p-4 bg-white mt-6 rounded-lg flex flex-col gap-y-6">
                     <div>
                       <Label> Ownership Type</Label>
                       <select
@@ -603,7 +603,7 @@ const AddFarm = () => {
                               </div>
                             </div>
                           ) : (
-                            <div className="bg-[#EEFEF6] border border-[#51F4A6] border-dashed flex flex-col gap-y-3 cursor-pointer items-center w-full py-6 rounded-xl">
+                            <div className="bg-[#EEFEF6] border border-[#51F4A6] border-dashed flex flex-col gap-y-3 cursor-pointer items-center w-full py-24 rounded-xl">
                               <span>
                                 <FiDownload size={24} color="#2D865B" />{" "}
                               </span>
@@ -620,7 +620,7 @@ const AddFarm = () => {
                     </div>
                   </div>
 
-                  <div className="mt-8 flex items-center justify-between">
+                  <div className="mt-8 flex-row md:flex-col md:gap-4  flex items-center justify-between">
                     <Button
                       className="w-fit flex items-center justify-center gap-x-4"
                       onClick={(e) => {
@@ -655,7 +655,7 @@ const AddFarm = () => {
 
               {formStep === 4 && (
                 <div>
-                  <div className="p-6 bg-white rounded-lg">
+                  <div className="p-6 md:p-4 bg-white rounded-lg">
                     <p className="mb-2">
                       Upload Farm Images
                       <span className=" font-poppinsRegular text-[#5F5F5F]">
@@ -687,7 +687,7 @@ const AddFarm = () => {
                                         height={158}
                                         src={uploadedImages.image1.preview}
                                         alt="Uploaded image1"
-                                        className="object-cover w-full"
+                                        className="object-cover rounded-xl w-full h-[458px]"
                                       />
                                     </div>
 
@@ -702,7 +702,7 @@ const AddFarm = () => {
                                   </div>
                                 </div>
                               ) : (
-                                <div className="bg-[#EEFEF6] border border-[#51F4A6] border-dashed flex flex-col gap-y-3 cursor-pointer items-center w-full py-6 rounded-xl">
+                                <div className="bg-[#EEFEF6] border border-[#51F4A6] border-dashed flex flex-col gap-y-3 cursor-pointer items-center w-full py-24  rounded-xl">
                                   <span>
                                     <FiDownload size={24} color="#2D865B" />
                                   </span>
@@ -719,7 +719,7 @@ const AddFarm = () => {
                         </div>
                       </div>
 
-                      <div className="grid grid-cols-3 gap-4">
+                      <div className="grid grid-cols-1 gap-4">
                         {Object.entries(uploadedImages)
                           .filter(([key]) => key !== "image1")
                           .map(([key, { preview }]) => (
@@ -746,7 +746,7 @@ const AddFarm = () => {
                                           height={95}
                                           src={preview}
                                           alt={`Uploaded ${key}`}
-                                          className="object-cover w-full"
+                                          className="object-cover w-full h-[458px]"
                                         />
                                         <div className="flex items-center justify-center absolute gap-x-1 bg-[#FFFFFFE5] px-2 py-1 cursor-pointer rounded-lg bottom-[4rem] right-[3rem]">
                                           <p className="text-xs font-poppinsRegular text-[#616161]">
@@ -782,7 +782,7 @@ const AddFarm = () => {
                     </div>
                   </div>
 
-                  <div className="mt-8 flex items-center justify-between">
+                  <div className="mt-8 flex-row md:flex-col md:gap-4 flex items-center justify-between">
                     <Button
                       className="w-fit flex items-center justify-center gap-x-4"
                       onClick={(e) => {
@@ -815,10 +815,10 @@ const AddFarm = () => {
 
               {/* Fifth form */}
               {formStep === 5 && (
-                <div className="p-6 bg-white rounded-lg">
+                <div className="p-6 md:p-4 bg-white rounded-lg">
                   <div className="flex flex-col gap-y-6">
                     <div>
-                      <div className="flex gap-x-2 items-center justify-center pb-4 border-b border-[#F6F6F6]">
+                      <div className="flex gap-x-2 md:justify-between items-center justify-center pb-4 border-b border-[#F6F6F6]">
                         {" "}
                         <FarmHeading text="Project Image" />
                         <EditBtn onButtonEdit={() => setFormStep(4)} />
@@ -872,7 +872,7 @@ const AddFarm = () => {
                     </div>
 
                     <div>
-                      <div className="flex gap-x-2 items-center justify-center pt-6 border-t border-[#F6F6F6] mb-4">
+                      <div className="flex gap-x-2 items-center  md:justify-between justify-center pt-6 border-t border-[#F6F6F6] mb-4">
                         {" "}
                         <FarmHeading text="Farm Information" />
                         <EditBtn onButtonEdit={() => setFormStep(1)} />
@@ -882,7 +882,7 @@ const AddFarm = () => {
                         {farmDetailsConfirmation.slice(0, 5).map((el, i) => (
                           <div
                             key={i}
-                            className="flex justify-between items-center py-3 border-t border-[#F6F6F6] font-poppinsRegular text-sm text-[#5F5F5F]"
+                            className="flex justify-between flex-row md:flex-col md:items-start items-center py-3 border-t border-[#F6F6F6] font-poppinsRegular text-sm text-[#5F5F5F]"
                           >
                             <p>{el?.name}</p>
                             <p className=" font-poppinsSemiBold">
@@ -895,15 +895,15 @@ const AddFarm = () => {
                             Description
                           </p>
 
-                          <p className="bg-[#FCFCFC] border p-5 border-[#F6F6F6] rounded-xl text-[#5F5F5F] font-poppinsSemiBold">
-                            We specialize in apple
+                          <p className="bg-[#FCFCFC] border p-5 border-[#F6F6F6] rounded-xl text-[#5F5F5F] font-poppinsSemiBold text-wrap w-fit break-all">
+                            {form?.fieldDescription}
                           </p>
                         </div>
                       </div>
                     </div>
 
                     <div>
-                      <div className="flex gap-x-2 items-center justify-center pt-6 border-t border-[#F6F6F6] mb-4">
+                      <div className="flex gap-x-2  md:justify-between items-center justify-center pt-6 border-t border-[#F6F6F6] mb-4">
                         {" "}
                         <FarmHeading text="Farm Ownership Details" />
                         <EditBtn onButtonEdit={() => setFormStep(3)} />
@@ -925,7 +925,7 @@ const AddFarm = () => {
                     </div>
 
                     <div>
-                      <div className="flex gap-x-2 items-center justify-center pt-6 border-t border-[#F6F6F6] mb-4">
+                      <div className="flex gap-x-2  md:justify-between items-center justify-center pt-6 border-t border-[#F6F6F6] mb-4">
                         {" "}
                         <FarmHeading text="Document Details" />
                         <EditBtn onButtonEdit={() => setFormStep(3)} />

@@ -10,7 +10,6 @@ import { getProjectDetails } from "@/stores/farms/getProjectDetails";
 import Spinner from "@/app/components/common/modals/spinner";
 import { IoMdArrowBack } from "react-icons/io";
 import Link from "next/link";
-import Image from "next/image";
 import { useRouter } from "next/navigation";
 
 const ProjectDetails = ({
@@ -50,32 +49,39 @@ const ProjectDetails = ({
     },
   ];
 
-  const branchSetup = [
-    {
-      name: "Branch Size",
-      details: projectData?.plots || "N/A",
-    },
-    {
-      name: "Opening Hour",
-      details: "Lagos branch",
-    },
-    {
-      name: "Closing Hour",
-      details: "1, bodija, Ibadan, Nigeria.",
-    },
-    {
-      name: "Working Days",
-      details: "1, bodija, Ibadan, Nigeria.",
-    },
-  ];
+  const handleEditProject = () => {
+    localStorage.setItem("slectedEditProjectId", projectData?.id || "");
+    router?.push("/farmer-dashboard/my-farms/update-project");
+  };
+
+  // const branchSetup = [
+  //   {
+  //     name: "Branch Size",
+  //     details: projectData?.plots || "N/A",
+  //   },
+  //   {
+  //     name: "Opening Hour",
+  //     details: "Lagos branch",
+  //   },
+  //   {
+  //     name: "Closing Hour",
+  //     details: "1, bodija, Ibadan, Nigeria.",
+  //   },
+  //   {
+  //     name: "Working Days",
+  //     details: "1, bodija, Ibadan, Nigeria.",
+  //   },
+  // ];
 
   return (
     <DashboardLayout>
-      <main className="px-10 py-10 bg-gray-50 overflow-auto">
+      <main className="px-10 py-10 bg-gray-50 overflow-auto xl:px-4 xl:py-6">
         <FarmHeadingOverview
           farmName={projectData?.name || "N/A"}
           goBackLink={`/farmer-dashboard/my-farms/${farmDetailsId}/farm-branches/${branchDetailsId}`}
           isProjectDetails={true}
+          isBranch={false}
+          isProject={false}
         />
         {loading ? (
           <Spinner />
@@ -94,7 +100,7 @@ const ProjectDetails = ({
           </div>
         ) : (
           <>
-            <div className="grid grid-cols-2 gap-x-6 gap-y-6 mt-10">
+            <div className="grid grid-cols-2 gap-x-6 gap-y-6 mt-10 lg:grid-cols-1">
               <div className="flex flex-col gap-y-10">
                 <div className="bg-white shadow-md rounded-[12px] p-6">
                   <div className="flex gap-x-2 items-center justify-center pb-4 border-b border-[#F6F6F6]">
@@ -105,23 +111,21 @@ const ProjectDetails = ({
                         router.push(
                           "/farmer-dashboard/my-farms/update-project"
                         );
+                        handleEditProject();
                       }}
                     />
                   </div>
 
                   <div className="pt-6">
-                    <div className="grid grid-cols-3 gap-3">
+                    <div className="grid grid-cols-3 gap-3 xl:grid-cols-2 lg:grid-cols-1">
                       {projectData?.images?.map((images, i) => (
-                        <Image
+                        <img
                           width={i === 0 ? 556 : 177}
                           height={i === 0 ? 158 : 95}
-                          src={
-                            `https://padycvgcoops.name.ng${images}` ||
-                            "/assets/my-farms/no-img.avif"
-                          }
+                          src={`${images}` || "/assets/my-farms/no-img.avif"}
                           alt={`Uploaded images`}
                           className={`object-cover w-full  rounded-[12px] border-dashed border border-[#51F4A6] ${
-                            i === 0 ? "col-span-3 h-[158px]" : "h-[95px]"
+                            i === 0 ? "col-span-3 h-[158px] md:col-span-1" : "h-[95px]"
                           }`}
                           key={i}
                         />
@@ -133,14 +137,15 @@ const ProjectDetails = ({
                 <div className="bg-white shadow-md rounded-[12px] p-6">
                   <div className="flex gap-x-2 items-center justify-center pt-6 border-t border-[#F6F6F6] mb-4">
                     {" "}
-                    <FarmHeading text="Branch Information" />
-                    <EditBtn
+                    <FarmHeading text="Project Branch Information" />
+                    {/* <EditBtn
                       onButtonEdit={() => {
                         router.push(
                           "/farmer-dashboard/my-farms/update-project"
                         );
+                        handleEditProject();
                       }}
-                    />
+                    /> */}
                   </div>
 
                   <div>
@@ -167,7 +172,7 @@ const ProjectDetails = ({
               </div>
               {/* Branch setup and optional info */}
               <div className="flex flex-col gap-y-6">
-                <div className="bg-white shadow-md rounded-[12px] p-6 h-fit">
+                {/* <div className="bg-white shadow-md rounded-[12px] p-6 h-fit">
                   <div className="flex gap-x-2 items-center justify-center pt-6 border-t border-[#F6F6F6] mb-4">
                     {" "}
                     <FarmHeading text="Branch Set Up" />
@@ -191,7 +196,7 @@ const ProjectDetails = ({
                       </div>
                     ))}
                   </div>
-                </div>
+                </div> */}
 
                 <div className="bg-white shadow-md rounded-[12px] p-6 h-fit">
                   <div className="border-t border-[#F6F6F6] pt-3 pb-3">
@@ -229,9 +234,12 @@ const ProjectDetails = ({
                   <IoMdArrowBack size={16} color="#2D865B" /> Go back
                 </Button>
               </Link>
-              <Link
-                href={`/farmer-dashboard/my-farms/${farmDetailsId}/farm-branches/${branchDetailsId}`}
+              <div
                 className="w-full"
+                onClick={() => {
+                  handleEditProject();
+                  router.push("/farmer-dashboard/my-farms/update-project");
+                }}
               >
                 <Button
                   variant="secondary"
@@ -239,7 +247,7 @@ const ProjectDetails = ({
                 >
                   <HiPencil size={16} color="#2D865B" /> Edit Project Details
                 </Button>
-              </Link>
+              </div>
             </div>
           </>
         )}

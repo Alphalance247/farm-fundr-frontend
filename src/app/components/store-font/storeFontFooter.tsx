@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 
 const StoreFontFooter = () => {
   return (
@@ -9,38 +10,57 @@ const StoreFontFooter = () => {
             Send us a message on our social platform
           </h4>
           <div className="flex justify-center gap-x-20 md:grid md:grid-cols-2 md:gap-y-6 justify-items-center md:justify-items-start md:mb-6">
-            <div className="flex items-center gap-x-[10px]">
-              <Image
-                src="/assets/ContactUs/instgram.svg"
-                width={40}
-                height={40}
-                alt=""
-              />
+            <Link
+              href={
+                "https://www.instagram.com/farmpady?igsh=MWxzMWs0ZDh3cnJldQ=="
+              }
+              target="_blank"
+            >
+              <div className="flex items-center gap-x-[10px]">
+                <Image
+                  src="/assets/ContactUs/instgram.svg"
+                  width={40}
+                  height={40}
+                  alt=""
+                />
 
-              <p className="text-lg text-white font-poppinsRegular">
-                Instagram
-              </p>
-            </div>
+                <p className="text-lg text-white font-poppinsRegular">
+                  Instagram
+                </p>
+              </div>
+            </Link>
 
-            <div className="flex items-center gap-x-[10px]">
-              <Image
-                src="/assets/ContactUs/linkdIn.svg"
-                width={40}
-                height={40}
-                alt="linkedIn"
-              />
-              <p className="text-lg text-white font-poppinsRegular">Linkedin</p>
-            </div>
+            <Link
+              href={"https://www.linkedin.com/company/farmpady/"}
+              target="_blank"
+            >
+              <div className="flex items-center gap-x-[10px]">
+                <Image
+                  src="/assets/ContactUs/linkdIn.svg"
+                  width={40}
+                  height={40}
+                  alt="linkedIn"
+                />
+                <p className="text-lg text-white font-poppinsRegular">
+                  Linkedin
+                </p>
+              </div>
+            </Link>
 
-            <div className="flex items-center gap-x-[10px] md:items-start">
-              <Image
-                src="/assets/ContactUs/x.svg"
-                width={40}
-                height={40}
-                alt="X"
-              />
-              <p className="text-lg text-white font-poppinsRegular">X</p>
-            </div>
+            <Link
+              href={"https://x.com/farmpady?t=EaSInmdoSp7MMoKvnacbUg&s=09"}
+              target="_blank"
+            >
+              <div className="flex items-center gap-x-[10px] md:items-start">
+                <Image
+                  src="/assets/ContactUs/x.svg"
+                  width={40}
+                  height={40}
+                  alt="X"
+                />
+                <p className="text-lg text-white font-poppinsRegular">X</p>
+              </div>
+            </Link>
           </div>
         </div>
 
@@ -49,7 +69,7 @@ const StoreFontFooter = () => {
             Powered By
           </p>
           <Image
-            src="/assets/my-farms/newlogo.svg"
+            src="/assets/LandingPage/icons/fundrlogo.svg"
             width={256}
             height={61}
             alt="logo"

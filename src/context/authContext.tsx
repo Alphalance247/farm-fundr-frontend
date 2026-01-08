@@ -10,6 +10,7 @@ import {
 
 type User = {
   fullname: string;
+  profileImage: string;
   user_type: string;
 };
 
@@ -32,8 +33,9 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   useEffect(() => {
     const fullname = localStorage.getItem("fullname");
     const user_type = localStorage.getItem("user_type");
+    const profileImage = localStorage.getItem("profileImage") || "";
     if (fullname && user_type) {
-      setUser({ fullname, user_type });
+      setUser({ fullname, user_type, profileImage: profileImage as string });
     }
     setIsLoading(false);
   }, []);
@@ -42,7 +44,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     // Store in localStorage consistently
     localStorage.setItem("fullname", userData?.fullname);
     localStorage.setItem("user_type", userData?.user_type);
-
+    localStorage.setItem("profileImage", userData?.profileImage);
     // Update state
     setUser(userData);
   };

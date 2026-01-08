@@ -1,9 +1,11 @@
+"use client";
 import Image from "next/image";
 import HeadingTextWithSubHead from "./headingTextWithSubHead";
 import Container from "./container";
 import Button from "./Buttons";
 import { GoArrowRight } from "react-icons/go";
 import SlideInSection from "./slideInSection";
+import { useAuth } from "@/context/authContext";
 
 interface aboutUsProp {
   withAboutUsHeading?: boolean;
@@ -26,6 +28,7 @@ const AboutUsCommon: React.FC<aboutUsProp> = ({
   imgUrl,
   alignment,
 }) => {
+  const { isAuthenticated } = useAuth();
   return (
     <SlideInSection>
       <section className="bg-[#fcfcfc] relative">
@@ -71,16 +74,20 @@ const AboutUsCommon: React.FC<aboutUsProp> = ({
                 }
                 withImage={false}
               />
-              {btnAvailable && (
-                <Button
-                  size="medium"
-                  className="flex items-center gap-x-4 justify-center mt-10 lg:mt-4 md:mt-8"
-                >
-                  <span>{btnText || "Learn More"}</span>
-                  <span>
-                    <GoArrowRight size={24} className="text-white" />
-                  </span>
-                </Button>
+              {!isAuthenticated && (
+                <>
+                  {btnAvailable && (
+                    <Button
+                      size="medium"
+                      className="flex items-center gap-x-4 justify-center mt-10 lg:mt-4 md:mt-8"
+                    >
+                      <span>{btnText || "Learn More"}</span>
+                      <span>
+                        <GoArrowRight size={24} className="text-white" />
+                      </span>
+                    </Button>
+                  )}
+                </>
               )}
             </div>
 

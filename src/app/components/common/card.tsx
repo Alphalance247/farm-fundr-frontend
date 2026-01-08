@@ -39,12 +39,12 @@ const Card = ({
   return (
     <div className="border border-[#E2E2E2] shadow-sm bg-white py-5 px-6 rounded-[20px]">
       <div className="mb-6 relative">
-        <Image
+        <img
           src={projectImage || `/assets/LandingPage/card/1.png`}
           width={336}
           height={185}
           alt="land"
-          className="w-[308px] h-[169px] rounded-md"
+          className="w-[full] h-[169px] rounded-md lg:w-full"
         />
         <p className="border-[#B0EECA] border px-4 py-1 absolute bottom-[-1rem] right-[1rem] flex items-center bg-white text-[#00C853] rounded-lg">
           <span className="mr-1">
@@ -145,20 +145,36 @@ const Card = ({
         </div>
       )}
 
-      <div className={`flex items-center gap-x-3  ${withRating ? "" : "pt-6"}`}>
-        <Button
-          variant="tertiary"
-          size="small"
-          className="w-fit"
-          onClick={onUpdateClick}
-        >
-          {btnText1 || " Bid Now"}
-        </Button>
-        <Link href={btnTextLink2 || "/"}>
-          <Button className="w-fit" variant="secondary" size="small">
-            {btnText2 || "View Details"}
+      <div
+        className={`flex items-center gap-3 lg:flex-col ${
+          withRating ? "" : "pt-6"
+        } ${btnText1 && btnText2 ? "justify-start" : "w-full"}`}
+      >
+        {btnText1 && (
+          <Button
+            variant="tertiary"
+            size="small"
+            className={`${btnText2 ? "w-fit lg:w-full" : "w-full"} `}
+            onClick={onUpdateClick}
+          >
+            {btnText1}
           </Button>
-        </Link>
+        )}
+
+        {btnText2 && (
+          <Link
+            href={btnTextLink2 || "/"}
+            className={btnText1 ? "lg:w-full" : "w-full"}
+          >
+            <Button
+              className={btnText1 ? "w-fit lg:w-full" : "w-full"}
+              variant="secondary"
+              size="small"
+            >
+              {btnText2}
+            </Button>
+          </Link>
+        )}
       </div>
     </div>
   );

@@ -48,17 +48,19 @@ const GetInTouch = () => {
                 </p>
               </div>
 
-              <div className="flex gap-x-3 mb-5 items-center">
-                <Image
-                  width={40}
-                  height={40}
-                  src="/assets/ContactUs/2.svg"
-                  alt="number-contact-svg"
-                />
-                <p className="text-lg font-poppinsRegular text-white">
-                  090123456789
-                </p>
-              </div>
+              <a href="tel:+2349022291012">
+                <div className="flex gap-x-3 mb-5 items-center">
+                  <Image
+                    width={40}
+                    height={40}
+                    src="/assets/ContactUs/2.svg"
+                    alt="number-contact-svg"
+                  />
+                  <p className="text-lg font-poppinsRegular text-white">
+                    09022291012
+                  </p>
+                </div>
+              </a>
             </div>
           </div>
 
@@ -79,35 +81,58 @@ const GetInTouch = () => {
 
           <div className="flex justify-center gap-x-20 md:grid md:grid-cols-2 md:gap-y-6 justify-items-center">
             <div className="flex items-center gap-x-[10px]">
-              <Image
-                src="/assets/ContactUs/instgram.svg"
-                width={40}
-                height={40}
-                alt=""
-              />
-              <p className="text-lg text-[#7C7C7C] font-poppinsRegular">
-                Instagram
-              </p>
+              <a
+                href="https://www.instagram.com/farmpady?igsh=MWxzMWs0ZDh3cnJldQ=="
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-x-[10px]"
+              >
+                <Image
+                  src="/assets/ContactUs/instgram.svg"
+                  width={40}
+                  height={40}
+                  alt="Instagram"
+                />
+                <p className="text-lg text-[#7C7C7C] font-poppinsRegular">
+                  Instagram
+                </p>
+              </a>
             </div>
+
             <div className="flex items-center gap-x-[10px]">
-              <Image
-                src="/assets/ContactUs/linkdIn.svg"
-                width={40}
-                height={40}
-                alt="linkedIn"
-              />
-              <p className="text-lg text-[#7C7C7C] font-poppinsRegular">
-                Linkedin
-              </p>
+              <a
+                href="https://www.linkedin.com/company/farmpady/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-x-[10px]"
+              >
+                <Image
+                  src="/assets/ContactUs/x.svg"
+                  width={40}
+                  height={40}
+                  alt="LinkedIn"
+                />
+                <p className="text-lg text-[#7C7C7C] font-poppinsRegular">
+                  LinkedIn
+                </p>
+              </a>
             </div>
+
             <div className="flex items-center gap-x-[10px] md:col-span-2">
-              <Image
-                src="/assets/ContactUs/x.svg"
-                width={40}
-                height={40}
-                alt="X"
-              />
-              <p className="text-lg text-[#7C7C7C] font-poppinsRegular">X</p>
+              <a
+                href="https://x.com/farmpady?t=EaSInmdoSp7MMoKvnacbUg&s=09"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-x-[10px]"
+              >
+                <Image
+                  src="/assets/ContactUs/linkdIn.svg"
+                  width={40}
+                  height={40}
+                  alt="X"
+                />
+                <p className="text-lg text-[#7C7C7C] font-poppinsRegular">X</p>
+              </a>
             </div>
           </div>
         </div>

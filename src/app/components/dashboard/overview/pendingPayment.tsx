@@ -1,9 +1,11 @@
 import SubHead from "../common/sectionHeading";
-import { PiDotsThree } from "react-icons/pi";
-import { FaCaretDown } from "react-icons/fa";
+// import { PiDotsThree } from "react-icons/pi";
+// import { FaCaretDown } from "react-icons/fa";
 import Image from "next/image";
 import Button from "../../common/Buttons";
 import { getWalletTransactionStore } from "@/stores/wallet/getWalletTransactions";
+import { getFarmersEarnings } from "@/stores/farmer-dashboard/earnings";
+import Link from "next/link";
 
 const PendingPayment = ({
   isTotalAvailable = true,
@@ -11,17 +13,19 @@ const PendingPayment = ({
   isTotalAvailable?: boolean;
 }) => {
   const { data: transactionData } = getWalletTransactionStore();
+  const { data: farmerEarningData } = getFarmersEarnings();
+
   return (
     <div
       className={`px-[22px] py-8 border border-[#E4E7EC] bg-[white] rounded-xl h-fit ${
         isTotalAvailable && "mt-6"
       }`}
     >
-      <div className="flex justify-between  items-center mb-4">
+      <div className="flex flex-row md:flex-col justify-between md:items-start md:gap-2 items-center mb-4">
         <SubHead text="Pending Payment" />
-        <div className="relative flex items-center gap-x-4">
+        {/* <div className="relative flex items-center gap-x-4">
           <div
-            className="flex items-center gap-x-2 p-2 bg-white border border-[#d9d9d9] rounded-xl cursor-pointer w-fit"
+            className="flex items-center  gap-x-2 p-2 bg-white border border-[#d9d9d9] rounded-xl cursor-pointer w-fit"
             // onClick={handleOpen}
           >
             <p className="">
@@ -41,7 +45,7 @@ const PendingPayment = ({
           >
             <PiDotsThree size={20} color="#7C7C7C" />
           </div>
-        </div>
+        </div> */}
       </div>
 
       {isTotalAvailable && (
@@ -49,7 +53,9 @@ const PendingPayment = ({
           <p className="mb-1 text-sm font-poppinsRegular text-[#5F5F5F]">
             Total
           </p>
-          <h4 className=" font-poppinsSemiBold text-[#5F5F5F]">N500,000.00</h4>
+          <h4 className=" font-poppinsSemiBold text-[#5F5F5F]">
+            N {farmerEarningData?.earnings?.pending_withdrawals}
+          </h4>
         </div>
       )}
 
@@ -94,13 +100,15 @@ const PendingPayment = ({
         )}
 
         {isTotalAvailable && (
-          <Button
-            variant="secondary"
-            size="small"
-            className="w-[180px] mt-6 mx-auto"
-          >
-            View All
-          </Button>
+          <Link href={"/farmer-dashboard/wallet"} className="mx-auto md:w-full">
+            <Button
+              variant="secondary"
+              size="small"
+              className="w-[180px] mt-6 mx-auto text-center"
+            >
+              View All
+            </Button>
+          </Link>
         )}
       </div>
     </div>

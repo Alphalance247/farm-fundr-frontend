@@ -1,10 +1,32 @@
+"use client";
 import Container from "../common/container";
 import Card from "../common/card";
-import Button from "../common/Buttons";
-import { GoArrowRight } from "react-icons/go";
+// import Button from "../common/Buttons";
+// import { GoArrowRight } from "react-icons/go";
 import Image from "next/image";
+import { getFarmMarketPlaceListStore } from "@/stores/farm-marketplace/farmMarketPlace";
+import { useEffect } from "react";
+import Spinner from "../common/modals/spinner";
 
 const ProjectListing = () => {
+  const { data, error, loading, fetchFarmMarketPlaceList } =
+    getFarmMarketPlaceListStore();
+
+  useEffect(() => {
+    fetchFarmMarketPlaceList();
+  }, [fetchFarmMarketPlaceList]);
+  const projects = data?.results?.data ?? [];
+  if (loading) {
+    return <Spinner />;
+  }
+
+  if (error) {
+    return (
+      <div className="text-center py-10 text-red-600 font-medium">
+        Failed to load projects. Please try again later.
+      </div>
+    );
+  }
   return (
     <section className="bg-[#FCFCFC] relative">
       <div className="absolute bottom-0 z-[1]">
@@ -17,27 +39,31 @@ const ProjectListing = () => {
       </div>
       <Container>
         <h5 className="text-lg font-poppinsSemiBold text-[#5F5F5F] mb-16">
-          120 Project Listings
+          {projects.length} Project Listings
         </h5>
 
         <div>
           <div className="grid grid-cols-3 gap-6 lg:grid-cols-2 lg:gap-x-4 lg:gap-y-10 md:grid-cols-1 md:gap-y-8">
-            <Card />
-            <Card />
-            <Card />
-            <Card />
-            <Card />
-            <Card />
-            <Card />
-            <Card />
-            <Card />
-            <Card />
-            <Card />
-            <Card />
+            {projects.map((project) => (
+              <Card
+                key={project.id}
+                projectImage={
+                  project.project_images?.find((img) => img.is_main)?.image ??
+                  project.images?.[0]
+                }
+                projectName={project.name}
+                projectFarm={project.farm_name}
+                projectDescrip={project.short_description}
+                projectLocation={project.project_location}
+                projectROI={String(project.ROI)}
+                btnText2="View Details"
+                btnTextLink2={`${project?.farm_page_link}`}
+              />
+            ))}
           </div>
         </div>
 
-        <Button
+        {/* <Button
           size="medium"
           className="flex items-center gap-x-4 justify-center mt-20 text-center w-[535px] mx-auto relative z-10"
         >
@@ -45,7 +71,7 @@ const ProjectListing = () => {
           <span>
             <GoArrowRight size={24} className="text-white" />
           </span>
-        </Button>
+        </Button> */}
       </Container>
     </section>
   );

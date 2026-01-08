@@ -1,8 +1,10 @@
+"use client";
 import React, { useState } from "react";
 import Image from "next/image";
 import Button from "../../common/Buttons";
 import Link from "next/link";
-import { FiEdit, FiTrash2 } from "react-icons/fi";
+import { FiEdit } from "react-icons/fi";
+import { useRouter } from "next/navigation";
 
 interface BranchFarmCardProps {
   branchName: string;
@@ -29,13 +31,19 @@ const BranchFarmCard: React.FC<BranchFarmCardProps> = ({
   id,
 }) => {
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
+  const router = useRouter();
   const handleDropdownToggle = (farmId: string) => {
     setOpenDropdown(openDropdown === farmId ? null : farmId);
   };
+  const handleEditBranch = (branchId: string) => {
+    localStorage.setItem("slectedEditBranchId", branchId);
+    router?.push("/farmer-dashboard/my-farms/update-branch");
+  };
+
   return (
     <div className="bg-white rounded-xl w-full shadow-lg">
       <div className="relative">
-        <Image
+        <img
           src={imageUrl}
           alt={branchName}
           className="w-full h-36 object-cover rounded-tr-lg rounded-tl-lg"
@@ -72,19 +80,19 @@ const BranchFarmCard: React.FC<BranchFarmCardProps> = ({
             <div className="absolute right-0 bottom-0 mt-2 w-28 bg-white rounded-lg shadow-lg border border-gray-200 z-50">
               <div className="py-1">
                 <button
-                  // onClick={() => handleEditFarm(emp.id)}
+                  onClick={() => handleEditBranch(id)}
                   className="w-full px-2 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center gap-2"
                 >
                   <FiEdit size={14} />
                   Edit
                 </button>
-                <button
+                {/* <button
                   // onClick={() => handleDeleteFarm(emp?.id, emp?.name)}
                   className="w-full px-2 py-2 text-sm text-red-600 hover:bg-gray-100 flex items-center gap-2"
                 >
                   <FiTrash2 size={14} />
                   Delete
-                </button>
+                </button> */}
               </div>
             </div>
           )}
@@ -131,7 +139,10 @@ const BranchFarmCard: React.FC<BranchFarmCardProps> = ({
           </span>
           {openingHours}
         </div>
-        <Link href={`${href}`}>
+        <Link
+          href={`${href}`}
+          onClick={() => localStorage.setItem("slectedEditBranchId", id)}
+        >
           <Button className="mt-6 w-full"> View All Projects</Button>
         </Link>
       </div>

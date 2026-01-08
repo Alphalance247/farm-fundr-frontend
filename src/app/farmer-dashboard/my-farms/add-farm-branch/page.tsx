@@ -133,12 +133,13 @@ const AddFarmBranch = () => {
             />
           </div>
         )}
-        <main className="px-10 py-10 bg-gray-50 overflow-auto">
-          <div className="flex gap-x-6">
-            <div className="w-[30%]">
+
+        <main className="px-10 md:px-4 py-10 bg-gray-50 overflow-auto">
+          <div className="flex flex-row md:flex-col md:gap-6 gap-x-6">
+            <div className="w-[30%] xl:w-[60%] lg:w-[50%] md:w-full">
               <GoBackBtn href="/farmer-dashboard/my-farms" />
 
-              <div className="border border-[#FEF0B0] bg-[#FFFAE6] rounded-lg p-3 flex gap-x-5 items-start mt-6 ">
+              <div className="border lg:items-center border-[#FEF0B0] bg-[#FFFAE6] rounded-lg p-3 flex gap-x-5 items-start mt-6 ">
                 <Image
                   src="/assets/my-farms/danger.svg"
                   width={46}
@@ -166,7 +167,7 @@ const AddFarmBranch = () => {
                 alt="warning"
                 className="mx-auto"
               />
-              <h3 className="text-[#303030] font-aristoBold text-3xl mt-4">
+              <h3 className="text-[#303030] font-aristoBold text-3xl xl:text-2xl  mt-4">
                 {formStep === 1
                   ? " Set Up Your farm Details"
                   : formStep === 2
@@ -197,7 +198,7 @@ const AddFarmBranch = () => {
             <form
               action="submit"
               onSubmit={(e) => handleFinalSubmit(e)}
-              className="w-[70%] mx-auto"
+              className="w-[70%] xl:w-full mx-auto"
             >
               {formStep === 1 && (
                 <BranchInformation

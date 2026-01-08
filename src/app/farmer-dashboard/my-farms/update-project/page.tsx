@@ -16,11 +16,12 @@ import { getFarmListStore } from "@/stores/farms/getFarmList";
 import { getBranchListStore } from "@/stores/farms/getBranchList";
 import { getProjectDetails } from "@/stores/farms/getProjectDetails";
 import { useRouter } from "next/navigation";
-import Image from "next/image";
-import { environment } from "@/env/env.local";
+import ConfirmationModal from "@/app/components/common/dashboard/confirmationModal";
 
 const UpdateProject = () => {
   const [loadingProject, setLoading] = useState(false);
+  const [loadingProjectImage, setIsProjectLoading] = useState(false);
+  const [successModal, setSuccessModal] = useState(false);
   const [selectedFarmId, setSelectedFarmId] = useState("");
   const [selectedBranchId, setSelectedBranchId] = useState("");
   const [selectedProjectId, setSelectedProjectId] = useState("");
@@ -30,18 +31,20 @@ const UpdateProject = () => {
 
   const farmListData = farmList?.results?.farms;
   const farmBranchData = branchList?.results?.data;
-
   const { fetchProjectsDetails, data } = getProjectDetails();
 
   // Get the farm ID from localStorage on component mount
   useEffect(() => {
-    const storedProjectId = localStorage.getItem("selectedEditFarmId");
-    if (storedProjectId) {
+    const storedProjectId = localStorage.getItem("slectedEditProjectId");
+    const storedFarmId = localStorage.getItem("selectedEditFarmId");
+    const storedBranchId = localStorage.getItem("slectedEditBranchId");
+
+    if (storedProjectId && storedBranchId && storedFarmId) {
       fetchProjectsDetails(storedProjectId);
       setSelectedProjectId(storedProjectId);
     } else {
       // If no farm ID is stored, redirect back to farms list
-      window.location.href = `/farmer-dashboard/my-farms/${selectedFarmId}/farm-branches/${selectedBranchId}/${storedProjectId}`;
+      window.location.href = `/farmer-dashboard/my-farms/${storedFarmId}/farm-branches/${storedBranchId}/${storedProjectId}`;
     }
   }, [fetchProjectsDetails, selectedBranchId, selectedFarmId]);
 
@@ -192,20 +195,13 @@ const UpdateProject = () => {
         formData.append("how_it_works", form.howItWorks);
         formData.append("budget", form.fundingDetails);
         formData.append("progress_over_time", form.progressOvertime);
-        formData.append("plots", form.branchSize);
+        formData.append("plots", form.plots);
         formData.append("ROI", form.expectedReturn);
         formData.append("published", "true");
 
-        // Add images
-        Object.entries(uploadedImages).forEach(([, imageData]) => {
-          if (imageData.file) {
-            formData.append("images", imageData.file);
-          }
-        });
-
         // Make API call to create project
         const response = await axiosInstance.patch(
-          `/farms/${selectedFarmId}/branches/${selectedBranchId}/projects/`,
+          `/farms/projects/${selectedProjectId}`,
           formData,
           {
             headers: {
@@ -214,14 +210,13 @@ const UpdateProject = () => {
           }
         );
 
-        if (response.status === 201) {
+        if (response.status === 201 || response?.status === 200) {
           // Reset form and uploaded images after successful submission
           toast.success(
             response.data.message || "Project created successfully!"
           );
-          router.push(
-            `/farmer-dashboard/my-farms/${selectedFarmId}/farm-branches/${selectedBranchId}/${selectedProjectId}`
-          );
+
+          setSuccessModal(true);
 
           setForm({
             selectFarm: "",
@@ -261,6 +256,66 @@ const UpdateProject = () => {
     }
   };
 
+  const handleImageUpload = async () => {
+    try {
+      setIsProjectLoading(true);
+
+      // Create FormData for file upload
+      const formData = new FormData();
+
+      const img1 = uploadedImages.image1?.file;
+      const img2 = uploadedImages.image2?.file;
+      const img3 = uploadedImages.image3?.file;
+      const img4 = uploadedImages.image4?.file;
+
+      if (img1 && projectData) {
+        formData.append("images", img1);
+        formData.append("old_image_links", projectData?.images[0]);
+      }
+      if (img2 && projectData) {
+        formData.append("images", img2);
+        formData.append("old_image_links", projectData?.images[1]);
+      }
+      if (img3 && projectData) {
+        formData.append("images", img3);
+        formData.append("old_image_links", projectData?.images[2]);
+      }
+      if (img4 && projectData) {
+        formData.append("images", img4);
+        formData.append("old_image_links", projectData?.images[3]);
+      }
+
+      const res = await axiosInstance.post(
+        `/farms/projects/${selectedProjectId}/update-images`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+
+      if (res.status === 201 || res.status === 200) {
+        setSuccessModal(true);
+      }
+
+      setIsProjectLoading(false);
+    } catch (err) {
+      // Extract the error message from the response
+      let errorMessage =
+        "Please make sure all fields are filled correctly. and try again.";
+
+      if (err instanceof AxiosError) {
+        // Check if err is an instance of AxiosError
+        errorMessage = err.response?.data?.statusmessage || errorMessage;
+      }
+
+      toast.error(errorMessage);
+
+      setIsProjectLoading(false);
+    }
+  };
+
   const handleFileChange = (
     e: React.ChangeEvent<HTMLInputElement>,
     imageKey: string
@@ -284,6 +339,13 @@ const UpdateProject = () => {
   return (
     <ProtectedRoute requiredUserType="farmer">
       <DashboardLayout>
+        {loadingProjectImage && (
+          <SpinnerModal
+            onClose={() => {}}
+            message="Uploading project images, please wait this might take a while...."
+          />
+        )}
+
         {loadingProject && (
           <SpinnerModal
             onClose={() => {}}
@@ -291,7 +353,7 @@ const UpdateProject = () => {
           />
         )}
 
-        <main className="px-10 py-10 bg-gray-50 overflow-auto">
+        <main className="px-10 py-10 bg-gray-50 overflow-auto lg:px-6 md:px-4">
           <GoBackBtn href="/farmer-dashboard/my-farms" />
           <div className="mt-6 text-center">
             <h5 className="text-xl font-semibold text-[#5F5F5F]">
@@ -299,147 +361,157 @@ const UpdateProject = () => {
               Edit Project
             </h5>
             <p className=" font-poppinsRegular text-sm text-[#7C7C7C] mt-3 mb-4">
-              Apple gardenm farm/Lagos Branch
+              {projectData?.name}
             </p>
           </div>
           {/* form section */}
-          <form
-            action=""
-            className="w-[70%] mx-auto"
-            onSubmit={(e) => handleProjectSubmit(e)}
-          >
-            <div className="p-6 bg-white rounded-lg shadow-lg">
-              {/* Upload Farm Images */}
-              <div>
-                <div className="p-6 bg-white rounded-lg">
-                  <p className="mb-2">
-                    Upload Farm Images
-                    <span className=" font-poppinsRegular text-[#5F5F5F]">
-                      (5mb size, jpg, png format only)
-                    </span>
-                  </p>
-                  <div className=" flex flex-col gap-y-6">
-                    <div className="flex flex-col gap-4">
-                      {/* First row - Single image */}
-                      <div className="w-full">
-                        <label
-                          htmlFor="file-upload-image1"
-                          className="text-sm font-poppinsSemiBold text-[#5F5F5F] block"
-                        >
-                          <input
-                            id="file-upload-image1"
-                            type="file"
-                            accept="image/*"
-                            onChange={(e) => handleFileChange(e, "image1")}
-                            className="hidden"
-                          />
-                          <div>
-                            {uploadedImages.image1.preview ? (
-                              <div className="border border-[#51F4A6] border-dashed w-full rounded-xl relative">
-                                <div className="relative">
-                                  <div className="relative">
-                                    <Image
-                                      width={556}
-                                      height={158}
-                                      src={`${environment?.imgBaserUrl}${uploadedImages.image1.preview}`}
-                                      alt="Uploaded image1"
-                                      className="object-cover w-full h-[300px] rounded-lg"
-                                    />
-                                  </div>
 
-                                  <div className="flex items-center justify-center absolute gap-x-1 bg-[#FFFFFFE5] px-2 py-1 cursor-pointer rounded-lg bottom-[8rem] left-[20rem]">
-                                    <p className="text-xs font-poppinsRegular text-[#616161]">
-                                      Change Cover
-                                    </p>
-                                    <span>
-                                      <FiDownload color="#2D865B" size={14} />
-                                    </span>
-                                  </div>
+          <div className="w-[70%] mx-auto xl:w-[80%] lg:w-[90%] md:w-full">
+            <div className="p-6 bg-white rounded-lg shadow-lg md:px-3">
+              {/* Upload Farm Images */}
+              <div className=" bg-white rounded-lg">
+                <p className="mb-2">
+                  Upload Project Images
+                  <span className=" font-poppinsRegular text-[#5F5F5F]">
+                    (5mb size, jpg, png format only)
+                  </span>
+                </p>
+                <div className=" flex flex-col gap-y-6">
+                  <div className="flex flex-col gap-4">
+                    {/* First row - Single image */}
+                    <div className="w-full">
+                      <label
+                        htmlFor="file-upload-image1"
+                        className="text-sm font-poppinsSemiBold text-[#5F5F5F] block"
+                      >
+                        <input
+                          id="file-upload-image1"
+                          type="file"
+                          accept="image/*"
+                          onChange={(e) => handleFileChange(e, "image1")}
+                          className="hidden"
+                        />
+                        <div>
+                          {uploadedImages.image1.preview ? (
+                            <div className="border border-[#51F4A6] border-dashed w-full rounded-xl relative">
+                              <div className="relative">
+                                <div className="relative">
+                                  <img
+                                    width={556}
+                                    height={158}
+                                    src={`${uploadedImages.image1.preview}`}
+                                    alt="Uploaded image1"
+                                    className="object-cover w-full h-[458px] rounded-lg"
+                                  />
+                                </div>
+
+                                <div className="flex items-center justify-center absolute gap-x-1 bg-[#FFFFFFE5] px-2 py-1 cursor-pointer rounded-lg bottom-[8rem] left-[20rem]">
+                                  <p className="text-xs font-poppinsRegular text-[#616161]">
+                                    Change Cover
+                                  </p>
+                                  <span>
+                                    <FiDownload color="#2D865B" size={14} />
+                                  </span>
                                 </div>
                               </div>
-                            ) : (
-                              <div className="bg-[#EEFEF6] border border-[#51F4A6] border-dashed flex flex-col gap-y-3 cursor-pointer items-center w-full py-6 rounded-xl">
-                                <span>
-                                  <FiDownload size={24} color="#2D865B" />
+                            </div>
+                          ) : (
+                            <div className="bg-[#EEFEF6] border border-[#51F4A6] border-dashed flex flex-col gap-y-3 cursor-pointer items-center w-full py-6 rounded-xl">
+                              <span>
+                                <FiDownload size={24} color="#2D865B" />
+                              </span>
+                              <p className="text-xs text-[#616161] tracking-[-0.8%] font-poppinsRegular">
+                                Upload image or <br />
+                                <span className="font-poppinsSemiBold block mt-1">
+                                  click to browse
                                 </span>
-                                <p className="text-xs text-[#616161] tracking-[-0.8%] font-poppinsRegular">
-                                  Upload image or <br />
-                                  <span className="font-poppinsSemiBold block mt-1">
-                                    click to browse
-                                  </span>
-                                </p>
-                              </div>
-                            )}
-                          </div>
-                        </label>
-                      </div>
+                              </p>
+                            </div>
+                          )}
+                        </div>
+                      </label>
                     </div>
+                  </div>
 
-                    {/* Second row - Multiple images */}
-                    <div className="grid grid-cols-3 gap-4">
-                      {Object.entries(uploadedImages)
-                        .filter(([key]) => key !== "image1")
-                        .map(([key, { preview }]) => (
-                          <div key={key}>
-                            <label
-                              htmlFor={`file-upload-${key}`}
-                              className="text-sm font-poppinsSemiBold text-[#5F5F5F] block"
-                            >
-                              <input
-                                id={`file-upload-${key}`}
-                                type="file"
-                                accept="image/*"
-                                onChange={(e) => handleFileChange(e, key)}
-                                className="hidden"
-                              />
-                              <div>
-                                {preview ? (
-                                  <div
-                                    className={`border border-[#51F4A6] border-dashed w-full rounded-xl relative`}
-                                  >
-                                    <div className="relative">
-                                      <Image
-                                        width={177}
-                                        height={95}
-                                        src={`${environment?.imgBaserUrl}${preview}`}
-                                        alt={`Uploaded ${key}`}
-                                        className="object-cover w-full h-[95px] rounded-lg"
-                                      />
-                                      <div className="flex items-center justify-center absolute gap-x-1 bg-[#FFFFFFE5] px-2 py-1 cursor-pointer rounded-lg bottom-[4rem] right-[3rem]">
-                                        <p className="text-xs font-poppinsRegular text-[#616161]">
-                                          Change Cover
-                                        </p>
-                                        <span>
-                                          <FiDownload
-                                            color="#2D865B"
-                                            size={14}
-                                          />
-                                        </span>
-                                      </div>
+                  {/* Second row - Multiple images */}
+                  <div className="grid grid-cols-1 gap-4 lg:grid-cols-1 md:grid-cols-1">
+                    {Object.entries(uploadedImages)
+                      .filter(([key]) => key !== "image1")
+                      .map(([key, { preview }]) => (
+                        <div key={key}>
+                          <label
+                            htmlFor={`file-upload-${key}`}
+                            className="text-sm font-poppinsSemiBold text-[#5F5F5F] block"
+                          >
+                            <input
+                              id={`file-upload-${key}`}
+                              type="file"
+                              accept="image/*"
+                              onChange={(e) => handleFileChange(e, key)}
+                              className="hidden"
+                            />
+                            <div>
+                              {preview ? (
+                                <div
+                                  className={`border border-[#51F4A6] border-dashed w-full rounded-xl relative`}
+                                >
+                                  <div className="relative">
+                                    <img
+                                      width={177}
+                                      height={95}
+                                      src={`${preview}`}
+                                      alt={`Uploaded ${key}`}
+                                      className="object-cover w-full h-[458px] rounded-lg"
+                                    />
+                                    <div className="flex items-center justify-center absolute gap-x-1 bg-[#FFFFFFE5] px-2 py-1 cursor-pointer rounded-lg bottom-[4rem] right-[3rem]">
+                                      <p className="text-xs font-poppinsRegular text-[#616161]">
+                                        Change Cover
+                                      </p>
+                                      <span>
+                                        <FiDownload color="#2D865B" size={14} />
+                                      </span>
                                     </div>
                                   </div>
-                                ) : (
-                                  <div className="bg-[#EEFEF6] border border-[#51F4A6] border-dashed flex flex-col gap-y-3 cursor-pointer items-center w-full py-6 rounded-xl">
-                                    <span>
-                                      <FiDownload size={24} color="#2D865B" />
+                                </div>
+                              ) : (
+                                <div className="bg-[#EEFEF6] border border-[#51F4A6] border-dashed flex flex-col gap-y-3 cursor-pointer items-center w-full py-6 rounded-xl">
+                                  <span>
+                                    <FiDownload size={24} color="#2D865B" />
+                                  </span>
+                                  <p className="text-xs text-[#616161] tracking-[-0.8%] font-poppinsRegular">
+                                    Upload image or <br />
+                                    <span className="font-poppinsSemiBold block mt-1">
+                                      click to browse
                                     </span>
-                                    <p className="text-xs text-[#616161] tracking-[-0.8%] font-poppinsRegular">
-                                      Upload image or <br />
-                                      <span className="font-poppinsSemiBold block mt-1">
-                                        click to browse
-                                      </span>
-                                    </p>
-                                  </div>
-                                )}
-                              </div>
-                            </label>
-                          </div>
-                        ))}
-                    </div>
+                                  </p>
+                                </div>
+                              )}
+                            </div>
+                          </label>
+                        </div>
+                      ))}
                   </div>
                 </div>
               </div>
+            </div>
 
+            <div className="my-10 flex gap-x-4 items-end justify-end">
+              <Button
+                className="w-fit flex items justify-center gap-x-4 text-right"
+                type="submit"
+                onClick={handleImageUpload}
+              >
+                Update Project Image
+              </Button>
+            </div>
+          </div>
+
+          <form
+            action=""
+            className="w-[70%] mx-auto xl:w-[80%] lg:w-[90%] md:w-full"
+            onSubmit={(e) => handleProjectSubmit(e)}
+          >
+            <div className="p-6 bg-white rounded-lg shadow-lg md:px-3">
               {/*  Project Information*/}
 
               <div className="mt-6 flex flex-col gap-y-6">
@@ -447,7 +519,7 @@ const UpdateProject = () => {
                   Farm Information
                 </p>
 
-                <div className="grid grid-cols-2 gap-6">
+                <div className="grid grid-cols-2 gap-6 md:grid-cols-1">
                   <div>
                     <Label>Select Farm</Label>
                     <select
@@ -540,21 +612,39 @@ const UpdateProject = () => {
                     </select>
                   </div>
                 </div>
-                <div>
-                  <Label>Description</Label>
 
-                  <textarea
-                    name="description"
-                    id=""
-                    value={form?.description || ""}
-                    cols={20}
-                    rows={5}
-                    className="bg-[#F6F6F6] border-[#E2E2E2] border w-full text-[#7C7C7C] rounded-lg text-sm p-4 focus:ring-[#51F4A6]"
-                    placeholder="Enter description here"
-                    onChange={(e) => {
-                      setForm({ ...form, description: e.target.value });
-                    }}
-                  ></textarea>
+                <div className="grid grid-cols-2 gap-6 md:grid-cols-1">
+                  <div>
+                    <Label>Description</Label>
+
+                    <textarea
+                      name="description"
+                      id=""
+                      value={form?.description || ""}
+                      cols={20}
+                      rows={5}
+                      className="bg-[#F6F6F6] border-[#E2E2E2] border w-full text-[#7C7C7C] rounded-lg text-sm p-4 focus:ring-[#51F4A6]"
+                      placeholder="Enter description here"
+                      onChange={(e) => {
+                        setForm({ ...form, description: e.target.value });
+                      }}
+                    ></textarea>
+                  </div>
+
+                  <div>
+                    <Label className="">Plots</Label>
+                    <Input
+                      name="plots"
+                      className=""
+                      type="number"
+                      value={form?.plots}
+                      placeholder="Enter number of plots"
+                      variant="tertiary"
+                      onChange={(e) =>
+                        setForm({ ...form, plots: e.target.value })
+                      }
+                    />
+                  </div>
                 </div>
               </div>
 
@@ -563,7 +653,7 @@ const UpdateProject = () => {
                   Investment Details
                 </p>
 
-                <div className="grid grid-cols-2 gap-6">
+                <div className="grid grid-cols-2 gap-6 md:grid-cols-1">
                   <div>
                     <Label className="">Total Funding</Label>
                     <Input
@@ -629,7 +719,7 @@ const UpdateProject = () => {
                     </select>
                   </div>
 
-                  <div className="grid grid-cols-2 gap-2">
+                  <div className="grid grid-cols-2 gap-2 md:grid-cols-1 md:gap-6">
                     <div>
                       <Label className="">Investment Start date</Label>
                       <Input
@@ -705,13 +795,13 @@ const UpdateProject = () => {
             </div>
 
             <div className="mt-8 flex gap-x-4 items-center justify-between">
-              <Button
+              {/* <Button
                 className="w-full flex items-center justify-center gap-x-4"
                 variant="secondary"
                 type="button"
               >
                 Cancel
-              </Button>
+              </Button> */}
               <Button
                 className="w-full flex items-center justify-center gap-x-4"
                 type="submit"
@@ -720,6 +810,20 @@ const UpdateProject = () => {
               </Button>
             </div>
           </form>
+          <ConfirmationModal
+            isOpen={successModal}
+            onClose={() => setSuccessModal(false)}
+            title="Farm Images Updated"
+            description="Your farm images have been successfully updated. Would you like to go home or continue updating your farm information?"
+            confirmText="Keep Updating"
+            cancelText="Go To Project Details"
+            onConfirm={() => setSuccessModal(false)}
+            onCancel={() =>
+              router.push(
+                `/farmer-dashboard/my-farms/${selectedFarmId}/farm-branches/${selectedBranchId}/${selectedProjectId}`
+              )
+            }
+          />
         </main>
       </DashboardLayout>
     </ProtectedRoute>

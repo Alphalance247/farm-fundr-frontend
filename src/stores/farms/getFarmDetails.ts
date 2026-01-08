@@ -13,6 +13,7 @@ export interface farmDetailsDataStore {
       farm_branches_count: number;
       status: string;
       color: string;
+      logo: string;
       active_farm_branches: string;
       created: string;
       farm_link: string;
@@ -20,6 +21,10 @@ export interface farmDetailsDataStore {
       inactive_projects: string;
       cac_reg_status: string;
       description: string;
+      facebook_link: string;
+      instagram_link: string;
+      linkedln_link: string;
+      x_link: string;
       owner_name: string;
       state: string;
       images: string[];

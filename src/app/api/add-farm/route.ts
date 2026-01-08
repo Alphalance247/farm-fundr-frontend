@@ -7,8 +7,6 @@ export async function POST(request: NextRequest) {
     // Get the access token from cookies
     const accessToken = request.cookies.get("access")?.value;
 
-    console.log("🔐 Access token found:", !!accessToken);
-
     if (!accessToken) {
       return NextResponse.json(
         { message: "Authentication required. Please login again." },
@@ -37,16 +35,9 @@ export async function POST(request: NextRequest) {
       city: formData.get("city") as string,
     };
 
-    console.log("📋 Farm data:", farmData);
-
     // Handle file uploads
     const cacDocument = formData.get("cac_reg_doc") as File;
     const images = formData.getAll("images") as File[];
-
-    console.log("📁 Files:", {
-      cacDocument: !!cacDocument,
-      imagesCount: images.length,
-    });
 
     // Create FormData for the external API
     const externalFormData = new FormData();
@@ -82,15 +73,11 @@ export async function POST(request: NextRequest) {
       withCredentials: true,
     });
 
-    console.log("✅ API response:", response.status, response.data);
-
     return NextResponse.json(
       { message: "Farm added successfully", data: response.data },
       { status: 201 }
     );
   } catch (error: unknown) {
-    console.error("Error adding farm:", error);
-
     let errorMessage = "Failed to add farm. Please try again.";
     let statusCode = 500;
     let errorDetails = null;

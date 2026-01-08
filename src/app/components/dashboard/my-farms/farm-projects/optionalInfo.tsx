@@ -57,7 +57,7 @@ const OptionalInfo = ({
 
   return (
     <div>
-      <div className="p-6 bg-white mt-6 rounded-lg flex flex-col gap-y-6">
+      <div className="p-6 md:p-4 bg-white mt-6 rounded-lg flex flex-col gap-y-6">
         <div>
           <Label>How It Works</Label>
 
@@ -93,9 +93,9 @@ const OptionalInfo = ({
         </div>
 
         <div>
-          <div className="p-6 bg-white rounded-lg">
+          <div className="p-6 md:p-4 bg-white mt-6 rounded-lg flex flex-col gap-y-6">
             <p className="mb-2">
-              Upload Farm Images
+              Upload Project Images
               <span className=" font-poppinsRegular text-[#5F5F5F]">
                 (5mb size, jpg, png format only)
               </span>
@@ -122,10 +122,10 @@ const OptionalInfo = ({
                             <div className="relative">
                               <Image
                                 width={556}
-                                height={158}
+                                height={458}
                                 src={uploadedImages.image1.preview}
                                 alt="Uploaded image1"
-                                className="object-cover w-full"
+                                className="object-cover rounded-xl w-full h-[458px]"
                               />
                             </div>
 
@@ -140,7 +140,7 @@ const OptionalInfo = ({
                           </div>
                         </div>
                       ) : (
-                        <div className="bg-[#EEFEF6] border border-[#51F4A6] border-dashed flex flex-col gap-y-3 cursor-pointer items-center w-full py-6 rounded-xl">
+                        <div className="bg-[#EEFEF6] border border-[#51F4A6] border-dashed flex flex-col gap-y-3 cursor-pointer items-center w-full py-24 rounded-xl">
                           <span>
                             <FiDownload size={24} color="#2D865B" />
                           </span>
@@ -158,7 +158,7 @@ const OptionalInfo = ({
               </div>
 
               {/* Second row - Multiple images */}
-              <div className="grid grid-cols-3 gap-4">
+              <div className="grid grid-cols-1 gap-4">
                 {Object.entries(uploadedImages)
                   .filter(([key]) => key !== "image1")
                   .map(([key, { preview }]) => (
@@ -198,7 +198,7 @@ const OptionalInfo = ({
                               </div>
                             </div>
                           ) : (
-                            <div className="bg-[#EEFEF6] border border-[#51F4A6] border-dashed flex flex-col gap-y-3 cursor-pointer items-center w-full py-6 rounded-xl">
+                            <div className="bg-[#EEFEF6] border border-[#51F4A6] border-dashed flex flex-col gap-y-3 cursor-pointer items-center w-full py-24 rounded-xl">
                               <span>
                                 <FiDownload size={24} color="#2D865B" />
                               </span>
@@ -279,7 +279,7 @@ const OptionalInfo = ({
         </div> */}
       </div>
 
-      <div className="mt-8 flex items-center justify-between">
+      <div className="mt-8 flex flex-row md:flex-col md:gap-4 items-center justify-between">
         <Button
           className="w-fit flex items-center justify-center gap-x-4"
           onClick={(e) => {
