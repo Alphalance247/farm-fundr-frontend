@@ -1,22 +1,38 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Sidebar from "./dashboard/sideBar";
 import { Topbar } from "./dashboard/topBar";
-// import PhoeNumberModal from "../dashboard/overview/phoneNumberModal";
+import CreateFarmModal from "./createFarmModal";
+import { getFarmListStore } from "@/stores/farms/getFarmList";
 
 const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
   const [showMobileMenu, setShowMobileMenu] = useState(false);
-  // const [showMobileModal, setShowMobileMoal] = useState(true);
+  const [showCreateFarmModal, setShowCreateFarmModal] = useState(false);
+  const { fetchFarmList, data: farmData } = getFarmListStore();
+
+  useEffect(() => {
+    fetchFarmList();
+  }, []);
+
+  useEffect(() => {
+    // Check if user has no farms
+    const totalFarms = farmData?.results?.extra_data?.total_farms || 0;
+    if (totalFarms === 0) {
+      setShowCreateFarmModal(true);
+    } else {
+      setShowCreateFarmModal(false);
+    }
+  }, [farmData]);
 
   return (
     <div className="flex h-screen max-w-[1800px] mx-auto flex-col">
-      {/* {showMobileModal && (
-        <PhoeNumberModal
+      {showCreateFarmModal && (
+        <CreateFarmModal
           onClose={() => {
-            setShowMobileMoal(false);
+            setShowCreateFarmModal(false);
           }}
         />
-      )} */}
+      )}
       <Topbar
         overview=""
         showMobileMenu={showMobileMenu}
