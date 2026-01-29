@@ -36,11 +36,10 @@ const CreateFarmModal = ({ onClose }: CreateFarmModalProps) => {
         <div className="p-8 md:p-6 sm:p-4 overflow-y-auto max-h-[calc(100vh-250px)]">
           <div className="bg-[#EEFEF6] border border-[#51F4A6] rounded-xl p-6 mb-6 md:p-4 md:mb-5 sm:p-3 sm:mb-4">
             <p className="text-sm font-poppinsRegular text-[#0B222A] leading-relaxed md:text-xs sm:text-xs">
-              Welcome to FarmFundr! You haven&apos;t created any farms yet. To
-              start showcasing your farming projects and attracting investors,
-              please create your first farm. This will help you manage your
-              agricultural activities, track investments, and connect with
-              potential investors in your area.
+              Welcome to FarmPady! You haven’t set up your Farm Page yet.
+              Creating one is the first step to telling your farming story,
+              showcasing your work, and getting discovered by investors who want
+              to support farmers like you.
             </p>
           </div>
 
